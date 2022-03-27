@@ -1,0 +1,4 @@
+{
+    "lo_script_dir": ["~","snap","libreoffice", "current", ".config", "libreoffice", "4", "user"],
+    "app_build_dir": ["build"]
+}

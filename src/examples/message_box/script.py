@@ -1,7 +1,7 @@
 # coding: utf-8
-from .msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
+from src.examples.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
 
-def main():
+def main(*args, **kwargs):
     msg = "A small message"
     result = msgbox(
         message=msg,
