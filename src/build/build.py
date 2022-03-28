@@ -9,8 +9,10 @@ from typing import List, Optional
 from distutils.sysconfig import get_python_lib
 import fileinput
 import re
-from ..utils import util
 from config import AppConfig
+from .embed_py_script import EmbedScriptPy
+from .copy_resource import CopyResource
+from ..utils import util
 from ..models.example.model_example import ModelExample
 
 @dataclass
@@ -27,7 +29,10 @@ class BuilderArgs:
     """
     Optional AppConfig
     """
-
+    embed_in_odt: bool = False
+    """
+    If True then an odt file with embeded script is generated
+    """
 
 class Builder:
     """Builder Class"""
@@ -44,9 +49,10 @@ class Builder:
         if self._config is None:
             self._config = util.get_app_cfg()
         self._allow_print = args.allow_print
+        self._embed = args.embed_in_odt
         self._dest_file = ""
-        self._json_cfg = util.get_path_from_lst(
-            lst=args.config_json.replace('\\', '/').split('/'),
+        self._json_cfg = util.get_path(
+            path=args.config_json.replace('\\', '/').split('/'),
             ensure_absolute=True)
         # self._json_cfg = util.get_path_from_lst(
         #     "src/examples/message_box/config.json".split("/"), ensure_absolute=True
@@ -62,7 +68,7 @@ class Builder:
 
     def _get_src_file(self) -> Path:
         parts = self._model.args.src_file.replace("\\", "/").split("/")
-        rel = util.get_path_from_lst(parts, ensure_absolute=False)
+        rel = util.get_path(parts, ensure_absolute=False)
         if rel.is_absolute():
             return rel
         return Path(self._src_path, rel)
@@ -121,6 +127,20 @@ class Builder:
     def _append_g_exported(self) -> None:
         with open(self._dest_file, 'a') as file:
             file.write(self._get_g_exported())
+    
+    def _embed_script(self) -> None:
+        cp = CopyResource(
+            src=self._config.app_res_blank_odt,
+            dst=None,
+            clear_prev=False,
+            config=self._config
+        )
+        emb = EmbedScriptPy(
+            src=self._dest_file,
+            doc_path=cp.src_path,
+            config=self._config
+        )
+        emb.embed()
 
     # region Public Methods
     def build(self) -> bool:
@@ -129,7 +149,7 @@ class Builder:
         @return: `True` of the build is a success; Otherwise, `False`
         """
 
-        dist_dir = util.get_path_from_lst(
+        dist_dir = util.get_path(
             self._config.app_build_dir, ensure_absolute=True
         )
         dest_file = dist_dir / self._src_file.name
@@ -174,6 +194,8 @@ class Builder:
         # endregion Report
         self._remove_modules()
         self._append_g_exported()
+        if self._embed:
+            self._embed_script()
         return True
 
     # endregion Public Methods
