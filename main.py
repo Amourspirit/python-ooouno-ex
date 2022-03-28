@@ -36,6 +36,7 @@ def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
         default=False,
     )
 
+
 def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-c",
@@ -53,6 +54,15 @@ def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
         dest="allow_print",
         default=False,
     )
+    parser.add_argument(
+        "-e",
+        "--embed-in-odt",
+        help="If True an otd file will be generated with script embeded.",
+        action="store_true",
+        dest="embed_otd",
+        default=False,
+    )
+
 
 def _args_action_cmd_link(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -64,18 +74,18 @@ def _args_action_cmd_link(
     elif args.remove:
         uno_lnk.remove_links()
 
+
 def _args_action_cmd_build(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
 ) -> None:
-    bargs = BuilderArgs(
-        config_json=args.config_json
-    )
+    bargs = BuilderArgs(config_json=args.config_json, embed_in_odt=bool(args.embed_otd))
     builder = Builder(args=bargs)
     _valid = builder.build()
     if _valid == False:
-        print('Build Failed')
+        print("Build Failed")
     else:
-        print('Build Success')
+        print("Build Success")
+
 
 def _args_process_cmd(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -91,21 +101,21 @@ def _args_process_cmd(
 # endregion        process arg command
 # endregion parser
 
+
 def _main():
-    args = 'build -p'
+    args = "build -e -c src/examples/message_box/config.json"
     sys.argv.extend(args.split())
     main()
 
+
 def main():
-    os.environ['project_root'] = str(Path(__file__).parent)
+    os.environ["project_root"] = str(Path(__file__).parent)
     parser = _create_parser("main")
     subparser = parser.add_subparsers(dest="command")
     cmd_link = subparser.add_parser(
         name="cmd-link", help="Add/Remove links in virtual environments to uno files."
     )
-    cmd_build = subparser.add_parser(
-        name="build", help="Build a script"
-    )
+    cmd_build = subparser.add_parser(name="build", help="Build a script")
 
     _args_cmd_link(parser=cmd_link)
     _args_cmd_build(parser=cmd_build)
@@ -117,4 +127,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    _main()
