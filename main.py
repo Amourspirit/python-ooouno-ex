@@ -1,6 +1,5 @@
 # coding: utf-8
 import argparse
-from distutils.command.config import config
 import sys
 import os
 from pathlib import Path
