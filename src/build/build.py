@@ -138,6 +138,7 @@ class Builder:
         emb = EmbedScriptPy(
             src=self._dest_file,
             doc_path=cp.src_path,
+            model=self._model,
             config=self._config
         )
         emb.embed()
@@ -152,7 +153,7 @@ class Builder:
         dist_dir = util.get_path(
             self._config.app_build_dir, ensure_absolute=True
         )
-        dest_file = dist_dir / self._src_file.name
+        dest_file = dist_dir / f"{self._model.args.output_name}{self._src_file.suffix}"
         self._dest_file = str(dest_file)
 
         if not os.path.exists(dist_dir):

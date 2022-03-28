@@ -25,6 +25,10 @@ class AppConfig:
     
     This is expected to be a subpath of ``app_res_dir``.
     """
+    xml_manifest_namesapce: str
+    """
+    Name of LO manifest xml file such as `urn:oasis:names:tc:opendocument:xmlns:manifest:1.0`
+    """
 
 
 def read_config(config_file: str) -> AppConfig:
