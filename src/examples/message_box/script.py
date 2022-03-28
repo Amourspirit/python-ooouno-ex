@@ -1,7 +1,7 @@
 # coding: utf-8
 from src.examples.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
 
-def main(*args, **kwargs):
+def msg_small(*args, **kwargs):
     msg = "A small message"
     result = msgbox(
         message=msg,
@@ -11,6 +11,8 @@ def main(*args, **kwargs):
     )
     assert result == MessageBoxResultsEnum.OK
     print(result)
+
+def msg_long(*args, **kwargs):
     msg = (
         "A very long message A very long message A very long message A very long message "
         "A very long message A very long message A very long message A very long message "
@@ -27,6 +29,7 @@ def main(*args, **kwargs):
     assert result == MessageBoxResultsEnum.YES or MessageBoxResultsEnum.NO
     print(result)
 
+def msg_default_yes(*args, **kwargs):
     msg = "This dialog as button set to a defalt of yes."
     result = msgbox(
         message=msg,
@@ -40,6 +43,7 @@ def main(*args, **kwargs):
     assert result == MessageBoxResultsEnum.YES or MessageBoxResultsEnum.NO
     print(result)
 
+def msg_error(*args, **kwargs):
     msg = "Looks like an error!"
     result = msgbox(
         message=msg,
@@ -50,6 +54,7 @@ def main(*args, **kwargs):
     assert result == MessageBoxResultsEnum.OK
     print(result)
 
+def msg_warning(*args, **kwargs):
     msg = "Looks like a Warning!"
     result = msgbox(
         message=msg,

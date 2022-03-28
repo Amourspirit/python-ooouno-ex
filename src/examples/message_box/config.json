@@ -11,5 +11,11 @@
     "include_paths": ["."],
     "remove_modules": ["uno"]
   },
-  "methods": ["main"]
+  "methods": [
+    "msg_small",
+    "msg_long",
+    "msg_default_yes",
+    "msg_error",
+    "msg_warning"
+  ]
 }
