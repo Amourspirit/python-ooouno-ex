@@ -15,6 +15,17 @@ class AppConfig:
     """
     Path Like structure to build dir
     """
+    app_res_dir: List[str]
+    """
+    Path Like structure to resources dir
+    """
+    app_res_blank_odt: List[str]
+    """
+    Path Like structure to resources dir.
+    
+    This is expected to be a subpath of ``app_res_dir``.
+    """
+
 
 def read_config(config_file: str) -> AppConfig:
     """
