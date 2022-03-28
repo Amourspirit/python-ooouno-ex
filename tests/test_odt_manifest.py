@@ -1,6 +1,7 @@
 import pytest
 import xml.dom.minidom
 
+
 from xml.dom.minicompat import NodeList
 from pathlib import Path
 if __name__ == "__main__":
