@@ -3,6 +3,7 @@ import verr
 from pydantic import BaseModel, validator
 from typing import List, Optional
 from .args import ExampleArgs
+from .. import validators
 
 class ModelExample(BaseModel):
     id: str
@@ -10,6 +11,8 @@ class ModelExample(BaseModel):
     name: str
     args: ExampleArgs
     methods: List[str]
+    _str_null_empty = validator('name', allow_reuse=True)(
+        validators.str_null_empty)
     
     @validator('id')
     def validate_id(cls, value: str) -> str:

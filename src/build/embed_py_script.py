@@ -9,6 +9,7 @@ from .tmp_dir import tmpdir
 from .copy_resource import CopyResource
 from .manifest_script import ManifestScript
 from ..utils import util
+from ..models.example.model_example import ModelExample as Model
 from . import build_util
 
 class EmbedScriptPy:
@@ -16,6 +17,7 @@ class EmbedScriptPy:
         self,
         src: Union[str, Path, List[str]],
         doc_path: Union[str, Path, List[str]],
+        model: Model,
         config: Optional[AppConfig] = None,
     ) -> None:
         """
@@ -23,12 +25,14 @@ class EmbedScriptPy:
 
         Args:
             src (Union[str, Path, List[str]]): Source File, this is usually is a file from build dir.
-            doc_path (Union[str, Path, List[str]]): Path to resource LibreOffice document
+            doc_path (Union[str, Path, List[str]]): Path to resource LibreOffice document.
+            model (ModelExample): Model for example.
             config (Optional[AppConfig], optional): App Config. Defaults to None.
         """
         self._src = util.get_path(src, ensure_absolute=True)
         self._doc_path = util.get_path(doc_path, ensure_absolute=True)
         self._config: AppConfig = config
+        self._model = model
         if self._config is None:
             self._config = util.get_app_cfg()
 
@@ -85,11 +89,11 @@ class EmbedScriptPy:
             util.mkdirp(p_script)
             shutil.copy2(script_src, dst)
 
-        def copy_ziped_to_build() -> None:
+        def copy_zipped_to_build(zip_file: Path) -> None:
             build_path = build_util.get_build_path()
             util.mkdirp(build_path)
-            build_dest = Path(build_path, f"{self._src.stem}{self._doc_path.suffix}")
-            shutil.copy2(cp.dst_path, build_dest)
+            build_dest = Path(build_path, f"{self._model.args.output_name}{self._doc_path.suffix}")
+            shutil.copy2(zip_file, build_dest)
 
         self._validate()
         with tmpdir() as temp_dir:
@@ -120,9 +124,11 @@ class EmbedScriptPy:
             copy_script_to_unzipped(script_src=self._src, zip_extract_dst=zip_extract_dst)
             
             # zip unzipped dir with the new embeded script files
-            zip_dir(unzipped_path=zip_extract_dst, dst_zip=cp.dst_path)
+            zip_dest = cp.dst_path.parent / f"{self._model.args.output_name}.zip"
+            # zip_dir(unzipped_path=zip_extract_dst, dst_zip=cp.dst_path)
+            zip_dir(unzipped_path=zip_extract_dst, dst_zip=zip_dest)
             
-            copy_ziped_to_build()
+            copy_zipped_to_build(zip_dest)
             # tmp dir will not del.
 
     def _validate(self) -> None:
