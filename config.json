@@ -1,0 +1,6 @@
+{
+    "lo_script_dir": ["~","snap","libreoffice", "current", ".config", "libreoffice", "4", "user"],
+    "app_build_dir": ["build"],
+    "app_res_dir": ["resources"],
+    "app_res_blank_odt": ["odt", "blank.odt"]
+}
