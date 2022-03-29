@@ -5,8 +5,6 @@
   "args": {
     "src_file": "script.py",
     "output_name": "msgbox",
-    "embed_in_doc": false,
-    "document_name": null,
     "include_modules": [],
     "include_paths": ["."],
     "remove_modules": ["uno"]
