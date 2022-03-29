@@ -10,7 +10,7 @@ from ..utils import util
 
 class CopyResource:
     """
-    Copies a resource from the resources dir into the scratch dir.
+    Copies a resource from the source or into destination dir.
     Resource can be a file or a dir.
     """
 
