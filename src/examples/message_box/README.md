@@ -44,7 +44,7 @@ from src.examples.message_box.msgbox import (
 result = msgbox(
         message="Are you sure you want to by coffee?",
         buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
-        title="Long...",
+        title="☕ - coffee - ☕",
         boxtype=MessageBoxType.QUERYBOX,
     )
 
