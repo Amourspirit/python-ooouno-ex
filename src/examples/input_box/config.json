@@ -1,0 +1,13 @@
+{
+  "id": "ooouno-ex",
+  "name": "input_box",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "script.py",
+    "output_name": "inputbox",
+    "include_modules": [],
+    "include_paths": ["."],
+    "remove_modules": ["uno"]
+  },
+  "methods": ["input_box"]
+}
