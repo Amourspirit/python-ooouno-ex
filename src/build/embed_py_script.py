@@ -105,6 +105,7 @@ class EmbedScriptPy:
                 dst_is_file=True,
                 clear_prev=False,
                 config=self._config,
+                src_is_res=False,
             )
             cp.copy()
 

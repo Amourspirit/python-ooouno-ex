@@ -29,9 +29,18 @@ class BuilderArgs:
     """
     Optional AppConfig
     """
-    embed_in_odt: bool = False
+    embed_in_doc: bool = False
     """
     If True then an odt file with embeded script is generated
+    """
+    embed_doc: Optional[str] = None
+    """
+    The document to embed compile script into.
+    
+    Requires ``embed_in_doc`` be ``True``.
+    
+    If ``embed_in_doc`` be ``True`` then the default used document to embed
+    is internal .odt file.
     """
 
 class Builder:
@@ -49,7 +58,8 @@ class Builder:
         if self._config is None:
             self._config = util.get_app_cfg()
         self._allow_print = args.allow_print
-        self._embed = args.embed_in_odt
+        self._embed = args.embed_in_doc
+        self._embed_doc = args.embed_doc
         self._dest_file = ""
         self._json_cfg = util.get_path(
             path=args.config_json.replace('\\', '/').split('/'),
@@ -129,11 +139,16 @@ class Builder:
             file.write(self._get_g_exported())
     
     def _embed_script(self) -> None:
+        if self._embed_doc is None:
+            src_doc = self._config.app_res_blank_odt
+        else:
+            src_doc = util.get_path(self._embed_doc)
         cp = CopyResource(
-            src=self._config.app_res_blank_odt,
+            src=src_doc,
             dst=None,
             clear_prev=False,
-            config=self._config
+            config=self._config,
+            src_is_res = self._embed_doc is None
         )
         emb = EmbedScriptPy(
             src=self._dest_file,
