@@ -62,7 +62,7 @@ class InputBox:
         """
         self._create()
         edit = self.ctl_edit
-        edit.setSelection(Selection(min=0, max=len(str(self._default))))
+        edit.setSelection(Selection(Min=0, Max=len(str(self._default))))
         edit.setFocus()
         ret = edit.getModel().Text if self.dialog.execute() else ""
         self.dialog.dispose()
@@ -78,17 +78,17 @@ class InputBox:
         lbl_title.PositionX = self._hori_margin
         lbl_title.PositionY = self._vert_margin
         lbl_title.Width = self._label_width
-        lbl_title.Height = self._label_height
+        lbl_title.Height = self._edit_height
         self._m_lbl_title = lbl_title
 
         btn_ok = self._builder.create_control(UnoControlButtonModel)
         btn_ok.Name = "btn_ok"
         btn_ok.TabIndex = 2
-        btn_ok.DefaultButton = False
-        btn_ok.Width = self._button_width
-        btn_ok.Height = self._button_height
+        btn_ok.DefaultButton = True
         btn_ok.PositionX = self._hori_margin + self._label_width + self._hori_sep
         btn_ok.PositionY = self._vert_margin
+        btn_ok.Width = self._button_width
+        btn_ok.Height = self._button_height
         btn_ok.PushButtonType = PushButtonType.OK
         self._m_btn_ok = btn_ok
 
@@ -97,11 +97,11 @@ class InputBox:
         )
         btn_cancel.Name = "btn_cancel"
         btn_cancel.TabIndex = 1
-        btn_cancel.DefaultButton = True
+        btn_cancel.DefaultButton = False
+        btn_cancel.PositionX = self._hori_margin + lbl_title.Width + self._hori_sep
+        btn_cancel.PositionY = self._vert_margin + self._button_height + 5
         btn_cancel.Width = btn_ok.Width
-        btn_cancel.Height = self._btn_height
-        btn_cancel.PositionX = self._border_padding_x
-        btn_cancel.PositionY = btn_ok.PositionY
+        btn_cancel.Height = btn_ok.Height
         btn_cancel.PushButtonType = PushButtonType.CANCEL
         self._m_btn_cancel = btn_cancel
 
@@ -111,8 +111,8 @@ class InputBox:
         ctl_edit.PositionY = self._label_height + self._vert_margin + self._vert_sep
         ctl_edit.Width = self._width - self._hori_margin * 2
         ctl_edit.Height = self._edit_height
-        ctl_edit.Text = self._default
-        self._m_ctl_edit = btn_cancel
+        ctl_edit.Text = str(self._default)
+        self._m_ctl_edit = ctl_edit
 
         self._builder.add_control(self._m_lbl_title.Name, self._m_lbl_title)
         self._builder.add_control(self._m_btn_ok.Name, self._m_btn_ok)
