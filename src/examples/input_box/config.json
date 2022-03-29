@@ -1,19 +1,13 @@
 {
   "id": "ooouno-ex",
-  "name": "message_box",
+  "name": "input_box",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
-    "output_name": "msgbox",
+    "output_name": "inputbox",
     "include_modules": [],
     "include_paths": ["."],
     "remove_modules": ["uno"]
   },
-  "methods": [
-    "msg_small",
-    "msg_long",
-    "msg_default_yes",
-    "msg_error",
-    "msg_warning"
-  ]
+  "methods": ["input_box"]
 }
