@@ -6,7 +6,7 @@ Input box is a dialog box that ask for user input.
 
 ## sample document
 
-see [inputbox.odt](inputbox.odt)
+see sample LibreOffice Writer document, [inputbox.odt](inputbox.odt)
 
 ### sample code
 
