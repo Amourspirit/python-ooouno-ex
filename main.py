@@ -46,22 +46,30 @@ def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
         required=True,
     )
     parser.add_argument(
-        "-p",
-        "--allow-print",
+        "-v",
+        "--verbose",
         help="If True some print statements will be made in the terminal.",
         action="store_true",
-        dest="allow_print",
+        dest="verbose",
         default=False,
     )
-    parser.add_argument(
+    embed_grp = parser.add_argument_group()
+    embed_grp.add_argument(
         "-e",
-        "--embed-in-odt",
-        help="If True an otd file will be generated with script embeded.",
+        "--embed",
+        help="If True script embeded script will be embed in a doc.",
         action="store_true",
-        dest="embed_otd",
+        dest="embed",
         default=False,
     )
-
+    embed_grp.add_argument(
+        "-s",
+        "--embed-src",
+        help="Source document to embed script into. If omitted then default to interanl odt file.",
+        action="store",
+        dest="embed_src",
+        default=None,
+    )
 
 def _args_action_cmd_link(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -77,7 +85,12 @@ def _args_action_cmd_link(
 def _args_action_cmd_build(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
 ) -> None:
-    bargs = BuilderArgs(config_json=args.config_json, embed_in_odt=bool(args.embed_otd))
+    bargs = BuilderArgs(
+        config_json=args.config_json,
+        embed_in_doc=bool(args.embed),
+        embed_doc=args.embed_src,
+        allow_print=bool(args.verbose),
+    )
     builder = Builder(args=bargs)
     _valid = builder.build()
     if _valid == False:
@@ -102,7 +115,9 @@ def _args_process_cmd(
 
 
 def _main():
-    args = "build -e -c src/examples/message_box/config.json"
+    # for debugging
+    # args = "build -e -c src/examples/message_box/config.json"
+    args = "build -e --config src/examples/input_box/config.json --embed-src src/examples/input_box/inputbox.odt"
     sys.argv.extend(args.split())
     main()
 
