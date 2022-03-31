@@ -86,6 +86,8 @@ def add_links(uno_src_dir: Optional[str] = None):
             print(f"Unable to create system link for  '{p_uno.name}'. Attempting copy.")
             shutil.copy2(p_uno, dest)
             print(f"Copied file: {p_uno} -> {dest}")
+    else:
+        print(f"{p_uno.name} not found.")
 
     if p_uno_helper.exists():
         dest = Path(p_site_dir, "unohelper.py")
@@ -101,7 +103,8 @@ def add_links(uno_src_dir: Optional[str] = None):
             )
             shutil.copy2(p_uno_helper, dest)
             print(f"Copied file: {p_uno_helper} -> {dest}")
-
+    else:
+        print(f"{p_uno_helper.name} not found.")
 
 def remove_links():
     p_site_dir = _get_env_site_packeges_dir()
