@@ -10,7 +10,7 @@ from ..utils import util
 
 class CopyResource:
     """
-    Copies a resource from the resources dir into the scratch dir.
+    Copies a resource from the source or into destination dir.
     Resource can be a file or a dir.
     """
 
@@ -20,6 +20,7 @@ class CopyResource:
         dst: Union[str, Path, List[str], None],
         dst_is_file: bool = False,
         clear_prev: bool = True,
+        src_is_res: bool = True,
         config: Optional[AppConfig] = None,
     ) -> None:
         """
@@ -27,10 +28,11 @@ class CopyResource:
 
         Arguments:
             src (str, Path, List[str]): path to the resource to copy. This can be a path to a file or dir.
-                If src is an absolute path then it is used verbatium; Otherwise, will be a subdir of resource dir.
             dst (str, Path, List[str]): destination path to copy resource.
-            clear_previous (bool, optional): If ``True`` previous files/dir will be cleared before resources are copied.
-                Default: ``True``
+            dst_is_file (bool, Optional): Specifies if ``dst`` is a file or a dir. Default ``False``
+            clear_previous (bool, optional): If ``True`` previous files/dir will be cleared before resources are copied. Default: ``True``
+            src_is_res (bool, Optional): Specifies if ``src`` is in the resource. Default ``True``
+            config (AppConfig, Optional): App config. Default ``None``
         Raises:
             FileNotFoundError: If resource path is not found.
         """
@@ -45,11 +47,14 @@ class CopyResource:
         else:
             _dst = util.get_path(dst, ensure_absolute=True)
 
-        self._res_path = util.get_path(self._config.app_res_dir, ensure_absolute=True)
-        if _src.is_absolute():
-            self._src = _src
+        if src_is_res:
+            if _src.is_absolute():
+                self._src = _src
+            else:
+                res_path = util.get_path(self._config.app_res_dir, ensure_absolute=True)
+                self._src = Path(res_path, _src)
         else:
-            self._src = Path(self._res_path, _src)
+            self._src = util.get_path(_src, ensure_absolute=True)
         if not self._src.exists():
             raise FileNotFoundError(
                 f"{self.__class__.__name__} unable to find resource path: '{self._src}'"

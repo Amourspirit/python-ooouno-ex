@@ -1,0 +1,24 @@
+{
+    "python.formatting.provider": "black",
+    "python.defaultInterpreterPath": "${workspaceRoot}/env/bin/python",
+    "autoDocstring.docstringFormat": "google",
+    "workbench.colorCustomizations": {
+        "[Monokai]": {
+            "titleBar.activeBackground": "#098088"
+        },
+        "[Default Dark+]": {
+            "titleBar.activeBackground": "#098088"
+        },
+        "[Visual Studio Dark]": {
+            "titleBar.activeBackground": "#ff0000",
+            "titleBar.activeForeground": "#77f5ac"
+        }
+    },
+    "workbench.colorTheme": "Monokai",
+    "esbonio.sphinx.confDir": "",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

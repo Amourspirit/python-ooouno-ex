@@ -5,7 +5,6 @@ _test/*
 out/
 dist/
 *.log
-.vscode/settings.json
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
