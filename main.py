@@ -18,13 +18,23 @@ def _create_parser(name: str) -> argparse.ArgumentParser:
 
 # region        process arg command
 def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument(
+    add_grp = parser.add_argument_group()
+    add_grp.add_argument(
         "-a",
         "--add",
         help="Add uno links to virtual environment.",
         action="store_true",
         dest="add",
         default=False,
+    )
+    
+    add_grp.add_argument(
+        "-s",
+        "--uno-src",
+        help="Optional source directory that contains uno.py and unohelper.py. If ommited then defaults are used.",
+        action="store",
+        dest="src_dir",
+        default=None,
     )
     parser.add_argument(
         "-r",
@@ -77,7 +87,7 @@ def _args_action_cmd_link(
     if not (args.add or args.remove):
         a_parser.error("No action requested, add --add or --remove")
     if args.add:
-        uno_lnk.add_links()
+        uno_lnk.add_links(args.src_dir)
     elif args.remove:
         uno_lnk.remove_links()
 
@@ -117,8 +127,11 @@ def _args_process_cmd(
 def _main():
     # for debugging
     # args = "build -e -c src/examples/message_box/config.json"
-    args = "build -e --config src/examples/input_box/config.json --embed-src src/examples/input_box/inputbox.odt"
+    args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
+    # args = " build -e --config src\\examples\\input_box\\config.json --embed-src src\\examples\\input_box\\inputbox.odt"
     sys.argv.extend(args.split())
+    # args = "cmd-link_-a_-s_C:\\Program Files\\LibreOffice\\program\\classes"
+    # sys.argv.extend(args.split('_'))
     main()
 
 
