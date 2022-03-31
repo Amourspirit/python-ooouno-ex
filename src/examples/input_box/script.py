@@ -20,7 +20,7 @@ def show_msg_no_value() -> None:
     )
 
 def input_box(*args, **kwargs):
-    box = InputBox("")
+    box = InputBox("", title="Input")
     result = box.show()
     if len(result) == 0:
         show_msg_no_value()
