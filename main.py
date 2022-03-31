@@ -117,7 +117,9 @@ def _args_process_cmd(
 def _main():
     # for debugging
     # args = "build -e -c src/examples/message_box/config.json"
-    args = "build -e --config src/examples/input_box/config.json --embed-src src/examples/input_box/inputbox.odt"
+    # args = "build -e --config src/examples/input_box/config.json --embed-src src/examples/input_box/inputbox.odt"
+    # args = " build -e --config src\\examples\\input_box\\config.json --embed-src src\\examples\\input_box\\inputbox.odt"
+    args = "cmd-link -a"
     sys.argv.extend(args.split())
     main()
 
