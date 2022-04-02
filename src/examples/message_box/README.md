@@ -2,8 +2,6 @@
 
 Message box is a dialog box give user feedback.
 
-## sample
-
 ## sample document
 
 see sample LibreOffice Writer document, [msgbox.odt](msgbox.odt)
