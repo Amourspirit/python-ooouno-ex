@@ -1,0 +1,13 @@
+{
+  "id": "ooouno-ex",
+  "name": "dialog_tab",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "script.py",
+    "output_name": "dialog_tab",
+    "include_modules": [],
+    "include_paths": ["."],
+    "remove_modules": ["uno"]
+  },
+  "methods": ["show_tab_dialog"]
+}
