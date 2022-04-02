@@ -2,7 +2,7 @@
 from typing import List, Union
 from .interface import IViewMultiSyntax, IControllerMultiSyntax, IControllerSyntax
 from .enums import TextEnum, TimeEnum, SyntaxEnum
-
+from ...message_box.msgbox import msgbox, MessageBoxType
 
 class ControllerSyntax(IControllerSyntax):
     def __init__(self, controller: IControllerMultiSyntax, view: IViewMultiSyntax):
@@ -14,8 +14,6 @@ class ControllerSyntax(IControllerSyntax):
         self._text = TextEnum.NONE
         self._syntax: Union[SyntaxEnum, None] = None
 
-    def start(self):
-        pass
 
     def get_list_data(self) -> List[str]:
         return self._model.get_syntax_list_data()
@@ -23,7 +21,17 @@ class ControllerSyntax(IControllerSyntax):
     # region Handler Methods
 
     def write(self):
-        pass
+        if self._syntax:
+            msg = f"Selected: {self._syntax.name}\nTime: {self.time.name}\nSuffix: {self.text.name}"
+            msg += f"\nDPV: {self.dpv}"
+            
+            msgbox(
+                message=msg,
+                title="SYNTAX",
+                boxtype=MessageBoxType.INFOBOX,
+            )
+        else:
+            msgbox("Nothing selected.", title="SYNTAX", boxtype=MessageBoxType.WARNINGBOX)
 
     # endregion Handler Methods
 

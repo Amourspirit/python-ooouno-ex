@@ -4,7 +4,6 @@ from .interface import IControllerMultiSyntax, IViewMultiSyntax, IModelMuiltiSyn
 from .enums import TabEnum
 from .controller_syntax import ControllerSyntax
 from .controller_void import ControllerVoid
-from ...message_box.msgbox import msgbox, MessageBoxButtonsEnum,MessageBoxResultsEnum,MessageBoxType
 
 
 class MultiSyntaxController(IControllerMultiSyntax):
@@ -18,9 +17,6 @@ class MultiSyntaxController(IControllerMultiSyntax):
         self._controller_void = ControllerVoid(self, self._view)
 
     def start(self):
-        self._controller_syntax.start()
-        self._controller_void.start()
-
         self._view.setup(controller=self)
         self._view.active_tab = self._selected_tab
         self._view.show()
@@ -42,6 +38,7 @@ class MultiSyntaxController(IControllerMultiSyntax):
                 raise NotImplementedError(
                     "MultiSyntaxController.handle_click_cancel()")
         except Exception as e:
+            print(e)
             raise e
         finally:
             self._view.exit()

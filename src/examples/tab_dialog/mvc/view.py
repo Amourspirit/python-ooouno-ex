@@ -492,13 +492,14 @@ class MultiSyntaxView(IViewMultiSyntax):
             UnoControlButtonModel
         )
         btn_ok.Name = self._name_btn_ok
+        btn_ok.Label = "OK"
         btn_ok.TabIndex = 1
         btn_ok.DefaultButton = True
         btn_ok.Width = 100
         btn_ok.Height = self._btn_height
         btn_ok.PositionX = self._width - (btn_ok.Width + self._border_padding_x)
         btn_ok.PositionY = self._height - btn_ok.Height - 5
-        btn_ok.PushButtonType = PushButtonType.OK
+        # btn_ok.PushButtonType = PushButtonType.OK
         self._builder.add_control(btn_ok.Name, btn_ok)
         self._m_btn_ok = btn_ok
 
@@ -681,9 +682,9 @@ class MultiSyntaxView(IViewMultiSyntax):
                     )
                     self._m_btn_ok.Enabled = True
                 else:
-                    self._m_chk_dpv.Enabled = True
-                    self._m_gb_time.Enabled = True
-                    self._m_gb_prefix_suffix.Enabled = True
+                    self._m_chk_dpv.Enabled = False
+                    self._m_gb_time.Enabled = False
+                    self._m_gb_prefix_suffix.Enabled = False
                     self._m_btn_ok.Enabled = False
 
                 self._m_opt_time_none.Enabled = self._m_gb_time.Enabled

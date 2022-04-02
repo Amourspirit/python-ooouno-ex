@@ -12,10 +12,6 @@ class IControllerVoid(ABC):
         """Constructor"""
 
     @abstractmethod
-    def start(self):
-        """Start Controller"""
-
-    @abstractmethod
     def get_list_data(self) -> List[str]:
         """ "Get Void List Data"""
 
@@ -36,10 +32,6 @@ class IControllerSyntax(ABC):
     @abstractmethod
     def __init__(self, controller: "IControllerMultiSyntax", view: "IViewMultiSyntax"):
         """Constructor"""
-
-    @abstractmethod
-    def start(self):
-        """Start Controller"""
 
     @abstractmethod
     def get_list_data(self) -> List[str]:
