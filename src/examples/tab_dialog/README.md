@@ -4,7 +4,7 @@ This sampale demonstrated a Tab Control in a Dialog Box.
 
 Also this example is created in MVC (model, view controller) style.
 
-Example also demonstrates usage of Raido Button Controls and List Box control.
+Example also demonstrates usage of Radio Button Controls and List Box controls.
 
 ## sample document
 
