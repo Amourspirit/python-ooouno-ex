@@ -22,6 +22,7 @@ from ....ui.listeners.item_listener import ItemListener
 from ....ui.listeners.tab_page_container_listener import TabPageContainerListener
 from ....ui.dialog.builder.control_wrapper import ControlWrapper
 from ....ui.dialog.builder.dialog_builder import DialogBuilder
+from ....utils import color as ucolor
 
 if TYPE_CHECKING:
     from ooo.csslo.awt import (
@@ -33,8 +34,9 @@ if TYPE_CHECKING:
         UnoControlGroupBox,
         UnoControlListBox,
         UnoControlRadioButton,
-        XControlContainer,
         ItemEvent,
+        XControlContainer,
+        XStyleSettings,
     )
     from ooo.csslo.awt.tab import (
         UnoControlTabPageContainer,
@@ -119,7 +121,6 @@ class MultiSyntaxView(IViewMultiSyntax):
             self._m_opt_suffix.addPropertyChangeListener(
                 "State", PropertyChangeListener(self._opt_pre_suf_state_change)
             )
-
         except Exception as e:
             print(e)
             raise
@@ -132,10 +133,24 @@ class MultiSyntaxView(IViewMultiSyntax):
             self._set_dialog_properties()
             # refresh must be called before self._builder.dialog.execute()
             self.refresh()
+
+            # uncomment next line to turns of system theming of controls
+            # self._builder.dialog.getPeer().setProperty("NativeWidgetLook", False)
+
+            style_settings: XStyleSettings = self._builder.dialog.StyleSettings
+            # get the background color of the dialog
+            rgb_bg = ucolor.rgb.from_int(style_settings.LightColor)
+            if rgb_bg.is_dark():
+                lb_gb = ucolor.lighten(rgb_bg, 5).to_int()
+            else:
+                lb_gb = ucolor.darken(rgb_bg, 5).to_int()
+            self._m_lb_syntax.BackgroundColor = lb_gb
+            self._m_lb_void_key.BackgroundColor = lb_gb
             self._builder.dialog.execute()
         except Exception as e:
             print(e)
             raise
+
     # endregion Show
 
     # region Populate list
@@ -242,7 +257,7 @@ class MultiSyntaxView(IViewMultiSyntax):
         lb_syntax_key.TabIndex = 0
         lb_syntax_key.Width = lbl_syntax_key_wraper.width
         lb_syntax_key.Height = self._get_tab_pixels_height(160)
-        lb_syntax_key.BackgroundColor = int("272727", 16)
+        # lb_syntax_key.BackgroundColor = int("272727", 16)
         lb_syntax_key_wraper = ControlWrapper(
             lb_syntax_key.Name,
             lb_syntax_key,
@@ -450,6 +465,7 @@ class MultiSyntaxView(IViewMultiSyntax):
         )
         self._m_tab_void.insertByName(lbl_syntax_key_wraper.name, lbl_void_key)
         self._m_lbl_void = lbl_void_key
+        # rgb_bg = ucolor.rgb.from_hex("272727")
 
         lb_void_key: UnoControlListBoxModel = self._m_tab_syntax.createInstance(
             UnoControlListBoxModel.__ooo_full_ns__
@@ -461,12 +477,12 @@ class MultiSyntaxView(IViewMultiSyntax):
         lb_void_key.Tabstop = True
         lb_void_key.TabIndex = 0
         lb_void_key.Width = self._get_tab_pixels_width(170)
-        lb_void_key.Height = self._get_tab_pixels_height(100)
+        lb_void_key.Height = self._get_tab_pixels_height(160)
         posx = int(self._get_tab_pixels_width(self._m_tabs_model.Width) / 2) - int(
             lb_void_key.Width / 2
         )
         lb_void_key.PositionX = posx
-        lb_void_key.BackgroundColor = int("272727", 16)
+        # lb_void_key.BackgroundColor = rgb_bg.to_int()
         self._m_tab_void.insertByName(lb_void_key.Name, lb_void_key)
         self._m_lb_void_key = lb_void_key
 
@@ -478,7 +494,7 @@ class MultiSyntaxView(IViewMultiSyntax):
         lbl_title.Name = "lblTitle"
         lbl_title.Label = "Syntax"
         lbl_title.NoLabel = True
-        lbl_title.TextColor = Color(int("9fa0a0", 16))
+        # lbl_title.TextColor = Color(int("9fa0a0", 16))
         lbl_title.Align = 1
         lbl_title.PositionX = self._border_padding_x
         lbl_title.PositionY = 2
@@ -589,7 +605,7 @@ class MultiSyntaxView(IViewMultiSyntax):
             print(e)
             raise
 
-    def _lb_syntax_change(self, evt: 'ItemEvent'):
+    def _lb_syntax_change(self, evt: "ItemEvent"):
 
         # self._builder.dialog.getControl("lbSyntaxKey").SelectedItems[0]
         # the above line get the text of the selected item, the below line gets the index
@@ -603,7 +619,7 @@ class MultiSyntaxView(IViewMultiSyntax):
             print(e)
             raise
 
-    def _lb_void_change(self, evt: 'ItemEvent'):
+    def _lb_void_change(self, evt: "ItemEvent"):
         try:
             lb = self.ctl_lb_void
             selected_item = lb.getSelectedItem()
@@ -662,7 +678,7 @@ class MultiSyntaxView(IViewMultiSyntax):
         except Exception as e:
             print(e)
             raise
-        
+
     def refresh(self):
         if self._refreshing:
             return

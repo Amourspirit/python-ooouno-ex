@@ -99,12 +99,21 @@ class rgb(NamedTuple):
             B = math.pow(((BsRGB + 0.055) / 1.055), 2.4)
         return (0.2126 * R) + (0.7152 * G) + (0.0722 * B)
 
-    def get_brightness(self) -> float:
+    def get_brightness(self) -> int:
+        """
+        Gets brightnes from 0 (dark) to 255 (light)
+
+        Returns:
+            int: brightness level
+        """
         # http://www.w3.org/TR/AERT#color-contrast
-        return (self.red * 299 + self.green * 587 + self.blue * 114) / 1000
+        return round(((self.red * 299) + (self.green * 587) + (self.blue * 114)) / 1000)
 
     def is_dark(self) -> bool:
-        return self.get_brightness() > 128
+        return self.get_brightness() < 128
+    
+    def is_light(self) -> bool:
+        return not self.is_dark()
 
 
 class hsl(NamedTuple):

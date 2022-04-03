@@ -70,3 +70,13 @@ def test_darken():
     b_color = ucolor.darken(color, 95)
     s_hex = b_color.to_hex()
     assert s_hex == '080300'
+
+def test_is_dark():
+    color = ucolor.rgb.from_int(16777215)
+    assert color.red == 255
+    assert color.green == 255
+    assert color.blue == 255
+    bright = color.get_brightness()
+    assert bright > 128
+    assert color.is_dark() is False
+    assert color.is_light() is True
