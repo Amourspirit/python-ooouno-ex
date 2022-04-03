@@ -132,40 +132,72 @@ class hsl(NamedTuple):
     saturation: float
     lightness: float
 
+    def __str__(self) -> str:
+        return (
+            "hls("
+            + f"{self.hue:.6f}"
+            + ", "
+            + f"{self.saturation:.6f}"
+            + ", "
+            + f"{self.lightness:.6f}"
+            + ")"
+        )
+
 
 class hsv(NamedTuple):
     hue: float
     saturation: float
     value: float
 
+    def __str__(self) -> str:
+        return (
+            "hlv("
+            + f"{self.hue:.6f}"
+            + ", "
+            + f"{self.saturation:.6f}"
+            + ", "
+            + f"{self.value:.6f}"
+            + ")"
+        )
+
 
 def clamp(value: float, min_value: float, max_value: float) -> float:
     return max(min_value, min(max_value, value))
 
 
-def saturate(value: float) -> float:
+def clamp01(value: float) -> float:
     return clamp(value, 0.0, 1.0)
 
 
 def hue_to_rgb(h: float) -> rgb:
+    """
+    Conerts a hue to instance of red, gree, blue
+
+    Args:
+        h (float): hue to convert
+
+    Returns:
+        rgb: instance containing red, green, blue
+    """
     r = abs(h * 6.0 - 3.0) - 1.0
     g = 2.0 - abs(h * 6.0 - 2.0)
     b = 2.0 - abs(h * 6.0 - 4.0)
-    return rgb(
-        red=round(saturate(r)), green=round(saturate(g)), blue=round(saturate(b))
-    )
+    return rgb(red=round(clamp01(r)), green=round(clamp01(g)), blue=round(clamp01(b)))
 
 
 def hsl_to_rgb(c: hsl) -> rgb:
+    """
+    Converts hue, saturation, lightness to red, green, blue
+
+    Args:
+        c (hsv): instance containing hue, saturation, lightness
+
+    Returns:
+        rgb: instance containing red, green, blue
+    """
     h = c.hue
     l = c.lightness
     s = c.saturation
-    # r, g, b = hue_to_rgb(h)
-    # i = (1.0 - abs(2.0 * l - 1.0)) * s
-    # r = (r - 0.5) * i + l
-    # g = (g - 0.5) * i + l
-    # b = (b - 0.5) * i + l
-    # return rgb(red=round(r), green=round(g), blue=round(b))
 
     t = colorsys.hls_to_rgb(h=h, l=l, s=s)
     return rgb(
@@ -176,6 +208,15 @@ def hsl_to_rgb(c: hsl) -> rgb:
 
 
 def rgb_to_hsv(c: rgb) -> hsv:
+    """
+    Converts red, green, blue to hue, saturation, value
+
+    Args:
+        c (rgb): instance containing red, green, blue
+
+    Returns:
+        hsv: instance containing hue, saturation, value
+    """
     r = float(c.red / MAX_COLOR)
     g = float(c.green / MAX_COLOR)
     b = float(c.blue / MAX_COLOR)
@@ -184,6 +225,15 @@ def rgb_to_hsv(c: rgb) -> hsv:
 
 
 def hsv_to_rgb(c: hsv) -> rgb:
+    """
+    Converts hue, saturation, value to red, green, blue
+
+    Args:
+        c (hsv): instance containing hue, saturation, value
+
+    Returns:
+        rgb: instance containing red, green, blue
+    """
     h = c.hue
     s = c.saturation
     v = c.value
@@ -196,35 +246,32 @@ def hsv_to_rgb(c: hsv) -> rgb:
 
 
 def rgb_to_hsl(c: rgb) -> hsl:
+    """
+    Converts red, green, blue to hue, saturation, value
 
+    Args:
+        c (rgb): instance containing red, green, blue
+
+    Returns:
+        hsl: instance containing hue, saturation, lightness
+    """
     r = float(c.red / MAX_COLOR)
     g = float(c.green / MAX_COLOR)
     b = float(c.blue / MAX_COLOR)
-
-    # high = max(r, g, b)
-    # low = min(r, g, b)
-    # h, s, v = ((high + low) / 2,)*3
-
-    # if high == low:
-    #     h = 0.0
-    #     s = 0.0
-    # else:
-    #     d = high - low
-    #     s = d / (2 - high - low) if l > 0.5 else d / (high + low)
-    #     h = {
-    #         r: (g - b) / d + (6 if g < b else 0),
-    #         g: (b - r) / d + 2,
-    #         b: (r - g) / d + 4,
-    #     }[high]
-    #     h /= 6
-
-    # return hsv(h, s, v)
-
     t = colorsys.rgb_to_hls(r=r, g=g, b=b)
     return hsl(hue=t[0], saturation=t[2], lightness=t[1])
 
 
 def hsv_to_hsl(c: hsv) -> hsl:
+    """
+    Convert hue, saturation, value to hue, saturation, lightness
+
+    Args:
+        c (hsv): instance containing hue, saturation, value
+
+    Returns:
+        hsl: instance containing hue, saturation, lightness
+    """
     h = c.hue
     s = c.saturation
     v = c.value
@@ -234,6 +281,15 @@ def hsv_to_hsl(c: hsv) -> hsl:
 
 
 def hsl_to_hsv(c: hsl) -> hsv:
+    """
+    Convert hue, saturation, lightness to hue, saturation, value
+
+    Args:
+        c (hsl): instance containing hue, saturation, lightness
+
+    Returns:
+        hsv: instance containing hue, saturation, value
+    """
     h = c.hue
     s = c.saturation
     l = c.lightness
@@ -364,6 +420,19 @@ def darken(rgb_color: rgb, percent: int) -> rgb:
 
 
 def darken(rgb_color: Union[rgb, int], percent: Union[float, int]) -> rgb:
+    """
+    Darkens an rgb instance
+
+    Args:
+        rgb_color (Union[rgb, int]): instanct containing data
+        percent (Union[float, int]): Amount between 0 and 100 int darken rgb by.
+
+    Raises:
+        ValueError: if percent is out of range
+
+    Returns:
+        rgb: rgb instance with darkened values applied.
+    """
     if percent < 0 or percent > 100:
         raise ValueError("percent is expected to be between 0 and 100")
     # https://mdigi.tools/lighten-color
@@ -376,7 +445,7 @@ def darken(rgb_color: Union[rgb, int], percent: Union[float, int]) -> rgb:
     amt = (percent * (c_hsl.lightness * 100)) / 100
     l = c_hsl.lightness
     l -= amt / 100
-    increase = clamp(l, 0, 1)
-    c2_hsl = hsl(c_hsl.hue, c_hsl.saturation, increase)
+    decrease = clamp(l, 0, 1)
+    c2_hsl = hsl(c_hsl.hue, c_hsl.saturation, decrease)
     c_rgb = hsl_to_rgb(c2_hsl)
     return c_rgb
