@@ -111,9 +111,20 @@ class rgb(NamedTuple):
 
     def is_dark(self) -> bool:
         return self.get_brightness() < 128
-    
+
     def is_light(self) -> bool:
         return not self.is_dark()
+
+    def __str__(self) -> str:
+        return (
+            "rgb("
+            + round(self.red)
+            + ", "
+            + round(self.green)
+            + ", "
+            + round(self.blue)
+            + ")"
+        )
 
 
 class hsl(NamedTuple):
@@ -362,7 +373,7 @@ def darken(rgb_color: Union[rgb, int], percent: Union[float, int]) -> rgb:
     else:
         _rgb = rgb_color
     c_hsl = rgb_to_hsl(_rgb)
-    amt = (percent * ((c_hsl.lightness) * 100)) / 100
+    amt = (percent * (c_hsl.lightness * 100)) / 100
     l = c_hsl.lightness
     l -= amt / 100
     increase = clamp(l, 0, 1)

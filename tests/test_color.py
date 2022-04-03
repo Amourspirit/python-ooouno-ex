@@ -60,7 +60,7 @@ def test_lighten():
     s_hex = b_color.to_hex()
     assert s_hex == '81e2e9'
 
-def test_darken():
+def test_darken_lighten():
     color = ucolor.rgb.from_hex("eeeeee")
     b_color = ucolor.darken(color, 15)
     s_hex = b_color.to_hex()
@@ -70,6 +70,11 @@ def test_darken():
     b_color = ucolor.darken(color, 95)
     s_hex = b_color.to_hex()
     assert s_hex == '080300'
+    
+    color = ucolor.rgb.from_hex("2c2c2c")
+    b_color = ucolor.lighten(color, 5)
+    s_hex = b_color.to_hex()
+    assert s_hex == '373737'
 
 def test_is_dark():
     color = ucolor.rgb.from_int(16777215)

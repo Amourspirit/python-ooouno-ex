@@ -138,8 +138,9 @@ class MultiSyntaxView(IViewMultiSyntax):
             # self._builder.dialog.getPeer().setProperty("NativeWidgetLook", False)
 
             style_settings: XStyleSettings = self._builder.dialog.StyleSettings
-            # get the background color of the dialog
-            rgb_bg = ucolor.rgb.from_int(style_settings.LightColor)
+            # get the color of the dialog
+            rgb_bg = ucolor.rgb.from_int(style_settings.DialogColor)
+
             if rgb_bg.is_dark():
                 lb_gb = ucolor.lighten(rgb_bg, 5).to_int()
             else:
