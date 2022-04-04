@@ -6,15 +6,17 @@ Also this example is created in MVC (model, view controller) style.
 
 Example also demonstrates usage of Radio Button Controls and List Box controls.
 
-## sample document
+![Dialog](./img/tab_dialog_lite_dark.png)
+
+## Sample Document
 
 see sample LibreOffice Writer document, [tab_dialog.odt](tab_dialog.odt)
 
-### sample code
+### Sample Code
 
 see [script.py](script.py) for sample usage.
 
-## usage
+## Usage
 
 ```python
 from src.examples.tab_dialog.mvc.controller import MultiSyntaxController
@@ -27,6 +29,6 @@ dlg.start()
 
 ```
 
-## source
+## Source
 
 see [mvc](mvc)
