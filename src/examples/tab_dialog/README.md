@@ -1,7 +1,7 @@
 # TAB CONTROL DIALOG BOX
 
 LibreOffice do not a Tab Control in the macro editor.
-However LibreOffice does have a [Tab Container](<https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1tab_1_1UnoControlTabPageContainerModel.html>) build in.
+However LibreOffice does have a [Tab Container](<https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1tab_1_1UnoControlTabPageContainerModel.html>) built in.
 
 This example demonstrates how to use Tabs in a Dialog Box.
 
