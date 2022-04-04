@@ -134,10 +134,10 @@ class MultiSyntaxView(IViewMultiSyntax):
             # refresh must be called before self._builder.dialog.execute()
             self.refresh()
 
-            # uncomment next line to turns of system theming of controls
+            # uncomment next line to turns off system theming of controls
             # self._builder.dialog.getPeer().setProperty("NativeWidgetLook", False)
 
-            style_settings: XStyleSettings = self._builder.dialog.StyleSettings
+            style_settings: 'XStyleSettings' = self._builder.dialog.StyleSettings
             # get the color of the dialog
             rgb_bg = ucolor.rgb.from_int(style_settings.DialogColor)
 
