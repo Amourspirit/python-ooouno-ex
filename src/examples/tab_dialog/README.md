@@ -8,7 +8,7 @@ Example also demonstrates usage of Radio Button Controls and List Box controls.
 
 ## sample document
 
-see sample LibreOffice Writer document, [dialog_tab.odt](dialog_tab.odt)
+see sample LibreOffice Writer document, [tab_dialog.odt](tab_dialog.odt)
 
 ### sample code
 
