@@ -24,9 +24,9 @@ class ItemListener(unohelper.Base, XItemListener):
 
     def itemStateChanged(self, rEvent: 'ItemEvent'):
         """
-        Calls the :paramref:`~.ItemListener.callback` function
+        Invokes the callback function
 
         Args:
-            aEvent (object): Item Event
+            rEvent (object): Item Event
         """
         self._callback(rEvent)
