@@ -32,12 +32,6 @@ SetCellStyle	in mark_invalid
 SetFormula	see SetValue
 SortRange	"""
 from ooo.lo.sheet.x_spreadsheet import XSpreadsheet
-
-
-
-
-
-
 import scriptforge as SF
 import random as rnd
 
@@ -129,31 +123,31 @@ def mark_invalid(args=None):
 # Example of using ClearAll
 def clear_contents_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.clearAll("B2:B7")
+    doc.ClearAll("B2:B7")
 
 
 # Example of using ClearFormats
 def clear_contents_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.clearFormats("D2:D7")
+    doc.ClearFormats("D2:D7")
 
 
 # Example of using ClearValues
 def clear_contents_v3(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.clearValues("F2:F7")
+    doc.ClearValues("F2:F7")
 
 
 # Copying to a single cell
 def copy_cells_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.copyToCell("A1:A4", "C1")
+    doc.CopyToCell("A1:A4", "C1")
 
 
 # Copying cells into a larger range
 def copy_cells_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.copyToRange("A1:A4", "E1:F6")
+    doc.CopyToRange("A1:A4", "E1:F6")
 
 
 # Copies range from an open file
