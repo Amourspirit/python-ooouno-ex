@@ -209,16 +209,10 @@ def open_csv_file_v3(args=None):
 
 # gets the path to res dir
 def get_res_path(doc: SF.SFDocuments.SF_Calc) -> Path:
-    try:
-        cmp: XModel = doc.XComponent
-        url = cmp.getURL()
-        print("url", url)
-        bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
-        file = bas.ConvertFromUrl(url)
-        print("file", file)
-        doc_path = Path(file)
-        doc_dir = doc_path.parent
-    except Exception as e:
-        print(e)
-        raise
+    cmp: XModel = doc.XComponent
+    url = cmp.getURL()
+    bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+    file = bas.ConvertFromUrl(url)
+    doc_path = Path(file)
+    doc_dir = doc_path.parent
     return doc_dir / 'res'
