@@ -34,10 +34,12 @@ SortRange	'''
 from ooo.lo.sheet.x_spreadsheet import XSpreadsheet
 from ooo.lo.sheet.x_sheet_cell_cursor import XSheetCellCursor
 from ooo.lo.sheet.sheet_cell_range import SheetCellRange
+from ooo.lo.frame.x_model import XModel
+
 from typing import Union
 import scriptforge as SF
 import random as rnd
-import pathlib
+from pathlib import Path
 
 # Creates a 6x6 matrix starting at A1
 def create_random_matrix_v1(args=None):
@@ -108,7 +110,7 @@ def mark_invalid(args=None):
     # Gets address of current selection
     cur_selection: str = doc.CurrentSelection
     # Gets address of first cell in the selection
-    first_cell = doc.Offset(cur_selection, 0, 0, 1, 1)
+    _ = doc.Offset(cur_selection, 0, 0, 1, 1)
     for i in range(doc.Height(cur_selection)):
         for j in range(doc.Width(cur_selection)):
             cell = doc.Offset(cur_selection, i, j, 1, 1)
@@ -135,7 +137,7 @@ def clear_contents_v3(args=None):
 # Copying to a single cell
 def copy_cells_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    doc.copyToCell("A1:A4", "C1")
+    doc.CopyToCell("A1:A4", "C1")
 
 # Copying cells into a larger range
 def copy_cells_v2(args=None):
@@ -172,7 +174,8 @@ def remove_sheet_example(args=None):
 # Copies sheet from another file (open or closed)
 def copy_from_file_example(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    wb = str(pathlib.Path.home().joinpath("Documents", "DataSource.ods"))
+    res_path = get_res_path(doc)
+    wb = str(Path(res_path, "DataSource.ods"))
     doc.CopySheetFromFile(wb, "Sheet2", "Copy_Sheet2")
 
 # Example using the DAvg method
@@ -185,18 +188,37 @@ def calculate_average(args=None):
 # Open CSV file JobData_v1.csv using default configuration
 def open_csv_file_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    csvfile = str(pathlib.Path.home().joinpath("Documents", "JobData_v1.csv"))
+    res_path = get_res_path(doc)
+    csvfile = str(Path(res_path, "JobData_v1.csv"))
     doc.ImportFromCSVFile(csvfile, "A1")
 
 # Open CSV file JobData_v2.csv using default configuration
 def open_csv_file_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    csvfile = str(pathlib.Path.home().joinpath("Documents", "JobData_v2.csv"))
+    res_path = get_res_path(doc)
+    csvfile = str(Path(res_path, "JobData_v2.csv"))
     doc.ImportFromCSVFile(csvfile, "A1")
 
 # Open CSV file using custom configuration
 def open_csv_file_v3(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    csvfile = str(pathlib.Path.home().joinpath("Documents", "JobData_v2.csv"))
+    res_path = get_res_path(doc)
+    csvfile = str(Path(res_path, "JobData_v2.csv"))
     filter_option = "59,34,UTF-8,1"
     doc.ImportFromCSVFile(csvfile, "A1", filter_option)
+
+# gets the path to res dir
+def get_res_path(doc: SF.SFDocuments.SF_Calc) -> Path:
+    try:
+        cmp: XModel = doc.XComponent
+        url = cmp.getURL()
+        print("url", url)
+        bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+        file = bas.ConvertFromUrl(url)
+        print("file", file)
+        doc_path = Path(file)
+        doc_dir = doc_path.parent
+    except Exception as e:
+        print(e)
+        raise
+    return doc_dir / 'res'
