@@ -31,10 +31,12 @@ SetValue	in create_random_matrix_v1
 SetCellStyle	in mark_invalid
 SetFormula	see SetValue
 SortRange	'''
-from ooo.lo.sheet.x_spreadsheet import XSpreadsheet
-from ooo.lo.sheet.x_sheet_cell_cursor import XSheetCellCursor
-from ooo.lo.sheet.sheet_cell_range import SheetCellRange
-from ooo.lo.frame.x_model import XModel
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from com.sun.star.sheet import XSpreadsheet
+    from com.sun.star.sheet import XSheetCellCursor
+    from com.sun.star.sheet import SheetCellRange
+    from com.sun.star.frame import XModel
 
 from typing import Union
 import scriptforge as SF
