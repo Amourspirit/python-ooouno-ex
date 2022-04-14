@@ -33,10 +33,13 @@ SetFormula	see SetValue
 SortRange	'''
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
+    # anything inside of TYPE_CHECKING block is ignored when script is executed.
     from com.sun.star.sheet import XSpreadsheet
     from com.sun.star.sheet import XSheetCellCursor
     from com.sun.star.sheet import SheetCellRange
     from com.sun.star.frame import XModel
+    from com.sun.star.script.provider import XScriptContext
+    XSCRIPTCONTEXT: XScriptContext = None
 
 from typing import Union
 import scriptforge as SF
