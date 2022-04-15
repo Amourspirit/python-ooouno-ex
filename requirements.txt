@@ -15,7 +15,7 @@ pyparsing==3.0.7
 pytest==7.1.1
 stickytape==0.2.1
 tomli==2.0.1
-types-sourceforge==0.1.12
+types-scriptforge==0.1.0
 types-unopy==0.1.5
 typing_extensions==4.1.1
 unotools==0.3.3
