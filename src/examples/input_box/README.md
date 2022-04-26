@@ -2,11 +2,11 @@
 
 Input box is a dialog box that ask for user input.
 
-## sample document
+## Sample Document
 
-see sample LibreOffice Writer document, [inputbox.odt](inputbox.odt)
+See sample LibreOffice Writer document, [inputbox.odt](inputbox.odt)
 
-### sample code
+### Sample Code
 
 see [script.py](script.py) for sample usage.
 
@@ -25,6 +25,6 @@ box = InputBox("")
         # process input
 ```
 
-## source
+## Source
 
 see [inputbox.py](inputbox.py)
