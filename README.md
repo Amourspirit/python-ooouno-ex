@@ -2,7 +2,7 @@
 
 Examples for [ooouno](https://github.com/Amourspirit/python-ooouno) project.
 
-Work in Progress... so please do not report any issue at this time.
+Work in Progress... so please be kind...
 
 [ooouno](https://github.com/Amourspirit/python-ooouno) project has made it possible to have a much more
 user friendly way of programming for [LibreOffice](https://www.libreoffice.org/).
@@ -17,3 +17,9 @@ Another fantastic resource is [LibreOffice Programming](https://github.com/flywi
 great documentation and many java examples.
 
 Work in progress... more to come.
+
+## I NEED A BREAK...
+
+Checkout the LibreOffice Calc [Sudoku example](src/examples/sudoku).
+
+![calc_sudoku](https://user-images.githubusercontent.com/4193389/165391098-883a7647-5fc8-47de-b028-4c2c98337abe.png)
