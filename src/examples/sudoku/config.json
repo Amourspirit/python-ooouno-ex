@@ -1,0 +1,24 @@
+{
+  "id": "ooouno-ex",
+  "name": "calc-sudoku",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "script.py",
+    "output_name": "calc-sudoku",
+    "include_modules": [],
+    "include_paths": ["."],
+    "remove_modules": ["uno", "scriptforge"]
+  },
+  "methods": [
+    "generate_single_solve",
+    "num1",
+    "num2",
+    "num3",
+    "num4",
+    "num5",
+    "num6",
+    "num7",
+    "num8",
+    "num9"
+  ]
+}
