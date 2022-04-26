@@ -19,6 +19,9 @@
     "num6",
     "num7",
     "num8",
-    "num9"
+    "num9",
+    "clear_sel",
+    "reset_board",
+    "hint"
   ]
 }

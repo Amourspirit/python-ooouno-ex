@@ -29,3 +29,12 @@ def num8(*args, **kwargs) -> None:
 
 def num9(*args, **kwargs) -> None:
     sudoku_calc.set_number(9)
+
+def clear_sel(*args, **kwargs) -> None:
+    sudoku_calc.clear_cell()
+
+def reset_board(*args, **kwargs) -> None:
+    sudoku_calc.reset_board()
+
+def hint(*args, **kwargs) -> None:
+    sudoku_calc.hint()

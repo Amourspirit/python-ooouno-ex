@@ -19,9 +19,10 @@ _EMPTY = 0
 #         [0,0,0,0,0,0,0,0,0]]
 
 board = []
-
+_solution = None
 
 def generate_solution() -> List[List[int]]:
+    global _solution
     # pattern for a baseline valid solution
     def pattern(r, c):
         return (base * (r % base) + r // base + c) % side
@@ -35,8 +36,8 @@ def generate_solution() -> List[List[int]]:
     nums = shuffle(range(1, base * base + 1))
 
     # produce board using randomized baseline pattern
-    solution = [[nums[pattern(r, c)] for c in cols] for r in rows]
-    return solution
+    _solution = [[nums[pattern(r, c)] for c in cols] for r in rows]
+    return _solution
 
 
 def generate_board(grid: Optional[list] = None) -> list:
@@ -112,6 +113,9 @@ def generate_single_solve_board() -> List[List[int]]:
         s_board[r][c] = solution[r][c]
     return s_board
 
+def get_current_solution() -> List[List[int]]:
+    global _solution
+    return _solution
 
 def possible(row: int, column: int, number: int) -> bool:
     global board
