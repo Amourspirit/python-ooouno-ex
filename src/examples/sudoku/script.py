@@ -38,3 +38,9 @@ def reset_board(*args, **kwargs) -> None:
 
 def hint(*args, **kwargs) -> None:
     sudoku_calc.hint()
+
+def hide_toolbars(*args, **kwargs) -> None:
+    sudoku_calc.hide_toolbars()
+
+def display_fullscreen(*args, **kwargs) -> None:
+    sudoku_calc.display_fullscreen()

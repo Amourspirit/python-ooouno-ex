@@ -1,13 +1,16 @@
 from __future__ import annotations
-from pprint import pprint
 from typing import Union, TYPE_CHECKING
 import scriptforge as SF
 from . import sudoku
 import threading
 
+from ooo.dyn.beans.property_value import PropertyValue
+
 if TYPE_CHECKING:
     from com.sun.star.sheet import XSpreadsheet
     from com.sun.star.util import XProtectable
+    from com.sun.star.frame import LayoutManager as UnoLayoutManager
+    from com.sun.star.frame import DispatchHelper
 
     _SHEET = Union[XSpreadsheet, XProtectable]
 
@@ -82,7 +85,6 @@ def _protect_sheet(sht: _SHEET) -> None:
 def _is_origin(x: int, y: int) -> bool:
     # zero-based index
     # get if cell is part of original gameboard.
-    # print("x", x, "y", y)
     global _game_board
     result = False
     try:
@@ -218,3 +220,29 @@ def new_game() -> None:
     _create_matrix_single_solve()
     _set_board_styles()
     _protect_sheet(sht)
+
+def hide_toolbars() -> None:
+    bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+    layout_manager: UnoLayoutManager = bas.ThisComponent.CurrentController.Frame.LayoutManager
+    elements = layout_manager.getElements()
+    for el in elements:
+        layout_manager.hideElement(el.ResourceURL)
+
+def display_fullscreen() -> None:
+    # https://wiki.documentfoundation.org/Development/DispatchCommands#Calc
+    doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
+    bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+    document = bas.ThisComponent.CurrentController.Frame
+    dispatcher: DispatchHelper = bas.CreateUnoService('com.sun.star.frame.DispatchHelper')
+
+    # display full screen
+    pv_full_screen = PropertyValue(Name="FullScreen", Value=True)
+    dispatcher.executeDispatch(document, ".uno:FullScreen", "", 0, (pv_full_screen,))
+
+    # hide sheet colum and row headers.
+    pv_headers = PropertyValue(Name="ViewRowColumnHeaders", Value=False)
+    dispatcher.executeDispatch(document, ".uno:ViewRowColumnHeaders", "", 0, (pv_headers,))
+    
+    # hide page tab.
+    bas.ThisComponent.CurrentController.SheetTabs = False
+
