@@ -6,7 +6,7 @@
     "src_file": "script.py",
     "output_name": "tab_dialog",
     "include_modules": [],
-    "include_paths": ["."],
+    "include_paths": [],
     "remove_modules": []
   },
   "methods": ["show_tab_dialog"]

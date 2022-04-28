@@ -15,11 +15,11 @@ For the supporting files the res folder must be located in the same folder as [l
 
 Build will compile the python scripts for this example into a single python script.
 
-The following command will compile script as `lib_o_con_2021.py` and embed it into`lib_o_con_2021.ods`
+The following command will compile script as `lib_o_con_2021.py` and embed it into `lib_o_con_2021.ods`
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config 'src/examples/lib_o_con_2021/config.json' --embed-src 'src/examples/lib_o_con_2021/lib_o_con_2021.ods'
+$ python -m main build -e --config 'src/examples/lib_o_con_2021/config.json' --embed-src 'src/examples/lib_o_con_2021/lib_o_con_2021.ods'
 ```
 
 ## Screenshot

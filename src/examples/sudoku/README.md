@@ -11,7 +11,7 @@ To run the example you need to use LibreOffice >= `7.2`.
 Build will compile the python scripts for this example into a single python script.
 
 
-The following command will compile script as `calc-sudoku.py` and embed it into`calc-sudoku.ods`
+The following command will compile script as `calc-sudoku.py` and embed it into `calc-sudoku.ods`
 The output is written into `build` folder in the projects root.
 
 ```sh
