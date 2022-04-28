@@ -92,9 +92,10 @@ class Builder:
         return result
 
     def _get_include_paths(self) -> List[str]:
-        paths = [itm for itm in self._model.args.include_paths]
+        paths = self._config.build_include_paths + self._model.args.include_paths
         paths.append(self.site_pkg_dir)
-        return paths
+        # ensure unique values in path.
+        return list(set(paths))
 
     def _get_site_include_path(self) -> str:
         paths = self._get_include_paths()
@@ -110,7 +111,9 @@ class Builder:
             return
         s_pattern_start = "^(?:[ \t]*)__stickytape_write_module\('"
         s_pattern_end = ".*$"
-        for i, p in enumerate(self._model.args.remove_modules):
+        # combine default config modules with example config remove modules
+        r_mods = set(self._config.build_remove_modules + self._model.args.remove_modules)
+        for i, p in enumerate(r_mods):
             pattern = f"{s_pattern_start}{p}{s_pattern_end}"
             matched = re.compile(pattern).search
             with fileinput.FileInput(

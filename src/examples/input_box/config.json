@@ -6,8 +6,8 @@
     "src_file": "script.py",
     "output_name": "inputbox",
     "include_modules": [],
-    "include_paths": ["."],
-    "remove_modules": ["uno"]
+    "include_paths": [],
+    "remove_modules": []
   },
   "methods": ["input_box"]
 }

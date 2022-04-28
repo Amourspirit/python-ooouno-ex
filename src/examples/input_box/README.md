@@ -25,6 +25,17 @@ box = InputBox("")
         # process input
 ```
 
+## Build
+
+Build will compile the python scripts for this example into a single python script.
+
+The following command will compile script as `inputbox.py` and embed it into `inputbox.odt`
+The output is written into `build` folder in the projects root.
+
+```sh
+python -m main build -e --config 'src/examples/input_box/config.json' --embed-src 'src/examples/input_box/inputbox.odt'
+```
+
 ## Source
 
 see [inputbox.py](inputbox.py)
