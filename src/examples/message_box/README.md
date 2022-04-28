@@ -55,6 +55,17 @@ elif result == MessageBoxResultsEnum.NO:
     # I guess another day...
 ```
 
-## source
+## Build
+
+Build will compile the python scripts for this example into a single python script.
+
+The following command will compile script as `msgbox.py` and embed it into`msgbox.odt`
+The output is written into `build` folder in the projects root.
+
+```sh
+python -m main build -e --config 'src/examples/message_box/config.json' --embed-src 'src/examples/message_box/msgbox.odt'
+```
+
+## Source
 
 see [msgbox.py](msgbox.py)

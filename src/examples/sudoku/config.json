@@ -6,8 +6,8 @@
     "src_file": "script.py",
     "output_name": "calc-sudoku",
     "include_modules": [],
-    "include_paths": ["."],
-    "remove_modules": ["uno", "scriptforge"]
+    "include_paths": [],
+    "remove_modules": []
   },
   "methods": [
     "generate_single_solve",

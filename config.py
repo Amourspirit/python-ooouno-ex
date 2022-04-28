@@ -29,6 +29,18 @@ class AppConfig:
     """
     Name of LO manifest xml file such as `urn:oasis:names:tc:opendocument:xmlns:manifest:1.0`
     """
+    build_remove_modules: List[str]
+    """
+    Modules to remove from compiled scripts such as ['uno', 'scriptforge', 'access2base']
+    
+    This list is combined with an examples config.json remove_modules property
+    """
+    build_include_paths: List[str]
+    """
+    Module include paths that is used to find module that may be included in compiled scripts such as ['.']
+    
+    This list is combined with an examples config.json include_paths property
+    """
 
 
 def read_config(config_file: str) -> AppConfig:
