@@ -92,9 +92,10 @@ class Builder:
         return result
 
     def _get_include_paths(self) -> List[str]:
-        paths = [itm for itm in self._model.args.include_paths]
+        paths = self._config.build_include_paths + self._model.args.include_paths
         paths.append(self.site_pkg_dir)
-        return paths
+        # ensure unique values in path.
+        return list(set(paths))
 
     def _get_site_include_path(self) -> str:
         paths = self._get_include_paths()
