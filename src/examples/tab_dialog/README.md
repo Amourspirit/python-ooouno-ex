@@ -40,6 +40,17 @@ For instance [XItemListener](https://api.libreoffice.org/docs/idl/ref/interfacec
 
 [XPropertyChangeListener](https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1beans_1_1XPropertyChangeListener.html) are attached to Radio buttons.
 
+## Build
+
+Build will compile the python scripts for this example into a single python script.
+
+The following command will compile script as `tab_dialog.py` and embed it into`tab_dialog.odt`
+The output is written into `build` folder in the projects root.
+
+```sh
+python -m main build -e --config 'src/examples/tab_dialog/config.json' --embed-src 'src/examples/tab_dialog/tab_dialog.odt'
+```
+
 ## Source
 
 see [mvc](mvc)
