@@ -7,7 +7,7 @@
     "output_name": "lib_o_con_2021",
     "include_modules": [],
     "include_paths": ["."],
-    "remove_modules": ["uno", "scriptforge"]
+    "remove_modules": []
   },
   "methods": [
     "create_random_matrix_v2",

@@ -3,5 +3,6 @@
     "app_build_dir": ["build"],
     "app_res_dir": ["resources"],
     "app_res_blank_odt": ["odt", "blank.odt"],
-    "xml_manifest_namesapce": "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0"
+    "xml_manifest_namesapce": "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0",
+    "build_remove_modules": ["uno", "scriptforge", "access2base"]
 }

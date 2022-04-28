@@ -7,7 +7,7 @@
     "output_name": "calc-sudoku",
     "include_modules": [],
     "include_paths": ["."],
-    "remove_modules": ["uno", "scriptforge"]
+    "remove_modules": []
   },
   "methods": [
     "generate_single_solve",

@@ -7,7 +7,7 @@
     "output_name": "msgbox",
     "include_modules": [],
     "include_paths": ["."],
-    "remove_modules": ["uno"]
+    "remove_modules": []
   },
   "methods": [
     "msg_small",
