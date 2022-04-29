@@ -1,7 +1,13 @@
+#!/usr/bin/env python
 import scriptforge as SF
 import sys
+import os
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
+def _set_root_env():
+    root = os.environ.get("project_root", None)
+    if root is None:
+        sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
+_set_root_env()
 from src.lib.connect import LoManager
 
 def main():
