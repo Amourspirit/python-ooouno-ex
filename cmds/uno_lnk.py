@@ -38,6 +38,34 @@ def _get_uno_path() -> Path:
             raise NotADirectoryError("UNO source is not a Directory")
         return p_uno
 
+def _get_lo_path() -> Path:
+    if os.name == "nt":
+
+        p_uno = Path(os.environ["PROGRAMFILES"], "LibreOffice", "program")
+        if p_uno.exists() is False or p_uno.is_dir() is False:
+            p_uno = Path(os.environ["PROGRAMFILES(X86)"], "LibreOffice", "program")
+        if not p_uno.exists():
+            raise FileNotFoundError("LibreOffice Source Dir not found.")
+        if not p_uno.is_dir():
+            raise NotADirectoryError("LibreOffice source is not a Directory")
+        return p_uno
+    else:
+        # search system path
+        s = shutil.which('soffice')
+        p_sf = None
+        if s is not None:
+            # expect '/usr/bin/soffice'
+            if os.path.islink(s):
+                p_sf = Path(os.path.realpath(s)).parent
+            else:
+                p_sf = Path(s).parent
+        if p_sf is None:
+            p_sf = Path("/usr/bin/soffice")
+        if not p_sf.exists():
+            raise FileNotFoundError("LibreOffice Source Dir not found.")
+        if not p_sf.is_dir():
+            raise NotADirectoryError("LibreOffice source is not a Directory")
+        return p_sf
 
 def _get_env_site_packeges_dir() -> Union[Path, None]:
     v_path = _get_virtual_path()
@@ -74,6 +102,7 @@ def add_links(uno_src_dir: Optional[str] = None):
 
     p_uno = Path(p_uno_dir, "uno.py")
     p_uno_helper = Path(p_uno_dir, "unohelper.py")
+    
     if p_uno.exists():
         dest = Path(p_site_dir, "uno.py")
         try:
@@ -106,6 +135,24 @@ def add_links(uno_src_dir: Optional[str] = None):
     else:
         print(f"{p_uno_helper.name} not found.")
 
+    p_scriptforge = Path(_get_lo_path(), "scriptforge.py")
+    if p_scriptforge.exists():
+        dest = Path(p_site_dir, "scriptforge.py")
+        try:
+            os.symlink(src=p_scriptforge, dst=dest)
+            print(f"Created system link: {p_scriptforge} -> {dest}")
+        except FileExistsError:
+            print(f"File already exist: {dest}")
+        except OSError:
+            # OSError: [WinError 1314] A required privilege is not held by the client
+            print(
+                f"Unable to create system link for  '{p_scriptforge.name}'. Attempting copy."
+            )
+            shutil.copy2(p_scriptforge, dest)
+            print(f"Copied file: {p_scriptforge} -> {dest}")
+    else:
+        print(f"{p_scriptforge.name} not found.")
+
 def remove_links():
     p_site_dir = _get_env_site_packeges_dir()
     if p_site_dir is None:
@@ -125,6 +172,12 @@ def remove_links():
     else:
         print("unohelper.py does not exist in virtual env.")
 
+    scriptforge_path = Path(_get_lo_path(), "scriptforge.py")
+    if scriptforge_path.exists():
+        os.remove(scriptforge_path)
+        print("removed scriptforge.py")
+    else:
+        print("scriptforge.py does not exist in virtual env.")
 
 def main():
     if len(sys.argv) == 2:
