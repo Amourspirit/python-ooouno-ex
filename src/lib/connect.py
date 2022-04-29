@@ -44,6 +44,8 @@ class _ConnectBase:
         self._headless = False
         self._start_as_service = False
 
+        default_profile_path = f"{os.environ['HOME']}{os.sep}.config{os.sep}libreoffice{os.sep}4"
+        # default_profile_path = f"{os.environ['HOME']}{os.sep}.cache{os.sep}lo_profile_cache"
         def _kw_cb_before(_, arg: BeforeAssignEventArgs):
             if arg.key == "soffice_path":
                 if not os.path.exists(arg.field_value):
@@ -53,10 +55,8 @@ class _ConnectBase:
                     arg.field_value = tempfile.mkdtemp()
             elif arg.key == "cache_path":
                 if arg.field_value is None:
-                    arg.field_value = os.getenv(
-                        "XDG_CACHE_DIR",
-                        f"{os.environ['HOME']}{os.sep}.cache{os.sep}lo_profile_cache",
-                    )
+                    # /home/paul/.config/libreoffice/4
+                    arg.field_value = os.getenv("XDG_CACHE_DIR",default_profile_path)
 
         # change this path if not the default
         kw = KwargsHelper(originator=self, obj_kwargs={**kwargs})
@@ -76,7 +76,9 @@ class _ConnectBase:
 
     @abstractstaticmethod
     def kill_soffice(self) -> None:...
-
+    @abstractstaticmethod
+    def _popen(self, **kwargs) -> None: ...
+    
     def check_pid(self, pid: int) -> bool:
         """
         Check For the existence of a unix pid.

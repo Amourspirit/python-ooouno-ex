@@ -8,6 +8,7 @@ from ooo.helper import uno_helper as ooo_uno_helper
 from ooo.dyn.frame.the_desktop import theDesktop
 from ooo.dyn.beans.the_introspection import theIntrospection
 from ooo.dyn.reflection.the_core_reflection import theCoreReflection
+import scriptforge as SF
 
 if TYPE_CHECKING:
     from ooo.lo.drawing.drawing_document import DrawingDocument
@@ -131,8 +132,9 @@ def get_desktop() -> theDesktop:
     """
     global _star_desktop
     if _star_desktop == None:
+        bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
         # StarDesktop = create_uno_service("com.sun.star.frame.Desktop")
-        _star_desktop = theDesktop()
+        _star_desktop = bas.StarDesktop
     return _star_desktop
 
 
@@ -204,8 +206,10 @@ def get_xModel() -> "XModel":
     """
     global _star_xmodel
     if _star_xmodel == None:
-        xFrame = get_xframe()
-        _star_xmodel = xFrame.getController().getModel()
+        bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+        bas.ThisComponent.CurrentController.Frame
+        # xFrame = get_xframe()
+        _star_xmodel = bas.ThisComponent.CurrentController.Frame.getController().getModel()
     return _star_xmodel
 
 
