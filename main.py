@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 from cmds import uno_lnk
 from src.build.build import Builder, BuilderArgs
+import subprocess
 
 # region parser
 # region        Create Parsers
@@ -46,6 +47,15 @@ def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
         default=False,
     )
 
+def _args_cmd_auto(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "-p",
+        "--process",
+        help="Path to file to run such as ex/auto/writer/hello_world/main.py",
+        action="store",
+        dest="process_file",
+        required=True,
+    )
 
 def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
@@ -109,6 +119,20 @@ def _args_action_cmd_build(
     else:
         print("Build Success")
 
+def _args_action_cmd_auto(
+    a_parser: argparse.ArgumentParser, args: argparse.Namespace
+) -> None:
+    pargs = str(args.process_file).split()
+    pfile = Path(pargs.pop(0))
+    if not pfile.is_absolute():
+        root = Path(os.environ["project_root"])
+        pfile = Path(root, pfile)
+    if not pfile.exists():
+        raise FileNotFoundError(f"Unable to find '{pfile}'")
+    if not pfile.is_file():
+        raise ValueError(f"Not a file: '{pfile}'")
+    cmd = [sys.executable, pfile] + pargs
+    subprocess.run(cmd)
 
 def _args_process_cmd(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -117,6 +141,8 @@ def _args_process_cmd(
         _args_action_cmd_link(a_parser=a_parser, args=args)
     elif args.command == "build":
         _args_action_cmd_build(a_parser=a_parser, args=args)
+    elif args.command == "auto":
+        _args_action_cmd_auto(a_parser=a_parser, args=args)
     else:
         a_parser.print_help()
 
@@ -144,9 +170,12 @@ def main():
         name="cmd-link", help="Add/Remove links in virtual environments to uno files."
     )
     cmd_build = subparser.add_parser(name="build", help="Build a script")
+    
+    cmd_auto = subparser.add_parser(name="auto", help="Run an automation script")
 
     _args_cmd_link(parser=cmd_link)
     _args_cmd_build(parser=cmd_build)
+    _args_cmd_auto(parser=cmd_auto)
 
     # region Read Args
     args = parser.parse_args()
