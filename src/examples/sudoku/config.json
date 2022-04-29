@@ -1,6 +1,8 @@
 {
   "id": "ooouno-ex",
   "name": "calc-sudoku",
+  "type": "EXAMPLE",
+  "app": "CALC",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",

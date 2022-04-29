@@ -1,5 +1,7 @@
 {
   "id": "ooouno-ex",
+  "type": "EXAMPLE",
+  "app": "CALC",
   "name": "lib_o_con_2021",
   "version": "0.1.0",
   "args": {

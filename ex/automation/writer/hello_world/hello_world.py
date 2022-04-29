@@ -1,7 +1,7 @@
 import scriptforge as SF
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
 from src.lib.connect import LoManager
 
 def main():

@@ -1,6 +1,8 @@
 {
   "id": "ooouno-ex",
   "name": "tab_dialog",
+  "type": "EXAMPLE",
+  "app": "WRITER",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",

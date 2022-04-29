@@ -1,5 +1,7 @@
 {
   "id": "ooouno-ex",
+  "type": "EXAMPLE",
+  "app": "WRITER",
   "name": "input_box",
   "version": "0.1.0",
   "args": {
