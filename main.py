@@ -4,7 +4,7 @@ import argparse
 import sys
 import os
 from pathlib import Path
-from cmds import uno_lnk
+from src.cmds import uno_lnk
 from src.build.build import Builder, BuilderArgs
 import subprocess
 
