@@ -19,7 +19,7 @@ The following command will compile script as `lib_o_con_2021.py` and embed it in
 The output is written into `build` folder in the projects root.
 
 ```sh
-$ python -m main build -e --config 'src/examples/lib_o_con_2021/config.json' --embed-src 'src/examples/lib_o_con_2021/lib_o_con_2021.ods'
+$ python -m main build -e --config "src/examples/lib_o_con_2021/config.json" --embed-src "src/examples/lib_o_con_2021/lib_o_con_2021.ods"
 ```
 
 ## Screenshot

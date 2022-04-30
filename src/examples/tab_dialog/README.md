@@ -48,7 +48,7 @@ The following command will compile script as `tab_dialog.py` and embed it into `
 The output is written into `build` folder in the projects root.
 
 ```sh
-$ python -m main build -e --config 'src/examples/tab_dialog/config.json' --embed-src 'src/examples/tab_dialog/tab_dialog.odt'
+$ python -m main build -e --config "src/examples/tab_dialog/config.json" --embed-src "src/examples/tab_dialog/tab_dialog.odt"
 ```
 
 ## Source
