@@ -159,6 +159,9 @@ def set_number(num: int) -> None:
         _style_good_cell(doc, cell)
     else:
         _style_bad_cell(doc, cell)
+    if sum([n.count(num) for n in doc.GetValue("A1:I9")])==9:
+        # disable completed option
+        sht.DrawPage.Forms[0]["btn" + str(num)].Enabled = False
     _protect_sheet(sht)
 
 def hint() -> None:
@@ -207,8 +210,12 @@ def clear_cell() -> None:
         return
     sht = doc.XSpreadsheet(_SHEET_NAME)
     _unprotect_sheet(sht)
+    num = doc.GetValue(cell)
     doc.SetValue(cell, "")
     _style_empty_cell(doc=doc, cell=cell)
+    if sum([n.count(num) for n in doc.GetValue("A1:I9")])<9:
+        # reenable incomplete option
+        sht.DrawPage.Forms[0]["btn" + str(num)].Enabled = True
     _protect_sheet(sht)
 
 
