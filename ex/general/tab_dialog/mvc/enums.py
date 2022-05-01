@@ -1,6 +1,6 @@
 # coding: utf-8
 from enum import IntEnum, auto
-from ....utils import enum_util as eutil
+from src.utils import enum_util as eutil
 
 class TimeEnum(IntEnum):
     """Time Enum Values"""

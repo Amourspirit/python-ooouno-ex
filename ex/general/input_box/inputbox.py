@@ -5,7 +5,7 @@ from ooo.dyn.awt.uno_control_edit_model import UnoControlEditModel
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.selection import Selection
 from typing import TYPE_CHECKING
-from ...ui.dialog.builder.dialog_builder import DialogBuilder
+from src.ui.dialog.builder.dialog_builder import DialogBuilder
 
 
 if TYPE_CHECKING:

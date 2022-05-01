@@ -1,6 +1,6 @@
 # coding: utf-8
-from src.examples.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
-from src.examples.input_box.inputbox import InputBox
+from ex.general.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
+from ex.general.input_box.inputbox import InputBox
 
 
 def show_msg_value(msg: str) -> None:

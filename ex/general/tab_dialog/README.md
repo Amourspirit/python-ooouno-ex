@@ -9,7 +9,7 @@ Example is created in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%
 
 Example also demonstrates usage of [Radio Button](https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1UnoControlRadioButton.html) Controls and [List Box](https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1UnoControlListBox.html) controls.
 
-![Dialog](./img/tab_dialog_lite_dark.png)
+![Dialog](https://user-images.githubusercontent.com/4193389/166167632-5492c83d-f4df-4199-b164-f0785a9a829b.png)
 
 ## Sample Document
 
@@ -48,7 +48,7 @@ The following command will compile script as `tab_dialog.py` and embed it into `
 The output is written into `build` folder in the projects root.
 
 ```sh
-$ python -m main build -e --config "src/examples/tab_dialog/config.json" --embed-src "src/examples/tab_dialog/tab_dialog.odt"
+$ python -m main build -e --config "ex/general/tab_dialog/config.json" --embed-src "ex/general/tab_dialog/tab_dialog.odt"
 ```
 
 ## Source

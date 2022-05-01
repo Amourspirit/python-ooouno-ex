@@ -1,6 +1,6 @@
 # coding: utf-8
 from typing import TYPE_CHECKING, Union
-from ...lib.ooo_util import create_uno_service
+from src.lib.ooo_util import create_uno_service
 
 from ooo.dyn.awt.message_box_results import (
     MessageBoxResultsEnum as MessageBoxResultsEnum,
