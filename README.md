@@ -20,6 +20,6 @@ Work in progress... more to come.
 
 ## I NEED A BREAK...
 
-Checkout the LibreOffice Calc [Sudoku example](src/examples/sudoku).
+Checkout the LibreOffice Calc [Sudoku example](ex/calc/sudoku).
 
 ![calc_sudoku](https://user-images.githubusercontent.com/4193389/165391098-883a7647-5fc8-47de-b028-4c2c98337abe.png)
