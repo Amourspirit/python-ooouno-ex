@@ -10,81 +10,15 @@ import sys
 import shutil
 from typing import Optional, Union
 from pathlib import Path
+from ..utils import util
 
-
-def _get_virtual_path() -> str:
-    spath = os.environ.get("VIRTUAL_ENV", None)
-    if spath is not None:
-        return spath
-    return sys.base_exec_prefix
-
-
-def _get_uno_path() -> Path:
-    if os.name == "nt":
-
-        p_uno = Path(os.environ["PROGRAMFILES"], "LibreOffice", "program")
-        if p_uno.exists() is False or p_uno.is_dir() is False:
-            p_uno = Path(os.environ["PROGRAMFILES(X86)"], "LibreOffice", "program")
-        if not p_uno.exists():
-            raise FileNotFoundError("Uno Source Dir not found.")
-        if not p_uno.is_dir():
-            raise NotADirectoryError("UNO source is not a Directory")
-        return p_uno
-    else:
-        p_uno = Path("/usr/lib/python3/dist-packages")
-        if not p_uno.exists():
-            raise FileNotFoundError("Uno Source Dir not found.")
-        if not p_uno.is_dir():
-            raise NotADirectoryError("UNO source is not a Directory")
-        return p_uno
-
-def _get_lo_path() -> Path:
-    if os.name == "nt":
-
-        p_uno = Path(os.environ["PROGRAMFILES"], "LibreOffice", "program")
-        if p_uno.exists() is False or p_uno.is_dir() is False:
-            p_uno = Path(os.environ["PROGRAMFILES(X86)"], "LibreOffice", "program")
-        if not p_uno.exists():
-            raise FileNotFoundError("LibreOffice Source Dir not found.")
-        if not p_uno.is_dir():
-            raise NotADirectoryError("LibreOffice source is not a Directory")
-        return p_uno
-    else:
-        # search system path
-        s = shutil.which('soffice')
-        p_sf = None
-        if s is not None:
-            # expect '/usr/bin/soffice'
-            if os.path.islink(s):
-                p_sf = Path(os.path.realpath(s)).parent
-            else:
-                p_sf = Path(s).parent
-        if p_sf is None:
-            p_sf = Path("/usr/bin/soffice")
-        if not p_sf.exists():
-            raise FileNotFoundError("LibreOffice Source Dir not found.")
-        if not p_sf.is_dir():
-            raise NotADirectoryError("LibreOffice source is not a Directory")
-        return p_sf
-
-def _get_env_site_packeges_dir() -> Union[Path, None]:
-    v_path = _get_virtual_path()
-    p_site = Path(v_path, "Lib", "site-packages")
-    if p_site.exists() and p_site.is_dir():
-        return p_site
-
-    ver = f"{sys.version_info[0]}.{sys.version_info[1]}"
-    p_site = Path(v_path, "lib", f"python{ver}", "site-packages")
-    if p_site.exists() and p_site.is_dir():
-        return p_site
-    return None
 
 
 def add_links(uno_src_dir: Optional[str] = None):
     if isinstance(uno_src_dir, str):
         str_cln = uno_src_dir.strip()
         if len(str_cln) == 0:
-            p_uno_dir = _get_uno_path()
+            p_uno_dir = util.get_uno_path()
         else:
             p_uno_dir = Path(str_cln)
             if not p_uno_dir.exists():
@@ -94,15 +28,15 @@ def add_links(uno_src_dir: Optional[str] = None):
                     f"UNO source is not a Directory: {uno_src_dir}"
                 )
     else:
-        p_uno_dir = _get_uno_path()
-    p_site_dir = _get_env_site_packeges_dir()
+        p_uno_dir = util.get_uno_path()
+    p_site_dir = util.get_site_packeges_dir()
     if p_site_dir is None:
         print("Unable to find site_packages direct in virtual enviornment")
         return
 
     p_uno = Path(p_uno_dir, "uno.py")
     p_uno_helper = Path(p_uno_dir, "unohelper.py")
-    
+
     if p_uno.exists():
         dest = Path(p_site_dir, "uno.py")
         try:
@@ -135,7 +69,7 @@ def add_links(uno_src_dir: Optional[str] = None):
     else:
         print(f"{p_uno_helper.name} not found.")
 
-    p_scriptforge = Path(_get_lo_path(), "scriptforge.py")
+    p_scriptforge = Path(util.get_lo_path(), "scriptforge.py")
     if p_scriptforge.exists():
         dest = Path(p_site_dir, "scriptforge.py")
         try:
@@ -153,8 +87,9 @@ def add_links(uno_src_dir: Optional[str] = None):
     else:
         print(f"{p_scriptforge.name} not found.")
 
+
 def remove_links():
-    p_site_dir = _get_env_site_packeges_dir()
+    p_site_dir = util.get_site_packeges_dir()
     if p_site_dir is None:
         print("Unable to find site_packages direct in virtual enviornment")
         return
@@ -172,12 +107,13 @@ def remove_links():
     else:
         print("unohelper.py does not exist in virtual env.")
 
-    scriptforge_path = Path(_get_lo_path(), "scriptforge.py")
+    scriptforge_path = Path(util.get_lo_path(), "scriptforge.py")
     if scriptforge_path.exists():
         os.remove(scriptforge_path)
         print("removed scriptforge.py")
     else:
         print("scriptforge.py does not exist in virtual env.")
+
 
 def main():
     if len(sys.argv) == 2:

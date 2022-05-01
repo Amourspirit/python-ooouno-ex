@@ -3,9 +3,24 @@ from __future__ import annotations
 import scriptforge as SF
 import sys
 import os
-from pathlib import Path
 from typing import TYPE_CHECKING
+
+def _set_env() -> None:
+    if os.name != 'nt':
+        return
+    site_pkg = os.environ.get("env-site-packages", None)
+    if site_pkg is not None:
+        sys.path.insert(1, site_pkg)
+    root = os.environ.get("project_root", None)
+    if root is not None:
+        sys.path.insert(1, root)
+    print("sys.path:", sys.path)
+    
+_set_env()
+
 from ooo.dyn.beans.property_value import PropertyValue
+from src.lib import writer_sel_framework as o_sel
+from src.lib.connect import LoSocketStart
 
 if TYPE_CHECKING:
     from com.sun.star.text import XText
@@ -13,20 +28,9 @@ if TYPE_CHECKING:
     from com.sun.star.frame import DispatchHelper
     from ooo.lo.text.x_text_cursor import XTextCursor
 
-def _set_root_env():
-    root = os.environ.get("project_root", None)
-    if root is None:
-        sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent))
-    else:
-        sys.path.insert(0, root)
-_set_root_env()
-
-from src.lib import writer_sel_framework as o_sel
-from src.lib.connect import LoManager, LoSocketStart
-
 def main():
     port = 2002
-    lo = LoSocketStart(port=port)
+    lo = LoSocketStart(port=port, start_soffice=True)
     lo.connect()
     lo.host
     # with LoManager(use_pipe=False, port=port) as _:
@@ -49,5 +53,6 @@ def main():
     dispatcher.executeDispatch(bas.ThisComponent.CurrentController.Frame, ".uno:StyleApply", "", 0, args)
     v_cursor: XTextCursor = bas.ThisComponent.CurrentController.Frame.getController().getViewCursor()
     v_cursor.gotoEnd(False)
+    raise SystemExit
 if __name__ == "__main__":
     main()

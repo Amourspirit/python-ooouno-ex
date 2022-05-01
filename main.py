@@ -4,10 +4,9 @@ import argparse
 import sys
 import os
 from pathlib import Path
-from src.cmds import uno_lnk
+from src.cmds import uno_lnk, run_auto
 from src.build.build import Builder, BuilderArgs
-import subprocess
-
+from src.utils import util
 # region parser
 # region        Create Parsers
 
@@ -123,16 +122,12 @@ def _args_action_cmd_auto(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
 ) -> None:
     pargs = str(args.process_file).split()
-    pfile = Path(pargs.pop(0))
-    if not pfile.is_absolute():
-        root = Path(os.environ["project_root"])
-        pfile = Path(root, pfile)
-    if not pfile.exists():
-        raise FileNotFoundError(f"Unable to find '{pfile}'")
-    if not pfile.is_file():
-        raise ValueError(f"Not a file: '{pfile}'")
-    cmd = [sys.executable, pfile] + pargs
-    subprocess.run(cmd)
+    if sys.platform == "win32":
+        run_auto.run_lo_py(*pargs)
+    else:
+        run_auto.run_py(*pargs)
+
+
 
 def _args_process_cmd(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -153,9 +148,8 @@ def _args_process_cmd(
 
 def _main():
     # for debugging
-    # args = "build -e -c src/examples/message_box/config.json"
-    args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
-    # args = " build -e --config src\\examples\\input_box\\config.json --embed-src src\\examples\\input_box\\inputbox.odt"
+    # args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
+    args = 'auto -p "ex\\auto\\writer\\hello_world\\main.py"'
     sys.argv.extend(args.split())
     # args = "cmd-link_-a_-s_C:\\Program Files\\LibreOffice\\program\\classes"
     # sys.argv.extend(args.split('_'))
@@ -164,6 +158,7 @@ def _main():
 
 def main():
     os.environ["project_root"] = str(Path(__file__).parent)
+    os.environ["env-site-packages"] = str(util.get_site_packeges_dir())
     parser = _create_parser("main")
     subparser = parser.add_subparsers(dest="command")
     cmd_link = subparser.add_parser(
