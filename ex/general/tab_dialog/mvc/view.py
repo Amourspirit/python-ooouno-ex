@@ -16,13 +16,13 @@ from ooo.dyn.awt.push_button_type import PushButtonType
 from typing import TYPE_CHECKING, Union
 from .enums import TabEnum, TimeEnum, TextEnum, SyntaxEnum, VoidEnum
 from .interface import IViewMultiSyntax, IControllerMultiSyntax
-from ....ui.listeners.action_listener import ActionListener
-from ....ui.listeners.property_change_listener import PropertyChangeListener
-from ....ui.listeners.item_listener import ItemListener
-from ....ui.listeners.tab_page_container_listener import TabPageContainerListener
-from ....ui.dialog.builder.control_wrapper import ControlWrapper
-from ....ui.dialog.builder.dialog_builder import DialogBuilder
-from ....utils import color as ucolor
+from src.ui.listeners.action_listener import ActionListener
+from src.ui.listeners.property_change_listener import PropertyChangeListener
+from src.ui.listeners.item_listener import ItemListener
+from src.ui.listeners.tab_page_container_listener import TabPageContainerListener
+from src.ui.dialog.builder.control_wrapper import ControlWrapper
+from src.ui.dialog.builder.dialog_builder import DialogBuilder
+from src.utils import color as ucolor
 
 if TYPE_CHECKING:
     from ooo.csslo.awt import (
