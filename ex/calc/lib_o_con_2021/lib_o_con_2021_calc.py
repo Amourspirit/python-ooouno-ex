@@ -1,4 +1,4 @@
-'''
+"""
 Module to demonstrate SourceForge Methods in the Calc Service	
 	
 Activate	in create_sheet_example
@@ -30,8 +30,9 @@ SetArray	in create_random_matrix_v2
 SetValue	in create_random_matrix_v1
 SetCellStyle	in mark_invalid
 SetFormula	see SetValue
-SortRange	'''
+SortRange	"""
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     # anything inside of TYPE_CHECKING block is ignored when script is executed.
     from com.sun.star.sheet import XSpreadsheet
@@ -39,6 +40,7 @@ if TYPE_CHECKING:
     from com.sun.star.sheet import SheetCellRange
     from com.sun.star.frame import XModel
     from com.sun.star.script.provider import XScriptContext
+
     XSCRIPTCONTEXT: XScriptContext = None
 
 from typing import Union
@@ -58,13 +60,15 @@ def create_random_matrix_v1(args=None):
             else:
                 doc.SetValue(target_cell, "ODD")
 
+
 # Creates a 6x6 matrix starting at A1
 # Uses the method setArray to insert values
 def create_random_matrix_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    rnd_word = lambda : "EVEN" if rnd.random() < 0.5 else "ODD"
+    rnd_word = lambda: "EVEN" if rnd.random() < 0.5 else "ODD"
     values = [[rnd_word() for _ in range(6)] for _ in range(6)]
     doc.SetArray("A1", values)
+
 
 # Creates an mxn matrix starting at A1 and asks the desired size
 def create_random_matrix_v3(args=None):
@@ -81,6 +85,7 @@ def create_random_matrix_v3(args=None):
             else:
                 doc.SetValue(target_cell, "ODD")
 
+
 # Creates an mxn matrix starting at A1 and asks the desired size
 # Uses the method setArray to insert values
 def create_random_matrix_v4(args=None):
@@ -88,19 +93,22 @@ def create_random_matrix_v4(args=None):
     bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
     n_rows = bas.InputBox("Number of rows")
     n_cols = bas.InputBox("Number of columns")
-    rnd_word = lambda : "EVEN" if rnd.random() < 0.5 else "ODD"
-    values = [[rnd_word() for _ in range(int(n_cols))]
-              for _ in range(int(n_rows))]
+    rnd_word = lambda: "EVEN" if rnd.random() < 0.5 else "ODD"
+    values = [[rnd_word() for _ in range(int(n_cols))] for _ in range(int(n_rows))]
     doc.setArray("A1", values)
+
 
 # Clear region starting at A1
 def clear_region_a1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
-    cur_sheet: XSpreadsheet  = XSCRIPTCONTEXT.getDocument().CurrentController.ActiveSheet
+    cur_sheet: XSpreadsheet = XSCRIPTCONTEXT.getDocument().CurrentController.ActiveSheet
     cell = cur_sheet.getCellRangeByName("A1")
-    cursor: Union[SheetCellRange, XSheetCellCursor] = cur_sheet.createCursorByRange(cell)
+    cursor: Union[SheetCellRange, XSheetCellCursor] = cur_sheet.createCursorByRange(
+        cell
+    )
     cursor.collapseToCurrentRegion()
     doc.ClearAll(cursor.AbsoluteName)
+
 
 # Creates a matrix of size 10x8 with random integers between -20 and 100
 def create_values_for_example_2(args=None):
@@ -108,6 +116,7 @@ def create_values_for_example_2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     data = [[rnd.randint(-20, 100) for _ in range(8)] for _ in range(10)]
     doc.SetArray("A1", data)
+
 
 # Marks cells with negative values as INVALID and apply the 'Bad' cell style
 def mark_invalid(args=None):
@@ -124,30 +133,36 @@ def mark_invalid(args=None):
                 doc.SetValue(cell, "INVALID")
                 doc.SetCellStyle(cell, "Bad")
 
+
 # Example of using ClearAll
 def clear_contents_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.ClearAll("B2:B7")
+
 
 # Example of using ClearFormats
 def clear_contents_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.ClearFormats("D2:D7")
 
+
 # Example of using ClearValues
 def clear_contents_v3(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.ClearValues("F2:F7")
+
 
 # Copying to a single cell
 def copy_cells_v1(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.CopyToCell("A1:A4", "C1")
 
+
 # Copying cells into a larger range
 def copy_cells_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.CopyToRange("A1:A4", "E1:F6")
+
 
 # Copies range from an open file
 def copy_range_from_file(args=None):
@@ -160,21 +175,25 @@ def copy_range_from_file(args=None):
     # Pastes the contents into the destination
     doc.CopyToCell(source_range, "A1")
 
+
 # Inserting new sheet
 def create_sheet_example(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.InsertSheet("TestSheet", 2)
     doc.Activate("TestSheet")
 
+
 # Copying an existing sheet
 def copy_sheet_example(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.CopySheet("TestSheet", "Copy_TestSheet")
 
+
 # Removing a sheet
 def remove_sheet_example(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     doc.RemoveSheet("Copy_TestSheet")
+
 
 # Copies sheet from another file (open or closed)
 def copy_from_file_example(args=None):
@@ -183,12 +202,14 @@ def copy_from_file_example(args=None):
     wb = str(Path(res_path, "DataSource.ods"))
     doc.CopySheetFromFile(wb, "Sheet2", "Copy_Sheet2")
 
+
 # Example using the DAvg method
 def calculate_average(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
     result = doc.DAvg("A1:E1")
     bas.MsgBox("The average is {:.02f}".format(result))
+
 
 # Open CSV file JobData_v1.csv using default configuration
 def open_csv_file_v1(args=None):
@@ -197,12 +218,14 @@ def open_csv_file_v1(args=None):
     csvfile = str(Path(res_path, "JobData_v1.csv"))
     doc.ImportFromCSVFile(csvfile, "A1")
 
+
 # Open CSV file JobData_v2.csv using default configuration
 def open_csv_file_v2(args=None):
     doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
     res_path = get_res_path(doc)
     csvfile = str(Path(res_path, "JobData_v2.csv"))
     doc.ImportFromCSVFile(csvfile, "A1")
+
 
 # Open CSV file using custom configuration
 def open_csv_file_v3(args=None):
@@ -212,6 +235,7 @@ def open_csv_file_v3(args=None):
     filter_option = "59,34,UTF-8,1"
     doc.ImportFromCSVFile(csvfile, "A1", filter_option)
 
+
 # gets the path to res dir
 def get_res_path(doc: SF.SFDocuments.SF_Calc) -> Path:
     cmp: XModel = doc.XComponent
@@ -220,4 +244,29 @@ def get_res_path(doc: SF.SFDocuments.SF_Calc) -> Path:
     file = bas.ConvertFromUrl(url)
     doc_path = Path(file)
     doc_dir = doc_path.parent
-    return doc_dir / 'res'
+    return doc_dir / "res"
+
+
+g_exportedScripts = (
+    create_random_matrix_v2,
+    create_random_matrix_v3,
+    create_random_matrix_v1,
+    create_random_matrix_v4,
+    clear_region_a1,
+    mark_invalid,
+    create_values_for_example_2,
+    clear_contents_v1,
+    clear_contents_v2,
+    clear_contents_v3,
+    copy_cells_v1,
+    copy_cells_v2,
+    copy_range_from_file,
+    create_sheet_example,
+    copy_sheet_example,
+    remove_sheet_example,
+    copy_from_file_example,
+    calculate_average,
+    open_csv_file_v1,
+    open_csv_file_v2,
+    open_csv_file_v3,
+)
