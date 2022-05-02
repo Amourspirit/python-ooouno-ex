@@ -1,0 +1,37 @@
+{
+  "id": "ooouno-ex",
+  "type": "EXAMPLE",
+  "app": "CALC",
+  "name": "lib_o_con_2021",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "lib_o_con_2021_calc.py",
+    "output_name": "lib_o_con_2021",
+    "include_modules": [],
+    "include_paths": [],
+    "remove_modules": []
+  },
+  "methods": [
+    "create_random_matrix_v2",
+    "create_random_matrix_v3",
+    "create_random_matrix_v1",
+    "create_random_matrix_v4",
+    "clear_region_a1",
+    "mark_invalid",
+    "create_values_for_example_2",
+    "clear_contents_v1",
+    "clear_contents_v2",
+    "clear_contents_v3",
+    "copy_cells_v1",
+    "copy_cells_v2",
+    "copy_range_from_file",
+    "create_sheet_example",
+    "copy_sheet_example",
+    "remove_sheet_example",
+    "copy_from_file_example",
+    "calculate_average",
+    "open_csv_file_v1",
+    "open_csv_file_v2",
+    "open_csv_file_v3"
+  ]
+}
