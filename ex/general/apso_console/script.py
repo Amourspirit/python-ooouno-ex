@@ -1,4 +1,4 @@
-from __future__ import annotations
+# coding: utf-8
 import scriptforge as SF
 # other reading
 # https://wiki.documentfoundation.org/Macros/Python_Design_Guide#Output_to_Consoles
