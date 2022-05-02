@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 """
-Creates system links for uno and uno_helper
+Creates system links for uno and uno_helper.
 
-see: docs/setup_env.rst
+This module is not useful in Windows.
+
+Windows makes use of the run_auto.py and creates subprocesses that call
+LibreOffice's python.exe while setting the appropriate paths so LibreOffice python can access
+this code base and its site-packages.
 """
 import os
 import sys
 import shutil
-from typing import Optional, Union
+from typing import Optional
 from pathlib import Path
 from ..utils import util
-
 
 
 def add_links(uno_src_dir: Optional[str] = None):
