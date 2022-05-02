@@ -152,11 +152,9 @@ def _args_process_cmd(
 
 def _main():
     # for debugging
-    # args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
-    args = "auto -p ex/auto/writer/hello_world/main.py"
+    args = "build -e --config ex/general/apso_console/config.json --embed-src ex/general/apso_console/apso_example.odt"
+    # args = "auto -p ex/auto/writer/hello_world/main.py"
     sys.argv.extend(args.split())
-    # args = "cmd-link_-a_-s_C:\\Program Files\\LibreOffice\\program\\classes"
-    # sys.argv.extend(args.split('_'))
     main()
 
 
