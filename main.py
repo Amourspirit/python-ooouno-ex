@@ -7,6 +7,7 @@ from pathlib import Path
 from src.cmds import uno_lnk, run_auto
 from src.build.build import Builder, BuilderArgs
 from src.utils import util
+
 # region parser
 # region        Create Parsers
 
@@ -28,7 +29,7 @@ def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
         dest="add",
         default=False,
     )
-    
+
     add_grp.add_argument(
         "-s",
         "--uno-src",
@@ -46,6 +47,7 @@ def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
         default=False,
     )
 
+
 def _args_cmd_auto(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-p",
@@ -55,6 +57,7 @@ def _args_cmd_auto(parser: argparse.ArgumentParser) -> None:
         dest="process_file",
         required=True,
     )
+
 
 def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
@@ -91,6 +94,7 @@ def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
         default=None,
     )
 
+
 def _args_action_cmd_link(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
 ) -> None:
@@ -118,6 +122,7 @@ def _args_action_cmd_build(
     else:
         print("Build Success")
 
+
 def _args_action_cmd_auto(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
 ) -> None:
@@ -126,7 +131,6 @@ def _args_action_cmd_auto(
         run_auto.run_lo_py(*pargs)
     else:
         run_auto.run_py(*pargs)
-
 
 
 def _args_process_cmd(
@@ -149,7 +153,7 @@ def _args_process_cmd(
 def _main():
     # for debugging
     # args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
-    args = 'auto -p ex/auto/writer/hello_world/main.py'
+    args = "auto -p ex/auto/writer/hello_world/main.py"
     sys.argv.extend(args.split())
     # args = "cmd-link_-a_-s_C:\\Program Files\\LibreOffice\\program\\classes"
     # sys.argv.extend(args.split('_'))
@@ -161,14 +165,19 @@ def main():
     os.environ["env-site-packages"] = str(util.get_site_packeges_dir())
     parser = _create_parser("main")
     subparser = parser.add_subparsers(dest="command")
-    cmd_link = subparser.add_parser(
-        name="cmd-link", help="Add/Remove links in virtual environments to uno files."
-    )
+
+    if os.name != "nt":
+        # linking is not useful in Windows.
+        cmd_link = subparser.add_parser(
+            name="cmd-link",
+            help="Add/Remove links in virtual environments to uno files.",
+        )
+        _args_cmd_link(parser=cmd_link)
+
     cmd_build = subparser.add_parser(name="build", help="Build a script")
-    
+
     cmd_auto = subparser.add_parser(name="auto", help="Run an automation script")
 
-    _args_cmd_link(parser=cmd_link)
     _args_cmd_build(parser=cmd_build)
     _args_cmd_auto(parser=cmd_auto)
 
