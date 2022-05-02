@@ -107,8 +107,6 @@ class Builder:
         return result
 
     def _remove_modules(self) -> None:
-        if len(self._model.args.remove_modules) == 0:
-            return
         s_pattern_start = "^(?:[ \t]*)__stickytape_write_module\('"
         s_pattern_end = ".*$"
         # combine default config modules with example config remove modules
