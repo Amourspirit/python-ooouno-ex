@@ -16,8 +16,6 @@ def main():
     port = 2002
     lo = LoSocketStart(port=port, start_soffice=True)
     lo.connect()
-    lo.host
-    # with LoManager(use_pipe=False, port=port) as _:
     SF.ScriptForge(hostname=lo.host, port=lo.port)
     ui: SF.SFScriptForge.SF_UI = SF.CreateScriptService("UI")
     bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
@@ -38,5 +36,6 @@ def main():
     v_cursor: XTextCursor = bas.ThisComponent.CurrentController.Frame.getController().getViewCursor()
     v_cursor.gotoEnd(False)
     raise SystemExit
+
 if __name__ == "__main__":
     main()
