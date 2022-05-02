@@ -4,13 +4,13 @@ This example demonstrates **Content Changed** events and **Selection Changed** e
 
 ## Sample Document
 
-See sample LibreOffice Writer document [cell_events.odt](cell_events.odt).
+See sample LibreOffice Writer document [cell_events.ods](cell_events.ods).
 
 ## Build
 
 Build will compile the python scripts for this example into a single python script.
 
-The following command will compile script as `script.py` and embed it into `cell_events.odt`
+The following command will compile script as `script.py` and embed it into `cell_events.ods`
 The output is written into `build` folder in the projects root.
 
 ```sh
