@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from __future__ import annotations
+import sys
+print("Path", sys.path)
 import scriptforge as SF
 from typing import TYPE_CHECKING
 from ooo.dyn.beans.property_value import PropertyValue

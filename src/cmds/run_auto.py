@@ -87,18 +87,19 @@ def run_py(*args: str) -> None:
         raise ValueError(f"Not a file: '{pfile}'")
     myenv = os.environ.copy()
     pypath = ''
+    p_sep = ';' if sys.platform == 'win32' else ':'
     for d in sys.path:
-        pypath = pypath + d + ';'
+        pypath = pypath + d + p_sep
     if sys.platform == 'win32':
         p_inst = uno_util.get_soffice_install_path()
         pypath = str(Path(p_inst, 'program')) + ';' + pypath
         myenv['URE_BOOTSTRAP'] = f"vnd.sun.star.pathname:{p_inst}\\program\\fundamental.ini"
         myenv['UNO_PATH'] = f"{p_inst}\\program\\"
-        
+    # else:
+        # pypath = util.get_root() + ';' + pypath
     myenv['PYTHONPATH'] = pypath
     cmd = [sys.executable, f"{pfile}"] + pargs
     print("cmd:", cmd)
-    # os.chdir("C:\\Program Files\\LibreOffice")
-    process = subprocess.Popen(" ".join(cmd),  env=myenv,  stdout=subprocess.PIPE, shell=True)
+    process = subprocess.run(" ".join(cmd),  env=myenv, shell=True)
     # for c in iter(lambda: process.stdout.read(1), b''): 
     #     sys.stdout.buffer.write(c)
