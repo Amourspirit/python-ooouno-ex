@@ -8,7 +8,6 @@ from src.lib.connect import LoSocketStart
 
 if TYPE_CHECKING:
     from com.sun.star.text import XText
-    from com.sun.star.text import XWordCursor
     from com.sun.star.frame import DispatchHelper
     from ooo.lo.text.x_text_cursor import XTextCursor
 
@@ -22,7 +21,7 @@ def main():
     doc: SF.SFDocuments.SF_Writer = ui.CreateDocument("Writer")
     odoc: XText = doc.XComponent
     txt = odoc.getText()
-    cursor: XWordCursor = txt.getEnd()
+    cursor = txt.getEnd()
     cursor.setString("Hello World")
     o_sel.select_view_by_cursors(sel=cursor, require_selection=False)
     bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
