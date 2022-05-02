@@ -1,23 +1,7 @@
 #!/usr/bin/env python
 from __future__ import annotations
 import scriptforge as SF
-import sys
-import os
 from typing import TYPE_CHECKING
-
-def _set_env() -> None:
-    if os.name != 'nt':
-        return
-    site_pkg = os.environ.get("env-site-packages", None)
-    if site_pkg is not None:
-        sys.path.insert(1, site_pkg)
-    root = os.environ.get("project_root", None)
-    if root is not None:
-        sys.path.insert(1, root)
-    print("sys.path:", sys.path)
-    
-_set_env()
-
 from ooo.dyn.beans.property_value import PropertyValue
 from src.lib import writer_sel_framework as o_sel
 from src.lib.connect import LoSocketStart
