@@ -1,13 +1,16 @@
 # coding: utf-8
-import verr
 from pydantic import BaseModel, validator
 from typing import List, Optional
 from .args import ExampleArgs
 from .. import validators
+from ..model_type_enum import ModelTypeEnum
+from ...lib.enums import AppTypeEnum
 
 class ModelExample(BaseModel):
     id: str
     version: str
+    type: ModelTypeEnum
+    app: AppTypeEnum
     name: str
     args: ExampleArgs
     methods: List[str]
@@ -21,11 +24,3 @@ class ModelExample(BaseModel):
         raise ValueError(
             f"root/id/ must be 'ooouno-ex'. Current value: {value}")
     
-    @validator('version')
-    def validate_version(cls, value: str) -> str:
-        v_result = verr.Version.try_parse(value)
-        if v_result[0] == False:
-            raise ValueError(f"root/version has a bad format: {value}")
-        else:
-            cls.ver = v_result[1]
-        return value

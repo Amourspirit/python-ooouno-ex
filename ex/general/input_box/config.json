@@ -1,0 +1,15 @@
+{
+  "id": "ooouno-ex",
+  "type": "EXAMPLE",
+  "app": "WRITER",
+  "name": "input_box",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "script.py",
+    "output_name": "inputbox",
+    "include_modules": [],
+    "include_paths": [],
+    "remove_modules": []
+  },
+  "methods": ["input_box"]
+}

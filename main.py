@@ -1,11 +1,12 @@
+#!/usr/bin/env python
 # coding: utf-8
 import argparse
 import sys
 import os
 from pathlib import Path
-from cmds import uno_lnk
+from src.cmds import uno_lnk, run_auto
 from src.build.build import Builder, BuilderArgs
-
+from src.utils import util
 # region parser
 # region        Create Parsers
 
@@ -45,6 +46,15 @@ def _args_cmd_link(parser: argparse.ArgumentParser) -> None:
         default=False,
     )
 
+def _args_cmd_auto(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "-p",
+        "--process",
+        help="Path to file to run such as ex/auto/writer/hello_world/main.py",
+        action="store",
+        dest="process_file",
+        required=True,
+    )
 
 def _args_cmd_build(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
@@ -108,6 +118,16 @@ def _args_action_cmd_build(
     else:
         print("Build Success")
 
+def _args_action_cmd_auto(
+    a_parser: argparse.ArgumentParser, args: argparse.Namespace
+) -> None:
+    pargs = str(args.process_file).split()
+    if sys.platform == "win32":
+        run_auto.run_lo_py(*pargs)
+    else:
+        run_auto.run_py(*pargs)
+
+
 
 def _args_process_cmd(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -116,6 +136,8 @@ def _args_process_cmd(
         _args_action_cmd_link(a_parser=a_parser, args=args)
     elif args.command == "build":
         _args_action_cmd_build(a_parser=a_parser, args=args)
+    elif args.command == "auto":
+        _args_action_cmd_auto(a_parser=a_parser, args=args)
     else:
         a_parser.print_help()
 
@@ -126,9 +148,8 @@ def _args_process_cmd(
 
 def _main():
     # for debugging
-    # args = "build -e -c src/examples/message_box/config.json"
-    args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
-    # args = " build -e --config src\\examples\\input_box\\config.json --embed-src src\\examples\\input_box\\inputbox.odt"
+    # args = "build -e --config src/examples/message_box/config.json --embed-src src/examples/message_box/msgbox.odt"
+    args = 'auto -p ex/auto/writer/hello_world/main.py'
     sys.argv.extend(args.split())
     # args = "cmd-link_-a_-s_C:\\Program Files\\LibreOffice\\program\\classes"
     # sys.argv.extend(args.split('_'))
@@ -137,15 +158,19 @@ def _main():
 
 def main():
     os.environ["project_root"] = str(Path(__file__).parent)
+    os.environ["env-site-packages"] = str(util.get_site_packeges_dir())
     parser = _create_parser("main")
     subparser = parser.add_subparsers(dest="command")
     cmd_link = subparser.add_parser(
         name="cmd-link", help="Add/Remove links in virtual environments to uno files."
     )
     cmd_build = subparser.add_parser(name="build", help="Build a script")
+    
+    cmd_auto = subparser.add_parser(name="auto", help="Run an automation script")
 
     _args_cmd_link(parser=cmd_link)
     _args_cmd_build(parser=cmd_build)
+    _args_cmd_auto(parser=cmd_auto)
 
     # region Read Args
     args = parser.parse_args()
