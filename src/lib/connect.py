@@ -333,6 +333,7 @@ class LoPipeStart(_ConnectBase):
             working_dir (str, optional): the working directory of LO. This is the path that profile will be copied into. Defaults to a tmp directory
             cache_path (str, optional): the path where the current profile resides to copy into the LO
                 workding dir for current instance of LO
+            start_soffice (bool, optional): If True soffice will be started a server that can be connected to. Default True
         """
         super().__init__(**kwargs)
         self._pipe_name = uuid.uuid4().hex
@@ -388,12 +389,13 @@ class LoSocketStart(_ConnectBase):
         Constructor
 
         Keyword Arguments:
-            soffice_path (str, optional): the path to soffice: Default ``/usr/bin/soffice``
+            soffice_path (str, optional): the path to soffice: Default System dependent.
             working_dir (str, optional): the working directory of LO. This is the path that profile will be copied into. Defaults to a tmp directory
             cache_path (str, optional): the path where the current profile resides to copy into the LO
                 workding dir for current instance of LO
-            host (str, optional): host to connect. Default ``localhost``
-            port (int, optional): connection port. Default ``2002``
+            host (str, optional): host to connect. Default localhost
+            port (int, optional): connection port. Default 2002
+            start_soffice (bool, optional): If True soffice will be started a server that can be connected to. Default True
         """
         super().__init__(**kwargs)
         self._host = str(kwargs.get("host", "localhost"))

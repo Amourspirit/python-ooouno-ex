@@ -50,6 +50,7 @@ def run_lo_py(*args: str) -> None:
         pypath = pypath + util.get_root() + ';'
         myenv['URE_BOOTSTRAP'] = f"vnd.sun.star.pathname:{p_inst}\\program\\fundamental.ini"
         myenv['UNO_PATH'] = f"{p_inst}\\program\\"
+    myenv['PYTHONPATH'] = pypath
     # subprocess.run(cmd, env=myenv, ) fails in windows with error: PermissionError: [WinError 5] Access is denied
     # this is rather strange becuse it runs fine in debug mode.
     # solution is to run in shell.
