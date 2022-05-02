@@ -194,11 +194,15 @@ class Builder:
         # os.system(cmd)
 
         # sys.exit()
-        output = stickytape.script(
-            path=str(self._src_file),
-            add_python_modules=[],
-            add_python_paths=self._get_include_paths(),
-        )
+        if self._model.args.single_script:
+            with open(self._src_file, 'r') as sfile:
+                output = sfile.read()
+        else:
+            output = stickytape.script(
+                path=str(self._src_file),
+                add_python_modules=[],
+                add_python_paths=self._get_include_paths(),
+            )
         with open(self._dest_file, "w") as output_file:
             output_file.write(output)
         # endregion Make file using stickytape
@@ -209,8 +213,9 @@ class Builder:
         if self.allow_print == True and os.path.exists(self._dest_file):
             print("Generated File: " + self._dest_file)
         # endregion Report
-        self._remove_modules()
-        self._append_g_exported()
+        if self._model.args.single_script is False:
+            self._remove_modules()
+            self._append_g_exported()
         if self._embed:
             self._embed_script()
         return True

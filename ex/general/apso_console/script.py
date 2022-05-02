@@ -7,3 +7,5 @@ def console(*args, **kwargs) -> None:
     serv: SF.SFScriptForge.SF_Exception = SF.CreateScriptService('ScriptForge.Exception')
     serv.PythonShell({**globals(), **locals()})
     print("Hello World")
+
+g_exportedScripts = (console,)

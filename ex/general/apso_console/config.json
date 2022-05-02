@@ -9,7 +9,8 @@
     "output_name": "apso_example",
     "include_modules": [],
     "include_paths": [],
-    "remove_modules": []
+    "remove_modules": [],
+    "single_script": true
   },
   "methods": ["console"]
 }
