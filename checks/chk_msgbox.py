@@ -1,7 +1,7 @@
 # coding: utf-8
 if __name__ == "__main__":
     import root_path
-from src.examples.message_box.msgbox import (
+from ex.general.message_box.msgbox import (
     msgbox,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,

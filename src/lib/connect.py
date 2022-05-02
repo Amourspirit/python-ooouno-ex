@@ -353,13 +353,14 @@ class LoPipeStart(_ConnectBase):
             "--norestore",
             "--invisible",
         ]
+        str_args = " ".join(args)
         if self._is_nt:
             self._soffice_process = subprocess.Popen(
-                    " ".join(args), shell=True, env=self._envirnment
+                    str_args, shell=True, env=self._envirnment
                 )
         else:
             self._soffice_process = subprocess.Popen(
-                args, env=self._envirnment, preexec_fn=os.setsid
+                str_args, env=self._envirnment, preexec_fn=os.setsid, shell=True
             )
 
     def _connect(self):
