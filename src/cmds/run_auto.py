@@ -99,7 +99,7 @@ def run_py(*args: str) -> None:
         # pypath = util.get_root() + ';' + pypath
     myenv['PYTHONPATH'] = pypath
     cmd = [sys.executable, f"{pfile}"] + pargs
-    print("cmd:", cmd)
+    # print("cmd:", cmd)
     process = subprocess.run(" ".join(cmd),  env=myenv, shell=True)
     # for c in iter(lambda: process.stdout.read(1), b''): 
     #     sys.stdout.buffer.write(c)

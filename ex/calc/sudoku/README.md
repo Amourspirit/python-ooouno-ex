@@ -15,7 +15,7 @@ The following command will compile script as `calc-sudoku.py` and embed it into 
 The output is written into `build` folder in the projects root.
 
 ```sh
-$ python -m main build -e --config "ex/calc/sudoku/config.json" --embed-src "ex/calc/sudoku/calc-sudoku.ods"
+python -m main build -e --config "ex/calc/sudoku/config.json" --embed-src "ex/calc/sudoku/calc-sudoku.ods"
 ```
 
 ## Sample Document
