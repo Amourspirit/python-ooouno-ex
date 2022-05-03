@@ -150,15 +150,15 @@ def _args_process_cmd(
 # endregion parser
 
 
-def _main():
+def _main() -> int:
     # for debugging
     args = "build -e --config ex/general/apso_console/config.json --embed-src ex/general/apso_console/apso_example.odt"
     # args = "auto -p ex/auto/writer/hello_world/main.py"
     sys.argv.extend(args.split())
-    main()
+    return main()
 
 
-def main():
+def main() -> int:
     os.environ["project_root"] = str(Path(__file__).parent)
     os.environ["env-site-packages"] = str(util.get_site_packeges_dir())
     parser = _create_parser("main")
@@ -183,7 +183,8 @@ def main():
     args = parser.parse_args()
     # endregion Read Args
     _args_process_cmd(a_parser=parser, args=args)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
