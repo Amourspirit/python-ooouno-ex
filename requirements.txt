@@ -4,6 +4,7 @@ click==8.0.4
 iniconfig==1.1.1
 kwargshelper==2.7.1
 mypy-extensions==0.4.3
+lo-dev-search==1.0.0
 ooouno==0.2.0
 packaging==21.3
 pathspec==0.9.0
