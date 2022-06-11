@@ -252,4 +252,3 @@ def display_fullscreen() -> None:
     
     # hide page tab.
     bas.ThisComponent.CurrentController.SheetTabs = False
-
