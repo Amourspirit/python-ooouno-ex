@@ -40,7 +40,7 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
 
 def main() -> int:
-    loader = Lo.load_office(host='localhost', port=2002)
+    loader = Lo.load_office(Lo.ConnectSocket())
     doc = Calc.create_doc(loader=loader)
     sheet = Calc.get_sheet(doc=doc, index=0)
     GUI.set_visible(is_visible=True, odoc=doc)

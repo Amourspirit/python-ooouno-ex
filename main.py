@@ -152,9 +152,12 @@ def _args_process_cmd(
 
 def _main() -> int:
     # for debugging
-    args = "build -e --config ex/general/apso_console/config.json --embed-src ex/general/apso_console/apso_example.odt"
+    args = "auto --process"
     # args = "auto -p ex/auto/writer/hello_world/main.py"
     sys.argv.extend(args.split())
+    extra = "ex/auto/writer/odev_doc_convert/start.py -e 'pdf' -f 'README.md'"
+    sys.argv.append(extra)
+    
     return main()
 
 

@@ -3,8 +3,11 @@ from ooodev.utils.lo import Lo
 from ooodev.office.calc import Calc
 from com.sun.star.sheet import XSpreadsheet
 
+
 def do_cell_range(sheet: XSpreadsheet) -> None:
+    # Highlight the borders of the range that is being inserted
     Calc.highlight_range(sheet=sheet, headline="Range Data Example", range_name="A2:C24")
+
     vals = (
         ("Name", "Fruit", "Quantity"),
         ("Alice", "Apples", 3),
@@ -32,17 +35,30 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.set_val("Total", sheet=sheet, cell_name="A24")
     Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
 
+
 def create_array() -> None:
-    loader = Lo.load_office(direct=True)
+    # get access to current Calc Document
     doc = Calc.get_ss_doc(Lo.ThisComponent)
+
+    # get access to current spreadsheet
     sheet = Calc.get_active_sheet(doc=doc)
+
+    # insert the array of data
     do_cell_range(sheet=sheet)
-    
+
 
 def clear_range() -> None:
-    loader = Lo.load_office(direct=True)
+    # get access to current Calc Document
     doc = Calc.get_ss_doc(Lo.ThisComponent)
+
+    # get access to current spreadsheet
     sheet = Calc.get_active_sheet(doc=doc)
+
+    # create the flags that let Calc know what kind or data to remove from cells
     flags = Calc.CellFlags.VALUE | Calc.CellFlags.STRING | Calc.CellFlags.FORMULA
+
+    # clears the cells in a given range
     Calc.clear_cells(sheet=sheet, range_name="A2:C24", cell_flags=flags)
-    Calc.remove_border(sheet=sheet,range_name="A2:C24")
+
+    # remove the border from the range.
+    Calc.remove_border(sheet=sheet, range_name="A2:C24")
