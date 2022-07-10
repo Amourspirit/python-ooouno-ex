@@ -2,7 +2,7 @@
 
 This is a basic example that opens up a new Calc document and inserts array of data and a formula.
 
-This demo uses [OOO Development Tools’s](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
+This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
 
 ODEV makes this demo possible with just a few lines of code.
 
