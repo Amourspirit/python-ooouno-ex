@@ -17,6 +17,11 @@ from pathlib import Path
 from ..utils import util
 
 
+def _print_env_msg() -> None:
+    print("Are you sure you environment is set up properly?")
+    if os.name == 'posix':
+        print("Have you installed necessary packages such as: libreoffice libreoffice-script-provider-python python3-access2base python3-uno")
+
 def add_links(uno_src_dir: Optional[str] = None):
     if isinstance(uno_src_dir, str):
         str_cln = uno_src_dir.strip()
@@ -54,6 +59,7 @@ def add_links(uno_src_dir: Optional[str] = None):
             print(f"Copied file: {p_uno} -> {dest}")
     else:
         print(f"{p_uno.name} not found.")
+        _print_env_msg()
 
     if p_uno_helper.exists():
         dest = Path(p_site_dir, "unohelper.py")
@@ -71,6 +77,8 @@ def add_links(uno_src_dir: Optional[str] = None):
             print(f"Copied file: {p_uno_helper} -> {dest}")
     else:
         print(f"{p_uno_helper.name} not found.")
+        _print_env_msg()
+        
 
     p_scriptforge = Path(util.get_lo_path(), "scriptforge.py")
     if p_scriptforge.exists():
@@ -89,6 +97,7 @@ def add_links(uno_src_dir: Optional[str] = None):
             print(f"Copied file: {p_scriptforge} -> {dest}")
     else:
         print(f"{p_scriptforge.name} not found.")
+        _print_env_msg()
 
 
 def remove_links():
