@@ -98,10 +98,12 @@ def main() -> int:
         print(f"System language location: {Info.get_config('ooSetupSystemLocale')}")
 
         print(f"\nWorking Dir: {Info.get_paths('Work')}")
+
         addin_dir = Info.get_paths('Addin')
         print(f"\nAddin Dir: {addin_dir}")
         print(f"Addin Path: {FileIO.uri_to_path(addin_dir)}")
         print(f"\nOffice Dir: {Info.get_office_dir()}")
+
         print(f"\nFilters Dir: {Info.get_paths('Filter')}")
         print(f"\nTemplates Dirs: {Info.get_paths('Template')}")
         print(f"\nGallery Dir: {Info.get_paths('Gallery')}")
