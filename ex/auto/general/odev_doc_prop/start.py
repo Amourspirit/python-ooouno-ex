@@ -3,16 +3,10 @@
 # region Imports
 from __future__ import annotations
 import argparse
-import platform
 
-# debugging
-import sys
-from pathlib import Path
-sys.path.insert(0, Path(__file__).parent.parent.parent.parent.parent)
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.info import Info
-from ooodev.utils.file_io import FileIO
 
 # endregion Imports
 
@@ -29,31 +23,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 
 # endregion args
-
-# region Show
-
-
-def show_filters() -> None:
-    print()
-    print(" File Filter Names for Office: ".center(50, "-"))
-    filters = Info.get_filter_names()
-    for filter in filters:
-        print(f"  {filter}")
-    print("-----------")
-    print(f"No. of filters: {len(filter)}")
-
-
-def show_services(title: str, srv_name: str | None = None) -> None:
-    print()
-    print(title.center(50, "-"))
-    services = Info.get_service_names(srv_name)
-    for service in services:
-        print(f"  {service}")
-    print("-----------")
-    print(f"No. of services: {len(services)}")
-
-
-# endregion Show
 
 # region Main
 def main() -> int:

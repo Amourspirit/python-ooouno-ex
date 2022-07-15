@@ -5,11 +5,6 @@ from __future__ import annotations
 import argparse
 import platform
 
-# debugging
-import sys
-from pathlib import Path
-sys.path.insert(0, Path(__file__).parent.parent.parent.parent.parent)
-
 from ooodev.utils.lo import Lo
 from ooodev.utils.info import Info
 from ooodev.utils.file_io import FileIO
