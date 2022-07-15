@@ -13,6 +13,15 @@
             "justMyCode": true
         },
         {
+            "name": "Python: Current and Subprocess File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "subProcess": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
             "name": "Python: Current All Code",
             "type": "python",
             "request": "launch",
