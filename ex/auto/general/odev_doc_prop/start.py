@@ -38,8 +38,9 @@ def main() -> int:
     with Lo.Loader(Lo.ConnectSocket(headless=True)) as loader:
         doc = Lo.open_doc(fnm=args.fnm_doc, loader=loader)
         Info.print_doc_properties(doc)
-        Info.set_doc_props(doc, "Example", "Examples", "Specific User")
-        
+        Info.set_doc_props(doc, "Example", "Examples", "Amour Spirit")
+        Lo.save(doc)
+        Lo.close_doc(doc)
     return 0
 
 
