@@ -1,6 +1,6 @@
 # Doc Properties
 
-This is a basic example that shows how to get document properties from document path via the command line.
+This is a basic example that shows how to write document properties from document path to the command line.
 
 This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
 
@@ -15,3 +15,5 @@ See [source code](./start.py)
 ```sh
 python -m main auto --process "ex/auto/general/odev_doc_prop/start.py --doc ex/auto/general/odev_doc_prop/algs.odp"
 ```
+
+![Properties Screen Shot](https://user-images.githubusercontent.com/4193389/179302791-d8373bd0-7b72-41a3-86b8-dcbd5bac6feb.png)
