@@ -3,6 +3,8 @@
 # region Imports
 from __future__ import annotations
 import argparse
+import sys
+
 
 
 from ooodev.utils.lo import Lo
@@ -31,6 +33,10 @@ def main() -> int:
 
     # add args to parser
     args_add(parser=parser)
+
+    if len(sys.argv) <= 1:
+        parser.print_help(sys.stderr)
+        return 1
 
     # read the current command line args
     args = parser.parse_args()
