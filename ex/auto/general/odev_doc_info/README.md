@@ -1,10 +1,8 @@
-# Doc Properties
+# Doc Info
 
-This is a basic example that shows how to write document properties from document path to the command line.
+This is a basic example that shows how to write document information from document path to the command line.
 
 This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
-
-ODEV makes this demo possible with just a few lines of code.
 
 See Also: [Examining Office](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part1/chapter03.html)
 
