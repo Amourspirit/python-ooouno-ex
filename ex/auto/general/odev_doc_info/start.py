@@ -118,24 +118,28 @@ def main() -> int:
         if args.xdoc is True:
             print()
             print(f" Method for interface: com.sun.star.text.XTextDocument ".center(80, "-"))
-
-            for i, meth in enumerate(Info.get_methods("com.sun.star.text.XTextDocument")):
+            i = 0
+            for meth in Info.get_methods("com.sun.star.text.XTextDocument"):
                 print(f"  {meth}()")
+                i+= 1
             print(f"No. methods: {i}")
 
         if args.property is True:
             print()
             print(" Properties for this document: ".center(80, "-"))
-            for i, prop in enumerate(Props.get_properties(doc)):
+            i = 0
+            for prop in Props.get_properties(doc):
                 print(f"  {Props.show_property(prop)}")
+                i += 1
             print(f"No. properties: {i}")
 
         if args.doc_meth is True:
             print()
             print(f" Method for entire document ".center(80, "-"))
-
-            for i, meth in enumerate(Info.get_methods_obj(doc)):
+            i = 0
+            for i, meth in Info.get_methods_obj(doc):
                 print(f"  {meth}()")
+                i += 1
             print(f"No. methods: {i}")
 
         print()
