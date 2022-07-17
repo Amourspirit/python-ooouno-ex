@@ -1,3 +1,10 @@
 # Automation General Examples
 
 Welcome to Automation General folder. Open a sub folder to get to an example.
+
+- [odev_doc_info](./odev_doc_info/) - An example that shows how to write document information from document path to the command line using [OOO Development Tools].
+- [odev_doc_prop](./odev_doc_prop/) - An example that shows how to write document properties from document path to the command line using [OOO Development Tools].
+- [odev_listen](./odev_listen/) - An example that shows how attach a window listener to office using [OOO Development Tools].
+- [odev_office_info](./odev_office_info/) - An example that shows how to get info from Office via the command line using [OOO Development Tools].
+
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
