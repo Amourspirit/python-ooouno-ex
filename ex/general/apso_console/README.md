@@ -1,6 +1,6 @@
 # APSO - Alternative Script Organizer for Python Example
 
-This example requires that [APSO Extension](https://extensions.libreoffice.org/en/extensions/show/apso-alternative-script-organizer-for-python) be installed into LibreOffice.
+This example requires that [APSO Extension] be installed into LibreOffice.
 
 This example demonstrates how to load an **APSO** console on startup using a macro.
 
@@ -18,3 +18,5 @@ The output is written into `build` folder in the projects root.
 ```sh
 python -m main build -e --config "ex/general/apso_console/config.json" --embed-src "ex/general/apso_console/apso_example.odt"
 ```
+
+[APSO Extension]: https://extensions.libreoffice.org/en/extensions/show/apso-alternative-script-organizer-for-python

@@ -8,7 +8,6 @@ from __future__ import annotations
 import scriptforge as SF
 from typing import TYPE_CHECKING
 from ooo.dyn.beans.property_value import PropertyValue
-from src.lib import writer_sel_framework as o_sel
 from src.lib.connect import LoSocketStart
 
 if TYPE_CHECKING:
