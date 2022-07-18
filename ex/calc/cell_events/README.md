@@ -1,6 +1,6 @@
 # Calc Cell Events Example
 
-This example demonstrates **Content Changed** events and **Selection Changed** events.
+This example demonstrates **Content Changed** events and **Selection Changed** events using [ScriptForge].
 
 ## Sample Document
 
@@ -18,3 +18,5 @@ python -m main build -e --config "ex/calc/cell_events/config.json" --embed-src "
 ```
 
 ![calc_on_sel_change](https://user-images.githubusercontent.com/4193389/166338567-e597c1e9-854c-4254-bbf8-fb8f94598797.gif)
+
+[ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge

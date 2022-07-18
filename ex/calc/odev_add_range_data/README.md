@@ -1,6 +1,6 @@
 # Calc Add Range of Data Example
 
-This example demonstrates how to add a range of data to a spreadsheet using a macro
+This example demonstrates how to add a range of data to a spreadsheet using a macro and [OOO Development Tools].
 
 There is also an automation command line version of this example.
 See [Add Range Automation](../../auto/calc/odev_add_range_data)
@@ -22,3 +22,5 @@ python -m main build -e --config "ex/calc/odev_add_range_data/config.json" --emb
 ```
 
 ![calc_range_macro](https://user-images.githubusercontent.com/4193389/173204999-924f12f6-59df-4bfe-8c2c-bee4cc5b9d6b.gif)
+
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
