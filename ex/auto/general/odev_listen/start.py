@@ -36,9 +36,9 @@ class DocWindow(XTopWindowAdapter):
         if self.tk is not None:
             self.tk.addTopWindowListener(self)
 
-        doc = Write.create_doc(loader=loader)
+        self.doc = Write.create_doc(loader=loader)
 
-        GUI.set_visible(True, doc)
+        GUI.set_visible(True, self.doc)
         # triggers 2 opened and 2 activated events
 
     def windowOpened(self, event: EventObject) -> None:
@@ -102,8 +102,23 @@ class DocWindow(XTopWindowAdapter):
 def main_loop() -> None:
     # https://stackoverflow.com/a/8685815/1171746
     dw = DocWindow()
+
+    # delay in seconds
+    delay = 1.5
+
+    # start run min and max to raise listen events
+    time.sleep(delay) # wait delay amount of seconds
+    for _ in range(3):
+        time.sleep(delay)
+        GUI.minimize(dw.doc)
+        time.sleep(delay)
+        GUI.maximize(dw.doc)
+
+    # stop run min and max to raise listen events
+
+    # while Writer is open, keep running the script unless specifically ended by user
     while 1:
-        if dw.closed is True:
+        if dw.closed is True: # wait for windowClosed event to be raised
             print("\nExiting by document close.\n")
             break
         time.sleep(0.1)
