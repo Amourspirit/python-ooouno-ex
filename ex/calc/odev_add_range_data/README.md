@@ -7,7 +7,7 @@ See [Add Range Automation](../../auto/calc/odev_add_range_data)
 
 ## Sample Document
 
-See sample LibreOffice Writer document [odev_add_range.ods](odev_add_range.ods).
+See [odev_add_range.ods](odev_add_range.ods).
 
 
 ## Build
