@@ -2,14 +2,13 @@
 
 Simple [ScriptForge] example of Dialog counter using a dialog that is embedded in Calc document.
 
-## Sample Socument
+## Sample Document
 
 see sample LibreOffice Writer document, [BasicCounter.ods](BasicCounter.ods)
 
-### sample Code
+### Source
 
-see [script.py](script.py) for sample usage.
-
+see [counter_box.py](./counter_box.py)
 
 
 ## Build
@@ -23,10 +22,7 @@ The output is written into `build` folder in the projects root.
 python -m main build -e --config "ex/general/dialog_basic_counter/config.json" --embed-src "ex/general/dialog_basic_counter/BasicCounter.ods"
 ```
 
-## Source
+![screenshot](https://user-images.githubusercontent.com/4193389/179670709-978fd704-db5e-4225-ae65-92bba0e88ac8.png)
 
-see [counter_box.py](./counter_box.py)
-
-![screenshot](https://user-images.githubusercontent.com/4193389/179668010-30a7c762-ef83-4431-a7dd-b48ebd169de2.png)
 
 [ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge
