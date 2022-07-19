@@ -1,0 +1,20 @@
+{
+  "id": "ooouno-ex",
+  "name": "BasicCounter",
+  "type": "EXAMPLE",
+  "app": "CALC",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "counter_box.py",
+    "output_name": "BasicCounter",
+    "include_modules": [],
+    "include_paths": ["."],
+    "remove_modules": [],
+    "single_script": true
+  },
+  "methods": [
+    "start_dialog",
+    "btnIncrement",
+    "btnDecrement"
+  ]
+}
