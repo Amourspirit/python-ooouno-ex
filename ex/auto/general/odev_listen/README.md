@@ -8,7 +8,7 @@ When the script starts it will call `minimize()` and `maximize()` several times 
 
 As (*Write in this case*) window is min, max, activated etc. The events are captured and printed to the screen.
 
-In this case the `DocWindow` class that is responsible for starting Office is implements [XTopWindowAdapter](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/listeners/x_top_window_adapter.html)
+In this case the `DocWindow` class that is responsible for starting Office that implements [XTopWindowAdapter](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/listeners/x_top_window_adapter.html)
 which implements [API XTopWindowListener](https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1awt_1_1XTopWindowListener.html).
 
 A `main_loop()` method is called that watches until Office is closed.
@@ -27,21 +27,27 @@ See [source code](./start.py)
 python -m main auto --process "ex/auto/general/odev_listen/start.py"
 ```
 
+or for auto shutdown
+
+```sh
+python -m main auto --process "ex/auto/general/odev_listen/start.py True"
+```
+
 ### Example console output
 
 User interactions with window are reflected in console window.
 
-Starts Write as a new document and monitors window activity.
+Starts Write as a new document and monitors window activity and auto terminates.
 
 ```python
-PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process "ex/auto/general/odev_listen/start.py"
+PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process "ex/auto/general/odev_listen/start.py True"
 Press 'ctl+c' to exit script early.
 Loading Office...
 Creating Office document swriter
 WL: Opened
-Rectangle: (0, 23), 1920 -- 1017
+Rectangle: (8, 54), 1904 -- 978
 WL: Opened
-Rectangle: (0, 23), 1920 -- 1017
+Rectangle: (8, 54), 1904 -- 978
 WL: Activated
   Titile bar: Untitled 1 - LibreOffice Writer
 WL: Activated
@@ -70,11 +76,12 @@ WL: Normalized
 WL: Minimized
 WL: Activated
   Titile bar: Untitled 1 - LibreOffice Writer
-WL: Closing
+Closing Office
 WL: Activated
   Titile bar: Untitled 1 - LibreOffice Writer
 WL: Closed
 WL: Closed
+Office terminated
 
 Exiting by document close.
 ```

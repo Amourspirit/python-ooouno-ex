@@ -113,6 +113,12 @@ def main_loop() -> None:
         GUI.minimize(dw.doc)
         time.sleep(delay)
         GUI.maximize(dw.doc)
+    
+    # check an see if user passed in a auto terminate option
+    if len(sys.argv) > 1:
+        if str(sys.argv[1]).casefold() in ('t', 'true', 'y', 'yes'):
+            Lo.delay(delay)
+            Lo.close_office()
 
     # stop run min and max to raise listen events
 
