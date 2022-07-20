@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from com.sun.star.lang import EventObject
 # endregion Imports
 
-# region DocWindow Class
+# region DocMonitor Class
 
 
 class DocMonitor:
@@ -80,7 +80,7 @@ class DocMonitor:
         # script will stop before dispose is called
         print("TL: Disposing")
 
-# endregion DocWindow Class
+# endregion DocMonitor Class
 
 # region main
 
@@ -89,11 +89,11 @@ def main_loop() -> None:
     # https://stackoverflow.com/a/8685815/1171746
     dw = DocMonitor()
 
+    # check an see if user passed in a auto terminate option
     if len(sys.argv) > 1:
         if str(sys.argv[1]).casefold() in ('t', 'true', 'y', 'yes'):
             Lo.delay(5000)
             Lo.close_office()
-    # stop run min and max to raise listen events
 
     # while Writer is open, keep running the script unless specifically ended by user
     while 1:
