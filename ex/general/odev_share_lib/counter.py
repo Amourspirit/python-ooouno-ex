@@ -8,7 +8,7 @@ from ooodev.utils.session import Session
 
 def _set_share_paths() -> None:
     # necessary hack for LO/python to import form "My Macros"
-    # this method only runs onece per session
+    # this method only runs onec per session
     Session.register_path(Session.PathEnum.SHARE_USER_PYTHON)
 
 
