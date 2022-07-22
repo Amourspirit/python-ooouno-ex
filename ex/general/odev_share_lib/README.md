@@ -11,8 +11,9 @@ must be added to python's sys.path.
 There is a command line example of importing from shared library [here](../../auto/general/odev_share_lib/).
 
 See:
-    - [Importing Python Modules]
-    - [Getting Session Information]
+
+- [Importing Python Modules]
+- [Getting Session Information]
 
 ## Requirements
 

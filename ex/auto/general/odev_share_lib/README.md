@@ -17,8 +17,9 @@ that allows then paths to be discovered. Without a connection automatic register
 There is a macro example of importing from shared library [here](../../../general/odev_share_lib/).
 
 See:
-    - [Importing Python Modules]
-    - [Getting Session Information]
+
+- [Importing Python Modules]
+- [Getting Session Information]
 
 ## Requirements
 
