@@ -1,0 +1,19 @@
+{
+  "id": "ooouno-ex",
+  "name": "message_box",
+  "type": "EXAMPLE",
+  "app": "CALC",
+  "version": "0.1.0",
+  "args": {
+    "src_file": "script.py",
+    "output_name": "share_lib",
+    "include_modules": [],
+    "include_paths": ["."],
+    "remove_modules": []
+  },
+  "methods": [
+    "start_dialog",
+    "btnIncrement",
+    "btnDecrement"
+  ]
+}

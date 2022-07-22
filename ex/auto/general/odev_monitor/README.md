@@ -40,7 +40,7 @@ User interactions with window are reflected in console window.
 
 Starts Calc as a new document and monitors window activity.
 
-```python
+```text
 PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process "ex/auto/general/odev_monitor/start.py True"
 Press 'ctl+c' to exit script early.
 Loading Office...
