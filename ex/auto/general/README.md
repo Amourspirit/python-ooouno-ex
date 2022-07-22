@@ -8,5 +8,6 @@ Welcome to Automation General folder. Open a sub folder to get to an example.
 - [odev_monitor](./odev_monitor) - An example This is a basic example that shows how attach a Terminate Monitor to office using [OOO Development Tools].
 - [odev_office_info](./odev_office_info/) - An example that shows how to get info from Office via the command line using [OOO Development Tools].
 - [odev_doc_convert](./odev_doc_convert/) - Demos converting from one document format to another using [OOO Development Tools].
+- [Shared Library Access](./odev_share_lib/) - Example of importing a python module from share library using [OOO Development Tools].
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

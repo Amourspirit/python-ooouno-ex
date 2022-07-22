@@ -14,6 +14,18 @@ See:
     - [Importing Python Modules]
     - [Getting Session Information]
 
+## Requirements
+
+For this demo to run it requires a module in "My Modules" named `pyglobal` with the following contents.
+This module is in the LibreOffice user's directory of your local machine.
+
+```py
+# coding: utf-8
+from __future__ import unicode_literals
+
+G_COUNT = 100
+```
+
 ## Sample Document
 
 see sample LibreOffice Calc document, [share_lib.ods](share_lib.ods)
@@ -34,6 +46,10 @@ The output is written into `build` folder in the projects root.
 ```sh
 python -m main build -e --config "ex/general/odev_share_lib/config.json" --embed-src "ex/general/odev_share_lib/share_lib.ods"
 ```
+
+## Demo
+
+Basic demo of a macro that imports a shared python module and also shares it module level `pyglobal.G_COUNT` between documents.
 
 https://user-images.githubusercontent.com/4193389/180564481-b4365aaa-041d-404b-89f0-f9ee66954dcd.mp4
 
