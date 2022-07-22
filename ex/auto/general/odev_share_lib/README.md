@@ -39,7 +39,7 @@ see sample LibreOffice Calc document, [share_lib.ods](share_lib.ods)
 
 ### Source
 
-see [counter.py](./counter.py)
+see [start.py](./start.py)
 
 There is an alternative way to add path. See the [alternative.py](./alternative.py) source code.
 
