@@ -58,7 +58,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-d",
         "--doc",
-        help="Path to document to get infor for",
+        help="Path to document to get info for",
         action="store",
         dest="fnm_doc",
         required=True,
