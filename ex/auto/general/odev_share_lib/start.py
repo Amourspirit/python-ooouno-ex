@@ -24,8 +24,8 @@ def main() -> int:
     with Lo.Loader(Lo.ConnectPipe()) as loader:
         Session.register_path(Session.PathEnum.SHARE_USER_PYTHON)
     
-    # Even though the connection to office is now closed the path is registered
-    # and the module can still be importted.
+    # Even though the connection to office is now closed the path is registered in sys.path
+    # and the module can still be imported.
     
     # pyglobal is a module in 'My Macros'
     # pyglobal cannot be imported by default as the 'My Macros' directory is not known to python.

@@ -9,16 +9,17 @@ Also ODEV has options to set these paths to a new location temporarily.
 
 Getting the locations of these paths can be challenging.
 
-[OOO Development Tools] can discover and register the path automatically as shown in this example.
+ODEV can discover and register the path automatically as shown in this example.
 
-Note that [OOO Development Tools requires a connection to LibreOffice as it is the LibreOffice API
+Note that ODEV requires a connection to LibreOffice as it is the LibreOffice API
 that allows then paths to be discovered. Without a connection automatic registering of path is not possible.
 
 There is a macro example of importing from shared library [here](../../../general/odev_share_lib/).
 
 See:
-    - [Importing Python Modules]
-    - [Getting Session Information]
+
+- [Importing Python Modules]
+- [Getting Session Information]
 
 ## Requirements
 
@@ -38,7 +39,7 @@ see sample LibreOffice Calc document, [share_lib.ods](share_lib.ods)
 
 ### Source
 
-see [counter.py](./counter.py)
+see [start.py](./start.py)
 
 There is an alternative way to add path. See the [alternative.py](./alternative.py) source code.
 
