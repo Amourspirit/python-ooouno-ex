@@ -1,0 +1,14 @@
+from typing import Any
+from ex.general.odev_share_lib import counter
+
+
+def start_dialog(*args, **kwargs) -> None:
+    counter.start_dialog()
+
+
+def btnIncrement(event: Any) -> None:
+    counter.updateLabel(event, 1)
+
+
+def btnDecrement(event: Any) -> None:
+    counter.updateLabel(event, -1)

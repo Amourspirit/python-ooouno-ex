@@ -1,6 +1,8 @@
 # Office Window Monitor
 
 This is a basic example that shows how attach a Terminate Monitor to office.
+In addition a listener is attached to bridge connection to office and
+if the bridge terminates for any reason before office is closed then script will also terminate.
 
 This script will stay running until office is closed or `ctl+c` is pressed.
 
@@ -38,7 +40,7 @@ User interactions with window are reflected in console window.
 
 Starts Calc as a new document and monitors window activity.
 
-```python
+```text
 PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process "ex/auto/general/odev_monitor/start.py True"
 Press 'ctl+c' to exit script early.
 Loading Office...
@@ -47,6 +49,7 @@ Closing Office
 TL: Starting Closing
 TL: Finished Closing
 Office terminated
+BR: Office bridge has gone!!
 
 Exiting by document close.
 ```
