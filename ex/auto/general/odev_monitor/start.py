@@ -5,13 +5,16 @@ from __future__ import annotations
 import time
 import sys
 import types
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
 from ooodev.office.calc import Calc
 from ooodev.listeners.x_terminate_adapter import XTerminateAdapter
 from ooodev.listeners.x_event_adapter import XEventAdapter
+from ooodev.events.args.event_args import EventArgs
+from ooodev.events.lo_events import Events
+from ooodev.events.lo_named_event import LoNamedEvent
 
 
 if TYPE_CHECKING:
@@ -32,6 +35,11 @@ class DocMonitor:
 
         # create a new instance of adapter. Note that adapter methods all pass.
         term_adapter = XTerminateAdapter()
+        
+        # using an event is redundant here and is included for example purposes.
+        # below a listener is attached to Lo.birdge that does the same job.
+        self.events = Events(source=self)
+        self.events.on(LoNamedEvent.BRIDGE_DISPOSED, DocMonitor.on_disposed)
 
         # reassign the method we want to use from XTerminateAdapter instance in a pythonic way.
         term_adapter.notifyTermination = types.MethodType(self.notify_termination, term_adapter)
@@ -94,6 +102,12 @@ class DocMonitor:
         # does not exit the script
         print("BR: Office bridge has gone!!")
         self.bridge_disposed = True
+
+    @staticmethod
+    def on_disposed(source: Any, event: EventArgs) -> None:
+        # just another way of knowing when bridge is gone.
+        print("LO: Office bridge has gone!!")
+        event.event_source.bridge_disposed = True
 
 
 # endregion DocMonitor Class
