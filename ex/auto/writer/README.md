@@ -2,7 +2,7 @@
 
 Welcome to Writer Automation folder. Open a sub folder to get to an example.
 
-[hello_world](./hello_world/) - Simple Hello World example using [ScriptForge].
-[odev_doc_print_console](./odev_doc_print_console/) - example shows how to print the contents of a Writer document to the console.
+- [hello_world](./hello_world/) - Simple Hello World example using [ScriptForge].
+- [odev_doc_print_console](./odev_doc_print_console/) - example shows how to print the contents of a Writer document to the console.
 
 [ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge
