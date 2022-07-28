@@ -12,7 +12,7 @@ In this case the `DocMonitor` class that is responsible for starting Office and 
 which implements [API XTerminateListener](https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1frame_1_1XTerminateListener.html)
 that monitors office terminate.
 
-`DocMonitor` also has two additional way of listening if the bridge to LibreOffice terminates for some
+`DocMonitor` also has two additional ways of listening if the bridge to LibreOffice terminates for some
 unexpected reason. One way is to listen for an event raised by `Lo` when bridge is gone.
 Another way is to attach a listener to `Lo.bridge`. Only one of these methods is necessary to be notified
 when bridge is gone away but both are included for example purposes.
