@@ -23,7 +23,7 @@ python -m main auto --process 'ex/auto/writer/odev_doc_print_console/start.py --
 ### Output
 
 ```text
-python -m main auto --process 'ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/cicero_dummy.odt"'
+>>> python -m main auto --process 'ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/cicero_dummy.odt"'
 -------------------Text Content-------------------
 Cicero
 Dummy Text
