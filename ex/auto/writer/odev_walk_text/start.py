@@ -87,7 +87,6 @@ def main() -> int:
 
     # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
-    # Note the use of the headless flag. Not using GUI for process.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with BreakContext(Lo.Loader(Lo.ConnectSocket())) as loader:
