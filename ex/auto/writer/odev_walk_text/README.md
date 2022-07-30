@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/4193389/181919190-a415dc2d-762c-48a6-b660-cbfc92b46db1.gif" width="400" alt="logo"/>
+<img src="https://user-images.githubusercontent.com/4193389/181919190-a415dc2d-762c-48a6-b660-cbfc92b46db1.gif" alt="animation"/>
 </p>
 
 # Walk Text
