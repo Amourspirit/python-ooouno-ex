@@ -7,7 +7,6 @@ import os
 
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
-from ooodev.utils.info import Info
 from ooodev.utils.gui import GUI
 from ooodev.wrapper.break_context import BreakContext
 
