@@ -6,7 +6,7 @@
 
 This example demonstrates how to dispatch commands using [OOO Development Tools] (ODEV).
 
-LibreOffice has a comprehensive webpage listing all the dispatch commands [Development/DispatchCommands](https://wiki.documentfoundation.org/Development/DispatchCommands).
+LibreOffice has a comprehensive web page listing all the dispatch commands [Development/DispatchCommands](https://wiki.documentfoundation.org/Development/DispatchCommands).
 
 This example also demonstrates hooking ODEV events that in this case allow for finer control over which commands are dispatched.
 
@@ -19,8 +19,10 @@ See [source code](./start.py)
 Running the following command opens a Write document, puts it into read-only mode.
 Next a Get Involved wep page is opened in local web browser.
 
-```sh
-python -m main auto --process 'ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"'
+From current folder
+
+```shell
+python start.py -d "../../../../resources/odt/story.odt"
 ```
 
 ### Example console output

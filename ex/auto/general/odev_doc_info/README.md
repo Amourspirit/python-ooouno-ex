@@ -10,14 +10,16 @@ See [source code](./start.py)
 
 ## Automate
 
-```sh
-python -m main auto --process "ex/auto/general/odev_doc_info/start.py --doc ex/auto/general/odev_doc_info/story.odt --service --interface --xdoc --property"
+From current folder.
+
+```shell
+python start.py --doc "story.odt" --service --interface --xdoc --property
 ```
 
 or, to see all possible commands
 
 ```sh
-python -m main auto --process "ex/auto/general/odev_doc_info/start.py -h"
+python start.py -h
 ```
 
 ![Terminal Example](https://user-images.githubusercontent.com/4193389/179373247-0b9d34b2-9457-44c8-8823-e405272d3c80.gif)
