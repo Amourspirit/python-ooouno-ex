@@ -111,7 +111,6 @@ def main() -> int:
 
         try:
             GUI.set_visible(is_visible=visible, odoc=doc)
-            Lo.delay(15_000)
             apply_shuffle(doc, loop_delay, visible)
 
             Lo.delay(2_000)
