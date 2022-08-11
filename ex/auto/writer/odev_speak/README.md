@@ -27,7 +27,7 @@ For advanced Text-to-Speech generation see [coqui-ai TTS](https://github.com/coq
 
 Run from current example folder.
 
-```python
+```shell
 python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
