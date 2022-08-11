@@ -17,7 +17,7 @@ see [requirements.txt](./requirements.txt)
 
 ## See
 
-See Also: [Text API Overview], [Extract Writer Text]
+See Also: [Text API Overview], [Extract Writer Text], [using and comparing cursors]
 
 See [source code](./start.py)
 
@@ -27,7 +27,7 @@ For advanced Text-to-Speech generation see [coqui-ai TTS](https://github.com/coq
 
 Run from current example folder.
 
-```python
+```shell
 python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
@@ -84,6 +84,8 @@ Office bridge has gone!!
 ```
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
+
+[using and comparing cursors]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html#using-and-comparing-text-cursors
 
 [Extract Writer Text]: ../odev_doc_print_console/
 
