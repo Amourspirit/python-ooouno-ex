@@ -1,7 +1,7 @@
 # Speak Text
 
 Demonstrates how to control Writer application's visible cursor.
-Moves cursor by paragraph and sentence while reading out loud each sentence.
+Moves cursor by paragraph and sentence while reading out loud each sentence using [text-to-speech].
 
 See [Extract Writer Text] for an example how to silence ODEV extra terminal output.
 
@@ -86,3 +86,5 @@ Office bridge has gone!!
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
 
 [Extract Writer Text]: ../odev_doc_print_console/
+
+[text-to-speech]: https://pypi.org/project/text-to-speech/
