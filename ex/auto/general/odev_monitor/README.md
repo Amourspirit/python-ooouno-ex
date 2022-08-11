@@ -29,14 +29,16 @@ See [source code](./start.py)
 
 ## Automate
 
+From current folder
+
 ```sh
-python -m main auto --process "ex/auto/general/odev_monitor/start.py"
+python start.py
 ```
 
 or for auto shutdown
 
 ```sh
-python -m main auto --process "ex/auto/general/odev_monitor/start.py True"
+python start.py True
 ```
 
 ### Example console output

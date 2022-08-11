@@ -3,6 +3,10 @@
 from __future__ import annotations
 import argparse
 from typing import cast
+import re
+
+
+from text_to_speech import speak
 
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
@@ -10,7 +14,11 @@ from ooodev.utils.gui import GUI
 from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.text import XTextDocument
-from com.sun.star.view import XLineCursor
+from com.sun.star.text import XSentenceCursor
+from com.sun.star.text import XTextRangeCompare
+
+
+regex = re.compile("[^a-zA-Z0-9, ]")
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -24,56 +32,53 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def show_paragraphs(doc: XTextDocument) -> None:
+def speak_sentences(doc: XTextDocument) -> None:
     tvc = Write.get_view_cursor(doc)
     para_cursor = Write.get_paragraph_cursor(doc)
     para_cursor.gotoStart(False)  # go to start test; no selection
 
     while 1:
         para_cursor.gotoEndOfParagraph(True)  # select all of paragraph
-        curr_para = para_cursor.getString()
-        if len(curr_para) > 0:
-            tvc.gotoRange(para_cursor.getStart(), False)
-            tvc.gotoRange(para_cursor.getEnd(), True)
+        end_para = para_cursor.getEnd()
+        curr_para_str = para_cursor.getString()
+        print(f"P<{curr_para_str}>")
 
-            print(f"P<{curr_para}>")
-            Lo.delay(500)  # delay half a second
+        if len(curr_para_str) > 0:
+            # set sentence cursor pointing to start of this paragraph
+            cursor = para_cursor.getText().createTextCursorByRange(para_cursor.getStart())
+            sc = Lo.qi(XSentenceCursor, cursor)
+            sc.gotoStartOfSentence(False)
+            while 1:
+                sc.gotoEndOfSentence(True)  # select all of sentence
+
+                # move the text view cursor to highlight the current sentence
+                tvc.gotoRange(sc.getStart(), False)
+                tvc.gotoRange(sc.getEnd(), True)
+                curr_sent_str = strip_non_word_chars(sc.getString())
+                print(f"S<{curr_sent_str}>")
+                if len(curr_sent_str) > 0:
+                    speak(
+                        curr_sent_str,
+                    )
+                if Write.compare_cursor_ends(sc.getEnd(), end_para) >= Write.CompareEnum.EQUAL:
+                    print("Sentence cursor passed end of current paragraph")
+                    break
+
+                if sc.gotoNextSentence(False) is False:
+                    print("# No next sentence")
+                    break
 
         if para_cursor.gotoNextParagraph(False) is False:
             break
 
 
-def count_words(doc: XTextDocument) -> int:
-    word_cursor = Write.get_word_cursor(doc)
-    word_cursor.gotoStart(False)  # go to start of text
-
-    word_count = 0
-    while 1:
-        word_cursor.gotoEndOfWord(True)
-        curr_word = word_cursor.getString()
-        if len(curr_word) > 0:
-            word_count += 1
-        if word_cursor.gotoNextWord(False) is False:
-            break
-    return word_count
-
-
-def show_lines(doc: XTextDocument) -> None:
-    tvc = Write.get_view_cursor(doc)
-    tvc.gotoStart(False)  # go to start of text
-
-    line_cursor = Lo.qi(XLineCursor, tvc, True)
-    have_text = True
-    while have_text is True:
-        line_cursor.gotoStartOfLine(False)
-        line_cursor.gotoEndOfLine(True)
-        print(f"L<{tvc.getString()}>")  # no text selection in line cursor
-        Lo.delay(500)  # delay half a second
-        tvc.collapseToEnd()
-        have_text = tvc.goRight(1, True)
+def strip_non_word_chars(s: str) -> str:
+    return regex.sub("", s)
 
 
 def main() -> int:
+    # speak("Hello World", save=True, file="/tmp/abc.mp3", speak=True)
+    # return
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
 
@@ -93,17 +98,16 @@ def main() -> int:
 
         try:
             doc = Write.open_doc(fnm=fnm, loader=loader)
-        except Exception:
+        except Exception as e:
             print(f"Could not open '{fnm}'")
+            print(f"  {e}")
             # office will close and with statement is exited
             raise BreakContext.Break
 
         try:
             GUI.set_visible(is_visible=True, odoc=doc)
+            speak_sentences(doc)
 
-            show_paragraphs(doc)
-            print(f"Word count: {count_words(doc)}")
-            show_lines(doc)
         finally:
             Lo.close_doc(doc)
 

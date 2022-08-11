@@ -7,8 +7,11 @@ See [source code](./start.py)
 
 ## Automate
 
+
 The following command will run automation that generates a new Writer document and writes "Hello World" into it.
 
+From current folder.
+
 ```sh
-python -m main auto --process "ex/auto/writer/hello_world/start.py"
+python start.py
 ```
