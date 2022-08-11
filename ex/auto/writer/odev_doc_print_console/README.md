@@ -16,8 +16,10 @@ See [source code](./start.py)
 
 ## Automate
 
-```python
-python -m main auto --process 'ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/cicero_dummy.odt"'
+Run from current folder.
+
+```shell
+python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
 ### Output

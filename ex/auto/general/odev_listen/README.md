@@ -23,14 +23,16 @@ See [source code](./start.py)
 
 ## Automate
 
+From current folder.
+
 ```sh
-python -m main auto --process "ex/auto/general/odev_listen/start.py"
+python start.py
 ```
 
 or for auto shutdown
 
 ```sh
-python -m main auto --process "ex/auto/general/odev_listen/start.py True"
+python start.py True
 ```
 
 ### Example console output
@@ -39,7 +41,7 @@ User interactions with window are reflected in console window.
 
 Starts Write as a new document and monitors window activity and auto terminates.
 
-```python
+```ps
 PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process "ex/auto/general/odev_listen/start.py True"
 Press 'ctl+c' to exit script early.
 Loading Office...

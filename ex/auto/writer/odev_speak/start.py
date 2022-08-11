@@ -3,29 +3,7 @@
 from __future__ import annotations
 import argparse
 from typing import cast
-from pathlib import Path
 import re
-import sys
-
-
-def register_proj_path() -> None:
-    def get_root_path(pth) -> Path:
-        print("testing Path:", pth)
-        p = Path(pth)
-        for file in p.glob(".root_token"):
-            if file.name == ".root_token":
-                return file.parent
-        parent = p.parent
-        if parent == p:
-            raise Exception("Got all the way to root. Did not find project root path.")
-        return get_root_path(parent)
-
-    ps = str(get_root_path(Path(__file__).absolute()))
-    if not ps in sys.path:
-        sys.path.insert(0, ps)
-
-
-# register_proj_path()
 
 
 from text_to_speech import speak

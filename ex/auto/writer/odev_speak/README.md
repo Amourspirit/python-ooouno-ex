@@ -7,7 +7,7 @@ See [Extract Writer Text] for an example how to silence ODEV extra terminal outp
 
 ## Requirements
 
-This example has additional requirements to install.
+This example has additional [requirements](./requirements.txt) to install.
 
 ```text
 pip install -r requirements.txt
@@ -15,13 +15,13 @@ pip install -r requirements.txt
 
 see [requirements.txt](./requirements.txt)
 
-
-
 ## See
 
 See Also: [Text API Overview], [Extract Writer Text]
 
 See [source code](./start.py)
+
+For advanced Text-to-Speech generation see [coqui-ai TTS](https://github.com/coqui-ai/TTS)
 
 ## Automate
 
@@ -32,6 +32,7 @@ python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
 ### Output
+
 ```text
 Loading Office...
 Opening /home/paul/Documents/Projects/Python/LibreOffice/ooouno_ex/resources/odt/cicero_dummy.odt

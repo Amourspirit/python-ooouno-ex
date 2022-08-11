@@ -12,8 +12,10 @@ See [source code](./start.py)
 
 ## Automate
 
-```sh
-python -m main auto --process "ex/auto/general/odev_doc_prop/start.py --doc ex/auto/general/odev_doc_prop/algs.odp"
+From current folder.
+
+```shell
+python start.py --doc "algs.odp"
 ```
 
 ![Properties Screen Shot](https://user-images.githubusercontent.com/4193389/179302791-d8373bd0-7b72-41a3-86b8-dcbd5bac6feb.png)

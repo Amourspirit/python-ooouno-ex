@@ -3,7 +3,6 @@
 from __future__ import annotations
 import argparse
 from typing import cast
-import os
 
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write

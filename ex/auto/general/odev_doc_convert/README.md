@@ -13,8 +13,10 @@ See [source code](./start.py)
 The following example command runs automation that reads the LICENSE file in this projects
 root folder and writes out to LICENSE.pdf in the same folder.
 
-```sh
-python -m main auto --process 'ex/auto/general/odev_doc_convert/start.py -e "pdf" -f "LICENSE"'
+From current folder.
+
+```shell
+python start.py -e "pdf" -f "../../../../LICENSE"
 ```
 
 ![convert text to pdf](https://user-images.githubusercontent.com/4193389/178155989-1ec6e63a-ace3-4c60-8645-729245235d19.gif)
