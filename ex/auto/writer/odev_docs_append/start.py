@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # coding: utf-8
-# Print all the text in every paragraph using enumeration access.
 
 from __future__ import annotations
 import sys
@@ -27,11 +26,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument(
-        "docs",
-        help="Append one or more documents",
-        nargs='*'
-    )
+    parser.add_argument("docs", help="Append one or more documents", nargs="*")
 
 
 def append_text_files(doc: XTextDocument, *args: str) -> None:
