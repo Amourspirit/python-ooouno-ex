@@ -4,14 +4,18 @@
 
 # Walk Text
 
-Demonstrates how to control Writer application's visible cursor.
+Using [OOO Development Tools] (ODEV) this example demonstrates how to control Writer application's visible cursor.
 Moves cursor by paragraph, line and word.
 
 See [Extract Writer Text] for an example how to silence ODEV extra terminal output.
 
 ## See
 
-See Also: [Text API Overview], [Extract Writer Text]
+See Also:
+
+- [Text API Overview]
+- [Extract Writer Text]
+- [OOO Development Tools]
 
 See [source code](./start.py)
 
@@ -86,5 +90,5 @@ Office bridge has gone!!
 ```
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
-
 [Extract Writer Text]: ../odev_doc_print_console/
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
