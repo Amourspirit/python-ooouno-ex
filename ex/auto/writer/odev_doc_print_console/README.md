@@ -10,7 +10,11 @@ This example also use ODEV's events to hook and suppress internal printing via [
 
 ## See
 
-See Also: [Text API Overview], [Class LoEvents]
+See Also:
+
+- [Text API Overview]
+- [Class LoEvents]
+- [OOO Development Tools]
 
 See [source code](./start.py)
 
@@ -46,3 +50,4 @@ Nor again is there anyone who loves or pursues or desires to obtain pain of itse
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
 [Class LoEvents]: http://localhost:8000/docs/_build/html/src/events/lo_events/lo_events.html
+
