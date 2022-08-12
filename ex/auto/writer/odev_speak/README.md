@@ -17,7 +17,12 @@ see [requirements.txt](./requirements.txt)
 
 ## See
 
-See Also: [Text API Overview], [Extract Writer Text], [using and comparing cursors]
+See Also:
+
+- [Text API Overview]
+- [Extract Writer Text]
+- [using and comparing cursors]
+- [OOO Development Tools]
 
 See [source code](./start.py)
 
@@ -84,9 +89,7 @@ Office bridge has gone!!
 ```
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
-
 [using and comparing cursors]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html#using-and-comparing-text-cursors
-
 [Extract Writer Text]: ../odev_doc_print_console/
-
 [text-to-speech]: https://pypi.org/project/text-to-speech/
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
