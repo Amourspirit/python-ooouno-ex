@@ -17,9 +17,6 @@ from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 
-from com.sun.star.text import XText
-from com.sun.star.text import XTextContent
-from com.sun.star.text import XTextRange
 from com.sun.star.text import XTextDocument
 
 
