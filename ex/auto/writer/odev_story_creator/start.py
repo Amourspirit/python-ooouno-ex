@@ -24,6 +24,7 @@ from com.sun.star.text import XTextDocument
 from ooo.dyn.style.line_spacing import LineSpacing
 from ooo.dyn.style.line_spacing_mode import LineSpacingMode
 
+
 def args_add(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-f",
@@ -42,15 +43,16 @@ def on_lo_print(source: Any, e: CancelEventArgs) -> None:
     # by setting e.canecl = True all internal printing of ooodev is suppressed
     e.cancel = True
 
+
 def read_text(fnm: Path, cursor: XTextCursor) -> None:
     sb: List[str] = []
-    with open(fnm, 'r') as file:
+    with open(fnm, "r") as file:
         i = 0
         for ln in file:
-            line = ln.rstrip() # remove new line \n
+            line = ln.rstrip()  # remove new line \n
             if len(line) == 0:
                 if len(sb) > 0:
-                    Write.append_para(cursor, ' '.join(sb))
+                    Write.append_para(cursor, " ".join(sb))
                 sb.clear()
             elif line.startswith("Title: "):
                 Write.append_para(cursor, line[7:])
@@ -67,32 +69,32 @@ def read_text(fnm: Path, cursor: XTextCursor) -> None:
             # if i > 20:
             #     break
         if len(sb) > 0:
-            Write.append_para(cursor, ' '.join(sb))
-            
+            Write.append_para(cursor, " ".join(sb))
 
 
 def create_para_style(doc: XTextDocument, style_name: str) -> bool:
     try:
         para_styles = Info.get_style_container(doc=doc, family_style_name="ParagraphStyles")
-        
+
         # create new paragraph style properties set
         para_style = Lo.create_instance_msf(XStyle, "com.sun.star.style.ParagraphStyle", raise_err=True)
         props = Lo.qi(XPropertySet, para_style, raise_err=True)
-        
+
         # set some properties
         props.setPropertyValue("CharFontName", Info.get_font_general_name())
         props.setPropertyValue("CharHeight", 12.0)
-        props.setPropertyValue("ParaBottomMargin", 400) # 4mm, in 100th mm
+        props.setPropertyValue("ParaBottomMargin", 400)  # 4mm, in 100th mm
 
         line_spacing = LineSpacing(Mode=LineSpacingMode.FIX, Height=600)
         props.setPropertyValue("ParaLineSpacing", line_spacing)
-        
+
         para_styles.insertByName(style_name, props)
         return True
     except Exception as e:
         print("Could not set paragraph style")
         print(f"  {e}")
     return False
+
 
 def main() -> int:
     # create parser to read terminal input
@@ -136,33 +138,32 @@ def main() -> int:
         try:
             if visible:
                 GUI.set_visible(is_visible=visible, odoc=doc)
-            
+
             styles = Info.get_style_names(doc, "ParagraphStyles")
             print("Paragraph Styles")
             Lo.print_names(styles)
-            
+
             if not create_para_style(doc, "adParagraph"):
                 print("Could not create new paragraph style")
                 # office will close and with statement is exited
                 raise BreakContext.Break
-                
-        
+
             xtext_range = doc.getText().getStart()
             Props.set_property(xtext_range, "ParaStyleName", "adParagraph")
-            
+
             Write.set_header(text_doc=doc, text=f"From: {fnm.name}")
             Write.set_a4_page_format(doc)
             Write.set_page_numbers(doc)
-            
+
             cursor = Write.get_cursor(doc)
-            
+
             read_text(fnm=fnm, cursor=cursor)
             Write.end_paragraph(cursor)
-            
+
             Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
-            
+
             Lo.delay(delay)
-            
+
             Write.save_doc(text_doc=doc, fnm="bigStory.doc")
 
         finally:
