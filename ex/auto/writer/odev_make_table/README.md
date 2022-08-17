@@ -7,8 +7,8 @@ and store as a blue table in "table.odt".
 
 See Also:
 
-- [Text Styles]
-- [Style Changes to Words and Phrases]
+- [Text Content Other than Strings]
+- [Adding a Text Table to a Document]
 - [OOO Development Tools]
 
 See [source code](./start.py)
@@ -59,6 +59,6 @@ Spectre 2015 Daniel Craig Sam Mendes
 
 ![image](https://user-images.githubusercontent.com/4193389/185208883-2a11e357-dde0-403a-ac08-b5696d51d5a9.png)
 
-[Text Styles]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter06.html
-[Style Changes to Words and Phrases]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter06.html#style-changes-to-words-and-phrases
+[Text Content Other than Strings]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html
+[Adding a Text Table to a Document]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html#adding-a-text-table-to-a-document
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
