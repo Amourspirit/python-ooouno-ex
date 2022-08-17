@@ -13,11 +13,11 @@ from ooodev.utils.date_time_util import DateUtil
 
 def read_table(fnm: Path) -> List[list]:
     results = []
-    with open(fnm, 'r', newline='') as csv_file:
+    with open(fnm, "r", newline="") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter="\t")
         line_count = 0
         for row in csv_reader:
-            if line_count in (0, 1, 2, 4): # not csv lines
+            if line_count in (0, 1, 2, 4):  # not csv lines
                 line_count += 1
                 continue
             # first row will be column names
@@ -25,8 +25,9 @@ def read_table(fnm: Path) -> List[list]:
             line_count += 1
     return results
 
+
 def main() -> int:
-    
+
     fnm = FileIO.get_absolute_path("../../../../resources/txt/bondMovies.txt")
     if not fnm.exists():
         print("resource image 'bondMovies.txt' not found.")
@@ -45,7 +46,7 @@ def main() -> int:
             GUI.set_visible(is_visible=True, odoc=doc)
 
             cursor = Write.get_cursor(doc)
-        
+
             Write.append_para(cursor, "Table of Bond Movies")
             Write.style_prev_paragraph(cursor, "Heading 1")
             Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
