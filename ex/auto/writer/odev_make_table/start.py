@@ -12,12 +12,14 @@ from ooodev.utils.date_time_util import DateUtil
 
 
 def read_table(fnm: Path) -> List[list]:
+    # get a 2D Table with the the first row containing column names.
     results = []
     with open(fnm, "r", newline="") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter="\t")
         line_count = 0
         for row in csv_reader:
-            if line_count in (0, 1, 2, 4):  # not csv lines
+            # each row is a list of values
+            if line_count in (0, 1, 2, 4):  # skip non-csv lines
                 line_count += 1
                 continue
             # first row will be column names
@@ -28,7 +30,7 @@ def read_table(fnm: Path) -> List[list]:
 
 def main() -> int:
 
-    fnm = FileIO.get_absolute_path("../../../../resources/txt/bondMovies.txt")
+    fnm = FileIO.get_absolute_path("../../../../resources/txt/bondMovies.txt")  # source csv file
     if not fnm.exists():
         print("resource image 'bondMovies.txt' not found.")
         print("Unable to continue.")
@@ -50,7 +52,8 @@ def main() -> int:
             Write.append_para(cursor, "Table of Bond Movies")
             Write.style_prev_paragraph(cursor, "Heading 1")
             Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
-            # Lock display updating
+
+            # Lock display updating for faster writing of table into document.
             with Lo.ControllerLock():
                 Write.add_table(cursor=cursor, table_data=tbl_data)
                 Write.end_paragraph(cursor)
