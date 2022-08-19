@@ -17,7 +17,7 @@ from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.awt import Size
 from com.sun.star.text import XTextShapesSupplier
-from com.sun.star.container import XIndexAccess
+
 
 def args_add(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
@@ -84,14 +84,14 @@ def main() -> int:
             Lo.delay(delay)
 
             pics = Write.get_text_graphics(doc)
-            print(f'Num. of text graphics: {len(pics)}')
-            
+            print(f"Num. of text graphics: {len(pics)}")
+
             # save text graphics to files
             for i, pic in enumerate(pics):
                 fnm = Path(f"graphic{i + 1}.png")
                 ImagesLo.save_graphic(pic, fnm, "png")  # ".gif", "gif")
                 sz = cast(Size, Props.get_property(pic, "SizePixel"))
-                print(f'Image size in pixels: {sz.Width} x {sz.Height}')
+                print(f"Image size in pixels: {sz.Width} x {sz.Height}")
             print()
 
             # this supplier is not created; qi() returns None
@@ -99,7 +99,7 @@ def main() -> int:
             if shps_supplier is None:
                 print("Could not obtain text shapes supplier")
             else:
-                print(f'Number of shapes: {shps_supplier.getShapes().getCount()}')
+                print(f"Number of shapes: {shps_supplier.getShapes().getCount()}")
 
             # shapes will be implemented at a later date.
 
