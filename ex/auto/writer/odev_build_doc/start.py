@@ -164,8 +164,6 @@ def main() -> int:
                 append(f"Image as a link: ")
 
                 img_size = ImagesLo.get_size_100mm(im_fnm=im_fnm)
-                assert img_size.Height == 5751
-                assert img_size.Width == 6092
                 Write.add_image_link(doc, cursor, im_fnm, img_size.Width, img_size.Height)
 
                 # enlarge by 1.5x
