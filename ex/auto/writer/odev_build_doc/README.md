@@ -24,6 +24,10 @@ python start.py
 
 ![build_doc](https://user-images.githubusercontent.com/4193389/184692062-4554d35d-4be8-4aac-99a6-4d7962e2017b.gif)
 
+## Output
+
+[build.odt](../../../../resources/odt/build.odt)
+
 [Text Styles]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter06.html
 [Style Changes to Words and Phrases]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter06.html#style-changes-to-words-and-phrases
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
