@@ -1,13 +1,17 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/4193389/185751451-e1544108-f0c8-4e38-86c9-2b0f9b57a94e.png" alt="Italics"/>
+<img src="https://user-images.githubusercontent.com/4193389/185763894-adb25e29-270f-4085-834b-502cf48c86fe.png" alt="Italics"/>
 </p>
 
 # Italics Styler
 
 Example of Search and style Italics.
 
+By adding `--word name color` instances to the command line determines which words are italicize and what color the italicize word shall be.
+
+In this example:
 Search for all occurrences of a `pleasure` (case-insensitive) and set their style to be in green italics.
 Search for all occurrences of a `pain` (case-insensitive) and set their style to be in red italics.
+
 Save changed  text to "italicized.doc" in current folder.
 
 ## See
@@ -25,7 +29,7 @@ See [source code](./start.py)
 Run from current example folder.
 
 ```shell
-python start.py --show --file "../../../../resources/odt/cicero_dummy.odt"
+python start.py --show --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ## Output

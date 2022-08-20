@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+from curses.ascii import isdigit
 import sys
 import argparse
 from typing import Any, cast
@@ -32,9 +33,16 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
     parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "--word",
+        action="append",
+        nargs=2,
+        required=True,
+        help="Word color pairs where word is the word to italicize and color is a named color such as red or a color integer such as 16711680",
+    )
 
 
-def italicize_all(doc: XTextDocument, phrase: str, color:Color ) -> int:
+def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
     # cursor = Write.get_view_cursor(doc) # can be used when visible
     cursor = Write.get_cursor(doc)
     cursor.gotoStart(False)
@@ -48,7 +56,9 @@ def italicize_all(doc: XTextDocument, phrase: str, color:Color ) -> int:
         srch_desc.setSearchString(phrase)
         # for props see: https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1util_1_1SearchDescriptor.html
         Props.set_property(obj=srch_desc, name="SearchCaseSensitive", value=False)
-        Props.set_property(obj=srch_desc, name="SearchWords", value=True) # If TRUE, only complete words will be found.    
+        Props.set_property(
+            obj=srch_desc, name="SearchWords", value=True
+        )  # If TRUE, only complete words will be found.
 
         matches = xsearchable.findAll(srch_desc)
         result = matches.getCount()
@@ -64,13 +74,20 @@ def italicize_all(doc: XTextDocument, phrase: str, color:Color ) -> int:
                 cursor.gotoStart(True)
                 print(f"    - starting at char position: {len(cursor.getString()) - pharse_len}")
 
-                Props.set_properties(
-                    obj=match_tr, names=("CharColor", "CharPosture"), vals=(color, FontSlant.ITALIC)
-                )
+                Props.set_properties(obj=match_tr, names=("CharColor", "CharPosture"), vals=(color, FontSlant.ITALIC))
 
     except Exception as e:
         raise
     return result
+
+
+def get_color(color: str) -> int:
+    if color.isdigit():
+        return int(color)
+    c = color.upper()
+    if hasattr(CommonColor, c):
+        return getattr(CommonColor, c)
+    return CommonColor.RED
 
 
 def on_lo_print(source: Any, e: CancelEventArgs) -> None:
@@ -125,11 +142,10 @@ def main() -> int:
                 GUI.set_visible(is_visible=visible, odoc=doc)
 
             with Lo.ControllerLock():
-                result = italicize_all(doc, "pleasure", CommonColor.RED)
-                print(f'Found {result} results for "pleasure"')
-                result = italicize_all(doc, "pain", CommonColor.GREEN)
-                print(f'Found {result} results for "pain"')
-        
+                for word, color in args.word:
+                    result = italicize_all(doc, word, get_color(color))
+                    print(f"Found {result} results for {word}")
+
             Lo.delay(delay)
             Write.save_doc(text_doc=doc, fnm="italicized.doc")
 
