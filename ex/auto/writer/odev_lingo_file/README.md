@@ -1,3 +1,8 @@
+<p align="center">
+<img src="https://user-images.githubusercontent.com/4193389/186020677-bb548a86-3bf7-4b04-b0f9-8f6a32428e26.jpg" alt="logo"/>
+</p>
+
+
 # Lingo File
 
 Apply the spell checker and proof reader (grammar checker) to the supplied file.
