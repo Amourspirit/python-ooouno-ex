@@ -8,6 +8,7 @@ Welcome to Writer Automation folder. Open a sub folder to get to an example.
 - [odev_doc_print_console](./odev_doc_print_console/) - example shows how to print the contents of a Writer document to the console.
 - [odev_docs_append](./odev_docs_append/) - example show how to append documents to an existing document.
 - [odev_italics_styler](./odev_italics_styler/) - example shows how to find and italicize words.
+- [odev_lingo_file](./odev_lingo_file) - example of grammar checking a document.
 - [odev_lingo](./odev_lingo/) - examples using the Linguistics API (the `com.sun.star.linguistic2` module).
 - [odev_make_table](./odev_make_table/) - example of importing csv file and create a table in Writer.
 - [odev_math_questions](./odev_math_questions/) - example of creating a new writer document, add random formula involving "x",  a fraction using x, or sqrt of x.
