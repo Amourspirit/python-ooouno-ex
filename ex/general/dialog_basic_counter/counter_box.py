@@ -1,6 +1,6 @@
 from __future__ import annotations
 import scriptforge as SF
-from typing import Any, cast
+from typing import Any
 
 G_COUNT = 100
 
@@ -8,8 +8,8 @@ G_COUNT = 100
 def start_dialog(*args, **kwargs) -> None:
     global G_COUNT
     # casting is only for typing (autocomplete) support during design time. Cast is ignored at runtime.
-    ui = cast(SF.SFScriptForge.SF_UI, SF.CreateScriptService("UI"))
-    o_dialog = cast(SF.SFDialogs.SF_Dialog, SF.CreateScriptService("Dialog", ui.ActiveWindow, "Standard", "Dialog1"))
+    ui = SF.CreateScriptService("UI")
+    o_dialog = SF.CreateScriptService("Dialog", ui.ActiveWindow, "Standard", "Dialog1")
 
     # uncomment line to have count reset to 100 each time dialog loads.
     # G_COUNT = 100
