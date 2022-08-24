@@ -46,11 +46,9 @@ def msgbox(
         _buttons = MessageBoxButtonsEnum.BUTTONS_OK.value
     else:
         _buttons = buttons
-    tk: 'Toolkit' = create_uno_service("com.sun.star.awt.Toolkit")
+    tk: "Toolkit" = create_uno_service("com.sun.star.awt.Toolkit")
     parent = tk.getDesktopWindow()
-    box: 'XMessageBox' = tk.createMessageBox(
-        parent, boxtype, int(_buttons), str(title), str(message)
-    )
+    box: "XMessageBox" = tk.createMessageBox(parent, boxtype, int(_buttons), str(title), str(message))
     return MessageBoxResultsEnum(int(box.execute()))
 
 

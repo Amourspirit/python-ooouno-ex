@@ -15,9 +15,7 @@ if TYPE_CHECKING:
 class InputBox:
     """InputBox Class for generating and displaying input box via UNO."""
 
-    def __init__(
-        self, message: str, title: str = "", default: str = "", x: int = -1, y: int = -1
-    ):
+    def __init__(self, message: str, title: str = "", default: str = "", x: int = -1, y: int = -1):
         """
         Inits Input Box
 
@@ -43,15 +41,8 @@ class InputBox:
         self._vert_sep = self._hori_sep
         self._label_height = self._button_height * 2 + 5
         self._edit_height = 24
-        self._height = (
-            self._vert_margin * 2
-            + self._label_height
-            + self._vert_sep
-            + self._edit_height
-        )
-        self._label_width = (
-            self._width - self._button_width - self._hori_sep - self._hori_margin * 2
-        )
+        self._height = self._vert_margin * 2 + self._label_height + self._vert_sep + self._edit_height
+        self._label_width = self._width - self._button_width - self._hori_sep - self._hori_margin * 2
 
     def show(self) -> str:
         """
@@ -92,9 +83,7 @@ class InputBox:
         btn_ok.PushButtonType = PushButtonType.OK
         self._m_btn_ok = btn_ok
 
-        btn_cancel: UnoControlButtonModel = self._builder.create_control(
-            UnoControlButtonModel
-        )
+        btn_cancel: UnoControlButtonModel = self._builder.create_control(UnoControlButtonModel)
         btn_cancel.Name = "btn_cancel"
         btn_cancel.TabIndex = 1
         btn_cancel.DefaultButton = False
