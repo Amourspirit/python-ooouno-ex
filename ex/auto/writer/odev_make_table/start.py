@@ -32,6 +32,8 @@ def main() -> int:
 
     fnm = FileIO.get_absolute_path("../../../../resources/txt/bondMovies.txt")  # source csv file
     if not fnm.exists():
+        fnm = FileIO.get_absolute_path("resources/txt/bondMovies.txt")
+    if not fnm.exists():
         print("resource image 'bondMovies.txt' not found.")
         print("Unable to continue.")
         return 1

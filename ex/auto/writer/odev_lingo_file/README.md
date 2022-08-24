@@ -18,6 +18,16 @@ See [source code](./start.py)
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_lingo_file/start.py --file resources/odt/badGrammar.odt"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell

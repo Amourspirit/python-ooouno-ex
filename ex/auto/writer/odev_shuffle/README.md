@@ -7,7 +7,7 @@ This causes the middle letters of the word to be rearranged, but not the first
 and last letters. Words of <= 3 characters are unaffected.
 The words are highlighted as they are shuffled.
 
-In this example the file "shuffled.odt" is saved in the project root folder.
+In this example the file "shuffled.odt" is saved in the working folder.
 
 ## See
 
@@ -21,12 +21,21 @@ See [source code](./start.py)
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_shuffle/start.py --file resources/odt/cicero_dummy.odt"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell
 python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
-
 
 ![shuffle text](https://user-images.githubusercontent.com/4193389/184251513-a8c96a5d-85b0-42ff-a891-ee5762e46a24.gif)
 

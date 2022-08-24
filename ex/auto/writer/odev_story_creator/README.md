@@ -7,7 +7,7 @@
 
 This example reads in a text file, apply a new paragraph style, header, page
 numbers in footer, A4 page style, title, and subtitle, and saves as "bigStory.doc" (Word 97 format)
-in the current folder.
+in the working folder.
 
 ## See
 
@@ -20,6 +20,24 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+Run from current example folder.
+
+```shell
+python start.py --show --verbose  --file "../../../../resources/txt/scandal.txt"
+```
+
+## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_story_creator/start.py --file resources/txt/scandal.txt"
+```
+
+### Linux
 
 Run from current example folder.
 

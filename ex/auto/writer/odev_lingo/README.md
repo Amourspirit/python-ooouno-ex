@@ -28,21 +28,32 @@ See [source code](./start.py)
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_lingo/start.py"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell
 python start.py
 ```
 
-
 ## Output
 
 ```text
 Loading Office...
-No. of dictionaries: 3
+No. of dictionaries: 5
   standard.dic (1); (active); ''; positive
+  en-GB.dic (42); (active); 'GB'; positive
+  en-US.dic (42); (active); 'US'; positive
   technical.dic (355); (active); ''; positive
-  List of Ignored Words (0); (active); ''; positive
+  List of Ignored Words (2); (active); ''; positive
 
 No. of conversion dictionaries: 0
 
@@ -58,7 +69,7 @@ Linguistic Manager Properties
   IsHyphAuto: False
   IsHyphSpecial: True
   IsIgnoreControlCharacters: True
-  IsSpellAuto: False
+  IsSpellAuto: True
   IsSpellCapitalization: True
   IsSpellHide: None
   IsSpellInAllLanguages: None
@@ -71,32 +82,32 @@ Linguistic Manager Properties
 
 Extensions:
 1. ID: apso.python.script.organizer
-   Version: 1.2.8
-   Loc: file:///home/user/.config/libreoffice/4/user/uno_packages/cache/uno_packages/lu59147xjqms4.tmp_/apso-v2.oxt
+   Version: 1.3.0
+   Loc: file:///C:/Users/bigby/AppData/Roaming/LibreOffice/4/user/uno_packages/cache/uno_packages/lu1271241oyk.tmp_/apso.oxt
 
-2. ID: French.linguistic.resources.from.Dicollecte.by.OlivierR
-   Version: 5.7
-   Loc: file:///home/user/.config/libreoffice/4/user/uno_packages/cache/uno_packages/lu287421qavj.tmp_/lo-oo-ressources-linguistiques-fr-v5-7.oxt
+2. ID: org.openoffice.en.hunspell.dictionaries
+   Version: 2021.11.01
+   Loc: file:///C:/Program%20Files/LibreOffice/program/../share/extensions/dict-en
 
-3. ID: org.openoffice.languagetool.oxt
+3. ID: French.linguistic.resources.from.Dicollecte.by.OlivierR
+   Version: 7.0
+   Loc: file:///C:/Program%20Files/LibreOffice/program/../share/extensions/dict-fr
+
+4. ID: org.openoffice.languagetool.oxt
    Version: 5.8
-   Loc: file:///home/user/.config/libreoffice/4/user/uno_packages/cache/uno_packages/lu14553844wbl51.tmp_/LanguageTool-stable.oxt
+   Loc: file:///C:/Users/bigby/AppData/Roaming/LibreOffice/4/user/uno_packages/cache/uno_packages/lu107803j3h0.tmp_/LanguageTool-stable.oxt
 
-4. ID: mytools.mri
-   Version: 1.3.3
-   Loc: file:///home/user/.config/libreoffice/4/user/uno_packages/cache/uno_packages/lu1050215332vj9.tmp_/MRI-1.3.3.oxt
+5. ID: com.sun.star.comp.Calc.NLPSolver
+   Version: 0.9
+   Loc: file:///C:/Program%20Files/LibreOffice/program/../share/extensions/nlpsolver
 
-5. ID: spanish.es.dicts.from.rla-es
-   Version: 2.6
-   Loc: file:///home/user/.config/libreoffice/4/user/uno_packages/cache/uno_packages/lu305561ujwy.tmp_/es.oxt
+6. ID: spanish.es.dicts.from.rla-es
+   Version: __VERSION__
+   Loc: file:///C:/Program%20Files/LibreOffice/program/../share/extensions/dict-es
 
-6. ID: org.openoffice.legacy.nlpsolver
-   Version: 
-   Loc: file:///usr/lib/libreoffice/share/extensions/nlpsolver
-
-7. ID: org.openoffice.legacy.wiki-publisher
-   Version: 
-   Loc: file:///usr/lib/libreoffice/share/extensions/wiki-publisher
+7. ID: com.sun.wiki-publisher
+   Version: 1.2.0
+   Loc: file:///C:/Program%20Files/LibreOffice/program/../share/extensions/wiki-publisher
 
 Available Services:
 SpellChecker (1):
@@ -105,8 +116,10 @@ Thesaurus (1):
   org.openoffice.lingu.new.Thesaurus
 Hyphenator (1):
   org.openoffice.lingu.LibHnjHyphenator
-Proofreader (1):
+Proofreader (2):
   org.languagetool.openoffice.Main
+  org.libreoffice.comp.pyuno.Lightproof.en
+
 Configured Services:
 SpellChecker (1):
   org.openoffice.lingu.MySpellSpellChecker
@@ -115,57 +128,57 @@ Thesaurus (1):
 Hyphenator (1):
   org.openoffice.lingu.LibHnjHyphenator
 Proofreader (1):
-  org.languagetool.openoffice.Main
+  org.libreoffice.comp.pyuno.Lightproof.en
 
-Locales for SpellChecker (39)
+Locales for SpellChecker (46)
+  AR  AU  BE  BO  BS  BZ  CA  CA  CH  CL
+  CO  CR  CU  DO  EC  ES  FR  GB  GH  GQ
+  GT  HN  IE  IN  JM  LU  MC  MW  MX  NA
+  NI  NZ  PA  PE  PH  PH  PR  PY  SV  TT
+  US  US  UY  VE  ZA  ZW
 
-    AR  BE  BF  BJ  BO  CA  CA  CH  CI
-  CL  CO  CR  CU  DO  EC  ES  FR  GQ  GT
-  HN  LU  MC  ML  MX  NE  NI  PA  PE  PH
-  PR  PY  SN  SV  TG  US  US  UY  VE
+Locales for Thesaurus (46)
+  AR  AU  BE  BO  BS  BZ  CA  CA  CH  CL
+  CO  CR  CU  DO  EC  ES  FR  GB  GH  GQ
+  GT  HN  IE  IN  JM  LU  MC  MW  MX  NA
+  NI  NZ  PA  PE  PH  PH  PR  PY  SV  TT
+  US  US  UY  VE  ZA  ZW
 
-Locales for Thesaurus (38)
+Locales for Hyphenator (46)
+  AR  AU  BE  BO  BS  BZ  CA  CA  CH  CL
+  CO  CR  CU  DO  EC  ES  FR  GB  GH  GQ
+  GT  HN  IE  IN  JM  LU  MC  MW  MX  NA
+  NI  NZ  PA  PE  PH  PH  PR  PY  SV  TT
+  US  US  UY  VE  ZA  ZW
 
-    AR  BE  BF  BJ  BO  CA  CH  CI  CL
-  CO  CR  CU  DO  EC  ES  FR  GQ  GT  HN
-  LU  MC  ML  MX  NE  NI  PA  PE  PH  PR
-  PY  SN  SV  TG  US  US  UY  VE
-
-Locales for Hyphenator (40)
-
-      AR  BE  BF  BJ  BO  CA  CA  CH
-  CI  CL  CO  CR  CU  DO  EC  ES  FR  GQ
-  GT  HN  LU  MC  ML  MX  NE  NI  PA  PE
-  PH  PR  PY  SN  SV  TG  US  US  UY  VE
-
-Locales for Proofreader (106)
-
-            AE  AF  AO  AR  AT
-  AU  BE  BE  BE  BH  BO  BR  BY  CA  CA
-  CD  CH  CH  CH  CI  CL  CM  CN  CR  CU
-  CV  DE  DE  DK  DO  DZ  EC  EG  ES  ES
-  ES  ES  ES  FI  FR  FR  GB  GR  GT  GW
-  HN  HT  IE  IN  IQ  IR  IT  JO  JP  KH
-  KW  LB  LI  LU  LU  LY  MA  MA  MC  ML
-  MO  MX  MZ  NI  NL  NZ  OM  PA  PE  PH
-  PL  PR  PT  PY  QA  RE  RO  RU  SA  SD
-  SE  SI  SK  SN  ST  SV  SY  TL  TN  UA
-  US  US  UY  VE  YE  ZA
+Locales for Proofreader (111)
+  AE  AF  AO  AR  AT  AU  BE  BE  BE  BH
+  BO  BR  BS  BY  BZ  CA  CA  CD  CH  CH
+  CH  CI  CL  CM  CN  CR  CU  CV  DE  DE
+  DK  DO  DZ  EC  EG  ES  ES  ES  ES  ES
+  FI  FR  FR  GB  GH  GR  GT  GW  HN  HT
+  IE  IE  IN  IN  IQ  IR  IT  JM  JO  JP
+  KH  KW  LB  LI  LU  LU  LY  MA  MA  MC
+  ML  MO  MX  MZ  NA  NI  NL  NZ  OM  PA
+  PE  PH  PH  PL  PR  PT  PY  QA  RE  RO
+  RU  SA  SD  SE  SI  SK  SN  ST  SV  SY
+  TL  TN  TT  UA  US  US  UY  VE  YE  ZA
+  ZW
 
 
 * 'ceurse' is unknown. Try:
-No. of names: 3
-  'ceruse'  'course'  'curse'
+No. of names: 2
+  'course'  'curse'
 
 
 * 'magisian' is unknown. Try:
 No. of names: 2
-  'magician'  'siamang'
+  'magician'  'magnesia'
 
 
 * 'ellucidate' is unknown. Try:
-No. of names: 3
-  'elucidate'  'elucidation'  'elucidator'
+No. of names: 2
+  'elucidate'  'elucidation'
 
 
 'magician' found in thesaurus; number of meanings: 2
