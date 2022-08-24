@@ -1,5 +1,6 @@
 # coding: utf-8
-from ex.general.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
+from ex.general.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum, MessageBoxType
+
 
 def msg_small(*args, **kwargs):
     msg = "A small message"
@@ -11,6 +12,7 @@ def msg_small(*args, **kwargs):
     )
     assert result == MessageBoxResultsEnum.OK
     print(result)
+
 
 def msg_long(*args, **kwargs):
     msg = (
@@ -29,19 +31,18 @@ def msg_long(*args, **kwargs):
     assert result == MessageBoxResultsEnum.YES or MessageBoxResultsEnum.NO
     print(result)
 
+
 def msg_default_yes(*args, **kwargs):
     msg = "This dialog as button set to a defalt of yes."
     result = msgbox(
         message=msg,
-        buttons=(
-            MessageBoxButtonsEnum.BUTTONS_YES_NO.value
-            | MessageBoxButtonsEnum.DEFAULT_BUTTON_YES.value
-        ),
+        buttons=(MessageBoxButtonsEnum.BUTTONS_YES_NO.value | MessageBoxButtonsEnum.DEFAULT_BUTTON_YES.value),
         title="Default",
         boxtype=MessageBoxType.MESSAGEBOX,
     )
     assert result == MessageBoxResultsEnum.YES or MessageBoxResultsEnum.NO
     print(result)
+
 
 def msg_error(*args, **kwargs):
     msg = "Looks like an error!"
@@ -53,6 +54,7 @@ def msg_error(*args, **kwargs):
     )
     assert result == MessageBoxResultsEnum.OK
     print(result)
+
 
 def msg_warning(*args, **kwargs):
     msg = "Looks like a Warning!"

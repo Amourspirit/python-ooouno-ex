@@ -58,7 +58,7 @@ if TYPE_CHECKING:
 
 
 def OnSheetContentChange(e: XInterface) -> None:
-    doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
+    doc = SF.CreateScriptService("Calc")
     sht: XSpreadsheet = e.Spreadsheet
     
     txt:RichTextControl = sht.DrawPage.Forms[0]["txtChanged"]
@@ -69,7 +69,7 @@ def OnSheetContentChange(e: XInterface) -> None:
     txt.setString(json.dumps(d, sort_keys=True, indent=4))
 
 def OnSelectionChanged(e: XInterface) -> None:
-    doc: SF.SFDocuments.SF_Calc = SF.CreateScriptService("Calc")
+    doc = SF.CreateScriptService("Calc")
     sht: XSpreadsheet = e.Spreadsheet
     
     txt:RichTextControl = sht.DrawPage.Forms[0]["txtChangedSel"]
@@ -105,7 +105,7 @@ def _get_cell_info(e: XInterface, doc: SF.SFDocuments.SF_Calc) -> dict:
     return d
 
 def console(*args, **kwargs) -> None:
-    serv: SF.SFScriptForge.SF_Exception = SF.CreateScriptService('ScriptForge.Exception')
+    serv = SF.CreateScriptService('ScriptForge.Exception')
     serv.PythonShell({**globals(), **locals()})
 
 g_exportedScripts = (OnSheetContentChange, OnSelectionChanged, console)

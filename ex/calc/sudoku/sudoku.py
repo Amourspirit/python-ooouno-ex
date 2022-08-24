@@ -21,6 +21,7 @@ _EMPTY = 0
 board = []
 _solution = None
 
+
 def generate_solution() -> List[List[int]]:
     global _solution
     # pattern for a baseline valid solution
@@ -85,9 +86,7 @@ def shortSudokuSolve(board: List[List[int]]):
     while empty >= 0 and empty < len(empties):
         pos = empties[empty]
         used -= span[board[pos], pos]
-        board[pos] = next(
-            (n for n in range(board[pos] + 1, size + 1) if not span[n, pos] & used), 0
-        )
+        board[pos] = next((n for n in range(board[pos] + 1, size + 1) if not span[n, pos] & used), 0)
         used |= span[board[pos], pos]
         empty += 1 if board[pos] else -1
         if empty == len(empties):
@@ -103,19 +102,16 @@ def generate_single_solve_board() -> List[List[int]]:
         solved = [*islice(shortSudokuSolve(s_board), 2)]
         if len(solved) == 1:
             break
-        diffPos = [
-            (r, c)
-            for r in range(9)
-            for c in range(9)
-            if solved[0][r][c] != solved[1][r][c]
-        ]
+        diffPos = [(r, c) for r in range(9) for c in range(9) if solved[0][r][c] != solved[1][r][c]]
         r, c = random.choice(diffPos)
         s_board[r][c] = solution[r][c]
     return s_board
 
+
 def get_current_solution() -> List[List[int]]:
     global _solution
     return _solution
+
 
 def possible(row: int, column: int, number: int) -> bool:
     global board
