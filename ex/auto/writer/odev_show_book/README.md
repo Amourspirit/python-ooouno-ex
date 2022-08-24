@@ -17,6 +17,16 @@ See [source code](./start.py)
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_show_book/start.py --file resources/odt/cicero_dummy.odt"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell

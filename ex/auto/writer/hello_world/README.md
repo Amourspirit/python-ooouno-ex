@@ -10,8 +10,18 @@ See [source code](./start.py)
 
 The following command will run automation that generates a new Writer document and writes "Hello World" into it.
 
-From current folder.
+### Cross Platform
 
-```sh
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/hello_world/start.py"
+```
+
+### Linux
+
+Run from current example folder.
+
+```shell
 python start.py
 ```

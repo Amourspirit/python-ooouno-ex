@@ -12,7 +12,7 @@ In this example:
 Search for all occurrences of a `pleasure` (case-insensitive) and set their style to be in green italics.
 Search for all occurrences of a `pain` (case-insensitive) and set their style to be in red italics.
 
-Save changed  text to "italicized.doc" in current folder.
+Save changed  text to "italicized.doc" in current working folder.
 
 ## See
 
@@ -25,6 +25,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_italics_styler/start.py --file resources/odt/cicero_dummy.odt --word pleasure green --word pain red"
+```
+
+### Linux
 
 Run from current example folder.
 

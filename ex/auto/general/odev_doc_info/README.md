@@ -10,7 +10,17 @@ See [source code](./start.py)
 
 ## Automate
 
-From current folder.
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/general/odev_doc_info/start.py --doc ex/auto/general/odev_doc_info/story.odt --service --interface --xdoc --property"
+```
+
+### Linux
+
+Run from current example folder.
 
 ```shell
 python start.py --doc "story.odt" --service --interface --xdoc --property
@@ -18,7 +28,7 @@ python start.py --doc "story.odt" --service --interface --xdoc --property
 
 or, to see all possible commands
 
-```sh
+```shell
 python start.py -h
 ```
 

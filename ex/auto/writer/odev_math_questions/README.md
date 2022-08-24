@@ -4,7 +4,7 @@
 
 # Math Questions
 
-Create a new writer document, add random formula involving "x",  a fraction using x, or sqrt of x, and save it as "mathQuestions.pdf" in the current folder.
+Create a new writer document, add random formula involving "x",  a fraction using x, or sqrt of x, and save it as "mathQuestions.pdf" in the current working folder.
 
 ## See
 
@@ -17,6 +17,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_math_questions/start.py"
+```
+
+### Linux
 
 Run from current example folder.
 

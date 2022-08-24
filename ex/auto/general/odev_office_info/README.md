@@ -12,7 +12,23 @@ See [source code](./start.py)
 
 ## Automate
 
-From current folder.
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/general/odev_office_info/start.py"
+```
+
+or for other commands
+
+```shell
+python -m main auto -p "ex/auto/general/odev_office_info/start.py -h"
+```
+
+### Linux
+
+Run from current example folder.
 
 ```shell
 python start.py

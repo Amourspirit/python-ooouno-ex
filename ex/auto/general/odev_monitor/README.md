@@ -29,15 +29,31 @@ See [source code](./start.py)
 
 ## Automate
 
-From current folder
+### Cross Platform
 
-```sh
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/general/odev_monitor/start.py"
+```
+
+or for auto shutdown
+
+```shell
+python -m main auto -p "ex/auto/general/odev_monitor/start.py True"
+```
+
+### Linux
+
+Run from current example folder.
+
+```shell
 python start.py
 ```
 
 or for auto shutdown
 
-```sh
+```shell
 python start.py True
 ```
 

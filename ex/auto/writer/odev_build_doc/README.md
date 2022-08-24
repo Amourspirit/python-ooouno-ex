@@ -2,7 +2,7 @@
 
 Create a new Writer document, add a few lines, styles,
 images, text frame, bookmark, and save it
-as the file "build.odt" in the current folder
+as the file "build.odt" in the current working folder.
 
 ## See
 
@@ -15,6 +15,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_build_doc/start.py"
+```
+
+### Linux
 
 Run from current example folder.
 
