@@ -1,6 +1,6 @@
 # Save Graphics
 
-This example use the output file from [odev_build_doc](../odev_build_doc/) and extracts graphics into local folder.
+This example use the output file from [odev_build_doc](../odev_build_doc/) and extracts graphics into working folder.
 
 ## See
 
@@ -13,6 +13,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_save_graphics/start.py --file resources/odt/build.odt"
+```
+
+### Linux
 
 Run from current example folder.
 

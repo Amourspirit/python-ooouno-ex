@@ -8,7 +8,7 @@
 Example of Search and replace.
 
 Search for the first occurrence of some words and/or replace some English spelled words with US spelled versions.
-Saved the changed document in "replaced.doc" of current folder.
+Saved the changed document in "replaced.doc" of working folder.
 
 ## See
 
@@ -21,6 +21,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_text_replace/start.py --file resources/odt/bigStory.doc"
+```
+
+### Linux
 
 Run from current example folder.
 

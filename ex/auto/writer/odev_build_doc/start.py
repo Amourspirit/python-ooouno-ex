@@ -20,6 +20,8 @@ def main() -> int:
 
     im_fnm = FileIO.get_absolute_path("../../../../resources/image/skinner.png")
     if not im_fnm.exists():
+         im_fnm = FileIO.get_absolute_path("resources/image/skinner.png")
+    if not im_fnm.exists():
         print("resource image 'skinner.png' not found.")
         print("Unable to continue.")
         return 1

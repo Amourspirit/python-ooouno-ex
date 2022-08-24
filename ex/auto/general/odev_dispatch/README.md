@@ -19,7 +19,17 @@ See [source code](./start.py)
 Running the following command opens a Write document, puts it into read-only mode.
 Next a Get Involved wep page is opened in local web browser.
 
-From current folder
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/general/odev_dispatch/start.py -d resources/odt/story.odt"
+```
+
+### Linux
+
+Run from current example folder.
 
 ```shell
 python start.py -d "../../../../resources/odt/story.odt"

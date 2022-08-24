@@ -15,6 +15,16 @@ See [source code](./start.py)
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_make_table/start.py"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell

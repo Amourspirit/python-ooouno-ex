@@ -6,8 +6,20 @@ In this example the file "hello.odt" is saved in the project root folder.
 
 ## Automate
 
-```python
-python -m main auto --process 'ex/auto/writer/odev_hello_save/start.py'
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_hello_save/start.py"
+```
+
+### Linux
+
+Run from current example folder.
+
+```shell
+python start.py
 ```
 
 ## See

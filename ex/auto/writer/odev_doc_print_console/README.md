@@ -20,7 +20,17 @@ See [source code](./start.py)
 
 ## Automate
 
-Run from current folder.
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_doc_print_console/start.py --file resources/odt/cicero_dummy.odt"
+```
+
+### Linux
+
+Run from current example folder.
 
 ```shell
 python start.py --file "../../../../resources/odt/cicero_dummy.odt"

@@ -12,7 +12,17 @@ See [source code](./start.py)
 
 ## Automate
 
-From current folder.
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/general/odev_doc_prop/start.py --doc ex/auto/general/odev_doc_prop/algs.odp"
+```
+
+### Linux
+
+Run from current example folder.
 
 ```shell
 python start.py --doc "algs.odp"

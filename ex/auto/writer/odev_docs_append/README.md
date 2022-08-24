@@ -9,7 +9,7 @@ This example uses [OOO Development Tools] to show how to append other documents 
 Example uses `XDocumentInsertable.insertDocumentFromURL()`. A list of filenames is read from the command line; the first file is opened, and the other files appended to it by `append_text_files()`:
 
 The automate line below opens `blank.odt`, appends `story.odt` and then `cicero_dummy.odt`.
-The result is saved in a new document in the current example folder and is named `blank_APPENDED.odt`.
+The result is saved in a new document in the current working folder and is named `blank_APPENDED.odt`.
 
 ## See
 
@@ -22,6 +22,16 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_docs_append/start.py --file resources/odt/blank.odt resources/odt/story.odt resources/odt/cicero_dummy.odt"
+```
+
+### Linux
 
 Run from current example folder.
 

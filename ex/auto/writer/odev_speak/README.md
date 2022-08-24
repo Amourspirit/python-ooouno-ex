@@ -30,6 +30,16 @@ For advanced Text-to-Speech generation see [coqui-ai TTS](https://github.com/coq
 
 ## Automate
 
+### Cross Platform
+
+From project root folder.
+
+```shell
+python -m main auto -p "ex/auto/writer/odev_speak/start.py --file resources/odt/cicero_dummy.odt"
+```
+
+### Linux
+
 Run from current example folder.
 
 ```shell
