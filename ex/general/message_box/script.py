@@ -1,5 +1,5 @@
 # coding: utf-8
-from ex.general.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum, MessageBoxType
+from lib.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum, MessageBoxType
 
 
 def msg_small(*args, **kwargs):

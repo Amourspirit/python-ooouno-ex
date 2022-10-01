@@ -1,6 +1,5 @@
 {
-  "id": "ooouno-ex",
-  "type": "EXAMPLE",
+  "id": "oooscript",
   "app": "CALC",
   "name": "odev_add_range",
   "version": "0.1.0",
@@ -9,8 +8,9 @@
     "output_name": "odev_add_range",
     "include_modules": [],
     "include_paths": [],
-    "remove_modules": ["lxml"],
-    "single_script": false
+    "single_script": false,
+    "clean": true,
+    "exclude_modules": ["sphinx\\.*", "lxml\\.*", "PIL\\.*"]
   },
   "methods": ["fill", "clear"]
 }

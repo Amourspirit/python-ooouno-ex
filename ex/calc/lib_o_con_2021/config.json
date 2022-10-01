@@ -1,16 +1,11 @@
 {
-  "id": "ooouno-ex",
-  "type": "EXAMPLE",
+  "id": "oooscript",
   "app": "CALC",
   "name": "lib_o_con_2021",
   "version": "0.1.0",
   "args": {
     "src_file": "lib_o_con_2021_calc.py",
     "output_name": "lib_o_con_2021",
-    "include_modules": [],
-    "include_paths": [],
-    "remove_modules": [],
     "single_script": true
-  },
-  "methods": []
+  }
 }

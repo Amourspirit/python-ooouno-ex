@@ -1,16 +1,11 @@
 {
-  "id": "ooouno-ex",
-  "type": "EXAMPLE",
+  "id": "oooscript",
   "app": "CALC",
   "name": "Cell-Events",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
     "output_name": "cell_events",
-    "include_modules": [],
-    "include_paths": [],
-    "remove_modules": [],
     "single_script": true
-  },
-  "methods": []
+  }
 }

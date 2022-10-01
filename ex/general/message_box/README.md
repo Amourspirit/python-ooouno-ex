@@ -63,7 +63,7 @@ The following command will compile script as `msgbox.py` and embed it into`msgbo
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/general/message_box/config.json" --embed-src "ex/general/message_box/msgbox.odt"
+oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt"
 ```
 
 ## Source
