@@ -1,5 +1,5 @@
 from typing import Any
-from ex.general.odev_share_lib import counter
+import counter
 
 
 def start_dialog(*args, **kwargs) -> None:

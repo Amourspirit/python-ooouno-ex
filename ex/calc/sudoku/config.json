@@ -1,15 +1,13 @@
 {
-  "id": "ooouno-ex",
+  "id": "oooscript",
   "name": "calc-sudoku",
-  "type": "EXAMPLE",
   "app": "CALC",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
     "output_name": "calc-sudoku",
-    "include_modules": [],
-    "include_paths": [],
-    "remove_modules": []
+    "single_script": false,
+    "clean": true
   },
   "methods": [
     "generate_single_solve",

@@ -14,7 +14,7 @@ The following command will compile script as `script.py` and embed it into `cell
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/calc/cell_events/config.json" --embed-src "ex/calc/cell_events/cell_events.ods"
+oooscript compile --embed --config "ex/calc/cell_events/config.json" --embed-doc "ex/calc/cell_events/cell_events.ods"
 ```
 
 ![calc_on_sel_change](https://user-images.githubusercontent.com/4193389/166338567-e597c1e9-854c-4254-bbf8-fb8f94598797.gif)

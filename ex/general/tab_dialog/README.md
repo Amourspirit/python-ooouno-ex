@@ -1,3 +1,5 @@
+
+
 # TAB CONTROL DIALOG BOX
 
 LibreOffice do not a Tab Control in the macro editor.
@@ -48,7 +50,7 @@ The following command will compile script as `tab_dialog.py` and embed it into `
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/general/tab_dialog/config.json" --embed-src "ex/general/tab_dialog/tab_dialog.odt"
+oooscript compile --embed --config "ex/general/tab_dialog/config.json" --embed-doc "ex/general/tab_dialog/tab_dialog.odt"
 ```
 
 ## Source

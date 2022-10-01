@@ -18,7 +18,7 @@ The following command will compile script as `script.py` and embed it into `odev
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/calc/odev_add_range_data/config.json" --embed-src "ex/calc/odev_add_range_data/odev_add_range.ods"
+oooscript compile --embed --config "ex/calc/odev_add_range_data/config.json" --embed-doc "ex/calc/odev_add_range_data/odev_add_range.ods"
 ```
 
 ![calc_range_macro](https://user-images.githubusercontent.com/4193389/173204999-924f12f6-59df-4bfe-8c2c-bee4cc5b9d6b.gif)

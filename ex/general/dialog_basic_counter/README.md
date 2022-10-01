@@ -19,7 +19,7 @@ The following command will compile script as `BasicCounter.py` and embed it into
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/general/dialog_basic_counter/config.json" --embed-src "ex/general/dialog_basic_counter/BasicCounter.ods"
+oooscript compile --embed --config "ex/general/dialog_basic_counter/config.json" --embed-doc "ex/general/dialog_basic_counter/BasicCounter.ods"
 ```
 
 ![screenshot](https://user-images.githubusercontent.com/4193389/179670709-978fd704-db5e-4225-ae65-92bba0e88ac8.png)

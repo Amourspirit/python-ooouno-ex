@@ -22,7 +22,7 @@ The following command will compile script as `lib_o_con_2021.py` and embed it in
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/calc/lib_o_con_2021/config.json" --embed-src "ex/calc/lib_o_con_2021/lib_o_con_2021.ods"
+oooscript compile --embed --config "ex/calc/lib_o_con_2021/config.json" --embed-doc "ex/calc/lib_o_con_2021/lib_o_con_2021.ods"
 ```
 
 ## Screenshot

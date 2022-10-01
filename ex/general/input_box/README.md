@@ -33,7 +33,7 @@ The following command will compile script as `inputbox.py` and embed it into `in
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config 'ex/general/input_box/config.json' --embed-src 'ex/general/input_box/inputbox.odt'
+oooscript compile --embed --config "ex/general/input_box/config.json" --embed-doc "ex/general/input_box/inputbox.odt"
 ```
 
 ## Source
