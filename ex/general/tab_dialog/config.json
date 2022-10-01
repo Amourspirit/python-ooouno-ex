@@ -1,15 +1,14 @@
 {
-  "id": "ooouno-ex",
+  "id": "oooscript",
   "name": "tab_dialog",
-  "type": "EXAMPLE",
   "app": "WRITER",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
     "output_name": "tab_dialog",
-    "include_modules": [],
-    "include_paths": [],
-    "remove_modules": []
+    "single_script": false,
+    "clean": true,
+    "exclude_modules": ["sphinx\\.*", "lxml\\.*", "PIL\\.*"]
   },
   "methods": ["show_tab_dialog"]
 }

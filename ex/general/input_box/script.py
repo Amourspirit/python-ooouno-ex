@@ -1,6 +1,10 @@
 # coding: utf-8
-from ex.general.message_box.msgbox import msgbox, MessageBoxButtonsEnum, MessageBoxResultsEnum,MessageBoxType
-from ex.general.input_box.inputbox import InputBox
+from ex.general.message_box.lib.msgbox import (
+    msgbox,
+    MessageBoxButtonsEnum,
+    MessageBoxType,
+)
+from inputbox import InputBox
 
 
 def show_msg_value(msg: str) -> None:
@@ -11,6 +15,7 @@ def show_msg_value(msg: str) -> None:
         boxtype=MessageBoxType.INFOBOX,
     )
 
+
 def show_msg_no_value() -> None:
     msgbox(
         message="No input",
@@ -19,6 +24,7 @@ def show_msg_no_value() -> None:
         boxtype=MessageBoxType.WARNINGBOX,
     )
 
+
 def input_box(*args, **kwargs):
     box = InputBox("", title="Input")
     result = box.show()
@@ -26,4 +32,3 @@ def input_box(*args, **kwargs):
         show_msg_no_value()
     else:
         show_msg_value(result)
-

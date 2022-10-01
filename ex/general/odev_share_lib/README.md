@@ -45,7 +45,7 @@ The following command will compile script as `share_lib.py` and embed it into`sh
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/general/odev_share_lib/config.json" --embed-src "ex/general/odev_share_lib/share_lib.ods"
+oooscript compile --embed --config "ex/general/odev_share_lib/config.json" --embed-doc "ex/general/odev_share_lib/share_lib.ods"
 ```
 
 ## Demo

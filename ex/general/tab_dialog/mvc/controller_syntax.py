@@ -2,7 +2,7 @@
 from typing import List, Union
 from .interface import IViewMultiSyntax, IControllerMultiSyntax, IControllerSyntax
 from .enums import TextEnum, TimeEnum, SyntaxEnum
-from ...message_box.msgbox import msgbox, MessageBoxType
+from ...message_box.lib.msgbox import msgbox, MessageBoxType
 
 class ControllerSyntax(IControllerSyntax):
     def __init__(self, controller: IControllerMultiSyntax, view: IViewMultiSyntax):

@@ -1,15 +1,13 @@
 {
-  "id": "ooouno-ex",
+  "id": "oooscript",
   "name": "message_box",
-  "type": "EXAMPLE",
   "app": "CALC",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
     "output_name": "share_lib",
-    "include_modules": [],
-    "include_paths": ["."],
-    "remove_modules": []
+    "clean": true,
+    "exclude_modules": ["sphinx\\.*", "lxml\\.*", "PIL\\.*"]
   },
   "methods": [
     "start_dialog",

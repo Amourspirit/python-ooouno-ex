@@ -1,16 +1,11 @@
 {
-  "id": "ooouno-ex",
-  "type": "EXAMPLE",
+  "id": "oooscript",
   "app": "WRITER",
   "name": "apso_example",
   "version": "0.1.0",
   "args": {
     "src_file": "script.py",
     "output_name": "apso_example",
-    "include_modules": [],
-    "include_paths": [],
-    "remove_modules": [],
     "single_script": true
-  },
-  "methods": ["console"]
+  }
 }
