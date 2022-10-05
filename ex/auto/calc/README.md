@@ -2,6 +2,7 @@
 
 Welcome to Calc Automation folder. Open a sub folder to get to an example.
 
-[odev_add_range_data](./odev_add_range_data/) - An example that opens up a new Calc document and inserts array of data and a formula using [OOO Development Tools].
+- [odev_add_range_data](./odev_add_range_data/) - Example that opens up a new Calc document and inserts array of data and a formula using [OOO Development Tools].
+- [odev_show_sheet](./odev_show_sheet/) - Example of opening a spreadsheet and display it on-screen.
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
