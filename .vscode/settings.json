@@ -23,5 +23,17 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "spellchecker.ignoreWordsList": ["LibreOffice"]
+    "spellchecker.ignoreWordsList": ["LibreOffice"],
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/.hg/store/**": true,
+        "**/build/**": true,
+        "**/env/**": true,
+        "**/tmp/**": true,
+        "**/.pytest_cache/**": true,
+        "**/.idea/**": true,
+        "**/__pycache__/**": true
+    }
 }

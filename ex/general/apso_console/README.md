@@ -16,7 +16,7 @@ The following command will compile script as `apso_example.py` and embed it into
 The output is written into `build` folder in the projects root.
 
 ```sh
-python -m main build -e --config "ex/general/apso_console/config.json" --embed-src "ex/general/apso_console/apso_example.odt"
+oooscript compile --embed --config "ex/general/apso_console/config.json" --embed-doc "ex/general/apso_console/apso_example.odt"
 ```
 
 [APSO Extension]: https://extensions.libreoffice.org/en/extensions/show/apso-alternative-script-organizer-for-python

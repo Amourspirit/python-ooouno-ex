@@ -2,7 +2,7 @@
 from typing import List, Union
 from .interface import IViewMultiSyntax, IControllerMultiSyntax, IControllerVoid
 from .enums import VoidEnum
-from ...message_box.msgbox import msgbox, MessageBoxType
+from ...message_box.lib.msgbox import msgbox, MessageBoxType
 
 
 class ControllerVoid(IControllerVoid):

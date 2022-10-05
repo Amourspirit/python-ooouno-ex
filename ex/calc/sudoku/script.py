@@ -1,4 +1,4 @@
-from ex.calc.sudoku import sudoku_calc
+from lib import sudoku_calc
 
 
 def generate_single_solve(*args, **kwargs) -> None:

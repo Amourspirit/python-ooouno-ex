@@ -1,4 +1,4 @@
-from ex.calc.odev_add_range_data.range_action import create_array, clear_range
+from range_action import create_array, clear_range
 
 def fill(*args, **kwargs) -> None:
     create_array()
