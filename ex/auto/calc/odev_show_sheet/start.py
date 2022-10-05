@@ -10,6 +10,7 @@
 import sys
 import argparse
 from typing import Any, cast
+from getpass import getpass
 
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
@@ -20,7 +21,8 @@ from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
 
 
-from com.sun.star.text import XTextDocument
+from com.sun.star.util import XProtectable
+
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -76,7 +78,7 @@ def main() -> int:
         fnm = cast(str, args.file_path)
 
         try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
+            doc = Calc.open_doc(fnm=fnm, loader=loader)
         except Exception as e:
             print(f"Could not open '{fnm}'")
             print(f"  {e}")
@@ -88,9 +90,26 @@ def main() -> int:
             if visible:
                 GUI.set_visible(is_visible=visible, odoc=doc)
 
-            check_sentences(doc)
+            Calc.goto_cell(cell_name="A1", doc=doc)
+            sheet_names = Calc.get_sheet_names(doc=doc)
+            print(f"Names of Sheets ({len(sheet_names)}):")
+            for name in sheet_names:
+                print(f"  {name}")
+            
+            sheet = Calc.get_sheet(doc=doc, sheet_name="Sheet1")
+            Calc.set_active_sheet(doc=doc, sheet=sheet)
+            pro = Lo.qi(XProtectable, sheet, True)
+            pro.protect("foobar")
+            print(f"Is protected: {pro.isProtected()}")
 
-            Lo.delay(delay)
+            pwd = getpass("Enter Sheet Password:")
+            if pwd == "foobar":
+                print("Password correct")
+                pro.unprotect(pwd)
+            else:
+                print("Password incorrect")
+            Lo.wait_enter()
+            
 
         finally:
             Lo.close_doc(doc)
