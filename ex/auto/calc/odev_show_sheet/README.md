@@ -8,7 +8,7 @@ See [source code](./start.py)
 
 ## Automate
 
-The following command will run automation that generates a new Calc with data.
+The following command will run automation that opens Calc document and ask for password.
 
 ```sh
 python -m main auto --process "ex/auto/calc/odev_show_sheet/start.py --show --file resources\ods\totals.ods"
