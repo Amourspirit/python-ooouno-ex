@@ -19,18 +19,28 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_show_book/start.py --file resources/odt/cicero_dummy.odt"
+```sh
+python -m start --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
-### Linux
+### Linux/Mac
 
 Run from current example folder.
 
-```shell
-python start.py --file "../../../../resources/odt/cicero_dummy.odt"
+From project root folder.
+
+```sh
+python ./ex/auto/writer/odev_show_book/start.py --file "resources/odt/cicero_dummy.odt"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_show_book\start.py --file "resources/odt/cicero_dummy.odt"
 ```
 
 ## Output

@@ -45,8 +45,28 @@ There is an alternative way to add path. See the [alternative.py](./alternative.
 
 ## Automate
 
+### Cross Platform
+
+From this folder.
+
 ```sh
-python -m main auto --process "ex/auto/general/odev_share_lib/start.py"
+python -m start
+```
+
+### Linus/Mac
+
+From project root folder
+
+```sh
+python ./ex/auto/general/odev_share_lib/start.py
+```
+
+### Windows
+
+From project root folder
+
+```ps
+python .\ex\auto\general\odev_share_lib\start.py
 ```
 
 ### Example console output

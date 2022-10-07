@@ -14,30 +14,46 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
-
-```shell
-python -m main auto -p "ex/auto/general/odev_office_info/start.py"
-```
-
-or for other commands
-
-```shell
-python -m main auto -p "ex/auto/general/odev_office_info/start.py -h"
-```
-
-### Linux
-
 Run from current example folder.
 
-```shell
+```sh
 python start.py
 ```
 
 or for other commands
 
-```shell
+```sh
 python start.py -h
 ```
+
+### Linux/Mac
+
+From project root folder.
+
+```sh
+python ./ex/auto/general/odev_office_info/start.py
+```
+
+or for other commands
+
+```sh
+python ./ex/auto/general/odev_office_info/start.py -h
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\general\odev_office_info\start.py
+```
+
+or for other commands
+
+```ps
+python .\ex\auto\general\odev_office_info\start.py -h
+```
+
+
 
 ![command line example](https://user-images.githubusercontent.com/4193389/179056343-deafd3b5-c16e-45fa-9e2d-c95a0dc6b71e.gif)

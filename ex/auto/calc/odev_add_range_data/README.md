@@ -14,8 +14,26 @@ There is a macro demo of this. See [macro example](../../../calc/odev_add_range_
 
 The following command will run automation that generates a new Calc with data.
 
+From Project Root
+
+### Cross platform
+
+From this folder.
+
 ```sh
-python -m main auto --process "ex/auto/calc/odev_add_range_data/start.py"
+python -m start
+```
+
+### Linux/Mac
+
+```sh
+python ./ex/auto/calc/odev_add_range_data/start.py
+```
+
+### Windows
+
+```sh
+python .\ex\auto\calc\odev_add_range_data\start.py
 ```
 
 ![calc_auto_range](https://user-images.githubusercontent.com/4193389/173204609-e6ed10f0-55df-486e-8c93-3b40e705bbe6.png)

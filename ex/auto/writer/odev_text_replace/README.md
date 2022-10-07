@@ -24,18 +24,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_text_replace/start.py --file resources/odt/bigStory.doc"
+```sh
+python -m start --show --file "../../../../resources/odt/bigStory.doc"
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --show --file "../../../../resources/odt/bigStory.doc"
+```sh
+python ./ex/auto/writer/odev_text_replace/start.py --show --file "resources/odt/bigStory.doc"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_text_replace\start.py --show --file "resources/odt/bigStory.doc"
 ```
 
 [Text Search and Replace]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter09.html

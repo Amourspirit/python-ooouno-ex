@@ -20,18 +20,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_lingo_file/start.py --file resources/odt/badGrammar.odt"
+```sh
+python -m start --file "../../../../resources/odt/badGrammar.odt"
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --file "../../../../resources/odt/badGrammar.odt"
+```sh
+python ./ex/auto/writer/odev_lingo_file/start.py --file "resources/odt/badGrammar.odt"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_lingo_file\start.py --file "resources/odt/badGrammar.odt"
 ```
 
 ## Output

@@ -21,18 +21,28 @@ Next a Get Involved wep page is opened in local web browser.
 
 ### Cross Platform
 
-From project root folder.
+From current example folder.
 
-```shell
-python -m main auto -p "ex/auto/general/odev_dispatch/start.py -d resources/odt/story.odt"
+```sh
+python -m start -d "../../../../resources/odt/story.odt"
 ```
 
 ### Linux
 
-Run from current example folder.
+From project root folder
 
-```shell
-python start.py -d "../../../../resources/odt/story.odt"
+Linux/Mac
+
+```sh
+python ./ex/auto/general/odev_dispatch/start.py -d "resources/odt/story.odt"
+```
+
+### Windows
+
+From project root folder
+
+```sh
+python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
 ```
 
 ### Example console output

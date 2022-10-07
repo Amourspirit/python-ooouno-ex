@@ -28,18 +28,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_italics_styler/start.py --file resources/odt/cicero_dummy.odt --word pleasure green --word pain red"
+```sh
+python -m start --show --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --show --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+```sh
+python ./ex/auto.writer/odev_italics_styler/start.py --show --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_italics_styler\start.py --show --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ## Output

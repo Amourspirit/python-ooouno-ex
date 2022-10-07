@@ -12,16 +12,24 @@ The following command will run automation that generates a new Writer document a
 
 ### Cross Platform
 
-From project root folder.
+Run from this example folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/hello_world/start.py"
+```sh
+python -m start
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py
+```sh
+python ./ex/auto/writer/hello_world/start.py
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\hello_world\start.py
 ```

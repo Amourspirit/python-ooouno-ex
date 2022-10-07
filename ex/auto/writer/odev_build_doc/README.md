@@ -18,18 +18,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
 ```shell
-python -m main auto -p "ex/auto/writer/odev_build_doc/start.py"
+python -m start
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py
+```sh
+python ./ex/auto/writer/odev_build_doc/start.py
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_build_doc\start.py
 ```
 
 ![build_doc](https://user-images.githubusercontent.com/4193389/184692062-4554d35d-4be8-4aac-99a6-4d7962e2017b.gif)

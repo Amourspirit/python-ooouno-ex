@@ -30,18 +30,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_lingo/start.py"
+```sh
+python start.py
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder
 
-```shell
-python start.py
+```sh
+python ./ex/auto/writer/odev_lingo/start.py
+```
+
+### Windows
+
+From project root folder
+
+```ps
+python .\ex\auto\writer\odev_lingo\start.py
 ```
 
 ## Output
