@@ -26,18 +26,26 @@ root folder and writes out to LICENSE.pdf in the working folder.
 
 ### Cross Platform
 
-From project root folder.
+Run from this folder.
 
 ```shell
-python -m main auto -p "ex/auto/general/odev_doc_convert/start.py -e pdf -f LICENSE"
+python -m start -e "pdf" -f "../../../../LICENSE"
 ```
 
 ### Linux
 
-Run from current example folder.
+From project root folder.
 
 ```shell
-python start.py -e "pdf" -f "../../../../LICENSE"
+python ./ex/auto/general/odev_doc_convert/start.py -e "pdf" -f "LICENSE"
+```
+
+### Windows
+
+From project root folder.
+
+```shell
+python .\ex\auto\general\odev_doc_convert\start.py -e "pdf" -f "LICENSE"
 ```
 
 ![convert text to pdf](https://user-images.githubusercontent.com/4193389/178155989-1ec6e63a-ace3-4c60-8645-729245235d19.gif)

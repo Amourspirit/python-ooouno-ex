@@ -24,16 +24,24 @@ See [source code](./start.py)
 
 From project root folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_doc_print_console/start.py --file resources/odt/cicero_dummy.odt"
+```sh
+python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
-### Linux
+### Linux/Mac
 
 Run from current example folder.
 
-```shell
-python start.py --file "../../../../resources/odt/cicero_dummy.odt"
+```sh
+python ./ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/cicero_dummy.odt"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_doc_print_console\start.py --file "resources/odt/cicero_dummy.odt"
 ```
 
 ### Output

@@ -25,18 +25,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From current example folder.
 
 ```shell
-python -m main auto -p "ex/auto/writer/odev_docs_append/start.py --file resources/odt/blank.odt resources/odt/story.odt resources/odt/cicero_dummy.odt"
+python -m start --file "../../../../resources/odt/blank.odt" "../../../../resources/odt/story.odt" "../../../../resources/odt/cicero_dummy.odt"
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder
 
-```shell
-python start.py --file "../../../../resources/odt/blank.odt" "../../../../resources/odt/story.odt" "../../../../resources/odt/cicero_dummy.odt"
+```sh
+python ./ex/auto/writer/odev_docs_append/start.py -f "resources/odt/blank.odt" "resources/odt/story.odt" "resources/odt/cicero_dummy.odt"
+```
+
+### Windows
+
+From project root folder
+
+```ps
+python .\ex\auto\writer\odev_docs_append\start.py -f "resources/odt/blank.odt" "resources/odt/story.odt" "resources/odt/cicero_dummy.odt"
 ```
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html

@@ -23,21 +23,30 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_walk_text/start.py --file resources/odt/cicero_dummy.odt"
+```sh
+python -m start --file "../../../../resources/odt/cicero_dummy.odt"
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --file "../../../../resources/odt/cicero_dummy.odt"
+```sh
+python ./ex/auto/writer/odev_walk_text/start.py --file "resources/odt/cicero_dummy.odt"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_walk_text\start.py --file "resources/odt/cicero_dummy.odt"
 ```
 
 ### Output
+
 ```text
 P<Cicero>
 P<Dummy Text>

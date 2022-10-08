@@ -20,18 +20,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_math_questions/start.py"
+```sh
+python start.py
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py
+```sh
+python ./ex/auto/writer/odev_math_questions/start.py
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_math_questions\start.py
 ```
 
 [Text Content Other than Strings]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html

@@ -14,15 +14,7 @@ See [source code](./start.py)
 
 From project root folder.
 
-```shell
-python -m main auto -p "ex/auto/general/odev_doc_info/start.py --doc ex/auto/general/odev_doc_info/story.odt --service --interface --xdoc --property"
-```
-
-### Linux
-
-Run from current example folder.
-
-```shell
+```sh
 python start.py --doc "story.odt" --service --interface --xdoc --property
 ```
 
@@ -30,6 +22,20 @@ or, to see all possible commands
 
 ```shell
 python start.py -h
+```
+
+### Linux
+
+From project root folder.
+
+```sh
+python ./ex/auto/general/odev_doc_info/start.py --doc "ex/auto/general/odev_doc_info/story.odt" --service --interface --xdoc --property
+```
+
+### Windows
+
+```sh
+python .\ex\auto\general\odev_doc_info\start.py --doc "ex\auto\general\odev_doc_info\story.odt" --service --interface --xdoc --property
 ```
 
 ![Terminal Example](https://user-images.githubusercontent.com/4193389/179373247-0b9d34b2-9457-44c8-8823-e405272d3c80.gif)

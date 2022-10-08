@@ -16,18 +16,26 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
+From this folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_save_graphics/start.py --file resources/odt/build.odt"
+```sh
+python -m start --file "../../../../resources/odt/build.odt"
 ```
 
-### Linux
+### Linux/Mac
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --file "../../../../resources/odt/build.odt"
+```sh
+python ./ex/auto/writer/odev_save_graphics/start.py --file "resources/odt/build.odt"
+```
+
+### Windows
+
+From project root folder.
+
+```ps
+python .\ex\auto\writer\odev_save_graphics\start.py --file "resources/odt/build.odt"
 ```
 
 

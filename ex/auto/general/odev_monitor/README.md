@@ -31,21 +31,7 @@ See [source code](./start.py)
 
 ### Cross Platform
 
-From project root folder.
-
-```shell
-python -m main auto -p "ex/auto/general/odev_monitor/start.py"
-```
-
-or for auto shutdown
-
-```shell
-python -m main auto -p "ex/auto/general/odev_monitor/start.py True"
-```
-
-### Linux
-
-Run from current example folder.
+Run from this example folder.
 
 ```shell
 python start.py
@@ -56,6 +42,35 @@ or for auto shutdown
 ```shell
 python start.py True
 ```
+
+### Linux/Mac
+
+From project root folder.
+
+```sh
+python ./ex/auto/general/odev_monitor/start.py
+```
+or for auto shutdown
+
+```sh
+python ./ex/auto/general/odev_monitor/start.py True
+```
+
+### Windows
+
+From project root folder.
+
+```sh
+python .\ex\auto\general\odev_monitor\start.py
+```
+
+or for auto shutdown
+
+```sh
+python .\ex\auto\general\odev_monitor\start.py True
+```
+
+
 
 ### Example console output
 

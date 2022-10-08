@@ -21,28 +21,28 @@ See [source code](./start.py)
 
 ## Automate
 
-Run from current example folder.
+### Cross Platform
 
-```shell
-python start.py --show --verbose  --file "../../../../resources/txt/scandal.txt"
+From this folder.
+
+```sh
+python -m start --show --verbose  --file "../../../../resources/txt/scandal.txt"
 ```
 
-## Automate
-
-### Cross Platform
+### Linux/Mac
 
 From project root folder.
 
-```shell
-python -m main auto -p "ex/auto/writer/odev_story_creator/start.py --file resources/txt/scandal.txt"
+```sh
+python ./ex/auto/writer/odev_story_creator/start.py --show --verbose --file "resources/txt/scandal.txt"
 ```
 
-### Linux
+### Windows
 
-Run from current example folder.
+From project root folder.
 
-```shell
-python start.py --show --verbose  --file "../../../../resources/txt/scandal.txt"
+```ps
+python .\ex\auto\writer\odev_story_creator\start.py --show --verbose --file "resources/txt/scandal.txt"
 ```
 
 ## Output

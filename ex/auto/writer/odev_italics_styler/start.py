@@ -147,6 +147,7 @@ def main() -> int:
 
             Lo.delay(delay)
             Write.save_doc(text_doc=doc, fnm="italicized.doc")
+            Lo.wait_enter()
 
         finally:
             Lo.close_doc(doc)
