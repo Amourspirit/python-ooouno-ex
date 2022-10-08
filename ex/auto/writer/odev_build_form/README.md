@@ -4,7 +4,7 @@ Demonstrates how to build a form from code and attach form to a database.
 
 This example uses [OOO Development Tools]
 
-See [source code](./start.py)
+See [start source code](./start.py) and [build_form source code](./build_form.py)
 
 ## Automate
 
