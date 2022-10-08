@@ -50,7 +50,7 @@ Activate virtual environment and install development requirements.
 Install requirement using Poetry.
 
 ```sh
-Poetry install
+poetry install
 ```
 
 Add the `uno.py` and `unohelper.py` links to virtual environment.
@@ -109,7 +109,7 @@ Activate virtual environment and install development requirements.
 ```
 
 ```ps
-Poetry install
+poetry install
 ```
 
 ### Testing Virtual Environment

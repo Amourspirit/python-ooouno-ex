@@ -23,7 +23,7 @@ python -m start
 From project root folder
 
 ```sh
-python ./ex/auto/writer/odev_build_form/start.py 
+python ./ex/auto/writer/odev_build_form/start.py
 ```
 
 ### Windows

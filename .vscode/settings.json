@@ -2,7 +2,7 @@
     "terminal.integrated.shellIntegration.enabled": true,
     "terminal.integrated.shellIntegration.decorationsEnabled":"gutter",
     "python.formatting.provider": "black",
-    "python.defaultInterpreterPath": "${workspaceRoot}/env/bin/python",
+    "python.defaultInterpreterPath": "${workspaceRoot}/.venv/bin/python",
     "autoDocstring.docstringFormat": "google",
     "workbench.colorCustomizations": {
         "[Monokai]": {
