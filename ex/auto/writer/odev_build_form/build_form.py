@@ -257,7 +257,7 @@ class BuildForm(
         name = "Empty"
         label = "Check for empty sales names"
         y += height
-        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
         Props.set_property(
             props, "HelpText", "When checked, you cannot enter empty values"
         )
