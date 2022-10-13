@@ -88,7 +88,7 @@ class BuildForm(
 
         # Form has four sections: text, command_button, list_box, grid_control
         # Section 1 has two columns
-        DOC = BuildForm.doc
+        _doc = BuildForm.doc
 
         props = Forms.add_labelled_control(
             doc=BuildForm.doc,
