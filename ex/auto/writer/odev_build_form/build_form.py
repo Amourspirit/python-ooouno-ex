@@ -84,7 +84,12 @@ class BuildForm(
         Lo.close_office()
 
     def create_form(self, doc: XTextDocument) -> None:
-        props = Forms.add_labelled_control(doc=doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
+
+# Form has four sections: text, command_button, list_box, grid_control
+# Section 1 has two columns
+        DOC = BuildForm.doc
+
+        props = Forms.add_labelled_control(doc=BuildForm.doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
         self.listen_to_text_field(props)
 
         Forms.add_labelled_control(doc=BuildForm.doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19)
@@ -99,22 +104,28 @@ class BuildForm(
         )
 
         # buttons, all with listeners
-        props = Forms.add_button(doc=BuildForm.doc, name="first", label="<<", x=2, y=63, width=8)
+        col1_x= 2
+        x = col1_x
+        spacing = 10
+        y = 63
+        width = 8
+
+        props = Forms.add_button(doc=DOC, name="first", label="<<", x=x + 0 * spacing, y=y, width=width)
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="prev", label="<", x=12, y=63, width=8)
+        props = Forms.add_button(doc=DOC, name="prev", label="<", x=x + 1 * spacing, y=y, width=width)
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="next", label=">", x=22, y=63, width=8)
+        props = Forms.add_button(doc=DOC, name="next", label=">", x=x + 2 * spacing, y=y, width=width)
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="last", label=">>", x=32, y=63, width=8)
+        props = Forms.add_button(doc=DOC, name="last", label=">>", x=x + 3 * spacing, y=y, width=width)
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="new", label=">*", x=42, y=63, width=8)
+        props = Forms.add_button(doc=DOC, name="new", label=">*", x=x + 4 * spacing, y=y, width=width)
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="reload", label="reload", x=58, y=63, width=13)
+        props = Forms.add_button(doc=DOC, name="reload", label="reload", x=x + 4 * spacing + 16, y=y, width=13)
         self.listen_to_button(props)
         self.listen_to_mouse(props)
 
@@ -124,111 +135,89 @@ class BuildForm(
             name="text-1",
             label="show only sales since",
             comp_kind=Forms.CompenentKind.FixedText,
-            x=2,
+            x=x,
             y=80,
             width=35,
             height=6,
         )
 
         #  radio buttons inside a group box; use a property change listener
+        col2_x = 103
+        col2_width = 56
+        
+        name="Options"
+        y = 5
+
         Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
+            doc=DOC,
+            name=name,
             label="Options",
             comp_kind=Forms.CompenentKind.GroupBox,
-            x=103,
-            y=5,
-            width=56,
+            x=col2_x,
+            y=y,
+            width=col2_width,
             height=25,
         )
 
         # these three radio buttons have the same name ("Option"), and
         # so only one can be on at a time
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="No automatic generation",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=11,
-            width=50,
-            height=6,
-        )
+        comp_kind = Forms.CompenentKind.RadioButton
+        indent = 3
+        height = 6
+        x = col2_x + indent
+        width = col2_width - 2 * indent
+
+        label = "No automatic generation"
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="Before inserting a record",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=17,
-            width=50,
-            height=6,
-        )
+        label = "Before inserting a record"
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="When moving to a new record",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=23,
-            width=50,
-            height=6,
-        )
+        label = "When moving to a new record"
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
         # check boxes inside another group box
         # use the same property change listener
-        Forms.add_control(
-            doc=BuildForm.doc,
-            name="Misc",
-            label="Miscellaneous",
-            comp_kind=Forms.CompenentKind.GroupBox,
-            x=103,
-            y=35,
-            width=56,
-            height=25,
-        )
+        y = 33
+        width=60
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="DefaultDate",
-            label='Default sales date to "today"',
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=39,
-            width=60,
-            height=6,
-        )
+        name="Misc"
+        label="Miscellaneous"
+        comp_kind=Forms.CompenentKind.GroupBox
+        x=col2_x
+        y=35
+        width=width
+        Forms.add_control(DOC, name, label, comp_kind, x, y, width, 25)
+
+        comp_kind = Forms.CompenentKind.CheckBox
+        x = x + indent
+        y = 33
+        width = col2_width - 4
+
+        name = "DefaultDate"
+        label = 'Default sales date to "today"'
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         Props.set_property(props, "HelpText", "When checked, newly entered sales records are pre-filled")
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Protect",
-            label="Protect key fields from editing",
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=45,
-            width=60,
-            height=6,
-        )
+        name = "Protect"
+        label = "Protect key fields from editing"
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         Props.set_property(props, "HelpText", "When checked, you cannot modify the values")
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Empty",
-            label="Check for empty sales names",
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=51,
-            width=60,
-            height=6,
-        )
+        name = "Empty"
+        label = "Check for empty sales names"
+        y += height
+        props = Forms.add_control(DOC, name, label, comp_kind, x, y, width, height)
         Props.set_property(props, "HelpText", "When checked, you cannot enter empty values")
         props.addPropertyChangeListener("State", self)
 
