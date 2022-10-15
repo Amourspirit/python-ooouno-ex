@@ -44,6 +44,7 @@ from ooodev.utils.file_io import FileIO
 # from .....resources import __res_path__
 # endregion imports
 
+
 class BuildForm(
     unohelper.Base,
     XEventListener,
@@ -75,10 +76,10 @@ class BuildForm(
             tvc = Write.get_view_cursor(BuildForm.doc)
             Write.append(tvc, "Building a Form\n")
             Write.end_paragraph(tvc)
-            
+
             self.create_form(BuildForm.doc)
         Lo.dispatch_cmd("SwitchControlDesignMode")
-        
+
         Lo.wait_enter()
         Lo.close_doc(BuildForm.doc)
         Lo.close_office()
@@ -89,10 +90,14 @@ class BuildForm(
         # Section 1 has two columns
         _doc = BuildForm.doc
 
-        props = Forms.add_labelled_control(doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
+        props = Forms.add_labelled_control(
+            doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11
+        )
         self.listen_to_text_field(props)
 
-        Forms.add_labelled_control(doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19)
+        Forms.add_labelled_control(
+            doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19
+        )
 
         props = Forms.add_labelled_control(
             doc=_doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43
@@ -100,32 +105,52 @@ class BuildForm(
         Props.set_property(props, "DecimalAccuracy", 0)
 
         Forms.add_labelled_control(
-            doc=_doc, label="BIRTHDATE", comp_kind=Forms.CompenentKind.FormattedField, y=51
+            doc=_doc,
+            label="BIRTHDATE",
+            comp_kind=Forms.CompenentKind.FormattedField,
+            y=51,
         )
 
         # buttons, all with listeners
-        col1_x= 2
+        col1_x = 2
         x = col1_x
         spacing = 10
         y = 63
         width = 8
 
-        props = Forms.add_button(doc=_doc, name="first", label="<<", x=x + 0 * spacing, y=y, width=width)
+        props = Forms.add_button(
+            doc=_doc, name="first", label="<<", x=x + 0 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=_doc, name="prev", label="<", x=x + 1 * spacing, y=y, width=width)
+        props = Forms.add_button(
+            doc=_doc, name="prev", label="<", x=x + 1 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=_doc, name="next", label=">", x=x + 2 * spacing, y=y, width=width)
+        props = Forms.add_button(
+            doc=_doc, name="next", label=">", x=x + 2 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=_doc, name="last", label=">>", x=x + 3 * spacing, y=y, width=width)
+        props = Forms.add_button(
+            doc=_doc, name="last", label=">>", x=x + 3 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=_doc, name="new", label=">*", x=x + 4 * spacing, y=y, width=width)
+        props = Forms.add_button(
+            doc=_doc, name="new", label=">*", x=x + 4 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=_doc, name="reload", label="reload", x=x + 4 * spacing + 16, y=y, width=13)
+        props = Forms.add_button(
+            doc=_doc,
+            name="reload",
+            label="reload",
+            x=x + 4 * spacing + 16,
+            y=y,
+            width=13,
+        )
         self.listen_to_button(props)
         self.listen_to_mouse(props)
 
@@ -144,8 +169,8 @@ class BuildForm(
         #  radio buttons inside a group box; use a property change listener
         col2_x = 103
         col2_width = 56
-        
-        name="Options"
+
+        name = "Options"
         y = 5
 
         Forms.add_control(
@@ -185,14 +210,14 @@ class BuildForm(
         # check boxes inside another group box
         # use the same property change listener
         y = 33
-        width=60
+        width = 60
 
-        name="Misc"
-        label="Miscellaneous"
-        comp_kind=Forms.CompenentKind.GroupBox
-        x=col2_x
-        y=35
-        width=width
+        name = "Misc"
+        label = "Miscellaneous"
+        comp_kind = Forms.CompenentKind.GroupBox
+        x = col2_x
+        y = 35
+        width = width
         Forms.add_control(_doc, name, label, comp_kind, x, y, width, 25)
 
         comp_kind = Forms.CompenentKind.CheckBox
@@ -204,31 +229,43 @@ class BuildForm(
         label = 'Default sales date to "today"'
         y += height
         props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(props, "HelpText", "When checked, newly entered sales records are pre-filled")
+        Props.set_property(
+            props,
+            "HelpText",
+            "When checked, newly entered sales records are pre-filled",
+        )
         props.addPropertyChangeListener("State", self)
 
         name = "Protect"
         label = "Protect key fields from editing"
         y += height
         props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(props, "HelpText", "When checked, you cannot modify the values")
+        Props.set_property(
+            props, "HelpText", "When checked, you cannot modify the values"
+        )
         props.addPropertyChangeListener("State", self)
 
         name = "Empty"
         label = "Check for empty sales names"
         y += height
         props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(props, "HelpText", "When checked, you cannot enter empty values")
+        Props.set_property(
+            props, "HelpText", "When checked, you cannot enter empty values"
+        )
         props.addPropertyChangeListener("State", self)
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
-        props = Forms.add_list(doc=_doc, name="Fruits", entries=fruits, x=2, y=90, width=20, height=6)
+        props = Forms.add_list(
+            doc=_doc, name="Fruits", entries=fruits, x=2, y=90, width=20, height=6
+        )
         self.listen_to_list(props)
 
         # set Form's data source to be the DB_FNM database
         def_form = Forms.get_form(doc, "Form")
-        Forms.bind_form_to_table(xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course")
+        Forms.bind_form_to_table(
+            xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course"
+        )
 
         # a list filled using an SQL query on the form's data source
         props = Forms.add_database_list(
@@ -255,7 +292,7 @@ class BuildForm(
             height=6,
         )
         self.listen_to_list(props)
-        
+
         # create a new form, gridForm,
         grid_con = Forms.insert_form(doc=_doc)
         grid_form = Lo.qi(XForm, grid_con, True)
@@ -281,8 +318,15 @@ class BuildForm(
         )
 
         grid_model = Lo.qi(XControlModel, props, True)
-        Forms.create_grid_column(grid_model=grid_model, data_field="firstName", col_kind="TextField", width=25)
-        Forms.create_grid_column(grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25)
+        Forms.create_grid_column(
+            grid_model=grid_model,
+            data_field="firstName",
+            col_kind="TextField",
+            width=25,
+        )
+        Forms.create_grid_column(
+            grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25
+        )
 
         self.listen_to_gird(grid_model)
 
@@ -343,7 +387,9 @@ class BuildForm(
     # region XTextListener
     def textChanged(self, ev: TextEvent) -> None:
         cmodel = Forms.get_event_control_model(ev)
-        print(f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}")
+        print(
+            f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}"
+        )
 
     # endregion XTextListener
 
@@ -434,4 +480,3 @@ class BuildForm(
         print("Grid Column change")
 
     # endregion XGridControlListener
-    
