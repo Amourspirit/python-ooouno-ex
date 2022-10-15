@@ -44,6 +44,7 @@ from ooodev.utils.file_io import FileIO
 # from .....resources import __res_path__
 # endregion imports
 
+
 class BuildForm(
     unohelper.Base,
     XEventListener,
@@ -75,175 +76,200 @@ class BuildForm(
             tvc = Write.get_view_cursor(BuildForm.doc)
             Write.append(tvc, "Building a Form\n")
             Write.end_paragraph(tvc)
-            
+
             self.create_form(BuildForm.doc)
         Lo.dispatch_cmd("SwitchControlDesignMode")
-        
+
         Lo.wait_enter()
         Lo.close_doc(BuildForm.doc)
         Lo.close_office()
 
     def create_form(self, doc: XTextDocument) -> None:
-        props = Forms.add_labelled_control(doc=doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
-        self.listen_to_text_field(props)
 
-        Forms.add_labelled_control(doc=BuildForm.doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19)
+        # Form has four sections: text, command_button, list_box, grid_control
+        # Section 1 has two columns
+        _doc = BuildForm.doc
 
         props = Forms.add_labelled_control(
-            doc=BuildForm.doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43
+            doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11
+        )
+        self.listen_to_text_field(props)
+
+        Forms.add_labelled_control(
+            doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19
+        )
+
+        props = Forms.add_labelled_control(
+            doc=_doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43
         )
         Props.set_property(props, "DecimalAccuracy", 0)
 
         Forms.add_labelled_control(
-            doc=BuildForm.doc, label="BIRTHDATE", comp_kind=Forms.CompenentKind.FormattedField, y=51
+            doc=_doc,
+            label="BIRTHDATE",
+            comp_kind=Forms.CompenentKind.FormattedField,
+            y=51,
         )
 
         # buttons, all with listeners
-        props = Forms.add_button(doc=BuildForm.doc, name="first", label="<<", x=2, y=63, width=8)
+        col1_x = 2
+        x = col1_x
+        spacing = 10
+        y = 63
+        width = 8
+
+        props = Forms.add_button(
+            doc=_doc, name="first", label="<<", x=x + 0 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="prev", label="<", x=12, y=63, width=8)
+        props = Forms.add_button(
+            doc=_doc, name="prev", label="<", x=x + 1 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="next", label=">", x=22, y=63, width=8)
+        props = Forms.add_button(
+            doc=_doc, name="next", label=">", x=x + 2 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="last", label=">>", x=32, y=63, width=8)
+        props = Forms.add_button(
+            doc=_doc, name="last", label=">>", x=x + 3 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="new", label=">*", x=42, y=63, width=8)
+        props = Forms.add_button(
+            doc=_doc, name="new", label=">*", x=x + 4 * spacing, y=y, width=width
+        )
         self.listen_to_button(props)
 
-        props = Forms.add_button(doc=BuildForm.doc, name="reload", label="reload", x=58, y=63, width=13)
+        props = Forms.add_button(
+            doc=_doc,
+            name="reload",
+            label="reload",
+            x=x + 4 * spacing + 16,
+            y=y,
+            width=13,
+        )
         self.listen_to_button(props)
         self.listen_to_mouse(props)
 
         # some fixed text; no listener
         Forms.add_control(
-            doc=BuildForm.doc,
+            doc=_doc,
             name="text-1",
             label="show only sales since",
             comp_kind=Forms.CompenentKind.FixedText,
-            x=2,
+            x=x,
             y=80,
             width=35,
             height=6,
         )
 
         #  radio buttons inside a group box; use a property change listener
+        col2_x = 103
+        col2_width = 56
+
+        name = "Options"
+        y = 5
+
         Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
+            doc=_doc,
+            name=name,
             label="Options",
             comp_kind=Forms.CompenentKind.GroupBox,
-            x=103,
-            y=5,
-            width=56,
+            x=col2_x,
+            y=y,
+            width=col2_width,
             height=25,
         )
 
         # these three radio buttons have the same name ("Option"), and
         # so only one can be on at a time
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="No automatic generation",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=11,
-            width=50,
-            height=6,
-        )
+        comp_kind = Forms.CompenentKind.RadioButton
+        indent = 3
+        height = 6
+        x = col2_x + indent
+        width = col2_width - 2 * indent
+
+        label = "No automatic generation"
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="Before inserting a record",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=17,
-            width=50,
-            height=6,
-        )
+        label = "Before inserting a record"
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Options",
-            label="When moving to a new record",
-            comp_kind=Forms.CompenentKind.RadioButton,
-            x=106,
-            y=23,
-            width=50,
-            height=6,
-        )
+        label = "When moving to a new record"
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
         props.addPropertyChangeListener("State", self)
 
         # check boxes inside another group box
         # use the same property change listener
-        Forms.add_control(
-            doc=BuildForm.doc,
-            name="Misc",
-            label="Miscellaneous",
-            comp_kind=Forms.CompenentKind.GroupBox,
-            x=103,
-            y=35,
-            width=56,
-            height=25,
-        )
+        y = 33
+        width = 60
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="DefaultDate",
-            label='Default sales date to "today"',
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=39,
-            width=60,
-            height=6,
+        name = "Misc"
+        label = "Miscellaneous"
+        comp_kind = Forms.CompenentKind.GroupBox
+        x = col2_x
+        y = 35
+        width = width
+        Forms.add_control(_doc, name, label, comp_kind, x, y, width, 25)
+
+        comp_kind = Forms.CompenentKind.CheckBox
+        x = x + indent
+        y = 33
+        width = col2_width - 4
+
+        name = "DefaultDate"
+        label = 'Default sales date to "today"'
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
+        Props.set_property(
+            props,
+            "HelpText",
+            "When checked, newly entered sales records are pre-filled",
         )
-        Props.set_property(props, "HelpText", "When checked, newly entered sales records are pre-filled")
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Protect",
-            label="Protect key fields from editing",
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=45,
-            width=60,
-            height=6,
+        name = "Protect"
+        label = "Protect key fields from editing"
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
+        Props.set_property(
+            props, "HelpText", "When checked, you cannot modify the values"
         )
-        Props.set_property(props, "HelpText", "When checked, you cannot modify the values")
         props.addPropertyChangeListener("State", self)
 
-        props = Forms.add_control(
-            doc=BuildForm.doc,
-            name="Empty",
-            label="Check for empty sales names",
-            comp_kind=Forms.CompenentKind.CheckBox,
-            x=106,
-            y=51,
-            width=60,
-            height=6,
+        name = "Empty"
+        label = "Check for empty sales names"
+        y += height
+        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
+        Props.set_property(
+            props, "HelpText", "When checked, you cannot enter empty values"
         )
-        Props.set_property(props, "HelpText", "When checked, you cannot enter empty values")
         props.addPropertyChangeListener("State", self)
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
-        props = Forms.add_list(doc=BuildForm.doc, name="Fruits", entries=fruits, x=2, y=90, width=20, height=6)
+        props = Forms.add_list(
+            doc=_doc, name="Fruits", entries=fruits, x=2, y=90, width=20, height=6
+        )
         self.listen_to_list(props)
 
         # set Form's data source to be the DB_FNM database
         def_form = Forms.get_form(doc, "Form")
-        Forms.bind_form_to_table(xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course")
+        Forms.bind_form_to_table(
+            xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course"
+        )
 
         # a list filled using an SQL query on the form's data source
         props = Forms.add_database_list(
-            doc=BuildForm.doc,
+            doc=_doc,
             name="CourseNames",
             sql_cmd='SELECT "title" FROM "Course"',
             x=90,
@@ -257,7 +283,7 @@ class BuildForm(
 
         # ------------------------ set up database grid/table ----------------
         props = Forms.add_database_list(
-            doc=BuildForm.doc,
+            doc=_doc,
             name="StudNames",
             sql_cmd='SELECT "lastName" FROM "Student"',
             x=140,
@@ -266,9 +292,9 @@ class BuildForm(
             height=6,
         )
         self.listen_to_list(props)
-        
+
         # create a new form, gridForm,
-        grid_con = Forms.insert_form(doc=BuildForm.doc)
+        grid_con = Forms.insert_form(doc=_doc)
         grid_form = Lo.qi(XForm, grid_con, True)
 
         # which uses an SQL query as its data source
@@ -280,7 +306,7 @@ class BuildForm(
 
         # create the grid/table component and set its columns
         props = Forms.add_control(
-            doc=BuildForm.doc,
+            doc=_doc,
             name="SalesTable",
             label=None,
             comp_kind=Forms.CompenentKind.GridControl,
@@ -292,8 +318,15 @@ class BuildForm(
         )
 
         grid_model = Lo.qi(XControlModel, props, True)
-        Forms.create_grid_column(grid_model=grid_model, data_field="firstName", col_kind="TextField", width=25)
-        Forms.create_grid_column(grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25)
+        Forms.create_grid_column(
+            grid_model=grid_model,
+            data_field="firstName",
+            col_kind="TextField",
+            width=25,
+        )
+        Forms.create_grid_column(
+            grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25
+        )
 
         self.listen_to_gird(grid_model)
 
@@ -354,7 +387,9 @@ class BuildForm(
     # region XTextListener
     def textChanged(self, ev: TextEvent) -> None:
         cmodel = Forms.get_event_control_model(ev)
-        print(f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}")
+        print(
+            f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}"
+        )
 
     # endregion XTextListener
 
