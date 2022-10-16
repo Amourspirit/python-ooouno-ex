@@ -118,30 +118,29 @@ class BuildForm(
         y = 63
         width = 8
 
-        props = Forms.add_button(
-            doc=_doc, name="first", label="<<", x=x + 0 * spacing, y=y, width=width
+        names, labels = map(
+            list,
+            zip(
+                *[
+                    ["first", "<<"],
+                    ["prev", "<"],
+                    ["next", ">"],
+                    ["last", ">>"],
+                    ["new", ">*"],
+                ]
+            ),
         )
-        self.listen_to_button(props)
 
-        props = Forms.add_button(
-            doc=_doc, name="prev", label="<", x=x + 1 * spacing, y=y, width=width
-        )
-        self.listen_to_button(props)
-
-        props = Forms.add_button(
-            doc=_doc, name="next", label=">", x=x + 2 * spacing, y=y, width=width
-        )
-        self.listen_to_button(props)
-
-        props = Forms.add_button(
-            doc=_doc, name="last", label=">>", x=x + 3 * spacing, y=y, width=width
-        )
-        self.listen_to_button(props)
-
-        props = Forms.add_button(
-            doc=_doc, name="new", label=">*", x=x + 4 * spacing, y=y, width=width
-        )
-        self.listen_to_button(props)
+        for i in range(0, len(labels)):
+            props = Forms.add_button(
+                doc=_doc,
+                name=names[i],
+                label=labels[i],
+                x=x + i * spacing,
+                y=y,
+                width=width,
+            )
+            self.listen_to_button(props)
 
         props = Forms.add_button(
             doc=_doc,
@@ -192,67 +191,84 @@ class BuildForm(
         x = col2_x + indent
         width = col2_width - 2 * indent
 
-        label = "No automatic generation"
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        props.addPropertyChangeListener("State", self)
+        labels = [
+            "No automatic generation",
+            "Before inserting a record",
+            "When moving to a new record",
+        ]
 
-        label = "Before inserting a record"
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        props.addPropertyChangeListener("State", self)
-
-        label = "When moving to a new record"
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        props.addPropertyChangeListener("State", self)
+        for i in range(0, len(labels)):
+            props = Forms.add_control(
+                doc=_doc,
+                name=name,
+                label=labels[i],
+                comp_kind=comp_kind,
+                x=x,
+                y=y + (i + 1) * height,
+                width=width,
+                height=height,
+            )
+            props.addPropertyChangeListener("State", self)
 
         # check boxes inside another group box
         # use the same property change listener
         y = 33
         width = 60
 
-        name = "Misc"
-        label = "Miscellaneous"
-        comp_kind = Forms.CompenentKind.GroupBox
         x = col2_x
-        y = 35
         width = width
-        Forms.add_control(_doc, name, label, comp_kind, x, y, width, 25)
+        Forms.add_control(
+            doc=_doc,
+            name="Misc",
+            label="Miscellaneous",
+            comp_kind=Forms.CompenentKind.GroupBox,
+            x=col2_x,
+            y=35,
+            width=width,
+            height=25,
+        )
 
         comp_kind = Forms.CompenentKind.CheckBox
         x = x + indent
-        y = 33
         width = col2_width - 4
 
-        name = "DefaultDate"
-        label = 'Default sales date to "today"'
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(
-            props,
-            "HelpText",
-            "When checked, newly entered sales records are pre-filled",
+        names, labels, HelpTexts = map(
+            list,
+            zip(
+                *[
+                    [
+                        "DefaultDate",
+                        'Default sales date to "today"',
+                        "When checked, newly entered sales records are pre-filled",
+                    ],
+                    [
+                        "Protect",
+                        "Protect key fields from editing",
+                        "When checked, you cannot modify the values",
+                    ],
+                    [
+                        "Empty",
+                        '"Check for empty sales names"',
+                        "When checked, you cannot enter empty values",
+                    ],
+                ]
+            ),
         )
-        props.addPropertyChangeListener("State", self)
 
-        name = "Protect"
-        label = "Protect key fields from editing"
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(
-            props, "HelpText", "When checked, you cannot modify the values"
-        )
-        props.addPropertyChangeListener("State", self)
-
-        name = "Empty"
-        label = "Check for empty sales names"
-        y += height
-        props = Forms.add_control(_doc, name, label, comp_kind, x, y, width, height)
-        Props.set_property(
-            props, "HelpText", "When checked, you cannot enter empty values"
-        )
-        props.addPropertyChangeListener("State", self)
+        for i in range(0, len(labels)):
+            props = Forms.add_control(
+                doc=_doc,
+                name=names[i],
+                label=labels[i],
+                comp_kind=comp_kind,
+                x=x,
+                y=y + (i + 1) * height,
+                width=width,
+                height=height,
+            )
+            props.addPropertyChangeListener("State", self)
+            Props.set_property(props, "HelpText", HelpTexts[i])
+            props.addPropertyChangeListener("State", self)
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
