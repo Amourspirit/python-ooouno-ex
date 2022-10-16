@@ -248,7 +248,7 @@ class BuildForm(
                     ],
                     [
                         "Empty",
-                        '"Check for empty sales names"',
+                        "Check for empty sales names",
                         "When checked, you cannot enter empty values",
                     ],
                 ]
