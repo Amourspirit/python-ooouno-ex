@@ -167,7 +167,7 @@ class BuildForm(
 
         #  radio buttons inside a group box; use a property change listener
         col2_x = 103
-        col2_width = 56
+        box_width = 56
 
         name = "Options"
         y = 5
@@ -179,7 +179,7 @@ class BuildForm(
             comp_kind=Forms.CompenentKind.GroupBox,
             x=col2_x,
             y=y,
-            width=col2_width,
+            width=box_width,
             height=25,
         )
 
@@ -189,7 +189,7 @@ class BuildForm(
         indent = 3
         height = 6
         x = col2_x + indent
-        width = col2_width - 2 * indent
+        width = box_width - 2 * indent
 
         labels = [
             "No automatic generation",
@@ -213,7 +213,7 @@ class BuildForm(
         # check boxes inside another group box
         # use the same property change listener
         y = 33
-        width = 60
+        width = box_width
 
         x = col2_x
         width = width
@@ -230,7 +230,7 @@ class BuildForm(
 
         comp_kind = Forms.CompenentKind.CheckBox
         x = x + indent
-        width = col2_width - 4
+        width = box_width - 4
 
         names, labels, HelpTexts = map(
             list,
