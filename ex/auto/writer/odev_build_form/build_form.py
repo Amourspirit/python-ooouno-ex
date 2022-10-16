@@ -164,7 +164,7 @@ class BuildForm(
 
         #  radio buttons inside a group box; use a property change listener
         col2_x = 90
-        col2_width = 70
+        box_width = 70
         y = 5
 
         name = "Options"
@@ -176,7 +176,7 @@ class BuildForm(
             comp_kind=Forms.CompenentKind.GroupBox,
             x=col2_x,
             y=y,
-            width=col2_width,
+            width=box_width,
             height=25,
         )
 
@@ -185,7 +185,7 @@ class BuildForm(
         comp_kind = Forms.CompenentKind.RadioButton
         indent = 3
         x = col2_x + indent
-        width = col2_width - 2 * indent
+        width = box_width - 2 * indent
 
         labels = [
             "No automatic generation",
@@ -220,13 +220,13 @@ class BuildForm(
             comp_kind=Forms.CompenentKind.GroupBox,
             x=col2_x,
             y=35,
-            width=col2_width,
+            width=box_width,
             height=25,
         )
 
         comp_kind = Forms.CompenentKind.CheckBox
         x = x + indent
-        width = col2_width - 4
+        width = box_width - 4
 
         names, labels, HelpTexts = map(
             list,
@@ -244,7 +244,7 @@ class BuildForm(
                     ],
                     [
                         "Empty",
-                        '"Check for empty sales names"',
+                        "Check for empty sales names",
                         "When checked, you cannot enter empty values",
                     ],
                 ]
