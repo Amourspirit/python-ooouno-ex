@@ -90,18 +90,12 @@ class BuildForm(
         # Section 1 has two columns
         _doc = BuildForm.doc
 
-        props = Forms.add_labelled_control(
-            doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11
-        )
+        props = Forms.add_labelled_control(doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
         self.listen_to_text_field(props)
 
-        Forms.add_labelled_control(
-            doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19
-        )
+        Forms.add_labelled_control(doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19)
 
-        props = Forms.add_labelled_control(
-            doc=_doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43
-        )
+        props = Forms.add_labelled_control(doc=_doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43)
         Props.set_property(props, "DecimalAccuracy", 0)
 
         Forms.add_labelled_control(
@@ -154,23 +148,26 @@ class BuildForm(
         self.listen_to_mouse(props)
 
         # some fixed text; no listener
+        width = 60
+        y = 80
+        height = 6
         Forms.add_control(
             doc=_doc,
             name="text-1",
             label="show only sales since",
             comp_kind=Forms.CompenentKind.FixedText,
             x=x,
-            y=80,
-            width=35,
-            height=6,
+            y=y,
+            width=width,
+            height=height,
         )
 
         #  radio buttons inside a group box; use a property change listener
-        col2_x = 103
-        col2_width = 56
+        col2_x = 90
+        col2_width = 70
+        y = 5
 
         name = "Options"
-        y = 5
 
         Forms.add_control(
             doc=_doc,
@@ -187,7 +184,6 @@ class BuildForm(
         # so only one can be on at a time
         comp_kind = Forms.CompenentKind.RadioButton
         indent = 3
-        height = 6
         x = col2_x + indent
         width = col2_width - 2 * indent
 
@@ -224,7 +220,7 @@ class BuildForm(
             comp_kind=Forms.CompenentKind.GroupBox,
             x=col2_x,
             y=35,
-            width=width,
+            width=col2_width,
             height=25,
         )
 
@@ -272,40 +268,41 @@ class BuildForm(
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
-        props = Forms.add_list(
-            doc=_doc, name="Fruits", entries=fruits, x=2, y=90, width=20, height=6
-        )
+        width = 40
+        height = 6
+        y = 90
+        x = 2
+        props = Forms.add_list(doc=_doc, name="Fruits", entries=fruits, x=x, y=y, width=width, height=height)
         self.listen_to_list(props)
 
         # set Form's data source to be the DB_FNM database
         def_form = Forms.get_form(doc, "Form")
-        Forms.bind_form_to_table(
-            xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course"
-        )
+        Forms.bind_form_to_table(xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course")
 
         # a list filled using an SQL query on the form's data source
+        x = 60
         props = Forms.add_database_list(
             doc=_doc,
             name="CourseNames",
             sql_cmd='SELECT "title" FROM "Course"',
-            x=90,
-            y=90,
-            width=20,
-            height=6,
+            x=x,
+            y=y,
+            width=width,
+            height=height,
         )
         self.listen_to_list(props)
 
         # another list filled using a different SQL query on the form's data source
-
+        x = 120
         # ------------------------ set up database grid/table ----------------
         props = Forms.add_database_list(
             doc=_doc,
             name="StudNames",
             sql_cmd='SELECT "lastName" FROM "Student"',
-            x=140,
-            y=90,
-            width=20,
-            height=6,
+            x=x,
+            y=y,
+            width=width,
+            height=height,
         )
         self.listen_to_list(props)
 
@@ -340,9 +337,7 @@ class BuildForm(
             col_kind="TextField",
             width=25,
         )
-        Forms.create_grid_column(
-            grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25
-        )
+        Forms.create_grid_column(grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25)
 
         self.listen_to_gird(grid_model)
 
@@ -403,9 +398,7 @@ class BuildForm(
     # region XTextListener
     def textChanged(self, ev: TextEvent) -> None:
         cmodel = Forms.get_event_control_model(ev)
-        print(
-            f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}"
-        )
+        print(f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}")
 
     # endregion XTextListener
 
