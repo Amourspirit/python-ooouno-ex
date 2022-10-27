@@ -18,6 +18,8 @@ And it takes forever to do it.
 
 ## Automate
 
+A message box is display once the document has been created asking if you want to close the document.
+
 An extra parameter can be passed in:
 
 An integer value the determines the levels to draw [Hilbert curve]. The default value is `4`.
