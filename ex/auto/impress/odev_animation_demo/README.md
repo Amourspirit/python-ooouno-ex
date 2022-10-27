@@ -1,6 +1,6 @@
 # Impress Animation Demo
 
-![Animation_Demo](https://user-images.githubusercontent.com/4193389/198396156-c644df97-22ed-43fa-bc03-9c04680b6de9.svg)
+![Animation_Demo](https://user-images.githubusercontent.com/4193389/198396583-7a763f89-24e3-42d4-8a5c-67a502136a50.gif)
 
 Demonstrates a circle being animated across a slide while playing an audio file.
 
