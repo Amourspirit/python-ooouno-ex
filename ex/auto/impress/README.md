@@ -13,3 +13,4 @@ Welcome to Impress Automation folder. Open a sub folder to get to an example.
 - [odev_modify_slides](./odev_modify_slides/) - Example of adding / modifying slides.
 - [odev_points_builder](./odev_points_builder) - Example of converting a text file of points into a series of slides.
 - [odev_slide_show](./odev_slide_show) - Example of creating a slide show dynamically.
+- [odev_slide_to_image](./odev_slide_to_image/) - Example saves a given page of a slide presentation to a given image format.
