@@ -11,3 +11,4 @@ Welcome to Impress Automation folder. Open a sub folder to get to an example.
 - [odev_extract_text](./odev_extract_text/) - Example of to extract the text from the slide deck and printing to console.
 - [odev_master_use](./odev_master_use/) - Example of working with master pages.
 - [odev_modify_slides](./odev_modify_slides/) - Example of adding / modifying slides.
+- [odev_points_builder](./odev_points_builder) - Example of converting a text file of points into a series of slides.
