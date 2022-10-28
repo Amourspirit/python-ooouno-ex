@@ -8,7 +8,7 @@ See [start source code](./start.py) and [build_form source code](./build_form.py
 
 ## Automate
 
-To close just press enter in the terminal after running the start command.
+A message box is display once the document has been created asking if you want to close the document.
 
 ### Cross Platform
 
