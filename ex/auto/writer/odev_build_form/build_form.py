@@ -2,6 +2,8 @@
 from __future__ import annotations
 from pathlib import Path
 
+import uno
+import unohelper
 from com.sun.star.awt import ActionEvent
 from com.sun.star.awt import FocusEvent
 from com.sun.star.awt import ItemEvent
@@ -21,6 +23,7 @@ from com.sun.star.beans import PropertyChangeEvent
 from com.sun.star.beans import XPropertyChangeListener
 from com.sun.star.beans import XPropertySet
 from com.sun.star.document import XEventListener
+from com.sun.star.form import XForm
 from com.sun.star.form import XGridControl
 from com.sun.star.form import XGridControlListener
 from com.sun.star.lang import EventObject
@@ -28,20 +31,16 @@ from com.sun.star.sdbc import XResultSet
 from com.sun.star.text import XTextDocument
 from com.sun.star.view import XSelectionChangeListener
 from com.sun.star.view import XSelectionSupplier
-from com.sun.star.form import XForm
-import unohelper
 
-from ooo.dyn.form.form_component_type import FormComponentType
-
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.write import Write
-from ooodev.utils.forms import Forms
+from ooodev.utils.file_io import FileIO
+from ooodev.utils.forms import Forms, FormComponentKind, FormComponentType
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-from ooodev.utils.file_io import FileIO
 
-# from .....resources import __res_path__
 # endregion imports
 
 
@@ -65,24 +64,40 @@ class BuildForm(
         self._db_fnm = db_path
 
         loader = Lo.load_office(Lo.ConnectSocket())
-        BuildForm.doc = Write.create_doc(loader)
+        try:
+            BuildForm.doc = Write.create_doc(loader)
 
-        GUI.set_visible(True, BuildForm.doc)
-        with Lo.ControllerLock():
-            # use a controller lock to lock screen updating.
-            # This will cut down and screen flashiing and add controls faster.
-            BuildForm.doc.addEventListener(self)
+            GUI.set_visible(True, BuildForm.doc)
+            with Lo.ControllerLock():
+                # use a controller lock to lock screen updating.
+                # This will cut down and screen flashiing and add controls faster.
+                BuildForm.doc.addEventListener(self)
 
-            tvc = Write.get_view_cursor(BuildForm.doc)
-            Write.append(tvc, "Building a Form\n")
-            Write.end_paragraph(tvc)
+                tvc = Write.get_view_cursor(BuildForm.doc)
+                Write.append(tvc, "Building a Form\n")
+                Write.end_paragraph(tvc)
 
-            self.create_form(BuildForm.doc)
-        Lo.dispatch_cmd("SwitchControlDesignMode")
+                self.create_form(BuildForm.doc)
+            Lo.dispatch_cmd("SwitchControlDesignMode")
 
-        Lo.wait_enter()
-        Lo.close_doc(BuildForm.doc)
-        Lo.close_office()
+            # Lo.wait_enter()
+            # Lo.close_doc(BuildForm.doc)
+            Lo.delay(2000)
+            msg_result = MsgBox.msgbox(
+                "Do you wish to close document?",
+                "All done",
+                boxtype=MessageBoxType.QUERYBOX,
+                buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+            )
+            if msg_result == MessageBoxResultsEnum.YES:
+                Lo.close_doc(doc=BuildForm.doc)
+                BuildForm.doc = None
+                Lo.close_office()
+            else:
+                print("Keeping document open")
+        except Exception:
+            Lo.close_office()
+            raise
 
     def create_form(self, doc: XTextDocument) -> None:
 
@@ -90,18 +105,18 @@ class BuildForm(
         # Section 1 has two columns
         _doc = BuildForm.doc
 
-        props = Forms.add_labelled_control(doc=_doc, label="FIRSTNAME", comp_kind=Forms.CompenentKind.TextField, y=11)
+        props = Forms.add_labelled_control(doc=_doc, label="FIRSTNAME", comp_kind=FormComponentKind.TEXT_FIELD, y=11)
         self.listen_to_text_field(props)
 
-        Forms.add_labelled_control(doc=_doc, label="LASTNAME", comp_kind=Forms.CompenentKind.TextField, y=19)
+        Forms.add_labelled_control(doc=_doc, label="LASTNAME", comp_kind=FormComponentKind.TEXT_FIELD, y=19)
 
-        props = Forms.add_labelled_control(doc=_doc, label="AGE", comp_kind=Forms.CompenentKind.NumericField, y=43)
+        props = Forms.add_labelled_control(doc=_doc, label="AGE", comp_kind=FormComponentKind.NUMERIC_FIELD, y=43)
         Props.set_property(props, "DecimalAccuracy", 0)
 
         Forms.add_labelled_control(
             doc=_doc,
             label="BIRTHDATE",
-            comp_kind=Forms.CompenentKind.FormattedField,
+            comp_kind=FormComponentKind.FORMATTED_FIELD,
             y=51,
         )
 
@@ -155,7 +170,7 @@ class BuildForm(
             doc=_doc,
             name="text-1",
             label="show only sales since",
-            comp_kind=Forms.CompenentKind.FixedText,
+            comp_kind=FormComponentKind.FIXED_TEXT,
             x=x,
             y=y,
             width=width,
@@ -173,7 +188,7 @@ class BuildForm(
             doc=_doc,
             name=name,
             label="Options",
-            comp_kind=Forms.CompenentKind.GroupBox,
+            comp_kind=FormComponentKind.GROUP_BOX,
             x=col2_x,
             y=y,
             width=box_width,
@@ -182,7 +197,7 @@ class BuildForm(
 
         # these three radio buttons have the same name ("Option"), and
         # so only one can be on at a time
-        comp_kind = Forms.CompenentKind.RadioButton
+        comp_kind = FormComponentKind.RADIO_BUTTON
         indent = 3
         x = col2_x + indent
         width = box_width - 2 * indent
@@ -217,14 +232,14 @@ class BuildForm(
             doc=_doc,
             name="Misc",
             label="Miscellaneous",
-            comp_kind=Forms.CompenentKind.GroupBox,
+            comp_kind=FormComponentKind.GROUP_BOX,
             x=col2_x,
             y=35,
             width=box_width,
             height=25,
         )
 
-        comp_kind = Forms.CompenentKind.CheckBox
+        comp_kind = FormComponentKind.CHECK_BOX
         x = x + indent
         width = box_width - 4
 
@@ -322,7 +337,7 @@ class BuildForm(
             doc=_doc,
             name="SalesTable",
             label=None,
-            comp_kind=Forms.CompenentKind.GridControl,
+            comp_kind=FormComponentKind.GRID_CONTROL,
             x=2,
             y=100,
             width=100,
