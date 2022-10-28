@@ -6,6 +6,7 @@
 
 Saves a given page of a slide presentation (e.g. ppt, odp) as an image file (e.g. "gif", "png", "jpeg", "wmf", "bmp", "svg")
 
+This demo uses [OOO Development Tools]
 ## Automate
 
 Args are required to be passed.
@@ -37,3 +38,5 @@ python ./ex/auto/impress/odev_slide_to_image/start.py --file "resources/presenta
 ```ps
 python .\ex\auto\impress\odev_slide_to_image\start.py --file "resources/presentation/algs.ppt" --out_fmt "jpeg" --idx 0
 ```
+
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
