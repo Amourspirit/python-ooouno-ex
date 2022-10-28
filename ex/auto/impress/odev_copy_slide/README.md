@@ -14,7 +14,7 @@ This demo uses [OOO Development Tools]
 
 Three parameters can be passed in:
 
-1. File Name: Such as `"tests/fixtures/presentation/algs.odp"`
+1. File Name: Such as `"resources/presentation/algs.odp"`
 2. From Index: Such as `2`
 3. To Index: Such as `4`
 
