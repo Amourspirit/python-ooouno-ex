@@ -50,11 +50,11 @@ python -m start -k happy_stock
 ### Linux/Mac
 
 ```sh
-python ./tests/samples/Chart2/Chart_2_Views/start.py -k happy_stock
+python ./ex/auto/chart/Chart_2_Views/start.py -k happy_stock
 ```
 
 ### Windows
 
 ```ps
-python .\tests\samples\Chart2\Chart_2_Views\start.py -k happy_stock
+python .\ex\auto\chart\Chart_2_Views\start.py -k happy_stock
 ```
