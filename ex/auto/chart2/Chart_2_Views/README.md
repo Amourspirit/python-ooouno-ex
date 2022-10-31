@@ -1,7 +1,6 @@
-# Demonstrates creating charts.
+# Demonstrates creating charts
 
-![charts_3d](https://user-images.githubusercontent.com/4193389/198852486-43ffdca8-9b26-4001-a734-1031cd4e42dd.png)
-
+![charts_happy](https://user-images.githubusercontent.com/4193389/198873533-36de5d26-1071-467b-95f4-2e557b4017cb.png)
 
 Demonstrates loading a spread sheet into Calc and dynamically inserting charts.
 There are a total of 17 different charts that can be dynamically created by this demo.
@@ -10,7 +9,7 @@ A message box is display once the document has been created asking if you want t
 
 ## NOTE
 
-There is currently an issue with LibreOffice `7.4` that does not allow the `Chart2` class to load.
+There is currently a [bug](https://bugs.documentfoundation.org/show_bug.cgi?id=151846) in LibreOffice `7.4` that does not allow the `Chart2` class to load.
 The `Chart2` has been tested with LibreOffice `7.3`
 
 ## Options
@@ -50,11 +49,11 @@ python -m start -k happy_stock
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/chart/Chart_2_Views/start.py -k happy_stock
+python ./ex/auto/chart2/Chart_2_Views/start.py -k happy_stock
 ```
 
 ### Windows
 
 ```ps
-python .\ex\auto\chart\Chart_2_Views\start.py -k happy_stock
+python .\ex\auto\chart2\Chart_2_Views\start.py -k happy_stock
 ```
