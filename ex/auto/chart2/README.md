@@ -1,4 +1,4 @@
-# Chart Automation Examples
+# Chart2 Automation Examples
 
 Welcome to Chart Automation folder. Open a sub folder to get to an example.
 
