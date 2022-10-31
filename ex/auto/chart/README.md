@@ -2,4 +2,4 @@
 
 Welcome to Chart Automation folder. Open a sub folder to get to an example.
 
-- [Chart_2_Views](./Chart_2_Views/) - Example demonstrates dynamically creating 17 different kinds of charts.
+- [Chart_views](./Chart_views/) - Example demonstrates dynamically creating 10 different kinds of charts.
