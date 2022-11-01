@@ -23,6 +23,7 @@ class SlidesInfo:
 
             if not Draw.is_shapes_based(doc):
                 Lo.print("-- not a drawing or slides presentation")
+                Lo.close_doc(doc)
                 return
 
             print()
