@@ -10,6 +10,40 @@ See Also: [Examining Office](https://python-ooo-dev-tools.readthedocs.io/en/late
 
 See [source code](./start.py)
 
+## Example output
+
+Print current user information
+
+```sh
+python -m start -u
+```
+
+```text
+User Data Properties
+  UserGroup: UserGroup
+  apartment:
+  c:
+  encrypttoself: True
+  facsimiletelephonenumber:
+  fathersname:
+  givenname: Amour
+  homephone:
+  initials: AS
+  l:
+  mail:
+  o:
+  position:
+  postalcode:
+  signingkey:
+  sn: Spirit
+  st:
+  street:
+  telephonenumber:
+  title:
+
+  Full Name: Amour Spirit
+```
+
 ## Automate
 
 ### Cross Platform
@@ -17,7 +51,7 @@ See [source code](./start.py)
 Run from current example folder.
 
 ```sh
-python start.py
+python -m start
 ```
 
 or for other commands
@@ -53,7 +87,5 @@ or for other commands
 ```ps
 python .\ex\auto\general\odev_office_info\start.py -h
 ```
-
-
 
 ![command line example](https://user-images.githubusercontent.com/4193389/179056343-deafd3b5-c16e-45fa-9e2d-c95a0dc6b71e.gif)
