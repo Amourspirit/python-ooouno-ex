@@ -5,9 +5,14 @@ from __future__ import annotations
 import argparse
 import platform
 
-from ooodev.utils.lo import Lo
-from ooodev.utils.info import Info
+import uno
+
+from com.sun.star.beans import XPropertySet
+
 from ooodev.utils.file_io import FileIO
+from ooodev.utils.info import Info
+from ooodev.utils.lo import Lo
+from ooodev.utils.props import Props
 
 # endregion Imports
 
@@ -43,6 +48,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         help="Show Filters",
         action="store_true",
         dest="filters",
+        default=False,
+    )
+    parser.add_argument(
+        "-u",
+        "--user-data",
+        help="Show User Data",
+        action="store_true",
+        dest="user_data",
         default=False,
     )
 
@@ -118,7 +131,11 @@ def main() -> int:
             show_services(" Services for Write: ", Lo.Service.WRITER)
         if args.services_calc:
             show_services(" Services for Calc: ", Lo.Service.CALC)
-
+        if args.user_data:
+            props = Lo.qi(XPropertySet, Info.get_config(node_str='Data', node_path="/org.openoffice.UserProfile/"))
+            Props.show_obj_props("User Data", props)
+            print(f'  Full Name: {props.getPropertyValue("givenname")} {props.getPropertyValue("sn")}'.rstrip())
+        
         print()
     return 0
 
