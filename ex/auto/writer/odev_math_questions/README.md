@@ -18,6 +18,10 @@ See [source code](./start.py)
 
 ## Automate
 
+Displays a message box asking if you want to save document.
+
+Display a message box asking if you want to close document.
+
 ### Cross Platform
 
 From this folder.

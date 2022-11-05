@@ -8,7 +8,8 @@
 Example of Search and replace.
 
 Search for the first occurrence of some words and/or replace some English spelled words with US spelled versions.
-Saved the changed document in "replaced.doc" of working folder.
+Displays a message box asking if you want to save document.
+Optionally Saves the changed document in "replaced.doc" of working folder.
 
 ## See
 
@@ -22,12 +23,16 @@ See [source code](./start.py)
 
 ## Automate
 
+Displays a message box asking if you want to save document.
+
+Display a message box asking if you want to close document.
+
 ### Cross Platform
 
 From this folder.
 
 ```sh
-python -m start --show --file "../../../../resources/odt/bigStory.doc"
+python -m start --file "../../../../resources/odt/bigStory.doc"
 ```
 
 ### Linux/Mac
@@ -35,7 +40,7 @@ python -m start --show --file "../../../../resources/odt/bigStory.doc"
 From project root folder.
 
 ```sh
-python ./ex/auto/writer/odev_text_replace/start.py --show --file "resources/odt/bigStory.doc"
+python ./ex/auto/writer/odev_text_replace/start.py --file "resources/odt/bigStory.doc"
 ```
 
 ### Windows
@@ -43,7 +48,7 @@ python ./ex/auto/writer/odev_text_replace/start.py --show --file "resources/odt/
 From project root folder.
 
 ```ps
-python .\ex\auto\writer\odev_text_replace\start.py --show --file "resources/odt/bigStory.doc"
+python .\ex\auto\writer\odev_text_replace\start.py --file "resources/odt/bigStory.doc"
 ```
 
 [Text Search and Replace]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter09.html

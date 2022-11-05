@@ -12,6 +12,8 @@ There is a macro demo of this. See [macro example](../../../calc/odev_add_range_
 
 ## Automate
 
+A message box is display once the document has been created asking if you want to close the document.
+
 The following command will run automation that generates a new Calc with data.
 
 From Project Root
@@ -32,7 +34,7 @@ python ./ex/auto/calc/odev_add_range_data/start.py
 
 ### Windows
 
-```sh
+```ps
 python .\ex\auto\calc\odev_add_range_data\start.py
 ```
 

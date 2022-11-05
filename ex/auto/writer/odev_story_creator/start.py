@@ -5,6 +5,9 @@ import argparse
 from typing import List, Any
 from pathlib import Path
 
+import uno
+
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
 from ooodev.events.lo_events import LoEvents
@@ -14,7 +17,6 @@ from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.beans import XPropertySet
 from com.sun.star.style import XStyle
@@ -120,54 +122,67 @@ def main() -> int:
         # hook ooodev internal printing event
         LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
-    # Context manager takes care of terminating instance when job is done.
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket(headless=not visible))) as loader:
+    loader = Lo.load_office(Lo.ConnectSocket())
 
-        fnm = Path(args.file_path)
+    fnm = Path(args.file_path)
 
-        try:
-            doc = Write.create_doc(loader=loader)
-        except Exception as e:
-            print(e)
-            # office will close and with statement is exited
-            raise BreakContext.Break
+    try:
+        doc = Write.create_doc(loader=loader)
+        if visible:
+            GUI.set_visible(is_visible=visible, odoc=doc)
 
-        try:
-            if visible:
-                GUI.set_visible(is_visible=visible, odoc=doc)
+        styles = Info.get_style_names(doc, "ParagraphStyles")
+        print("Paragraph Styles")
+        Lo.print_names(styles)
 
-            styles = Info.get_style_names(doc, "ParagraphStyles")
-            print("Paragraph Styles")
-            Lo.print_names(styles)
+        if not create_para_style(doc, "adParagraph"):
+            raise RuntimeError("Could not create new paragraph style")
 
-            if not create_para_style(doc, "adParagraph"):
-                print("Could not create new paragraph style")
-                # office will close and with statement is exited
-                raise BreakContext.Break
+        xtext_range = doc.getText().getStart()
+        Props.set_property(xtext_range, "ParaStyleName", "adParagraph")
 
-            xtext_range = doc.getText().getStart()
-            Props.set_property(xtext_range, "ParaStyleName", "adParagraph")
+        Write.set_header(text_doc=doc, text=f"From: {fnm.name}")
+        Write.set_a4_page_format(doc)
+        Write.set_page_numbers(doc)
 
-            Write.set_header(text_doc=doc, text=f"From: {fnm.name}")
-            Write.set_a4_page_format(doc)
-            Write.set_page_numbers(doc)
+        cursor = Write.get_cursor(doc)
 
-            cursor = Write.get_cursor(doc)
+        read_text(fnm=fnm, cursor=cursor)
+        Write.end_paragraph(cursor)
 
-            read_text(fnm=fnm, cursor=cursor)
-            Write.end_paragraph(cursor)
+        Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
 
-            Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
-
-            Lo.delay(delay)
-
+        Lo.delay(delay)
+        if visible:
+            msg_result = MsgBox.msgbox(
+                "Do you wish to save document?",
+                "Save",
+                boxtype=MessageBoxType.QUERYBOX,
+                buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+            )
+            if msg_result == MessageBoxResultsEnum.YES:
+                Write.save_doc(text_doc=doc, fnm="bigStory.doc")
+        else:
             Write.save_doc(text_doc=doc, fnm="bigStory.doc")
-
-        finally:
-            Lo.close_doc(doc)
+        if visible:
+            msg_result = MsgBox.msgbox(
+                "Do you wish to close document?",
+                "All done",
+                boxtype=MessageBoxType.QUERYBOX,
+                buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+            )
+            if msg_result == MessageBoxResultsEnum.YES:
+                Lo.close_doc(doc=doc, deliver_ownership=True)
+                Lo.close_office()
+            else:
+                print("Keeping document open")
+        else:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+    except Exception as e:
+        Lo.print(e)
+        Lo.close_office()
+        raise
 
     return 0
 

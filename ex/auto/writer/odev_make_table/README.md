@@ -1,7 +1,7 @@
 # Make Table
 
 Read tabbed text from an input file of Bond movies (bondMovies.txt)
-and store as a blue table in "table.odt".
+and displays a message box asking if you want to store as a blue table in "table.odt".
 
 ## See
 
@@ -14,6 +14,10 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+Displays a message box asking if you want to save document.
+
+Display a message box asking if you want to close document.
 
 ### Cross Platform
 
