@@ -1,7 +1,7 @@
 # Build Doc
 
 Create a new Writer document, add a few lines, styles,
-images, text frame, bookmark, and save it
+images, text frame, bookmark, and displays a message box giving the the option to save document
 as the file "build.odt" in the current working folder.
 
 ## See

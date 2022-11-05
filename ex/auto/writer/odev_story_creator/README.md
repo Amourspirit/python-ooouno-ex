@@ -9,6 +9,8 @@ This example reads in a text file, apply a new paragraph style, header, page
 numbers in footer, A4 page style, title, and subtitle, and saves as "bigStory.doc" (Word 97 format)
 in the working folder.
 
+if `--visible` is `True` then message boxes are displayed asking if you want to save and close document.
+
 ## See
 
 See Also:
