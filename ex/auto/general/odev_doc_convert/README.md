@@ -44,7 +44,7 @@ python ./ex/auto/general/odev_doc_convert/start.py -e "pdf" -f "LICENSE"
 
 From project root folder.
 
-```shell
+```ps
 python .\ex\auto\general\odev_doc_convert\start.py -e "pdf" -f "LICENSE"
 ```
 

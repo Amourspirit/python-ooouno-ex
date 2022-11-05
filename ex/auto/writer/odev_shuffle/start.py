@@ -5,11 +5,10 @@ import argparse
 from typing import cast
 import random
 
-
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
-from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.text import XTextDocument
 
@@ -93,31 +92,39 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
-    # Context manager takes care of terminating instance when job is done.
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket())) as loader:
+    loader = Lo.load_office(Lo.ConnectPipe())
 
-        fnm = cast(str, args.file_path)
+    fnm = cast(str, args.file_path)
 
-        try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
-        except Exception as e:
-            print(f"Could not open '{fnm}'")
-            print(f"  {e}")
-            # office will close and with statement is exited
-            raise BreakContext.Break
+    try:
+        doc = Write.open_doc(fnm=fnm, loader=loader)
+        GUI.set_visible(is_visible=visible, odoc=doc)
+        apply_shuffle(doc, loop_delay, visible)
 
-        try:
-            GUI.set_visible(is_visible=visible, odoc=doc)
-            apply_shuffle(doc, loop_delay, visible)
-
-            Lo.delay(2_000)
+        Lo.delay(1_000)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to save document?",
+            "Save",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
             Write.save_doc(text_doc=doc, fnm="shuffled.odt")
 
-        finally:
-            Lo.close_doc(doc)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to close document?",
+            "All done",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+        else:
+            print("Keeping document open")
+    except Exception:
+        Lo.close_office()
+        raise
 
     return 0
 

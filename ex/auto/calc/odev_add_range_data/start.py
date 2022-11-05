@@ -5,10 +5,12 @@ and is intended to be called from the projects main.
 Such as: python -m main auto --process "ex/auto/calc/odev_add_range_data/start.py"
 """
 from __future__ import annotations
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
 from ooodev.office.calc import Calc
 from com.sun.star.sheet import XSpreadsheet
+
 
 def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.highlight_range(sheet=sheet, headline="Range Data Example", range_name="A2:C24")
@@ -39,13 +41,31 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.set_val("Total", sheet=sheet, cell_name="A24")
     Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
 
+
 def main() -> int:
     loader = Lo.load_office(Lo.ConnectSocket())
-    doc = Calc.create_doc(loader=loader)
-    sheet = Calc.get_sheet(doc=doc, index=0)
-    GUI.set_visible(is_visible=True, odoc=doc)
-    do_cell_range(sheet=sheet)
+    try:
+        doc = Calc.create_doc(loader=loader)
+        sheet = Calc.get_sheet(doc=doc, index=0)
+        GUI.set_visible(is_visible=True, odoc=doc)
+        do_cell_range(sheet=sheet)
+        Lo.delay(1_500)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to close document?",
+            "All done",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+        else:
+            print("Keeping document open")
+    except Exception:
+        Lo.close_office()
+        raise
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

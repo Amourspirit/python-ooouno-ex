@@ -33,13 +33,13 @@ See [source code](./start.py)
 
 Run from this example folder.
 
-```shell
+```sh
 python start.py
 ```
 
 or for auto shutdown
 
-```shell
+```sh
 python start.py True
 ```
 
@@ -60,17 +60,15 @@ python ./ex/auto/general/odev_monitor/start.py True
 
 From project root folder.
 
-```sh
+```ps
 python .\ex\auto\general\odev_monitor\start.py
 ```
 
 or for auto shutdown
 
-```sh
+```ps
 python .\ex\auto\general\odev_monitor\start.py True
 ```
-
-
 
 ### Example console output
 

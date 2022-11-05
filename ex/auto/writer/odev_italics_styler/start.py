@@ -4,13 +4,14 @@ import sys
 import argparse
 from typing import Any, cast
 
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
 from ooodev.events.lo_events import LoEvents
 from ooodev.office.write import Write
+from ooodev.utils.color import CommonColor, Color
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.utils.color import CommonColor, Color
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 
@@ -30,7 +31,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
     parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
     parser.add_argument(
         "--word",
@@ -81,11 +81,10 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
 
 
 def get_color(color: str) -> int:
-    if color.isdigit():
-        return int(color)
-    c = color.upper()
-    if hasattr(CommonColor, c):
-        return getattr(CommonColor, c)
+    try:
+        return CommonColor.from_str(color)
+    except Exception:
+        pass
     return CommonColor.RED
 
 
@@ -109,49 +108,51 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    visible = args.show
-    if visible:
-        delay = 4_000
-    else:
-        delay = 0
+    delay = 3_000
 
     if not args.verbose:
         # hook ooodev internal printing event
         LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
-    # Context manager takes care of terminating instance when job is done.
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket(headless=not visible))) as loader:
+    loader = Lo.load_office(Lo.ConnectSocket())
 
-        fnm = cast(str, args.file_path)
+    fnm = cast(str, args.file_path)
 
-        try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
-        except Exception as e:
-            print(f"Could not open '{fnm}'")
-            print(f"  {e}")
-            # office will close and with statement is exited
-            raise BreakContext.Break
+    try:
+        doc = Write.open_doc(fnm=fnm, loader=loader)
 
-        try:
+        GUI.set_visible(is_visible=True, odoc=doc)
 
-            if visible:
-                GUI.set_visible(is_visible=visible, odoc=doc)
+        with Lo.ControllerLock():
+            for word, color in args.word:
+                result = italicize_all(doc, word, get_color(color))
+                print(f"Found {result} results for {word}")
 
-            with Lo.ControllerLock():
-                for word, color in args.word:
-                    result = italicize_all(doc, word, get_color(color))
-                    print(f"Found {result} results for {word}")
-
-            Lo.delay(delay)
+        Lo.delay(delay)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to save document?",
+            "Save",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
             Write.save_doc(text_doc=doc, fnm="italicized.doc")
-            Lo.wait_enter()
 
-        finally:
-            Lo.close_doc(doc)
-
+        msg_result = MsgBox.msgbox(
+            "Do you wish to close document?",
+            "All done",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+        else:
+            print("Keeping document open")
+    except Exception as e:
+        print(e)
+        Lo.close_office()
+        raise
     return 0
 
 

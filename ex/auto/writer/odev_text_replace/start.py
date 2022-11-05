@@ -4,13 +4,15 @@ import sys
 import argparse
 from typing import Any, Sequence, cast
 
+import uno
+
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
 from ooodev.events.lo_events import LoEvents
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.beans import XPropertySet
 from com.sun.star.text import XTextDocument
@@ -29,7 +31,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
     parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
 
 
@@ -92,52 +93,56 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    visible = args.show
-    if visible:
-        delay = 4_000
-    else:
-        delay = 0
+    delay = 4_000
 
     if not args.verbose:
         # hook ooodev internal printing event
         LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
-    # Context manager takes care of terminating instance when job is done.
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
-    # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket(headless=not visible))) as loader:
+    loader = Lo.load_office(Lo.ConnectSocket())
 
-        fnm = cast(str, args.file_path)
+    fnm = cast(str, args.file_path)
 
-        try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
-        except Exception as e:
-            print(f"Could not open '{fnm}'")
-            print(f"  {e}")
-            # office will close and with statement is exited
-            raise BreakContext.Break
+    try:
+        doc = Write.open_doc(fnm=fnm, loader=loader)
+        uk_words = ("colour", "neighbour", "centre", "behaviour", "metre", "through")
+        us_words = ("color", "neighbor", "center", "behavior", "meter", "thru")
 
-        try:
-            uk_words = ("colour", "neighbour", "centre", "behaviour", "metre", "through")
-            us_words = ("color", "neighbor", "center", "behavior", "meter", "thru")
+        GUI.set_visible(is_visible=True, odoc=doc)
 
-            if visible:
-                GUI.set_visible(is_visible=visible, odoc=doc)
+        words = (
+            "(G|g)rit",
+            "colou?r",
+        )
+        find_words(doc, words)
 
-            words = (
-                "(G|g)rit",
-                "colou?r",
-            )
-            find_words(doc, words)
+        num = replace_words(doc, uk_words, us_words)
 
-            num = replace_words(doc, uk_words, us_words)
-
-            Lo.delay(delay)
+        Lo.delay(delay)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to save document?",
+            "Save",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
             Write.save_doc(text_doc=doc, fnm="replaced.doc")
 
-        finally:
-            Lo.close_doc(doc)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to close document?",
+            "All done",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+        else:
+            print("Keeping document open")
+    except Exception as e:
+        print(e)
+        Lo.close_office()
+        raise
 
     return 0
 

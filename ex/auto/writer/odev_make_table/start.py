@@ -4,6 +4,7 @@ import csv
 from pathlib import Path
 from typing import List
 
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
@@ -42,31 +43,50 @@ def main() -> int:
 
     delay = 2_000  # delay so users can see changes.
 
-    with Lo.Loader(Lo.ConnectSocket()) as loader:
+    loader = Lo.load_office(Lo.ConnectSocket())
 
+
+    try:
         doc = Write.create_doc(loader=loader)
+        GUI.set_visible(is_visible=True, odoc=doc)
 
-        try:
-            GUI.set_visible(is_visible=True, odoc=doc)
+        cursor = Write.get_cursor(doc)
 
-            cursor = Write.get_cursor(doc)
+        Write.append_para(cursor, "Table of Bond Movies")
+        Write.style_prev_paragraph(cursor, "Heading 1")
+        Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
 
-            Write.append_para(cursor, "Table of Bond Movies")
-            Write.style_prev_paragraph(cursor, "Heading 1")
-            Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
+        # Lock display updating for faster writing of table into document.
+        with Lo.ControllerLock():
+            Write.add_table(cursor=cursor, table_data=tbl_data)
+            Write.end_paragraph(cursor)
 
-            # Lock display updating for faster writing of table into document.
-            with Lo.ControllerLock():
-                Write.add_table(cursor=cursor, table_data=tbl_data)
-                Write.end_paragraph(cursor)
-
-            Lo.delay(delay)
-            Write.append(cursor, f"Timestamp: {DateUtil.time_stamp()}")
-            Lo.delay(delay)
+        Lo.delay(delay)
+        Write.append(cursor, f"Timestamp: {DateUtil.time_stamp()}")
+        Lo.delay(delay)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to save document?",
+            "Save",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
             Lo.save_doc(doc, "table.odt")
 
-        finally:
-            Lo.close_doc(doc)
+        msg_result = MsgBox.msgbox(
+            "Do you wish to close document?",
+            "All done",
+            boxtype=MessageBoxType.QUERYBOX,
+            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+        )
+        if msg_result == MessageBoxResultsEnum.YES:
+            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_office()
+        else:
+            print("Keeping document open")
+    except Exception:
+        Lo.close_office()
+        raise
 
     return 0
 

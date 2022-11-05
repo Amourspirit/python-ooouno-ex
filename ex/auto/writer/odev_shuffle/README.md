@@ -7,7 +7,8 @@ This causes the middle letters of the word to be rearranged, but not the first
 and last letters. Words of <= 3 characters are unaffected.
 The words are highlighted as they are shuffled.
 
-In this example the file "shuffled.odt" is saved in the working folder.
+Displays a message box asking if you want to save document.
+If yes a file "shuffled.odt" is saved in the working folder.
 
 ## See
 
@@ -20,6 +21,10 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+Displays a message box asking if you want to save document.
+
+Display a message box asking if you want to close document.
 
 ### Cross Platform
 
