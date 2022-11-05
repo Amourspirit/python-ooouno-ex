@@ -34,7 +34,7 @@ python ./ex/auto/general/odev_doc_info/start.py --doc "ex/auto/general/odev_doc_
 
 ### Windows
 
-```sh
+```ps
 python .\ex\auto\general\odev_doc_info\start.py --doc "ex\auto\general\odev_doc_info\story.odt" --service --interface --xdoc --property
 ```
 

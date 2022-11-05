@@ -1,6 +1,6 @@
 from __future__ import annotations
 from ooodev.utils.lo import Lo
-from ooodev.office.calc import Calc
+from ooodev.office.calc import Calc, CellFlagsEnum
 from com.sun.star.sheet import XSpreadsheet
 
 
@@ -55,7 +55,7 @@ def clear_range() -> None:
     sheet = Calc.get_active_sheet(doc=doc)
 
     # create the flags that let Calc know what kind or data to remove from cells
-    flags = Calc.CellFlags.VALUE | Calc.CellFlags.STRING | Calc.CellFlags.FORMULA
+    flags = CellFlagsEnum.VALUE | CellFlagsEnum.STRING | CellFlagsEnum.FORMULA
 
     # clears the cells in a given range
     Calc.clear_cells(sheet=sheet, range_name="A2:C24", cell_flags=flags)

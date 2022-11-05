@@ -6,6 +6,8 @@
 
 This example demonstrates how to dispatch commands using [OOO Development Tools] (ODEV).
 
+Also demonstrates how to create message dialog.
+
 LibreOffice has a comprehensive web page listing all the dispatch commands [Development/DispatchCommands](https://wiki.documentfoundation.org/Development/DispatchCommands).
 
 This example also demonstrates hooking ODEV events that in this case allow for finer control over which commands are dispatched.
@@ -15,6 +17,8 @@ See Also: [Listening, and Other Techniques](https://python-ooo-dev-tools.readthe
 See [source code](./start.py)
 
 ## Automate
+
+A message box is display once the document has been processed asking if you want to close the document.
 
 Running the following command opens a Write document, puts it into read-only mode.
 Next a Get Involved wep page is opened in local web browser.
@@ -41,7 +45,7 @@ python ./ex/auto/general/odev_dispatch/start.py -d "resources/odt/story.odt"
 
 From project root folder
 
-```sh
+```ps
 python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
 ```
 

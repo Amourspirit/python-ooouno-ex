@@ -36,6 +36,7 @@ or for auto shutdown
 ```sh
 python start.py True
 ```
+
 ### Linus/Mac
 
 From project root folder.
@@ -54,13 +55,13 @@ python ./ex/auto/general/odev_listen/start.py True
 
 From project root folder.
 
-```sh
+```ps
 python .\ex\auto\general\odev_listen\start.py
 ```
 
 or for auto shutdown
 
-```sh
+```ps
 python .\ex\auto\general\odev_listen\start.py True
 ```
 

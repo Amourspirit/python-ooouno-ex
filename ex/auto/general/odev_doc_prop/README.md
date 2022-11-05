@@ -32,7 +32,7 @@ python ./ex/auto/general/odev_doc_prop/start.py --doc "ex/auto/general/odev_doc_
 
 Run from project root folder.
 
-```sh
+```ps
 python .\ex\auto\general\odev_doc_prop\start.py --doc "ex/auto/general/odev_doc_prop/algs.odp"
 ```
 
