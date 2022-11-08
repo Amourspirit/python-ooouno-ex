@@ -8,6 +8,10 @@ Document is closed when slide show is ended.
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Automate
 
 ### Cross Platform

@@ -6,18 +6,41 @@
 
 This example demonstrates how to combine Slide show documents using Impress.
 
+One challenge is for every slide that is appended a confirmation dialog pops up needing to click **yes** ( five time when adding `points.odp` ) in a dialog prompt.
+This is where [ooo-dev-tools-gui-win] come in, it can monitor for a dialog box and press a button automatically.
+
+You can see here how [ooo-dev-tools-gui-win] is called.
+
+```python
+try:
+    # only in windows
+    from odevgui_win.dialog_auto import DialogAuto
+except ImportError:
+    DialogAuto = None
+
+# partial AppendSlides class
+class AppendSlides:
+    # ...
+
+    def append(self) -> None:
+      # other code
+      # ...
+
+      # monitor for Confirmation dialog
+      if DialogAuto:
+          DialogAuto.monitor_dialog('y')
+
+      # rest of the code ...
+```
+
 There is one limitation at this time.
-For every slide that is appended the user is forced to click a **yes** ( five time when adding `points.odp` ) in a dialog prompt.
-
-There is a remedy for this but it is outside of the scope for this demo, mainly
-due to the many variations it will be up to end user to make a custom implementation
-
-One potential solution would be [autopy](https://pypi.org/project/autopy/)
-however `autopy` is for `X11` on Linux and will not work for `Wayland`.
-There are other Wayland solutions available.
-At this time there does not seem to be a solution that works for both X11 and Wayland.
+[ooo-dev-tools-gui-win] is only for [OOO Development Tools] on windows.
 
 This demo uses [OOO Development Tools]
+
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
 
 ## Automate
 
@@ -60,3 +83,4 @@ python .\ex\auto\impress\odev_append_slides\start.py
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[ooo-dev-tools-gui-win]: https://github.com/Amourspirit/python-ooo-dev-tools-gui-win

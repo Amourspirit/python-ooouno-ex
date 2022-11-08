@@ -11,6 +11,10 @@ A message box is display once slide show has completed asking if you want to clo
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Automate
 
 Slide index numbers can be passed in.
