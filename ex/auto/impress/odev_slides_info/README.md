@@ -14,6 +14,8 @@ Demonstrates get info using default `algs.odp` file.
 
 This demo uses [OOO Development Tools]
 
+See: [OOO Development Tools - Chapter 12. Examining a Draw/Impress Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter12.html)
+
 ## Automate
 
 A message box is display once the document has been created asking if you want to close the document.
