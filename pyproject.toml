@@ -25,7 +25,7 @@ types-unopy = "^0.4.7"
 unotools = "^0.3.3"
 verr = "^1.1.2"
 kwargshelper = "^2.7.1"
-ooo-dev-tools = "^0.6.0"
+ooo-dev-tools = ">=0.6.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
