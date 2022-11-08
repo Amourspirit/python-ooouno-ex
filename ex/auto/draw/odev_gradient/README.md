@@ -15,6 +15,10 @@ Demonstrates several type of Draw gradients.
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools: Chapter 13. Drawing Basic Shapes](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter13.html)
+
 ## Command line options
 
 There are many options for this example due to all the options available for gradients.

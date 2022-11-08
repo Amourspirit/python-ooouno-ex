@@ -15,6 +15,10 @@ Demonstrates the following:
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Automate
 
 A message box is display once the slide show has ended asking if you want to close the document.

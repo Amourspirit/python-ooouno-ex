@@ -13,6 +13,11 @@ from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
+try:
+    # only in windows
+    from odevgui_win.dialog_auto import DialogAuto
+except ImportError:
+    DialogAuto = None
 
 if TYPE_CHECKING:
     # these import are only being used for typing
@@ -48,6 +53,10 @@ class AppendSlides:
             Lo.dispatch_cmd(cmd=DrawViewDispatch.DIA_MODE, frame=self._to_frame)
 
             to_slides = Draw.get_slides(doc)
+            
+            # monitor for Confirmation dialog
+            if DialogAuto:
+                DialogAuto.monitor_dialog('y')
 
             for fnm in self._fnms[1:]:  # start at 1
                 try:
