@@ -9,6 +9,10 @@ Position/size the window, resize the page view
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Usage
 
 run `python -m draw_hilbert 4`

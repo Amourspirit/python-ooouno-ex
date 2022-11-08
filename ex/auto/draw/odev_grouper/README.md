@@ -8,7 +8,9 @@ Demonstrates creating a Draw doc, resizing window, Drawing shapes, connecting sh
 
 This demo uses [OOO Development Tools]
 
-See [OOO Development Tools: Chapter 15. Complex Shapes](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter15.html)
+See Also:
+
+- [OOO Development Tools: Chapter 15. Complex Shapes](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter15.html)
 
 ## Example
 

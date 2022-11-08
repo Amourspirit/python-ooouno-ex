@@ -12,6 +12,10 @@ Slide show starts and user can click on the third slide shapes to jump around th
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Automate
 
 A message box is display once the document has been created asking if you want to close the document.

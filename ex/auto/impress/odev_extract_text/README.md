@@ -15,6 +15,10 @@ In some cases headless mode is required such as when running on a Headless serve
 
 This demo uses [OOO Development Tools]
 
+See Also:
+
+- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+
 ## Automate
 
 A single parameters can be passed in which is the slide show document to read from:
