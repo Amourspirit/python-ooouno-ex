@@ -1,4 +1,6 @@
+# region imports
 from __future__ import annotations
+from enum import Enum
 
 import uno
 from com.sun.star.container import XNameContainer
@@ -19,8 +21,30 @@ from ooodev.utils.props import Props
 from ooodev.utils.info import Info
 from ooodev.utils.kind.graphic_arrow_style_kind import GraphicArrowStyleKind
 
+# endregion imports
 
+# region Enums
+class CombineElipseKind(str, Enum):
+    NONE = "none"
+    GROUP = "group"
+    BIND = "bind"
+    COMBINE = "combine"
+
+
+# endregion Enums
+
+# region Class Grouper
 class Grouper:
+    # region constructor
+
+    def __init__(self) -> None:
+        self._overlap = False
+        self._combine_kind = CombineElipseKind.COMBINE
+
+    # endregion constructor
+
+    # region public methods
+
     def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
 
@@ -45,8 +69,10 @@ class Grouper:
             height = 20
             x = round(((slide_size.Width * 3) / 4) - (width / 2))
             y1 = 20
-            y2 = round((slide_size.Height / 2) - (y1 + height))  # so separated
-            # y2 = 30  # so overlapping
+            if self.overlap:
+                y2 = 30
+            else:
+                y2 = round((slide_size.Height / 2) - (y1 + height))  # so separated
 
             s1 = Draw.draw_ellipse(slide=curr_slide, x=x, y=y1, width=width, height=height)
             s2 = Draw.draw_ellipse(slide=curr_slide, x=x, y=y2, width=width, height=height)
@@ -56,7 +82,12 @@ class Grouper:
             # group, bind, or combine the ellipses
             print()
             print("Grouping (or binding) ellipses ...")
-            self._combine_ellipses(slide=curr_slide, s1=s1, s2=s2)
+            if self._combine_kind == CombineElipseKind.GROUP:
+                self._group_ellipses(slide=curr_slide, s1=s1, s2=s2)
+            elif self._combine_kind == CombineElipseKind.BIND:
+                self._bind_ellipses(slide=curr_slide, s1=s1, s2=s2)
+            elif self._combine_kind == CombineElipseKind.COMBINE:
+                self._combine_ellipses(slide=curr_slide, s1=s1, s2=s2)
             Draw.show_shapes_info(curr_slide)
 
             # combine some rectangles
@@ -69,11 +100,12 @@ class Grouper:
             # split the combination into component shapes
             print()
             print("Splitting the combination ...")
+            # split the combination into component shapes
             combiner = Lo.qi(XShapeCombiner, curr_slide, True)
             combiner.split(comp_shape)
             Draw.show_shapes_info(curr_slide)
 
-            Lo.delay(2000)
+            Lo.delay(1_500)
             msg_result = MsgBox.msgbox(
                 "Do you wish to close document?",
                 "All done",
@@ -89,13 +121,17 @@ class Grouper:
             Lo.close_office()
             raise
 
+    # endregion public methods
+
+    # region private methods
+
     def _connect_rectangles(self, slide: XDrawPage, g_styles: XNameContainer) -> None:
         # draw two two labelled rectangles, one green, one blue, and
         #  connect them. Changing the connector to an arrow
 
         # dark green rectangle with shadow and text
         green_rect = Draw.draw_rectangle(slide=slide, x=70, y=180, width=50, height=25)
-        Props.set(green_rect, FillColor=CommonColor.DARK_SEA_GREEN, Shadow=True)
+        Props.set(green_rect, FillColor=CommonColor.GREEN, Shadow=True)
         Draw.add_text(shape=green_rect, msg="Green Rect")
 
         # (blue, the default color) rectangle with shadow and text
@@ -121,10 +157,10 @@ class Grouper:
         Props.set(
             conn_shape,
             LineWidth=50,
-            FillColor=CommonColor.DARK_BLUE,
+            LineColor=CommonColor.DARK_ORANGE,
             LineStartName=str(GraphicArrowStyleKind.ARROW_SHORT),
             LineStartCenter=False,
-            LineEndName=str(GraphicArrowStyleKind.DIAMOND),
+            LineEndName=GraphicArrowStyleKind.NONE,
         )
         # Props.show_obj_props("Connector Shape", conn_shape)
 
@@ -169,3 +205,29 @@ class Grouper:
         shapes.add(r2)
         comb = Draw.combine_shape(doc=doc, shapes=shapes, combine_op=ShapeCombKind.COMBINE)
         return comb
+
+    # endregion private methods
+
+    # region Properties
+    @property
+    def overlap(self) -> bool:
+        """Specifies if elipses are to overlap"""
+        return self._overlap
+
+    @overlap.setter
+    def overlap(self, value: bool):
+        self._overlap = value
+
+    @property
+    def combine_kind(self) -> CombineElipseKind:
+        """Specifies the kind of combining for ellipses"""
+        return self._combine_kind
+
+    @combine_kind.setter
+    def combine_kind(self, value: CombineElipseKind):
+        self._combine_kind = value
+
+    # endregion properties
+
+
+# endregion Class Grouper

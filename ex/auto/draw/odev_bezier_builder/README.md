@@ -8,6 +8,8 @@ A message box is display once the document has been created asking if you want t
 
 This demo uses [OOO Development Tools]
 
+See [OOO Development Tools: Chapter 15. Complex Shapes](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter15.html)
+
 ## Automate
 
 An extra parameter can be passed in:
