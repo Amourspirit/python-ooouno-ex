@@ -25,7 +25,7 @@ class PointsBuilder:
         # create Impress page or Draw slide
         try:
             self._report_templates()
-            tmpl_name = "Piano.otp"  # "Inspiration.otp"
+            tmpl_name = "Inspiration.otp"  # "Piano.otp"
             template_fnm = Path(Draw.get_slide_template_path(), tmpl_name)
             _ = FileIO.is_exist_file(template_fnm, True)
             doc = Lo.create_doc_from_template(template_path=template_fnm, loader=loader)
@@ -70,6 +70,8 @@ class PointsBuilder:
         # Formatting rules:
         # * ">", ">>", etc are points and their levels
         # * any other lines are the title text of a new slide
+        curr_slide = Draw.get_slide(doc=doc, idx=0)
+        Draw.title_slide(slide=curr_slide, title="Python-Generated Slides", sub_title="Using LibreOffice")
         try:
 
             def process_bullet(line: str, xbody: XText) -> None:
@@ -102,7 +104,7 @@ class PointsBuilder:
                         process_bullet(line=row, xbody=body)
                     else:
                         curr_slide = Draw.add_slide(doc)
-                        body = Draw.bullets_slide(slide=curr_slide, title=row)
+                        body = Draw.bullets_slide(slide=curr_slide, title=row.strip())
             print(f"Read in point file: {self._points_fnm.name}")
         except Exception as e:
             print(f"Error reading points file: {self._points_fnm}")
