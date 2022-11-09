@@ -9,6 +9,7 @@ Welcome to Impress Automation folder. Open a sub folder to get to an example.
 - [odev_copy_slide](./odev_copy_slide/) - Example demonstrates how to copy a slide from one position and place it into another position.
 - [odev_custom_show](./odev_custom_show/) - Example demonstrates opening a presentation file in Impress starting a slide show with specified slides.
 - [odev_extract_text](./odev_extract_text/) - Example of to extract the text from the slide deck and printing to console.
+- [odev_make_slides](./odev_make_slides/) - Example creates a deck of four or five slides, illustrating different aspects of slide generation.
 - [odev_master_use](./odev_master_use/) - Example of working with master pages.
 - [odev_modify_slides](./odev_modify_slides/) - Example of adding / modifying slides.
 - [odev_points_builder](./odev_points_builder) - Example of converting a text file of points into a series of slides.
