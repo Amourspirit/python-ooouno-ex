@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import cast
 
-
 import uno
 from com.sun.star.lang import XComponent
 from com.sun.star.drawing import XDrawPage
