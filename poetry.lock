@@ -112,7 +112,7 @@ typing-extensions = {version = ">=4.4.0,<5.0.0", markers = "python_version < \"3
 
 [[package]]
 name = "ooo-dev-tools-gui-win"
-version = "0.1.1"
+version = "0.1.2"
 description = "Methods for ooo-dev-tools and LibreOffice that require automatic GUI interaction for windows."
 category = "main"
 optional = false
@@ -120,7 +120,7 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 ooo-dev-tools = ">=0.6.0"
-pywinauto = ">=0.6.8,<0.7.0"
+pywinauto = ">=0.6.8"
 
 [[package]]
 name = "oooscript"
@@ -355,7 +355,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "5d5b464ca25fd68607a6dcf7ca4d4efa2523c763fa10707bcc13b2a26565ac8f"
+content-hash = "5ab6cb62f90ef9873f6399a00d01df4ac93a9955277aad034f2404baae91d716"
 
 [metadata.files]
 black = [
@@ -482,8 +482,8 @@ ooo-dev-tools = [
     {file = "ooo_dev_tools-0.6.1-py3-none-any.whl", hash = "sha256:bc85dcf14bd6a6ac251e359f47f9cbde04ee5a6bdf5f72a108bd37da62f65490"},
 ]
 ooo-dev-tools-gui-win = [
-    {file = "ooo-dev-tools-gui-win-0.1.1.tar.gz", hash = "sha256:76008466fa4f3a26da737a86ae5a3dc4583615941cc3418c31bf0da98a4cd092"},
-    {file = "ooo_dev_tools_gui_win-0.1.1-py3-none-any.whl", hash = "sha256:f3fdbee4c08be6ecb8cfb1383eac4eb15f18cab776198d22a1de9f53de24248b"},
+    {file = "ooo-dev-tools-gui-win-0.1.2.tar.gz", hash = "sha256:f58535b1b4c652969b77309ac0966a37512f1980543d35a1bff635dd9edfcffc"},
+    {file = "ooo_dev_tools_gui_win-0.1.2-py3-none-any.whl", hash = "sha256:4ce8efe8c3d56e4e1b55514275daa3066c32bc438a752d9c477798b608e0053c"},
 ]
 oooscript = [
     {file = "oooscript-1.0.0-py3-none-any.whl", hash = "sha256:e3246327326a537f485f10f3ef66f22c0befefd0188d3d5c4268f8b683022d00"},
