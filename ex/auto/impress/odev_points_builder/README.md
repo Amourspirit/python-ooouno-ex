@@ -1,7 +1,7 @@
 # Impress read text data and convert to slides with points
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/4193389/198420085-ec183c1f-94a7-47ec-9b75-ec44804a94be.png">
+    <img src="https://user-images.githubusercontent.com/4193389/200890963-b4569f69-a647-465a-9154-0ec114c45121.png" width="800" height="406">
 </p>
 
 Convert a text file of points into a series of slides. Uses a template from Office.
