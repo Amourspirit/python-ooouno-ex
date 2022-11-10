@@ -21,9 +21,11 @@ from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 
-from ooo.dyn.drawing.line_style import LineStyle
-from ooo.dyn.presentation.click_action import ClickAction
 from ooo.dyn.drawing.hatch import Hatch
+from ooo.dyn.drawing.line_style import LineStyle
+from ooo.dyn.presentation.animation_effect import AnimationEffect
+from ooo.dyn.presentation.animation_speed import AnimationSpeed
+from ooo.dyn.presentation.click_action import ClickAction
 
 try:
     # only windows
@@ -141,11 +143,11 @@ class MakeSlides:
 
         Draw.add_text(shape=ellipse, msg="Start Video", font_size=30)
         Props.set(ellipse, OnClick=ClickAction.DOCUMENT, Bookmark=FileIO.fnm_to_url(self._fnm_wildlife))
-        # Props.set(
-        #     ellipse,
-        #     Effect=AnimationEffect.FADE_FROM_BOTTOM,
-        #     Speed=AnimationSpeed.SLOW
-        # )
+        Props.set(
+            ellipse,
+            Effect=AnimationEffect.FADE_FROM_BOTTOM,
+            Speed=AnimationSpeed.SLOW
+        )
 
         # draw a rounded rectangle with text
         button = Draw.draw_rectangle(
