@@ -143,10 +143,11 @@ class MakeSlides:
 
         Draw.add_text(shape=ellipse, msg="Start Video", font_size=30)
         Props.set(ellipse, OnClick=ClickAction.DOCUMENT, Bookmark=FileIO.fnm_to_url(self._fnm_wildlife))
+        # set Animtion
         Props.set(
             ellipse,
-            Effect=AnimationEffect.FADE_FROM_BOTTOM,
-            Speed=AnimationSpeed.SLOW
+            Effect=AnimationEffect.MOVE_FROM_LEFT,
+            Speed=AnimationSpeed.FAST
         )
 
         # draw a rounded rectangle with text
