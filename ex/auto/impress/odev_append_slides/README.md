@@ -83,4 +83,4 @@ python .\ex\auto\impress\odev_append_slides\start.py
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-[ooo-dev-tools-gui-win]: https://github.com/Amourspirit/python-ooo-dev-tools-gui-win
+[ooo-dev-tools-gui-win]: https://ooo-dev-tools-gui-win.readthedocs.io/en/latest/index.html
