@@ -143,10 +143,11 @@ class MakeSlides:
 
         Draw.add_text(shape=ellipse, msg="Start Video", font_size=30)
         Props.set(ellipse, OnClick=ClickAction.DOCUMENT, Bookmark=FileIO.fnm_to_url(self._fnm_wildlife))
+        # set Animtion
         Props.set(
             ellipse,
-            Effect=AnimationEffect.FADE_FROM_BOTTOM,
-            Speed=AnimationSpeed.SLOW
+            Effect=AnimationEffect.MOVE_FROM_LEFT,
+            Speed=AnimationSpeed.FAST
         )
 
         # draw a rounded rectangle with text
@@ -177,7 +178,7 @@ class MakeSlides:
             y=y,
             width=50,
             height=30,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         _ = Draw.add_dispatch_shape(
             slide=curr_slide,
@@ -186,7 +187,7 @@ class MakeSlides:
             y=y,
             width=50,
             height=30,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         dshape = Draw.add_dispatch_shape(
             slide=curr_slide,
@@ -195,7 +196,7 @@ class MakeSlides:
             y=y,
             width=50,
             height=30,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         Draw.set_bitmap_color(shape=dshape, name=DrawingBitmapKind.LITTLE_CLOUDS)
 
@@ -206,7 +207,7 @@ class MakeSlides:
             y=y,
             width=50,
             height=30,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         Draw.set_hatch_color(shape=dshape, name=DrawingHatchingKind.BLUE_NEG_45_DEGREES)
         # convert blue to black manually
@@ -224,7 +225,7 @@ class MakeSlides:
             y=y,
             width=40,
             height=40,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         Draw.set_gradient_color(shape=dshape, name=DrawingGradientKind.SUNSHINE)
         Props.set(dshape, LineStyle=LineStyle.NONE)
@@ -236,7 +237,7 @@ class MakeSlides:
             y=y,
             width=40,
             height=40,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         Props.set(dshape, FillColor=CommonColor.RED)
 
@@ -247,7 +248,7 @@ class MakeSlides:
             y=y,
             width=50,
             height=30,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         dshape = Draw.add_dispatch_shape(
             slide=curr_slide,
@@ -256,7 +257,7 @@ class MakeSlides:
             y=y - 20,
             width=50,
             height=50,
-            fn=DrawDispatcher.create_dispatch_shape_win,
+            fn=DrawDispatcher.create_dispatch_shape,
         )
         Draw.set_bitmap_color(shape=dshape, name=DrawingBitmapKind.STONE)
 
