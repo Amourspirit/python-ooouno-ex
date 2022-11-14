@@ -98,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.6.2"
+version = "0.6.3"
 description = "LibreOffice Developer Tools"
 category = "main"
 optional = false
@@ -112,14 +112,14 @@ typing-extensions = {version = ">=4.4.0,<5.0.0", markers = "python_version < \"3
 
 [[package]]
 name = "ooo-dev-tools-gui-win"
-version = "0.2.0"
+version = "0.3.1"
 description = "Methods for ooo-dev-tools and LibreOffice that require automatic GUI interaction for windows."
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-ooo-dev-tools = ">=0.6.2"
+ooo-dev-tools = ">=0.6.3"
 pywinauto = ">=0.6.8"
 
 [[package]]
@@ -355,7 +355,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "d675c626d035eddd723fdb924f5d41eb4b49645407abb684815bb0935f6b8f5d"
+content-hash = "3afaacffc9eb7780d8958b7ea0935c488ac7364b5b799a2d190a6dcb612b3dcf"
 
 [metadata.files]
 black = [
@@ -478,12 +478,12 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 ooo-dev-tools = [
-    {file = "ooo-dev-tools-0.6.2.tar.gz", hash = "sha256:21441628afdaf38d3047ad8730c528e6be525e0f8b0bed7f3d828b700bc06842"},
-    {file = "ooo_dev_tools-0.6.2-py3-none-any.whl", hash = "sha256:686f4903c10ecfa486e86248657af175f7dddb5c0c29186713b5c0e53a1dbd09"},
+    {file = "ooo-dev-tools-0.6.3.tar.gz", hash = "sha256:e8e48291936d48d0d753a86550536ea369823aa95d0ffaf9a4a27a658967dc1c"},
+    {file = "ooo_dev_tools-0.6.3-py3-none-any.whl", hash = "sha256:ac73e1dd6a0ba022c5e23b4eaa37d15d45a81ab4ddf2829184737c3d52d11804"},
 ]
 ooo-dev-tools-gui-win = [
-    {file = "ooo-dev-tools-gui-win-0.2.0.tar.gz", hash = "sha256:ffafcd10a2a16ce81caa7a7bc95d47ff1d142eea2f5bb56a7ff77083ef0d86c1"},
-    {file = "ooo_dev_tools_gui_win-0.2.0-py3-none-any.whl", hash = "sha256:3baca83963d46cb16d5984f7139943298de0c207b632cc73c1577409aba2cf47"},
+    {file = "ooo-dev-tools-gui-win-0.3.1.tar.gz", hash = "sha256:534a313706319a10ba3ddbec918fb86c983cedd9202ad59c72058ebf64241af6"},
+    {file = "ooo_dev_tools_gui_win-0.3.1-py3-none-any.whl", hash = "sha256:02315c053899a99187850e7db6627fdb6dd87851f9a3f86ec6f0adbcc1748dda"},
 ]
 oooscript = [
     {file = "oooscript-1.0.0-py3-none-any.whl", hash = "sha256:e3246327326a537f485f10f3ef66f22c0befefd0188d3d5c4268f8b683022d00"},
