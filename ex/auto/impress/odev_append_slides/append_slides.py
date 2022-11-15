@@ -7,6 +7,7 @@ from com.sun.star.lang import XComponent
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.draw import Draw, mEx
+from ooodev.utils.dispatch.draw_drawing_dispatch import DrawDrawingDispatch
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.dispatch.global_edit_dispatch import GlobalEditDispatch
 from ooodev.utils.file_io import FileIO
@@ -69,7 +70,8 @@ class AppendSlides:
                 self._append_doc(to_slides=to_slides, doc=app_doc)
 
             Lo.delay(500)
-            Lo.dispatch_cmd(cmd=DrawViewDispatch.PAGE_MODE, frame=self._to_frame)  # does not work
+            # Lo.dispatch_cmd(cmd=DrawViewDispatch.PAGE_MODE, frame=self._to_frame)  # does not work
+            Lo.dispatch_cmd(cmd=DrawDrawingDispatch.DRAWING_MODE)
             Lo.delay(1000)
 
             msg_result = MsgBox.msgbox(
@@ -106,7 +108,7 @@ class AppendSlides:
             print("- No Slides Found")
 
         # Lo.dispatchCmd("PageMode");  // back to normal mode (not working)
-        Lo.dispatch_cmd(cmd="DrawingMode")
+        Lo.dispatch_cmd(cmd=DrawDrawingDispatch.DRAWING_MODE)
         Lo.close_doc(doc)
         print()
 
@@ -152,9 +154,7 @@ class AppendSlides:
         print("Paste")
 
         # needs automation at this point to monitor for dialog and click the dialog button.
-        # due to the many variations it will be up to end user to make a custom implementation.
-        # One potential solution would be autopy https://pypi.org/project/autopy/
-        # however autopy is for X11 on Linux and not Wayland.
+        # for windows use ooo-dev-tools-gui-win - https://ooo-dev-tools-gui-win.readthedocs.io/en/latest/index.html
 
         Lo.dispatch_cmd(cmd=GlobalEditDispatch.PASTE, frame=to_frame)
 
