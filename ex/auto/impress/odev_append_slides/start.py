@@ -20,7 +20,7 @@ def main() -> int:
             fnm_lst.append(Path(dir_path, file))
 
     appender = AppendSlides(*fnm_lst)
-    appender.append()
+    appender.main()
 
     return 0
 
