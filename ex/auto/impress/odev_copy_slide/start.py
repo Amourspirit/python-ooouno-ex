@@ -21,7 +21,7 @@ def main() -> int:
         p = Path(fnm)
     # slide indexes are zero based indexes.
     cs = CopySlide(fnm=p, from_idx=from_idx, to_idx=to_idx)
-    cs.copy()
+    cs.main()
     return 0
 
 

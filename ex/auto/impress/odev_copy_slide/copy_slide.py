@@ -32,7 +32,7 @@ class CopySlide:
         FileIO.is_exist_file(fnm=fnm, raise_err=True)
         self._fnm = FileIO.get_absolute_path(fnm)
 
-    def copy(self) -> None:
+    def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
@@ -45,6 +45,11 @@ class CopySlide:
             GUI.set_visible(is_visible=True, odoc=doc)
 
             self._copy_to(doc=doc)
+
+            # Draw.delete_slide(doc=doc, idx=self._from_idx)
+            # a problem if the copying changes the indices
+
+            # Lo.save(doc) # overwrites original
 
             Lo.delay(2000)
             msg_result = MsgBox.msgbox(
