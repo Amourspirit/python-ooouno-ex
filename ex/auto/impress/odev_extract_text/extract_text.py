@@ -14,7 +14,7 @@ class ExtractText:
         _ = FileIO.is_exist_file(fnm=fnm, raise_err=True)
         self._fnm = FileIO.get_absolute_path(fnm)
 
-    def extract(self) -> None:
+    def main(self) -> None:
         with Lo.Loader(Lo.ConnectPipe(headless=True)) as loader:
             doc = Lo.open_doc(fnm=self._fnm, loader=loader)
 

@@ -13,7 +13,7 @@ def main() -> int:
             fnm = "../../../../resources/presentation/algs.odp"
             FileIO.is_exist_file(fnm, True)
     et = ExtractText(fnm)
-    et.extract()
+    et.main()
     return 0
 
 

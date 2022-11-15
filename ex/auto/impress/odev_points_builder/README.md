@@ -12,7 +12,7 @@ This demo uses [OOO Development Tools]
 
 See Also:
 
-- [OOO Development Tools - Part 3: Draw & Impress](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/index.html)
+- [OOO Development Tools - Chapter 17. Slide Deck Manipulation](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part3/chapter17.html)
 
 ## Automate
 
