@@ -37,7 +37,7 @@ class AppendSlides:
 
         self._fnms = fnms
 
-    def append(self) -> None:
+    def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
