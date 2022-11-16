@@ -24,7 +24,7 @@ class AutoShow:
         self._end_delay = 2000
         self._fade_effect = FadeEffect.NONE
 
-    def show(self) -> None:
+    def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
@@ -52,7 +52,6 @@ class AutoShow:
             Lo.delay(500)
             Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION)
             # show.start() starts slideshow but not necessarily in 100% full screen
-            # show.start()
 
             sc = Draw.get_show_controller(show)
             Draw.wait_last(sc=sc, delay=self._end_delay)

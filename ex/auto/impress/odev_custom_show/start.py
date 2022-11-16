@@ -17,7 +17,7 @@ def main() -> int:
         FileIO.is_exist_file(fnm, True)
 
     custom_show = CustomShow(fnm, *idxs)  # 56 is too high
-    custom_show.show()
+    custom_show.main()
     return 0
 
 

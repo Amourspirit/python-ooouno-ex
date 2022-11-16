@@ -15,7 +15,7 @@ def main() -> int:
             FileIO.is_exist_file(fnm, True)
 
     basic_show = BasicShow(fnm)
-    basic_show.show()
+    basic_show.main()
     return 0
 
 
