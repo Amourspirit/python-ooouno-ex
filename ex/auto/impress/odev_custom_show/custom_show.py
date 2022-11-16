@@ -20,7 +20,7 @@ class CustomShow:
                 raise IndexError("Index cannot be negative")
         self._idxs = slide_idx
 
-    def show(self) -> None:
+    def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
