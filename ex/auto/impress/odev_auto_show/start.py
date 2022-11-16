@@ -18,7 +18,7 @@ def main() -> int:
     # auto_show.duration = 2
     # auto_show.fade_effect = FadeEffect.MOVE_FROM_LEFT
     # auto_show.end_delay = 3
-    auto_show.show()
+    auto_show.main()
     return 0
 
 
