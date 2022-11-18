@@ -9,16 +9,13 @@
 
 import sys
 import argparse
-from typing import Any, cast
+from typing import Any
 
 from show_sheet import ShowSheet
 
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
 from ooodev.events.lo_events import LoEvents
-
-
-from com.sun.star.util import XProtectable
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:

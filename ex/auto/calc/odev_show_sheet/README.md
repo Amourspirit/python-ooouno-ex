@@ -10,7 +10,12 @@ Also demonstrates how to create input password dialog and message dialog.
 
 Optionally saves the input file as a new file.
 
-This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
+This demo uses This demo uses [OOO Development Tools] (ODEV).
+
+See Also:
+
+- [OOO Development Tools - Chapter 20. Spreadsheet Displaying and Creation](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part4/chapter20.html)
+
 
 ## Automate
 
@@ -49,3 +54,5 @@ Alternatively
 ```ps
 python .\ex\auto\calc\odev_show_sheet\start.py --show --file "resources\data\sorted.csv" --out "tmp/totals.html"
 ```
+
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
