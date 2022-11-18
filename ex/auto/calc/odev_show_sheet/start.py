@@ -11,14 +11,11 @@ import sys
 import argparse
 from typing import Any, cast
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.dialog.input import Input
+from show_sheet import ShowSheet
+
 from ooodev.events.args.cancel_event_args import CancelEventArgs
 from ooodev.events.gbl_named_event import GblNamedEvent
 from ooodev.events.lo_events import LoEvents
-from ooodev.office.calc import Calc
-from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 
 
 from com.sun.star.util import XProtectable
@@ -32,6 +29,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         action="store",
         dest="file_path",
         required=True,
+    )
+    parser.add_argument(
+        "-o",
+        "--out",
+        help="Optional file path of output file",
+        action="store",
+        dest="out_file",
+        default="",
     )
     parser.add_argument(
         "-r", "--read-only", help="Read only mode", action="store_true", dest="read_only", default=False
@@ -70,51 +75,8 @@ def main() -> int:
         # hook ooodev internal printing event
         LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
 
-    loader = Lo.load_office(Lo.ConnectSocket())
-
-    fnm = cast(str, args.file_path)
-
-    try:
-        doc = Calc.open_doc(fnm=fnm, loader=loader)
-
-        if visible:
-            GUI.set_visible(is_visible=visible, odoc=doc)
-
-        Calc.goto_cell(cell_name="A1", doc=doc)
-        sheet_names = Calc.get_sheet_names(doc=doc)
-        print(f"Names of Sheets ({len(sheet_names)}):")
-        for name in sheet_names:
-            print(f"  {name}")
-
-        sheet = Calc.get_sheet(doc=doc, sheet_name="Sheet1")
-        Calc.set_active_sheet(doc=doc, sheet=sheet)
-        pro = Lo.qi(XProtectable, sheet, True)
-        pro.protect("foobar")
-        print(f"Is protected: {pro.isProtected()}")
-
-        Lo.delay(2000)
-        pwd = Input.get_input("Password", "Enter sheet Password", is_password=True)
-        if pwd == "foobar":
-            pro.unprotect(pwd)
-            MsgBox.msgbox("Password is Correct", "Password", boxtype=MessageBoxType.INFOBOX)
-        else:
-            MsgBox.msgbox("Password is incorrect", "Password", boxtype=MessageBoxType.ERRORBOX)
-
-        msg_result = MsgBox.msgbox(
-            "Do you wish to close document?",
-            "All done",
-            boxtype=MessageBoxType.QUERYBOX,
-            buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
-        )
-        if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
-            Lo.close_office()
-        else:
-            print("Keeping document open")
-    except Exception:
-        Lo.close_office()
-        raise
-
+    ss = ShowSheet(read_only=args.read_only, input_fnm=args.file_path, out_fnm=args.out_file, visible=args.show)
+    ss.main()
     return 0
 
 
