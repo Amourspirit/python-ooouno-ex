@@ -42,7 +42,6 @@ class ExtractGraphics:
             for i, pic in enumerate(pics):
                 img_file = self._out_dir / f"graphics{i}.png"
                 ImagesLo.save_graphic(pic=pic, fnm=img_file)
-                print(f"Save file: {img_file}")
                 sz = cast(Size, Props.get(pic, "SizePixel"))
                 print(f"Image size in pixels: {sz.Width} X {sz.Height}")
 
