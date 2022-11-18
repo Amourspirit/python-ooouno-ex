@@ -46,10 +46,8 @@ python .\ex\auto\writer\odev_extract_graphics\start.py --file "resources/odt/bui
 ```text
 No. of text graphics: 2
 Saving graphic in 'C:\Users\user\AppData\Local\Temp\tmpixludwxs\graphics0.png'
-Save file: C:\Users\user\AppData\Local\Temp\tmpixludwxs\graphics0.png
 Image size in pixels: 319 X 274
 Saving graphic in 'C:\Users\user\AppData\Local\Temp\tmpixludwxs\graphics1.png'
-Save file: C:\Users\user\AppData\Local\Temp\tmpixludwxs\graphics1.png
 Image size in pixels: 319 X 274
 
 Could not obtain text shapes supplier
