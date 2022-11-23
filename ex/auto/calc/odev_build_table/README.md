@@ -13,6 +13,7 @@ This demo uses This demo uses [OOO Development Tools] (ODEV).
 See Also:
 
 - [OOO Development Tools - Chapter 20. Spreadsheet Displaying and Creation](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part4/chapter20.html)
+- [OOO Development Tools - Chapter 22. Styles](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part4/chapter22.html)
 
 ## Automate
 

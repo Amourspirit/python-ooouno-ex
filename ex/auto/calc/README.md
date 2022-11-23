@@ -6,5 +6,6 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_build_table](./odev_build_table/) - Example of building a table.
 - [odev_extract_nums](./odev_extract_nums/) - Example of extracting data from a spreadsheet.
 - [odev_show_sheet](./odev_show_sheet/) - Example of opening a spreadsheet and display it on-screen.
+- [odev_styles_all_info](./odev_styles_all_info/) - Example of obtaining style information from a spreadsheet.
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
