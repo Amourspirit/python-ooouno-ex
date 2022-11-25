@@ -9,14 +9,12 @@ from com.sun.star.text import XParagraphCursor
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.calc import Calc
 from ooodev.office.write import Write
+from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
-from ooodev.utils.color import CommonColor
-
-from ooo.dyn.table.table_sort_field import TableSortField
 
 
 class CellTexts:
