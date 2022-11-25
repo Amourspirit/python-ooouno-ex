@@ -19,8 +19,6 @@ See Also:
 
 A message box is display once the document has been processed asking if you want to close the document.
 
-The following command will run automation that opens Calc document and ask for password.
-
 ### Cross Platform
 
 From this folder.
@@ -41,8 +39,6 @@ python ./ex/auto/calc/odev_build_table/start.py -h
 python .\ex\auto\calc\odev_build_table\start.py -h
 ```
 
-[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-
 ## Example Usage
 
 Starts LibreOffice Calc, Builds spreadsheet tables, adds an image, inserts chart and saves output to `tmp/Build.ods`
@@ -51,3 +47,4 @@ Starts LibreOffice Calc, Builds spreadsheet tables, adds an image, inserts chart
 python .\ex\auto\calc\odev_build_table\start.py -c -p -o "tmp/Build.ods"
 ```
 
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
