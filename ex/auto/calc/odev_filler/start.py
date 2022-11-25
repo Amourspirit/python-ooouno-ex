@@ -2,7 +2,7 @@
 import argparse
 
 from ooodev.utils.file_io import FileIO
-from data_sort import DataSort
+from filler import Filler
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -26,8 +26,8 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    ds = DataSort(out_fnm=args.out_file)
-    ds.main()
+    fl = Filler(out_fnm=args.out_file)
+    fl.main()
     return 0
 
 
