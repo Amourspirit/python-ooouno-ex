@@ -92,7 +92,7 @@ class CellTexts:
         sent_cursor = Lo.qi(XSentenceCursor, cursor)
         if sent_cursor is None:
             print("Sentence cursor is null")
-            return
+
 
         para_cursor = Lo.qi(XParagraphCursor, cursor)
         if para_cursor is None:
