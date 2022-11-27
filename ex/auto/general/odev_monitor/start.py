@@ -124,6 +124,7 @@ def main_loop() -> None:
         if str(sys.argv[1]).casefold() in ("t", "true", "y", "yes"):
             Lo.delay(5000)
             Lo.close_office()
+            return
 
     # while Writer is open, keep running the script unless specifically ended by user
     while 1:
