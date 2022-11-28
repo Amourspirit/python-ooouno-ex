@@ -105,7 +105,7 @@ version = 3.8.10
 Activate virtual environment and install development requirements.
 
 ```ps
-. .\.venv\Scripts\activate
+.\.venv\Scripts\activate
 ```
 
 ```ps
