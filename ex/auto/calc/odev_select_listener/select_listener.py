@@ -5,7 +5,7 @@ import uno
 from com.sun.star.frame import XController
 
 from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
-from ooodev.adapter.view.selection_chage_listener import SelectionChangeListener, GenericArgs
+from ooodev.adapter.view.selection_change_listener import SelectionChangeListener, GenericArgs
 from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
@@ -36,7 +36,7 @@ class SelectionListener:
         Calc.set_col(sheet=self.sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
 
         # close down when window closes
-        self._twl = TopWindowListener(event_args=GenericArgs(listener=self))
+        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
         self._twl.on("windowClosing", SelectionListener.on_window_closing)
 
     def _get_cell_float(self, addr: CellAddress) -> float | None:
@@ -47,12 +47,15 @@ class SelectionListener:
         return None
 
     def _attach_listener(self) -> None:
-        self._s_listener = SelectionChangeListener(event_args=GenericArgs(listener=self), doc=self._doc)
+        # pass GenericArgs with listener arg of self.
+        # this will allow for this instance to be passed to events.
+        # pass doc to constructor, this will allow listener to be automatically attached to document.
+        self._s_listener = SelectionChangeListener(trigger_args=GenericArgs(listener=self), doc=self._doc)
         self._s_listener.on("selectionChanged", SelectionListener.on_selection_changed)
         self._s_listener.on("disposing", SelectionListener.on_disposing)
 
     @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
         try:
             listener = cast(SelectionListener, kwargs.get("listener", None))
@@ -64,7 +67,7 @@ class SelectionListener:
             print(f"  {e}")
 
     @staticmethod
-    def on_selection_changed(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_selection_changed(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         # is fired four times for every click, and twice for shift arrow keys (?)
         # Once for arrow keys.
         # - Report when the selection changes by printing the name of the

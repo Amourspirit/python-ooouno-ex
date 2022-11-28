@@ -43,11 +43,11 @@ class ModifyListener(unohelper.Base, XModifyListener):
         mb.addModifyListener(self)
 
         # close down when window closes
-        self._twl = TopWindowListener(GenericArgs(listener=self))
+        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
         self._twl.on("windowClosing", ModifyListener.on_window_closing)
 
     @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
         try:
             ml = cast(ModifyListener, kwargs.get("listener", None))

@@ -35,16 +35,19 @@ class ModifyListenerAdapter:
         # insert some data
         Calc.set_col(sheet=self._sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
 
-        self._m_listener = ModifyListener(event_args=GenericArgs(listener=self), doc=self._doc,)
+        # pass GenericArgs with listener arg of self.
+        # this will allow for this instance to be passed to events.
+        # pass doc to constructor, this will allow listener to be automatically attached to document.
+        self._m_listener = ModifyListener(trigger_args=GenericArgs(listener=self), doc=self._doc)
         self._m_listener.on("modified", ModifyListenerAdapter.on_modified)
         self._m_listener.on("disposing", ModifyListenerAdapter.on_disposing)
 
         # close down when window closes
-        self._twl = TopWindowListener(event_args=GenericArgs(listener=self))
+        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
         self._twl.on("windowClosing", ModifyListenerAdapter.on_window_closing)
 
     @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
         try:
             ml = cast(ModifyListenerAdapter, kwargs.get("listener", None))
@@ -56,7 +59,7 @@ class ModifyListenerAdapter:
             print(f"  {e}")
 
     @staticmethod
-    def on_modified(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_modified(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Modified")
         try:
             event = cast("EventObject", event_args.event_data)
@@ -68,5 +71,5 @@ class ModifyListenerAdapter:
             print(e)
 
     @staticmethod
-    def on_disposing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Disposing")

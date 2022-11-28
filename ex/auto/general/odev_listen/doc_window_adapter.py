@@ -28,7 +28,7 @@ class DocWindowAdapter:
         # assigning TopWindowListener to class is important.
         # if not assigned then tk goes out of scope after class __init__() is called
         # and dispose is called right after __init__()
-        self._twl = TopWindowListener(event_args=GenericArgs(listener=self))
+        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
         self._twl.on("windowOpened", DocWindowAdapter.on_window_opened)
         self._twl.on("windowActivated", DocWindowAdapter.on_window_activated)
         self._twl.on("windowDeactivated", DocWindowAdapter.on_window_deactivated)
@@ -42,7 +42,7 @@ class DocWindowAdapter:
         # triggers 2 opened and 2 activated events
 
     @staticmethod
-    def on_window_opened(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_opened(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is activated."""
         event = cast("EventObject", event_args.event_data)
         print("WA: Opened")
@@ -50,28 +50,28 @@ class DocWindowAdapter:
         GUI.print_rect(xwin.getPosSize())
 
     @staticmethod
-    def on_window_activated(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_activated(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is activated."""
         print("WA: Activated")
         print(f"  Titile bar: {GUI.get_title_bar()}")
 
     @staticmethod
-    def on_window_deactivated(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_deactivated(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is deactivated."""
         print("WA: Minimized")
 
     @staticmethod
-    def on_window_minimized(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_minimized(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is iconified."""
         print("WA:  De-activated")
 
     @staticmethod
-    def on_window_normalized(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_normalized(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is deiconified."""
         print("WA: Normalized")
 
     @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
         is invoked when a window is in the process of being closed.
 
@@ -80,7 +80,7 @@ class DocWindowAdapter:
         print("WA: Closing")
 
     @staticmethod
-    def on_window_closed(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_window_closed(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window has been closed."""
         dw = cast(DocWindowAdapter, kwargs["listener"])
         if not dw.closed:
@@ -88,7 +88,7 @@ class DocWindowAdapter:
             print("WA: Closed")
 
     @staticmethod
-    def on_disposing(source: Any, event_args: EventArgs, **kwargs) -> None:
+    def on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
         gets called when the broadcaster is about to be disposed.
 
