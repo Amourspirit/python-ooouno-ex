@@ -83,9 +83,8 @@ class DocWindowAdapter:
     def on_window_closed(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window has been closed."""
         dw = cast(DocWindowAdapter, kwargs["listener"])
-        if not dw.closed:
-            dw.closed = True
-            print("WA: Closed")
+        dw.closed = True
+        print("WA: Closed")
 
     @staticmethod
     def on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
