@@ -12,7 +12,7 @@ LibreOffice has a comprehensive web page listing all the dispatch commands [Deve
 
 This example also demonstrates hooking ODEV events that in this case allow for finer control over which commands are dispatched.
 
-See Also: [Listening, and Other Techniques](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part1/chapter04.html)
+See Also: [OOO Development Tools - Chapter 4. Listening, and Other Techniques](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part1/chapter04.html)
 
 See [source code](./start.py)
 
@@ -52,7 +52,7 @@ python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
 ### Example console output
 
 ```text
-PS D:\Users\user\Python\python-ooouno-ex> python -m main auto --process 'ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"'
+PS D:\Users\user\Python\python-ooouno-ex> python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
 Loading Office...
 Opening D:\Users\user\Python\python-ooouno-ex\resources\odt\story.odt
 Dispatching: ReadOnlyDoc
