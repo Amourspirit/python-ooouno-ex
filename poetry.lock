@@ -98,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.6.8"
+version = "0.6.9"
 description = "LibreOffice Developer Tools"
 category = "main"
 optional = false
@@ -355,7 +355,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "57284c4e05d12f8d0a141d941b96e0c70972f816826512bc232e049fc812301c"
+content-hash = "3f690862b752760b36027eaa2e8c20ff1fdfa0c498d60354e6ce3acec6efe5ab"
 
 [metadata.files]
 black = [
@@ -478,8 +478,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 ooo-dev-tools = [
-    {file = "ooo-dev-tools-0.6.8.tar.gz", hash = "sha256:f32cfb3cbc81fdb07a1a3a961dd8a20a12e9ec088fb0d232b9d5ca0ef06f1c85"},
-    {file = "ooo_dev_tools-0.6.8-py3-none-any.whl", hash = "sha256:d0834ea85264244dda22e380d8d024bbcfad273e9e16b289a5fb2639a1a2761d"},
+    {file = "ooo-dev-tools-0.6.9.tar.gz", hash = "sha256:b84707e6a92dce7dc84dc4c218412c04f1f3a378cb2c4b4994418fd9980c8e40"},
+    {file = "ooo_dev_tools-0.6.9-py3-none-any.whl", hash = "sha256:8bc878b5f02ce498b896e197dcf7d9f44e4d439b7748a1cd57cba4ce82e90375"},
 ]
 ooo-dev-tools-gui-win = [
     {file = "ooo-dev-tools-gui-win-0.3.1.tar.gz", hash = "sha256:534a313706319a10ba3ddbec918fb86c983cedd9202ad59c72058ebf64241af6"},
