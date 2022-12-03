@@ -5,8 +5,6 @@ from __future__ import annotations
 import argparse
 import sys
 
-
-
 from ooodev.utils.lo import Lo
 from ooodev.utils.info import Info
 
