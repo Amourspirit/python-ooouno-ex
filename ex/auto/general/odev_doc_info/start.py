@@ -7,7 +7,6 @@ import sys
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.info import Info
-from ooodev.utils.file_io import FileIO
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 
