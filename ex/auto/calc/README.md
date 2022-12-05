@@ -10,6 +10,7 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_functions](./odev_functions/) - Examples of calc functions.
 - [odev_garlic_secrets](./odev_garlic_secrets/) - Example illustrates how data can be extracted from an existing spreadsheet.
 - [odev_modify_listener](./odev_modify_listener/) - Example of spreadsheet modify listeners.
+- [odev_pivot_table](./odev_pivot_table/) - Example of Calc pivot tables.
 - [odev_replace_all](./odev_replace_all/) - Examples for find and replace in a spreadsheet.
 - [odev_select_listener](./odev_select_listener/) - Example of spreadsheet selection change listener.
 - [odev_show_sheet](./odev_show_sheet/) - Example of opening a spreadsheet and display it on-screen.
