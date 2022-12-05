@@ -2,15 +2,12 @@
 # coding: utf-8
 from __future__ import annotations
 import argparse
-from typing import Any, cast
+from typing import cast
 
-from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
 from ooodev.utils.info import Info
+from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.lo_events import LoEvents
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -23,11 +20,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         required=True,
     )
 
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
-
 def main() -> int:
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
@@ -38,15 +30,12 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
     
-    # hook ooodev internal printing event
-    LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
     # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # Note the use of the headless flag. Not using GUI for process.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket(headless=True))) as loader:
+    with BreakContext(Lo.Loader(connector=Lo.ConnectSocket(headless=True))) as loader:
 
         fnm = cast(str, args.file_path)
 

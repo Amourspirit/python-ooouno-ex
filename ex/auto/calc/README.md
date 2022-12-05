@@ -9,6 +9,7 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_filler](./odev_filler/) - Example of using a fill series in a spreadsheet.
 - [odev_functions](./odev_functions/) - Examples of calc functions.
 - [odev_garlic_secrets](./odev_garlic_secrets/) - Example illustrates how data can be extracted from an existing spreadsheet.
+- [odev_goal_seek](./odev_goal_seek/) - Example of goal seeking in Calc.
 - [odev_modify_listener](./odev_modify_listener/) - Example of spreadsheet modify listeners.
 - [odev_pivot_table](./odev_pivot_table/) - Example of Calc pivot tables.
 - [odev_replace_all](./odev_replace_all/) - Examples for find and replace in a spreadsheet.

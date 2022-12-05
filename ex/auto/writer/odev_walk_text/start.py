@@ -5,14 +5,13 @@ import argparse
 from typing import cast
 
 import uno
+from com.sun.star.text import XTextDocument
+from com.sun.star.view import XLineCursor
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.utils.lo import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
-
-from com.sun.star.text import XTextDocument
-from com.sun.star.view import XLineCursor
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:

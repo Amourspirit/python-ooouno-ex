@@ -57,82 +57,91 @@ No. of Style Family Names: 7
   TableStyles
 
 0 "CellStyles" Style Family contains containers:
-No. of names: 0
-
-
-
+  No names found
 1 "CharacterStyles" Style Family contains containers:
 No. of names: 27
-  'Bullet Symbols'  'Caption characters'  'Citation'  'Definition'
-  'Drop Caps'  'Emphasis'  'Endnote anchor'  'Endnote Symbol'
-  'Example'  'Footnote anchor'  'Footnote Symbol'  'Index Link'
-  'Internet link'  'Line numbering'  'Main index entry'  'Numbering Symbols'
-  'Page Number'  'Placeholder'  'Rubies'  'Source Text'
-  'Standard'  'Strong Emphasis'  'Teletype'  'User Entry'
-  'Variable'  'Vertical Numbering Symbols'  'Visited Internet Link'
+  ---------------------------|----------------------------|----------------------------|----------------------------
+  Bullet Symbols             | Caption characters         | Citation                   | Definition
+  Drop Caps                  | Emphasis                   | Endnote anchor             | Endnote Symbol   
+  Example                    | Footnote anchor            | Footnote Symbol            | Index Link       
+  Internet link              | Line numbering             | Main index entry           | Numbering Symbols
+  Page Number                | Placeholder                | Rubies                     | Source Text      
+  Standard                   | Strong Emphasis            | Teletype                   | User Entry       
+  Variable                   | Vertical Numbering Symbols | Visited Internet Link      |
+
 
 
 2 "FrameStyles" Style Family contains containers:
 No. of names: 7
-  'Formula'  'Frame'  'Graphics'  'Labels'
-  'Marginalia'  'OLE'  'Watermark'
+  -----------|------------|------------|------------
+  Formula    | Frame      | Graphics   | Labels
+  Marginalia | OLE        | Watermark  |
+
 
 
 3 "NumberingStyles" Style Family contains containers:
 No. of names: 11
-  'List 1'  'List 2'  'List 3'  'List 4'
-  'List 5'  'No List'  'Numbering 123'  'Numbering ABC'
-  'Numbering abc'  'Numbering IVX'  'Numbering ivx'
+  --------------|---------------|---------------|---------------
+  List 1        | List 2        | List 3        | List 4
+  List 5        | No List       | Numbering 123 | Numbering ABC
+  Numbering abc | Numbering IVX | Numbering ivx |
+
 
 
 4 "PageStyles" Style Family contains containers:
 No. of names: 10
-  'Endnote'  'Envelope'  'First Page'  'Footnote'
-  'HTML'  'Index'  'Landscape'  'Left Page'
-  'Right Page'  'Standard'
+  -----------|------------|------------|------------
+  Endnote    | Envelope   | First Page | Footnote
+  HTML       | Index      | Landscape  | Left Page
+  Right Page | Standard   |            |
+
 
 
 5 "ParagraphStyles" Style Family contains containers:
 No. of names: 125
-  'Addressee'  'Appendix'  'Bibliography 1'  'Bibliography Heading'
-  'Caption'  'Contents 1'  'Contents 10'  'Contents 2'
-  'Contents 3'  'Contents 4'  'Contents 5'  'Contents 6'
-  'Contents 7'  'Contents 8'  'Contents 9'  'Contents Heading'
-  'Drawing'  'Endnote'  'Figure'  'Figure Index 1'
-  'Figure Index Heading'  'First line indent'  'Footer'  'Footer left'
-  'Footer right'  'Footnote'  'Frame contents'  'Hanging indent'
-  'Header'  'Header and Footer'  'Header left'  'Header right'
-  'Heading'  'Heading 1'  'Heading 10'  'Heading 2'
-  'Heading 3'  'Heading 4'  'Heading 5'  'Heading 6'
-  'Heading 7'  'Heading 8'  'Heading 9'  'Horizontal Line'
-  'Illustration'  'Index'  'Index 1'  'Index 2'
-  'Index 3'  'Index Heading'  'Index Separator'  'List'
-  'List 1'  'List 1 Cont.'  'List 1 End'  'List 1 Start'
-  'List 2'  'List 2 Cont.'  'List 2 End'  'List 2 Start'
-  'List 3'  'List 3 Cont.'  'List 3 End'  'List 3 Start'
-  'List 4'  'List 4 Cont.'  'List 4 End'  'List 4 Start'
-  'List 5'  'List 5 Cont.'  'List 5 End'  'List 5 Start'
-  'List Contents'  'List Heading'  'List Indent'  'Marginalia'
-  'Numbering 1'  'Numbering 1 Cont.'  'Numbering 1 End'  'Numbering 1 Start'
-  'Numbering 2'  'Numbering 2 Cont.'  'Numbering 2 End'  'Numbering 2 Start'
-  'Numbering 3'  'Numbering 3 Cont.'  'Numbering 3 End'  'Numbering 3 Start'
-  'Numbering 4'  'Numbering 4 Cont.'  'Numbering 4 End'  'Numbering 4 Start'
-  'Numbering 5'  'Numbering 5 Cont.'  'Numbering 5 End'  'Numbering 5 Start'
-  'Object index 1'  'Object index heading'  'Preformatted Text'  'Quotations'
-  'Salutation'  'Sender'  'Signature'  'Standard'
-  'Subtitle'  'Table'  'Table Contents'  'Table Heading'
-  'Table index 1'  'Table index heading'  'Text'  'Text body'
-  'Text body indent'  'Title'  'User Index 1'  'User Index 10'
-  'User Index 2'  'User Index 3'  'User Index 4'  'User Index 5'
-  'User Index 6'  'User Index 7'  'User Index 8'  'User Index 9'
-  'User Index Heading'
+  ---------------------|----------------------|----------------------|----------------------
+  Addressee            | Appendix             | Bibliography 1       | Bibliography Heading
+  Caption              | Contents 1           | Contents 10          | Contents 2
+  Contents 3           | Contents 4           | Contents 5           | Contents 6
+  Contents 7           | Contents 8           | Contents 9           | Contents Heading
+  Drawing              | Endnote              | Figure               | Figure Index 1
+  Figure Index Heading | First line indent    | Footer               | Footer left
+  Footer right         | Footnote             | Frame contents       | Hanging indent
+  Header               | Header and Footer    | Header left          | Header right
+  Heading              | Heading 1            | Heading 10           | Heading 2
+  Heading 3            | Heading 4            | Heading 5            | Heading 6
+  Heading 7            | Heading 8            | Heading 9            | Horizontal Line
+  Illustration         | Index                | Index 1              | Index 2
+  Index 3              | Index Heading        | Index Separator      | List
+  List 1               | List 1 Cont.         | List 1 End           | List 1 Start
+  List 2               | List 2 Cont.         | List 2 End           | List 2 Start
+  List 3               | List 3 Cont.         | List 3 End           | List 3 Start
+  List 4               | List 4 Cont.         | List 4 End           | List 4 Start
+  List 5               | List 5 Cont.         | List 5 End           | List 5 Start
+  List Contents        | List Heading         | List Indent          | Marginalia
+  Numbering 1          | Numbering 1 Cont.    | Numbering 1 End      | Numbering 1 Start
+  Numbering 2          | Numbering 2 Cont.    | Numbering 2 End      | Numbering 2 Start
+  Numbering 3          | Numbering 3 Cont.    | Numbering 3 End      | Numbering 3 Start
+  Numbering 4          | Numbering 4 Cont.    | Numbering 4 End      | Numbering 4 Start
+  Numbering 5          | Numbering 5 Cont.    | Numbering 5 End      | Numbering 5 Start
+  Object index 1       | Object index heading | Preformatted Text    | Quotations
+  Salutation           | Sender               | Signature            | Standard
+  Subtitle             | Table                | Table Contents       | Table Heading
+  Table index 1        | Table index heading  | Text                 | Text body
+  Text body indent     | Title                | User Index 1         | User Index 10
+  User Index 2         | User Index 3         | User Index 4         | User Index 5
+  User Index 6         | User Index 7         | User Index 8         | User Index 9
+  User Index Heading   |                      |                      |
+
 
 
 6 "TableStyles" Style Family contains containers:
 No. of names: 11
-  'Academic'  'Box List Blue'  'Box List Green'  'Box List Red'
-  'Box List Yellow'  'Default Style'  'Elegant'  'Financial'
-  'Simple Grid Columns'  'Simple Grid Rows'  'Simple List Shaded'
+  --------------------|---------------------|---------------------|---------------------
+  Academic            | Box List Blue       | Box List Green      | Box List Red
+  Box List Yellow     | Default Style       | Elegant             | Financial
+  Simple Grid Columns | Simple Grid Rows    | Simple List Shaded  |
+
 
 
 ParagraphStyles "Standard" Properties
@@ -150,8 +159,8 @@ ParagraphStyles "Standard" Properties
   CharCaseMap: 0
   CharColor: -1
   CharCombineIsOn: False
-  CharCombinePrefix: 
-  CharCombineSuffix: 
+  CharCombinePrefix:
+  CharCombineSuffix:
   CharContoured: False
   CharCrossedOut: False
   CharDiffHeight: 0.0
@@ -161,9 +170,9 @@ ParagraphStyles "Standard" Properties
   CharEscapement: 0
   CharEscapementHeight: 100
   CharFlash: False
-  CharFontCharSet: 76
-  CharFontCharSetAsian: 76
-  CharFontCharSetComplex: 76
+  CharFontCharSet: 1
+  CharFontCharSetAsian: 1
+  CharFontCharSetComplex: 1
   CharFontFamily: 3
   CharFontFamilyAsian: 6
   CharFontFamilyComplex: 6
@@ -174,8 +183,8 @@ ParagraphStyles "Standard" Properties
   CharFontPitchAsian: 2
   CharFontPitchComplex: 2
   CharFontStyleName: 
-  CharFontStyleNameAsian: 
-  CharFontStyleNameComplex: 
+  CharFontStyleNameAsian:
+  CharFontStyleNameComplex:
   CharHeight: 12.0
   CharHeightAsian: 10.5
   CharHeightComplex: 12.0
@@ -219,7 +228,7 @@ ParagraphStyles "Standard" Properties
   CharWeightComplex: 100.0
   CharWordMode: False
   DisplayName: Header
-  DropCapCharStyleName: 
+  DropCapCharStyleName:
   DropCapFormat: (com.sun.star.style.DropCapFormat){ Lines = (byte)0x0, Count = (byte)0x0, Distance = (short)0x0 }
   DropCapWholeWord: False
   FillBackground: False
@@ -243,18 +252,18 @@ ParagraphStyles "Standard" Properties
   FillGradientName: 
   FillGradientStepCount: 0
   FillHatch: (com.sun.star.drawing.Hatch){ Style = (com.sun.star.drawing.HatchStyle)SINGLE, Color = (long)0x3465a4, Distance = (long)0x14, Angle = (long)0x0 }
-  FillHatchName: 
+  FillHatchName:
   FillStyle: <Enum instance com.sun.star.drawing.FillStyle ('NONE')>
   FillTransparence: 0
   FillTransparenceGradient: (com.sun.star.awt.Gradient){ Style = (com.sun.star.awt.GradientStyle)LINEAR, StartColor = (long)0x0, EndColor = (long)0x0, Angle = (short)0x0, Border = (short)0x0, XOffset = (short)0x32, YOffset = (short)0x32, StartIntensity = (short)0x64, EndIntensity = (short)0x64, StepCount = (short)0x0 }
-  FillTransparenceGradientName: 
+  FillTransparenceGradientName:
   FollowStyle: Header
   Hidden: False
   IsAutoUpdate: False
   IsPhysical: True
   LeftBorder: (com.sun.star.table.BorderLine2){ (com.sun.star.table.BorderLine){ Color = (long)0x0, InnerLineWidth = (short)0x0, OuterLineWidth = (short)0x0, LineDistance = (short)0x0 }, LineStyle = (short)0x0, LineWidth = (unsigned long)0x0 }
   LeftBorderDistance: 0
-  LinkStyle: 
+  LinkStyle:
   NumberingLevel: 0
   NumberingStyleName: 
   OutlineLevel: 0
@@ -263,7 +272,7 @@ ParagraphStyles "Standard" Properties
   ParaAdjust: 0
   ParaBackColor: -1
   ParaBackGraphic: None
-  ParaBackGraphicFilter: 
+  ParaBackGraphicFilter:
   ParaBackGraphicLocation: <Enum instance com.sun.star.style.GraphicLocation ('NONE')>
   ParaBackGraphicURL: None
   ParaBackTransparent: True
@@ -300,7 +309,7 @@ ParagraphStyles "Standard" Properties
   ParaTabStops: ((com.sun.star.style.TabStop){ Position = (long)0x225b, Alignment = (com.sun.star.style.TabAlign)CENTER, DecimalChar = (char)'.', FillChar = (char)' ' }, (com.sun.star.style.TabStop){ Position = (long)0x44b6, Alignment = (com.sun.star.style.TabAlign)RIGHT, DecimalChar = (char)'.', FillChar = (char)' ' })
   ParaTopMargin: 0
   ParaTopMarginRelative: 100
-  ParaUserDefinedAttributes: pyuno object (com.sun.star.container.XNameContainer)0x7f5b7c035538{implementationName=SvUnoAttributeContainer, supportedServices={com.sun.star.xml.AttributeContainer}, supportedInterfaces={com.sun.star.lang.XServiceInfo,com.sun.star.lang.XUnoTunnel,com.sun.star.container.XNameContainer,com.sun.star.lang.XTypeProvider,com.sun.star.uno.XWeak,com.sun.star.uno.XAggregation}}
+  ParaUserDefinedAttributes: pyuno object (com.sun.star.container.XNameContainer)0x2599f4aa498{implementationName=SvUnoAttributeContainer, supportedServices={com.sun.star.xml.AttributeContainer}, supportedInterfaces={com.sun.star.lang.XServiceInfo,com.sun.star.lang.XUnoTunnel,com.sun.star.container.XNameContainer,com.sun.star.lang.XTypeProvider,com.sun.star.uno.XWeak,com.sun.star.uno.XAggregation}}
   ParaVertAlignment: 0
   ParaWidows: 2
   RightBorder: (com.sun.star.table.BorderLine2){ (com.sun.star.table.BorderLine){ Color = (long)0x0, InnerLineWidth = (short)0x0, OuterLineWidth = (short)0x0, LineDistance = (short)0x0 }, LineStyle = (short)0x0, LineWidth = (unsigned long)0x0 }

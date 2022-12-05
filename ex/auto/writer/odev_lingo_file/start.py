@@ -9,18 +9,15 @@
 
 import sys
 import argparse
-from typing import Any, cast
+from typing import cast
 
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.lo_events import LoEvents
+import uno
+from com.sun.star.text import XTextDocument
+
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
-
-
-from com.sun.star.text import XTextDocument
 
 
 def check_sentences(doc: XTextDocument) -> None:
@@ -37,7 +34,7 @@ def check_sentences(doc: XTextDocument) -> None:
 
         if len(curr_para_str) > 0:
             print(f"\n>> {curr_para_str}")
-           
+
             sentences = Write.split_paragraph_into_sentences(curr_para_str)
             for sentence in sentences:
                 # print(f'S <{sentence}>')
@@ -46,6 +43,7 @@ def check_sentences(doc: XTextDocument) -> None:
 
         if para_cursor.gotoNextParagraph(False) is False:
             break
+
 
 def args_add(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
@@ -58,12 +56,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
     parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
-
-
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
 
 
 def main() -> int:
@@ -86,15 +78,13 @@ def main() -> int:
     else:
         delay = 0
 
-    if not args.verbose:
-        # hook ooodev internal printing event
-        LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
     # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket(headless=not visible))) as loader:
+    with BreakContext(
+        Lo.Loader(connector=Lo.ConnectSocket(headless=not visible), opt=Lo.Options(verbose=args.verbose))
+    ) as loader:
 
         fnm = cast(str, args.file_path)
 
