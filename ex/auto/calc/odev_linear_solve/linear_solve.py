@@ -9,9 +9,11 @@ from ooodev.utils.props import Props
 
 from ooo.dyn.sheet.solver_constraint_operator import SolverConstraintOperator
 
+
 class LinearSolve:
-    def main(self) -> None:
-        with Lo.Loader(connector=Lo.ConnectPipe()) as loader:
+    @staticmethod
+    def main(verose: bool = False) -> None:
+        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verose)) as loader:
             doc = Calc.create_doc(loader)
             sheet = Calc.get_sheet(doc=doc)
             Calc.list_solvers()
@@ -19,7 +21,6 @@ class LinearSolve:
             # specify the variable cells
             xpos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
             ypos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
-
             vars = (xpos, ypos)
 
             # specify profit equation
@@ -43,17 +44,17 @@ class LinearSolve:
 
             # could also include x >= 0 and y >= 0
             constraints = (sc1, sc2, sc3)
-            
+
             # for unknown reason CoinMPSolver stopped working on linux.
             # Ubuntu 22.04 LibreOffice 7.3 no-longer list com.sun.star.comp.Calc.CoinMPSolver
             # as a reported service.
             # strangly Windows 10, LibreOffice 7.3 does still list com.sun.star.comp.Calc.CoinMPSolver
             # as a service.
-            # solver = "com.sun.star.comp.Calc.LpsolveSolver"
-            solver = "com.sun.star.comp.Calc.CoinMPSolver"
+            # srv_solver = "com.sun.star.comp.Calc.LpsolveSolver"
+            srv_solver = "com.sun.star.comp.Calc.CoinMPSolver"
 
             # initialize the linear solver (CoinMP or basic linear)
-            solver = Lo.create_instance_mcf(XSolver, solver, raise_err=True)
+            solver = Lo.create_instance_mcf(XSolver, srv_solver, raise_err=True)
             solver.Document = doc
             solver.Objective = profit_eq
             solver.Variables = vars

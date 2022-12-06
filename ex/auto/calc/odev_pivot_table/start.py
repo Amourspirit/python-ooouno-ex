@@ -1,11 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
-#
-# on wayland (some versions of Linux)
-# may get error:
-#    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
-# This seems to be a Wayland/Java compatability issues.
-# see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 
 import sys
 import argparse
@@ -42,10 +35,6 @@ def main() -> int:
 
     # add args to parser
     args_add(parser=parser)
-
-    # if len(sys.argv) <= 1:
-    #     parser.print_help()
-    #     return 0
 
     # read the current command line args
     args = parser.parse_args()
