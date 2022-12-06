@@ -98,11 +98,11 @@ python-versions = "*"
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.6.10"
+version = "0.6.11"
 description = "LibreOffice Developer Tools"
 category = "main"
 optional = false
-python-versions = ">=3.7,<3.12"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 lxml = ">=4.9.1,<5.0.0"
@@ -155,7 +155,7 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "Pillow"
+name = "pillow"
 version = "9.3.0"
 description = "Python Imaging Library (Fork)"
 category = "main"
@@ -355,7 +355,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.12"
-content-hash = "5cc8c664d297ac4b47e3d25c24325c4d0f3565d6075312e096d54e1a997fb6e5"
+content-hash = "2899a0c8f43c9ee507d3bddd8220ab151972e195fcf8eda22b3a5457467826b0"
 
 [metadata.files]
 black = [
@@ -478,8 +478,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 ooo-dev-tools = [
-    {file = "ooo-dev-tools-0.6.10.tar.gz", hash = "sha256:2df3d06cf23e784f3adf164318b19e10f83a7fc1c8d4ab82604d15425451d2fa"},
-    {file = "ooo_dev_tools-0.6.10-py3-none-any.whl", hash = "sha256:849befc5b42b2721c9d86dfec86b98a6d0054fe8ca0db632201b54ec6a0f489d"},
+    {file = "ooo_dev_tools-0.6.11-py3-none-any.whl", hash = "sha256:e689fce3649ef60028ce8b0f1ff1539e109a437a622c9f7be9e0e0ed3c6d6daf"},
+    {file = "ooo_dev_tools-0.6.11.tar.gz", hash = "sha256:123715f116d7d6b37756e7fab46e3d5eecf248edca7551edefadb7fe55850d76"},
 ]
 ooo-dev-tools-gui-win = [
     {file = "ooo-dev-tools-gui-win-0.3.1.tar.gz", hash = "sha256:534a313706319a10ba3ddbec918fb86c983cedd9202ad59c72058ebf64241af6"},
@@ -497,7 +497,7 @@ pathspec = [
     {file = "pathspec-0.10.2-py3-none-any.whl", hash = "sha256:88c2606f2c1e818b978540f73ecc908e13999c6c3a383daf3705652ae79807a5"},
     {file = "pathspec-0.10.2.tar.gz", hash = "sha256:8f6bf73e5758fd365ef5d58ce09ac7c27d2833a8d7da51712eac6e27e35141b0"},
 ]
-Pillow = [
+pillow = [
     {file = "Pillow-9.3.0-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:0b7257127d646ff8676ec8a15520013a698d1fdc48bc2a79ba4e53df792526f2"},
     {file = "Pillow-9.3.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:b90f7616ea170e92820775ed47e136208e04c967271c9ef615b6fbd08d9af0e3"},
     {file = "Pillow-9.3.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:68943d632f1f9e3dce98908e873b3a090f6cba1cbb1b892a9e8d97c938871fbe"},
