@@ -53,6 +53,4 @@ python ./ex/auto/calc/odev_replace_all/start.py -h
 python .\ex\auto\calc\odev_replace_all\start.py -h
 ```
 
-
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-

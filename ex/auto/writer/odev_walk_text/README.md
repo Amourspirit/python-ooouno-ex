@@ -102,10 +102,6 @@ L<cannot foresee the pain and trouble that are bound to ensue; and equal blame b
 L<in their duty through weakness of will, which is the same as saying through shrinking from toil and >
 L<pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice >
 L<is untrammelled and when nothing prevents our>
-Closing the document
-Closing Office
-Office terminated
-Office bridge has gone!!
 ```
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html

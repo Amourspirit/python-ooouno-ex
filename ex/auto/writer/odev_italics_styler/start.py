@@ -2,22 +2,19 @@
 # coding: utf-8
 import sys
 import argparse
-from typing import Any, cast
+from typing import cast
+
+import uno
+from com.sun.star.text import XTextDocument
+from com.sun.star.text import XTextRange
+from com.sun.star.util import XSearchable
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.lo_events import LoEvents
 from ooodev.office.write import Write
 from ooodev.utils.color import CommonColor, Color
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-from ooodev.wrapper.break_context import BreakContext
-
-from com.sun.star.text import XTextDocument
-from com.sun.star.text import XTextRange
-from com.sun.star.util import XSearchable
 
 from ooo.dyn.awt.font_slant import FontSlant  # enum
 
@@ -88,12 +85,6 @@ def get_color(color: str) -> int:
     return CommonColor.RED
 
 
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
-
-
 def main() -> int:
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
@@ -110,11 +101,7 @@ def main() -> int:
 
     delay = 3_000
 
-    if not args.verbose:
-        # hook ooodev internal printing event
-        LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
-    loader = Lo.load_office(Lo.ConnectSocket())
+    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
 
     fnm = cast(str, args.file_path)
 
