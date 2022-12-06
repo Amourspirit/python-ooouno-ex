@@ -35,7 +35,7 @@ Display a message box asking if you want to close document.
 From this folder.
 
 ```sh
-python -m start --show --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python -m start --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ### Linux/Mac
@@ -43,7 +43,7 @@ python -m start --show --file "../../../../resources/odt/cicero_dummy.odt" --wor
 From project root folder.
 
 ```sh
-python ./ex/auto.writer/odev_italics_styler/start.py --show --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python ./ex/auto.writer/odev_italics_styler/start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ### Windows
@@ -51,7 +51,7 @@ python ./ex/auto.writer/odev_italics_styler/start.py --show --file "resources/od
 From project root folder.
 
 ```ps
-python .\ex\auto\writer\odev_italics_styler\start.py --show --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python .\ex\auto\writer\odev_italics_styler\start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ## Output

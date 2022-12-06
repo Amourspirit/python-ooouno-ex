@@ -7,20 +7,17 @@ import sys
 import argparse
 from typing import cast, Any
 
+import uno
+from com.sun.star.text import XText
+from com.sun.star.text import XTextContent
+from com.sun.star.text import XTextRange
 
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.lo_events import LoEvents
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
-
-from com.sun.star.text import XText
-from com.sun.star.text import XTextContent
-from com.sun.star.text import XTextRange
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -58,12 +55,6 @@ def print_paras(xtext: XText) -> None:
         print(e)
 
 
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
-
-
 def main() -> int:
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
@@ -80,15 +71,11 @@ def main() -> int:
 
     visible = args.show
 
-    if not args.verbose:
-        # hook ooodev internal printing event
-        LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
     # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(Lo.ConnectSocket())) as loader:
+    with BreakContext(Lo.Loader(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))) as loader:
 
         fnm = cast(str, args.file_path)
 

@@ -6,22 +6,18 @@ from typing import List, Any
 from pathlib import Path
 
 import uno
+from com.sun.star.beans import XPropertySet
+from com.sun.star.style import XStyle
+from com.sun.star.text import XTextCursor
+from com.sun.star.text import XTextDocument
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.lo_events import LoEvents
 from ooodev.office.write import Write
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-
-from com.sun.star.beans import XPropertySet
-from com.sun.star.style import XStyle
-from com.sun.star.text import XTextCursor
-from com.sun.star.text import XTextDocument
 
 from ooo.dyn.style.line_spacing import LineSpacing
 from ooo.dyn.style.line_spacing_mode import LineSpacingMode
@@ -38,12 +34,6 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
     parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
-
-
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
 
 
 def read_text(fnm: Path, cursor: XTextCursor) -> None:
@@ -118,11 +108,7 @@ def main() -> int:
     else:
         delay = 0
 
-    if not args.verbose:
-        # hook ooodev internal printing event
-        LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
-    loader = Lo.load_office(Lo.ConnectSocket())
+    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
 
     fnm = Path(args.file_path)
 

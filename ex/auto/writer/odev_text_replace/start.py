@@ -5,21 +5,17 @@ import argparse
 from typing import Any, Sequence, cast
 
 import uno
-
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.events.args.cancel_event_args import CancelEventArgs
-from ooodev.events.gbl_named_event import GblNamedEvent
-from ooodev.events.lo_events import LoEvents
-from ooodev.office.write import Write
-from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
-
 from com.sun.star.beans import XPropertySet
 from com.sun.star.text import XTextDocument
 from com.sun.star.text import XTextRange
 from com.sun.star.util import XReplaceable
 from com.sun.star.util import XReplaceDescriptor
 from com.sun.star.util import XSearchable
+
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.office.write import Write
+from ooodev.utils.gui import GUI
+from ooodev.utils.lo import Lo
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -73,12 +69,6 @@ def replace_words(doc: XTextDocument, old_words: Sequence[str], new_words: Seque
     return replaceable.replaceAll(replace_desc)
 
 
-def on_lo_print(source: Any, e: CancelEventArgs) -> None:
-    # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
-    e.cancel = True
-
-
 def main() -> int:
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
@@ -95,11 +85,7 @@ def main() -> int:
 
     delay = 4_000
 
-    if not args.verbose:
-        # hook ooodev internal printing event
-        LoEvents().on(GblNamedEvent.PRINTING, on_lo_print)
-
-    loader = Lo.load_office(Lo.ConnectSocket())
+    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
 
     fnm = cast(str, args.file_path)
 
