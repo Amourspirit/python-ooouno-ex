@@ -43,9 +43,9 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
 
 
 def main() -> int:
-    loader = Lo.load_office(Lo.ConnectSocket())
+    _ = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = Calc.create_doc(loader=loader)
+        doc = Calc.create_doc()
         sheet = Calc.get_sheet(doc=doc, index=0)
         GUI.set_visible(is_visible=True, odoc=doc)
         do_cell_range(sheet=sheet)
