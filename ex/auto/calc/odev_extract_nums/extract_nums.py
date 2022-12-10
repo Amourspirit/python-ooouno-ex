@@ -29,7 +29,7 @@ class ExtractNums:
 
             GUI.set_visible(is_visible=True, odoc=doc)
 
-            sheet = Calc.get_sheet(doc=doc, index=0)
+            sheet = Calc.get_sheet(doc=doc)
 
             # basic data extraction
             # this code assumes the input file is "small totals.ods"
@@ -48,17 +48,19 @@ class ExtractNums:
 
             data = Calc.get_array(sheet=sheet, range_name="A1:E10")
             # apply formatting entire table except for first and last rows.
+            start_idx = Calc.get_row_used_first_index(sheet)
+            end_idx = Calc.get_row_used_last_index(sheet)
             # format as float with two decimal places.
-            fl = FormatterTable(format=(".2f", ">9"), idxs=(0, 9))
+            fl = FormatterTable(format=(".2f", ">9"), idxs=(start_idx, end_idx))
 
             # add a custom row item formatter for first and last row only and pad items 9 spaces.
-            fl.row_formats.append(FormatTableItem(format=">9", idxs_inc=(0, 9)))
+            fl.row_formats.append(FormatTableItem(format=">9", idxs_inc=(start_idx, end_idx)))
 
             # add a custom columm formatter that formats the first column as integer values and move center in the column
-            fl.col_formats.append(FormatTableItem(format=(".0f", "^9"), idxs_inc=(0,), row_idxs_exc=(0, 9)))
+            fl.col_formats.append(FormatTableItem(format=(".0f", "^9"), idxs_inc=(start_idx,), row_idxs_exc=(start_idx, end_idx)))
 
             # add a custom column formatter that formats the last columon as percent
-            fl.col_formats.append(FormatTableItem(format=(".0%", ">9"), idxs_inc=(4,), row_idxs_exc=(0, 9)))
+            fl.col_formats.append(FormatTableItem(format=(".0%", ">9"), idxs_inc=(4,), row_idxs_exc=(start_idx, end_idx)))
             Calc.print_array(data, fl)
 
             ids = Calc.get_float_array(sheet=sheet, range_name="A2:A7")
@@ -98,7 +100,7 @@ class ExtractNums:
                 print(f'Cell Ranges: ({len(addrs)}):')
                 fl = FormatterTable(format=(".2f", "<7"))
                 # format the first col as integers
-                fl.col_formats.append(FormatTableItem(format=(".0f", "<7"), idxs_inc=(0,)))
+                fl.col_formats.append(FormatTableItem(format=(".0f", "<7"), idxs_inc=(start_idx,)))
                 for addr in addrs:
                     Calc.print_address(addr)
                     vals = Calc.get_float_array(sheet=sheet, range_name=Calc.get_range_str(addr))
