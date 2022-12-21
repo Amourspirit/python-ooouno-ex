@@ -230,7 +230,7 @@ class BuildTable:
         except Exception as e:
             print(e)
 
-    def _apply_styles(sefl, sheet: XSpreadsheet) -> None:
+    def _apply_styles(self, sheet: XSpreadsheet) -> None:
         # apply cell styles
         # Calc.change_style(
         #     sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, start_col=1, start_row=0, end_col=13, end_row=0

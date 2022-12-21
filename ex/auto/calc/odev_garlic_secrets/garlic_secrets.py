@@ -184,21 +184,14 @@ class GarlicSecrets:
         Calc.goto_cell(cell_name=Calc.get_cell_str(col=0, row=empty_row_num), doc=doc)
 
         # Merge first few cells of the last row
-        cell_range = Calc.get_cell_range(
-            sheet=sheet, start_col=0, start_row=empty_row_num, end_col=3, end_row=empty_row_num
-        )
-        xmerge = Lo.qi(XMergeable, cell_range, True)
-        xmerge.merge(True)
+        rng_obj = Calc.get_range_obj(col_start=0, row_start=empty_row_num, col_end=3, row_end=empty_row_num)
+
+        # merge and center range
+        Calc.merge_cells(sheet=sheet, range_obj=rng_obj, center=True)
 
         # make the row taller
         Calc.set_row_height(sheet=sheet, height=18, idx=empty_row_num)
-        cell = Calc.get_cell(sheet=sheet, col=0, row=empty_row_num)
+        # get the cell from the range cell start
+        cell = Calc.get_cell(sheet=sheet, cell_obj=rng_obj.cell_start)
         cell.setFormula("Top Secret Garlic Changes")
-        Props.set(
-            cell,
-            CharWeight=FontWeight.BOLD,
-            CharHeight=24,
-            CellBackColor=CommonColor.RED,
-            HoriJustify=CellHoriJustify.CENTER,
-            VertJustify=CellVertJustify.CENTER,
-        )
+        Props.set(cell, CharWeight=FontWeight.BOLD, CharHeight=24, CellBackColor=CommonColor.RED)

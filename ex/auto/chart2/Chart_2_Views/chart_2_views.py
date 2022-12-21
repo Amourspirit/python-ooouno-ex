@@ -8,11 +8,11 @@ from com.sun.star.sheet import XSpreadsheetDocument
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.calc import Calc
-from ooodev.office.chart2 import Chart2, Angle, DataPointLabelTypeKind, DataPointGeometry3DEnum, CurveKind, mEx
+from ooodev.office.chart2 import Chart2, Angle, DataPointLabelTypeKind, CurveKind, mEx
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.kind.axis_kind import AxisKind
+from ooodev.utils.info import Info
 from ooodev.utils.kind.chart2_types import ChartTypes
 from ooodev.utils.kind.data_point_lable_placement_kind import DataPointLabelPlacementKind
 from ooodev.utils.lo import Lo
@@ -46,6 +46,7 @@ class ChartKind(str, Enum):
     SCATTER_LINE_ERROR = "scatter_line_error"
     SCATTER_LINE_LOG = "scatter_line_log"
     STOCK_PRICES = "stock_prices"
+    DEFAULT = "default"
 
 
 class Chart2View:
@@ -97,6 +98,8 @@ class Chart2View:
                 chart_doc = self._scatter_line_log_chart(doc=doc, sheet=sheet)
             elif self._chart_kind == ChartKind.STOCK_PRICES:
                 chart_doc = self._stock_prices_chart(doc=doc, sheet=sheet)
+            elif self._chart_kind == ChartKind.DEFAULT:
+                chart_doc = self._default_chart(doc=doc, sheet=sheet)
 
             if chart_doc:
                 Chart2.print_chart_types(chart_doc)
@@ -134,9 +137,9 @@ class Chart2View:
         )
         Calc.goto_cell(cell_name="A1", doc=doc)
 
-        Chart2.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A1"))
-        Chart2.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A2"))
-        Chart2.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B2"))
+        _ = Chart2.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A1"))
+        _ = Chart2.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A2"))
+        _ = Chart2.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B2"))
         Chart2.rotate_y_axis_title(chart_doc=chart_doc, angle=Angle(90))
         return chart_doc
 
@@ -588,5 +591,16 @@ class Chart2View:
         pork_points = f"{sheet_name}.J142:J146"
         Chart2.add_stock_line(chart_doc=chart_doc, data_label=pork_label, data_range=pork_points)
 
+        Chart2.view_legend(chart_doc=chart_doc, is_visible=True)
+        return chart_doc
+
+    def _default_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> XChartDocument:
+        # create a chart by using Chart2 defaults.
+        # uses "Sneakers Sold this Month" table
+        _ = Calc.set_selected_addr(doc=doc, sheet=sheet, range_name="B3:B7")
+        chart_doc = Chart2.insert_chart()
+        # deselect cells.
+        _ = Calc.set_selected_addr(doc=doc, sheet=sheet)
+        Calc.goto_cell(cell_name="A3", doc=doc)
         Chart2.view_legend(chart_doc=chart_doc, is_visible=True)
         return chart_doc
