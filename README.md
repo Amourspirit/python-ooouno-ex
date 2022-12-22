@@ -29,7 +29,7 @@ Checkout the LibreOffice Calc [Sudoku example](./ex/calc/sudoku).
 
 This project use a virtual environment for development purposes.
 
-[Poetry](https://python-poetry.org) is required to install this project.
+[poetry] is required to install this project.
 
 In order to run test it is essential that LibreOffice's `uno.py` and `unohelper.py` can be imported. These files are part of the LibreOffice installation. The location of these files vary depending on OS and other factors.
 
@@ -47,7 +47,7 @@ Activate virtual environment and install development requirements.
 . ./.venv/bin/activate
 ```
 
-Install requirement using Poetry.
+Install requirement using poetry.
 
 ```sh
 poetry install
@@ -63,6 +63,8 @@ python -m main cmd-link --add
 
 Windows is a little trickery. Creating a link to `uno.py` and importing it will not work as it does in Linux. This is due to the how LibreOffice implements the python environment on Windows.
 
+There are build in tools that aid in this that we will get to shortly.
+
 The work around on Windows is a slight hack to the virtual environment.
 
 Set up virtual environment if not existing (recommend using PowerShell).
@@ -71,45 +73,39 @@ Set up virtual environment if not existing (recommend using PowerShell).
 python -m venv .\.venv
 ```
 
-Get LibreOffice python version.
-
-```ps
-PS C:\python_ooo_dev_tools> & 'C:\Program Files\LibreOffice\program\python.exe'
-Python 3.8.10 (default, Mar 23 2022, 15:43:48) [MSC v.1928 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
->>>
-```
-
-Edit `.\.venv/pyvenv.cfg` file.
-
-```ps
-PS C:\python_ooo_dev_tools> notepad .\.venv\pyvenv.cfg
-```
-
-Original may look something like:
-
-```ps
-home = C:\ProgramData\Miniconda3
-include-system-site-packages = false
-version = 3.9.7
-```
-
-Change to: With the version that is the same as current LibreOffice Version
-
-```txt
-home = C:\Program Files\LibreOffice\program
-include-system-site-packages = false
-version = 3.8.10
-```
-
 Activate virtual environment and install development requirements.
 
 ```ps
 .\.venv\Scripts\activate
 ```
 
+Install requirements using poetry.
+
 ```ps
 poetry install
+```
+
+After installing using the previous command it time to set the environment to work with LibreOffice.
+
+```ps
+python -m main env -t
+```
+
+This will set the virtual environment to work with LibreOffice.
+
+To check of the virtual environment is set for LibreOffice use the following command.
+
+```python
+>>> python -m main env -u
+UNO Environment
+```
+
+Newer versions of [poetry] will not work with the configuration set up for LibreOffice.
+
+When you need to use [poetry] just toggle environment.
+
+```python
+python -m main env -t
 ```
 
 ### Testing Virtual Environment
@@ -130,3 +126,4 @@ Type "help", "copyright", "credits" or "license" for more information.
 [ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge
 [ex]: ./ex/
 [LibreOffice Programming]: https://github.com/flywire/lo-p
+[poetry]: https://python-poetry.org
