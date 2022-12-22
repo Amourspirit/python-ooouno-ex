@@ -1,4 +1,4 @@
-# coding: utf-8
+from __future__ import annotations
 import os
 import sys
 import shutil
@@ -264,3 +264,6 @@ def get_site_packeges_dir() -> Union[Path, None]:
     if p_site.exists() and p_site.is_dir():
         return p_site
     return None
+
+def copy_file(src: str | Path, dst: str | Path):
+    shutil.copy2(src=src, dst=dst)
