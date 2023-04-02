@@ -39,9 +39,9 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    fnm = "resources/data/produceSales.xlsx"
+    fnm = "resources/data/produceSales.ods"
     if not FileIO.is_exist_file(fnm):
-        fnm = "../../../../resources/data/produceSales.xlsx"
+        fnm = "../../../../resources/data/produceSales.ods"
 
     gs = GarlicSecrets(fnm=fnm, out_fnm=args.out_file)
     gs.main()

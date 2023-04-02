@@ -10,6 +10,7 @@ from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.date_time_util import DateUtil
+from ooodev.format.writer.style.para import Para as ParaStyle
 
 
 def read_table(fnm: Path) -> List[list]:
@@ -52,8 +53,8 @@ def main() -> int:
 
         cursor = Write.get_cursor(doc)
 
-        Write.append_para(cursor, "Table of Bond Movies")
-        Write.style_prev_paragraph(cursor, "Heading 1")
+        Write.append_para(cursor, "Table of Bond Movies", styles=[ParaStyle().h1])
+
         Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
 
         # Lock display updating for faster writing of table into document.

@@ -77,7 +77,7 @@ def main() -> int:
     # write text
     cursor.setString("Hello World")
 
-    bas: SF.SFScriptForge.SF_Basic = SF.CreateScriptService("Basic")
+    bas = SF.CreateScriptService("Basic")
 
     # create a dispatch helper
     dispatcher: DispatchHelper = bas.CreateUnoService(

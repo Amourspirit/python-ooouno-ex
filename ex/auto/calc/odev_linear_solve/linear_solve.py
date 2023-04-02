@@ -5,6 +5,7 @@ from com.sun.star.sheet import XSolver
 
 from ooodev.office.calc import Calc
 from ooodev.utils.lo import Lo
+from ooodev.utils.info import Info
 from ooodev.utils.props import Props
 
 from ooo.dyn.sheet.solver_constraint_operator import SolverConstraintOperator
@@ -51,10 +52,20 @@ class LinearSolve:
             # strangly Windows 10, LibreOffice 7.3 does still list com.sun.star.comp.Calc.CoinMPSolver
             # as a service.
             # srv_solver = "com.sun.star.comp.Calc.LpsolveSolver"
-            srv_solver = "com.sun.star.comp.Calc.CoinMPSolver"
+            solvers = Info.get_service_names(service_name="com.sun.star.sheet.Solver")
+            potential_solvers = ("com.sun.star.comp.Calc.CoinMPSolver", "com.sun.star.comp.Calc.LpsolveSolver")
 
+            srv_solver = ""
+            for val in potential_solvers:
+                if val in solvers:
+                    srv_solver = val
+                    break
+
+            if not srv_solver:
+                raise ValueError("No valid solvert was found")
             # initialize the linear solver (CoinMP or basic linear)
             solver = Lo.create_instance_mcf(XSolver, srv_solver, raise_err=True)
+
             solver.Document = doc
             solver.Objective = profit_eq
             solver.Variables = vars

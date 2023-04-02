@@ -144,7 +144,7 @@ def set_number(num: int) -> None:
     bas = SF.CreateScriptService("Basic")
 
     if doc.LastRow(cell) > 9 or doc.LastColumn(cell) > 9:
-        bas.MsgBox(f"Please select a game board cell.", title="Outside range")
+        bas.MsgBox("Please select a game board cell.", title="Outside range")
         return
     x = doc.FirstRow(cell) - 1
     y = doc.FirstColumn(cell) - 1

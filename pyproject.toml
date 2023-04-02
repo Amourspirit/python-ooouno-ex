@@ -17,17 +17,19 @@ repository = "https://github.com/Amourspirit/python-ooouno-ex"
 
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.12"
+python = "^3.7"
 oooscript = ">=1.0.0"
 types-access2base = ">=1.0.2"
 types-scriptforge = ">=2.0.1"
-types-unopy = ">=1.0.2"
+types-unopy = ">=1.0.3"
 unotools = ">=0.3.3"
 verr = ">=1.1.2"
 kwargshelper = ">=2.7.1"
-ooo-dev-tools = ">=0.9.0"
+ooo-dev-tools = ">=0.9.2"
 ooo-dev-tools-gui-win = { version = ">=0.3.1", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.group.dev.dependencies]
 black = ">=22.12.0"
 
+[tool.ruff]
+ignore=["E501"]

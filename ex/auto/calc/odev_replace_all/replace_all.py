@@ -1,5 +1,4 @@
 from __future__ import annotations
-import random
 from typing import Iterable
 
 import uno
@@ -10,16 +9,16 @@ from com.sun.star.util import XSearchable
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.calc import Calc
-from ooodev.utils.color import CommonColor
+from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.utils.table_helper import TableHelper
 from ooodev.utils.type_var import PathOrStr
-
-from ooo.dyn.awt.font_weight import FontWeight
+from ooodev.format import Styler
+from ooodev.format.calc.direct.cell.background import Color as BgColor
+from ooodev.format.calc.direct.cell.borders import Borders, BorderLineKind, Side, LineSize
+from ooodev.format.calc.direct.cell.font import Font
 
 
 class ReplaceAll:
@@ -83,6 +82,8 @@ class ReplaceAll:
             doc = Calc.create_doc(loader)
 
             GUI.set_visible(is_visible=True, odoc=doc)
+            Lo.delay(300)
+            GUI.zoom(view=GUI.ZoomEnum.ZOOM_150_PERCENT)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
 
@@ -99,7 +100,15 @@ class ReplaceAll:
                 return ReplaceAll.ANIMALS[i]
 
             tbl = TableHelper.make_2d_array(num_rows=ReplaceAll.TOTAL_ROWS, num_cols=ReplaceAll.TOTAL_COLS, val=cb)
-            Calc.set_array_range(sheet=sheet, range_name="A1:F15", values=tbl)
+            
+            # create styles that can be applied to the cells via Calc.set_array_range().
+            inner_side = Side()
+            outter_side = Side(width=LineSize.THICK)
+            bdr = Borders(border_side=outter_side, vertical=inner_side, horizontal=inner_side)
+            bg_color = BgColor(StandardColor.BLUE)
+            ft = Font(color=StandardColor.WHITE)
+
+            Calc.set_array_range(sheet=sheet, range_name="A1:F15", values=tbl, styles=[bdr, bg_color, ft])
 
             # A1:F15
             cell_rng = Calc.get_cell_range(sheet=sheet, col_start=0, row_start=0, col_end=5, row_end=15)
@@ -134,8 +143,11 @@ class ReplaceAll:
             raise
 
     def _highlight(self, cr: XCellRange) -> None:
-        # highlight by make cell bold, with text color of Indigo and a background color of light blue.
-        Props.set(cr, CharWeight=FontWeight.BOLD, CharColor=CommonColor.INDIGO, CellBackColor=CommonColor.LIGHT_BLUE)
+        # highlight by make cell bold, with text color of Light purple and a background color of light blue.
+        ft = Font(b=True, color=StandardColor.PURPLE_LIGHT1)
+        bg_color = BgColor(StandardColor.DEFAULT_BLUE)
+        bdrs = Borders(border_side=Side(line=BorderLineKind.SOLID, color=StandardColor.RED_DARK3))
+        Styler.apply(cr, ft, bg_color, bdrs)
 
     def _search_iter(self, sheet: XSpreadsheet, cell_rng: XCellRange, srch_str: str) -> None:
         print(f'Searching (iterating) for all occurrences of "{srch_str}"')

@@ -15,11 +15,11 @@ from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.view_state import ViewState
+from ooodev.format import Styler
+from ooodev.format.calc.direct.cell.font import Font
+from ooodev.format.calc.direct.cell.background import Color as BgColor
 
-from ooo.dyn.awt.font_weight import FontWeight
 from ooo.dyn.table.cell_content_type import CellContentType
-from ooo.dyn.table.cell_hori_justify import CellHoriJustify
-from ooo.dyn.table.cell_vert_justify import CellVertJustify
 
 
 class GarlicSecrets:
@@ -135,6 +135,8 @@ class GarlicSecrets:
 
         row = 0
         prod_cell = Calc.get_cell(sheet=sheet, col=0, row=row)  # produce column
+        red_font = Font(b=True, color=CommonColor.RED)
+
         # iterate down produce column until an empty cell is reached
         while prod_cell.getType() != CellContentType.EMPTY:
             if prod_cell.getFormula() == "Garlic":
@@ -143,7 +145,8 @@ class GarlicSecrets:
                 # change cost/pound column
                 cost_cell = Calc.get_cell(sheet=sheet, col=1, row=row)
                 cost_cell.setValue(1.05 * cost_cell.getValue())
-                Props.set(cost_cell, CharWeight=FontWeight.BOLD, CharColor=CommonColor.RED)
+                # make the change more visible by making the text bold and red
+                red_font.apply(cost_cell)
             row += 1
             prod_cell = Calc.get_cell(sheet=sheet, col=0, row=row)
         return row
@@ -194,4 +197,7 @@ class GarlicSecrets:
         # get the cell from the range cell start
         cell = Calc.get_cell(sheet=sheet, cell_obj=rng_obj.cell_start)
         cell.setFormula("Top Secret Garlic Changes")
-        Props.set(cell, CharWeight=FontWeight.BOLD, CharHeight=24, CellBackColor=CommonColor.RED)
+
+        font_red = Font(b=True, size=24, color=CommonColor.BLACK)
+        bg_color = BgColor(CommonColor.RED)
+        Styler.apply(cell, font_red, bg_color)

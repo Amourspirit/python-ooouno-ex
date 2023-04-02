@@ -7,13 +7,16 @@ from com.sun.star.text import XSentenceCursor
 from com.sun.star.text import XParagraphCursor
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.format import Styler
+from ooodev.format.calc.direct.cell.borders import Borders, Padding
+from ooodev.format.calc.direct.cell.font import Font
 from ooodev.office.calc import Calc
 from ooodev.office.write import Write
+from ooodev.units.unit_mm import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 
 
@@ -50,12 +53,9 @@ class CellTexts:
             )
 
             # beautify the cell
-            Props.set(
-                xcell,
-                CharColor=CommonColor.DARK_BLUE,  # from styles.CharacterProperties
-                CharHeight=18.0,  # from styles.CharacterProperties
-                ParaLeftMargin=500,  # from styles.ParagraphProperties
-            )
+            font = Font(color=CommonColor.DARK_BLUE, size=18.0)
+            bdr = Borders(padding=Padding(left=UnitMM(5)))
+            Styler.apply(xcell, font, bdr)
 
             self._print_cell_text(xcell)
 
@@ -92,7 +92,6 @@ class CellTexts:
         sent_cursor = Lo.qi(XSentenceCursor, cursor)
         if sent_cursor is None:
             print("Sentence cursor is null")
-
 
         para_cursor = Lo.qi(XParagraphCursor, cursor)
         if para_cursor is None:
