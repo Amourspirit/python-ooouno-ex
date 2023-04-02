@@ -15,8 +15,7 @@ from ooodev.utils.color import CommonColor, Color
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-
-from ooo.dyn.awt.font_slant import FontSlant  # enum
+from ooodev.format.writer.direct.char.font import Font
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -61,6 +60,8 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
 
         print(f"No. of matches: {result}")
 
+        font_effect = Font(i=True, color=color)
+
         for i in range(result):
             match_tr = Lo.qi(XTextRange, matches.getByIndex(i))
             if match_tr is not None:
@@ -70,9 +71,9 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
                 cursor.gotoStart(True)
                 print(f"    - starting at char position: {len(cursor.getString()) - pharse_len}")
 
-                Props.set_properties(obj=match_tr, names=("CharColor", "CharPosture"), vals=(color, FontSlant.ITALIC))
+                font_effect.apply(match_tr)
 
-    except Exception as e:
+    except Exception:
         raise
     return result
 

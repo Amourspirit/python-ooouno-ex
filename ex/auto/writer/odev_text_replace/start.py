@@ -102,7 +102,7 @@ def main() -> int:
         )
         find_words(doc, words)
 
-        num = replace_words(doc, uk_words, us_words)
+        _ = replace_words(doc, uk_words, us_words)
 
         Lo.delay(delay)
         msg_result = MsgBox.msgbox(

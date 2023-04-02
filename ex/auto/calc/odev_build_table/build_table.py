@@ -8,24 +8,27 @@ from com.sun.star.sheet import XSpreadsheet
 from com.sun.star.sheet import XSpreadsheetDocument
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.format import Styler
+from ooodev.format.calc.direct.cell import borders as direct_borders
+from ooodev.format.calc.modify.cell import borders as modify_borders
+from ooodev.format.calc.modify.cell.alignment import HoriAlignKind, VertAlignKind, TextAlign
+from ooodev.format.calc.modify.cell.background import Color as BgColor
+from ooodev.format.calc.modify.cell.font import FontEffects
 from ooodev.office.calc import Calc
 from ooodev.office.draw import Draw
+from ooodev.units import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.utils.table_helper import TableHelper
 from ooodev.utils.type_var import PathOrStr
 
 try:
     from ooodev.office.chart2 import Chart2
 except ImportError:
-    # bug in LibreOffice 7.4
+    # bug in LibreOffice 7.4, Fixed in 7.5
     Chart2 = None
-
-from ooo.dyn.table.cell_hori_justify import CellHoriJustify
-from ooo.dyn.table.cell_vert_justify import CellVertJustify
 
 
 class BuildTable:
@@ -52,6 +55,8 @@ class BuildTable:
             doc = Calc.create_doc(loader)
 
             GUI.set_visible(is_visible=True, odoc=doc)
+            Lo.delay(300)
+            Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
 
@@ -209,52 +214,50 @@ class BuildTable:
 
     def _create_styles(self, doc: XSpreadsheetDocument) -> None:
         try:
-            style1 = Calc.create_cell_style(doc=doc, style_name=BuildTable.HEADER_STYLE_NAME)
+            # create a style using Calc
+            header_style = Calc.create_cell_style(doc=doc, style_name=BuildTable.HEADER_STYLE_NAME)
 
-            Props.set(
-                style1,
-                IsCellBackgroundTransparent=False,
-                CellBackColor=CommonColor.ROYAL_BLUE,
-                CharColor=CommonColor.WHITE,
-                HoriJustify=CellHoriJustify.CENTER,
-                VertJustify=CellVertJustify.CENTER,
+            # create formats to apply to header_style
+            header_bg_color_style = BgColor(color=CommonColor.ROYAL_BLUE, style_name=BuildTable.HEADER_STYLE_NAME)
+            effects_style = FontEffects(color=CommonColor.WHITE, style_name=BuildTable.HEADER_STYLE_NAME)
+            txt_align_style = TextAlign(
+                hori_align=HoriAlignKind.CENTER,
+                vert_align=VertAlignKind.MIDDLE,
+                style_name=BuildTable.HEADER_STYLE_NAME,
             )
+            # Apply formatting to header_style
+            Styler.apply(header_style, header_bg_color_style, effects_style, txt_align_style)
 
-            style2 = Calc.create_cell_style(doc=doc, style_name=BuildTable.DATA_STYLE_NAME)
-            Props.set(
-                style2,
-                IsCellBackgroundTransparent=False,
-                CellBackColor=CommonColor.LIGHT_BLUE,
-                ParaRightMargin=500,  # move away from right edge
-            )
+            # create style
+            data_style = Calc.create_cell_style(doc=doc, style_name=BuildTable.DATA_STYLE_NAME)
+
+            # create formats to apply to data_style
+            footer_bg_color_style = BgColor(color=CommonColor.LIGHT_BLUE, style_name=BuildTable.DATA_STYLE_NAME)
+            bdr_style = modify_borders.Borders(padding=modify_borders.Padding(left=UnitMM(5)))
+
+            # Apply formatting to data_style
+            Styler.apply(data_style, footer_bg_color_style, bdr_style, txt_align_style)
+
         except Exception as e:
             print(e)
 
     def _apply_styles(self, sheet: XSpreadsheet) -> None:
-        # apply cell styles
-        # Calc.change_style(
-        #     sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, start_col=1, start_row=0, end_col=13, end_row=0
-        # )
-        # Calc.change_style(
-        #     sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, start_col=0, start_row=1, end_col=0, end_row=3
-        # )
-        # Calc.change_style(
-        #     sheet=sheet, style_name=BuildTable.DATA_STYLE_NAME, start_col=1, start_row=1, end_col=13, end_row=3
-        # )
 
         Calc.change_style(sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, range_name="B1:N1")
         Calc.change_style(sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, range_name="A2:A4")
         Calc.change_style(sheet=sheet, style_name=BuildTable.DATA_STYLE_NAME, range_name="B2:N4")
 
-        Calc.add_border(
-            sheet=sheet, range_name="A4:N4", color=CommonColor.DARK_BLUE, border_vals=Calc.BorderEnum.BOTTOM_BORDER
-        )
-        Calc.add_border(
-            sheet=sheet,
-            range_name="N1:N4",
-            color=CommonColor.DARK_BLUE,
-            border_vals=Calc.BorderEnum.LEFT_BORDER | Calc.BorderEnum.RIGHT_BORDER,
-        )
+        # create a border side, default width units are points
+        side = direct_borders.Side(width=2.85, color=CommonColor.DARK_BLUE)
+        # create a border setting bottom side
+        bdr = direct_borders.Borders(bottom=side)
+        # Apply border to range
+        Calc.set_style_range(sheet=sheet, range_name="A4:N4", styles=[bdr])
+
+        # create a border with left and right
+        bdr = direct_borders.Borders(left=side, right=side)
+        # Apply border to range
+        Calc.set_style_range(sheet=sheet, range_name="N1:N4", styles=[bdr])
 
     # endregion Private Methods
 
@@ -278,8 +281,9 @@ class BuildTable:
     @property
     def add_style(self) -> bool:
         return self._add_style
-    
+
     @add_style.setter
     def add_style(self, value: bool):
         self._add_style = value
+
     # endregion properties

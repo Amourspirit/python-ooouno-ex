@@ -2,25 +2,26 @@
 # coding: utf-8
 import sys
 import argparse
-from typing import List, Any
+from typing import List
 from pathlib import Path
 
 import uno
-from com.sun.star.beans import XPropertySet
-from com.sun.star.style import XStyle
 from com.sun.star.text import XTextCursor
 from com.sun.star.text import XTextDocument
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.format.writer.direct.char.font import Font
+from ooodev.format.writer.direct.para.indent_space import Spacing, LineSpacing, ModeKind
 from ooodev.office.write import Write
+from ooodev.units import UnitMM
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
-
-from ooo.dyn.style.line_spacing import LineSpacing
-from ooo.dyn.style.line_spacing_mode import LineSpacingMode
+from ooodev.format.writer.style.para import Para as StylePara, StyleParaKind
+from ooodev.utils.color import CommonColor
+from ooodev.format.writer.direct.page.header import Header
+from ooodev.format.writer.direct.page.header.area import Img, PresetImageKind
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -47,14 +48,11 @@ def read_text(fnm: Path, cursor: XTextCursor) -> None:
                     Write.append_para(cursor, " ".join(sb))
                 sb.clear()
             elif line.startswith("Title: "):
-                Write.append_para(cursor, line[7:])
-                Write.style_prev_paragraph(cursor, "Title")
+                Write.append_para(cursor, line[7:], styles=[StylePara(StyleParaKind.TITLE)])
             elif line.startswith("Author: "):
-                Write.append_para(cursor, line[8:])
-                Write.style_prev_paragraph(cursor, "Subtitle")
+                Write.append_para(cursor, line[8:], styles=[StylePara(StyleParaKind.SUBTITLE)])
             elif line.startswith("Part "):
-                Write.append_para(cursor, line)
-                Write.style_prev_paragraph(cursor, "Heading")
+                Write.append_para(cursor, line, styles=[StylePara(StyleParaKind.HEADING_1)])
             else:
                 sb.append(line)
             i += 1
@@ -66,22 +64,20 @@ def read_text(fnm: Path, cursor: XTextCursor) -> None:
 
 def create_para_style(doc: XTextDocument, style_name: str) -> bool:
     try:
-        para_styles = Info.get_style_container(doc=doc, family_style_name="ParagraphStyles")
 
-        # create new paragraph style properties set
-        para_style = Lo.create_instance_msf(XStyle, "com.sun.star.style.ParagraphStyle", raise_err=True)
-        props = Lo.qi(XPropertySet, para_style, raise_err=True)
+        # font 12 pt
+        font = Font(name=Info.get_font_general_name(), size=12.0)
 
-        # set some properties
-        props.setPropertyValue("CharFontName", Info.get_font_general_name())
-        props.setPropertyValue("CharHeight", 12.0)
-        props.setPropertyValue("ParaBottomMargin", 400)  # 4mm, in 100th mm
+        # spacing below paragraphs
+        spc = Spacing(below=UnitMM(4))
 
-        line_spacing = LineSpacing(Mode=LineSpacingMode.FIX, Height=600)
-        props.setPropertyValue("ParaLineSpacing", line_spacing)
+        # paragraph line spacing
+        ln_spc = LineSpacing(mode=ModeKind.FIXED, value=UnitMM(6))
 
-        para_styles.insertByName(style_name, props)
+        _ = Write.create_style_para(text_doc=doc, style_name=style_name, styles=[font, spc, ln_spc])
+
         return True
+
     except Exception as e:
         print("Could not set paragraph style")
         print(f"  {e}")
@@ -117,18 +113,43 @@ def main() -> int:
         if visible:
             GUI.set_visible(is_visible=visible, odoc=doc)
 
+        if not create_para_style(doc, "adParagraph"):
+            raise RuntimeError("Could not create new paragraph style")
+
         styles = Info.get_style_names(doc, "ParagraphStyles")
         print("Paragraph Styles")
         Lo.print_names(styles)
 
-        if not create_para_style(doc, "adParagraph"):
-            raise RuntimeError("Could not create new paragraph style")
-
         xtext_range = doc.getText().getStart()
-        Props.set_property(xtext_range, "ParaStyleName", "adParagraph")
+        # Load the paragraph style and apply it to the text range.
+        para_style = StylePara("adParagraph")
+        para_style.apply(xtext_range)
 
-        Write.set_header(text_doc=doc, text=f"From: {fnm.name}")
+        # header formatting
+        # create a header font style with a size of 9 pt, italic and dark green.
+        header_font = Font(name=Info.get_font_general_name(), size=9.0, i=True, color=CommonColor.DARK_GREEN)
+        header_format = Header(
+            on=True,
+            shared_first=True,
+            shared=True,
+            height=13.0,
+            spacing=3.0,
+            spacing_dyn=True,
+            margin_left=1.5,
+            margin_right=2.0,
+        )
+        # create a header image from a preset
+        header_img = Img.from_preset(PresetImageKind.MARBLE)
+        # Set header can be passed a list of styles to format the header.
+        Write.set_header(text_doc=doc, text=f"From: {fnm.name}", styles=[header_font, header_format, header_img])
+
+        # page format A4
         Write.set_a4_page_format(doc)
+        # alternative setting of page format
+        # from ooodev.format.writer.modify.page.page import PaperFormat, PaperFormatKind
+        # page_size_style = PaperFormat.from_preset(preset=PaperFormatKind.A4)
+        # page_size_style.apply(doc)
+
         Write.set_page_numbers(doc)
 
         cursor = Write.get_cursor(doc)

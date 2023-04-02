@@ -1,13 +1,12 @@
 from __future__ import annotations
+from com.sun.star.sheet import XSpreadsheet
 from ooodev.utils.lo import Lo
 from ooodev.office.calc import Calc, CellFlagsEnum
-from com.sun.star.sheet import XSpreadsheet
+from ooodev.format.calc.direct.cell.borders import Borders, Side
+from ooodev.utils.color import CommonColor
 
 
 def do_cell_range(sheet: XSpreadsheet) -> None:
-    # Highlight the borders of the range that is being inserted
-    Calc.highlight_range(sheet=sheet, headline="Range Data Example", range_name="A2:C24")
-
     vals = (
         ("Name", "Fruit", "Quantity"),
         ("Alice", "Apples", 3),
@@ -34,6 +33,10 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.set_array(values=vals, sheet=sheet, name="A3:C23")  # or just "A3"
     Calc.set_val("Total", sheet=sheet, cell_name="A24")
     Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
+    
+    # set Border around data and summary.
+    bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
+    Calc.set_style_range(sheet=sheet, range_name="A3:C24", styles=[bdr])
 
 
 def create_array() -> None:
