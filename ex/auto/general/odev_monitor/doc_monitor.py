@@ -60,7 +60,7 @@ class DocMonitor:
         # create a new instance of listener.
         # pass GenericArgs with listener arg of self.
         # this will allow for this instance to be passed to events.
-        self._term_listener = TerminateListener(trigger_args=GenericArgs(listener=self))
+        self._term_listener = TerminateListener()
         self._term_listener.on("notifyTermination", _on_notify_termination)
         self._term_listener.on("queryTermination", _on_query_termination)
         self._term_listener.on("disposing", _on_disposing)
@@ -73,7 +73,7 @@ class DocMonitor:
         # attach a listener to the bridge connection that gets notified if
         # office bridge connection terminates unexpectly.
         # Lo.bridge is not available if a script is run as a macro.
-        self._bridge_listen = EventListener(trigger_args=GenericArgs(listener=self))
+        self._bridge_listen = EventListener()
         self._bridge_listen.on("disposing", _on_disposing_bridge)
         Lo.bridge.addEventListener(self._bridge_listen)
 
