@@ -10,7 +10,7 @@ from ooodev.office.calc import Calc
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.file_io import FileIO
 from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
-from ooodev.adapter.util.modify_listener import ModifyListener, GenericArgs
+from ooodev.adapter.util.modify_listener import ModifyListener
 
 if TYPE_CHECKING:
     from com.sun.star.lang import EventObject
@@ -53,8 +53,6 @@ class ModifyListenerAdapter:
         self._fn_on_modified = _on_modified
         self._fn_on_disposing = _on_disposing
 
-        # pass GenericArgs with listener arg of self.
-        # this will allow for this instance to be passed to events.
         # pass doc to constructor, this will allow listener to be automatically attached to document.
         self._m_listener = ModifyListener(doc=self._doc)
         self._m_listener.on("modified", _on_modified)
@@ -76,8 +74,9 @@ class ModifyListenerAdapter:
     def on_modified(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Modified")
         try:
-            event = cast("EventObject", event_args.event_data)
-            doc = Lo.qi(XSpreadsheetDocument, event.Source, True)
+            # event = cast("EventObject", event_args.event_data)
+            # doc = Lo.qi(XSpreadsheetDocument, event.Source, True)
+            doc = self._doc
             addr = Calc.get_selected_cell_addr(doc)
             print(f"  {Calc.get_cell_str(addr=addr)} = {Calc.get_val(sheet=self._sheet, addr=addr)}")
         except Exception as e:

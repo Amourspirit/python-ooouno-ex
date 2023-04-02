@@ -1,8 +1,8 @@
 # region Imports
 from __future__ import annotations
-from typing import Any, cast
+from typing import Any
 
-from ooodev.adapter.frame.terminate_listener import TerminateListener, GenericArgs
+from ooodev.adapter.frame.terminate_listener import TerminateListener
 from ooodev.adapter.lang.event_listener import EventListener
 from ooodev.events.args.event_args import EventArgs
 from ooodev.events.lo_events import Events
@@ -10,7 +10,6 @@ from ooodev.events.lo_named_event import LoNamedEvent
 from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-
 
 # endregion Imports
 
@@ -58,8 +57,6 @@ class DocMonitor:
         self._fn_on_disposed = _on_disposed
 
         # create a new instance of listener.
-        # pass GenericArgs with listener arg of self.
-        # this will allow for this instance to be passed to events.
         self._term_listener = TerminateListener()
         self._term_listener.on("notifyTermination", _on_notify_termination)
         self._term_listener.on("queryTermination", _on_query_termination)

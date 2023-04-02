@@ -2,7 +2,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, cast
 
-from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs, GenericArgs
+from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
@@ -64,8 +64,7 @@ class DocWindowAdapter:
         self._fn_on_disposing = _on_disposing
 
         # assigning TopWindowListener to class is important.
-        # if not assigned then tk goes out of scope after class __init__() is called
-        # and dispose is called right after __init__()
+        # if not assigned then tk get garbage collected after class __init__() is called.
         self._twl = TopWindowListener()
         self._twl.on("windowOpened", _on_window_opened)
         self._twl.on("windowActivated", _on_window_activated)
