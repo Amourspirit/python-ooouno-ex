@@ -1,19 +1,17 @@
 #!/usr/bin/env python
-"""
-This module is not to be called directly
-and is intended to be called from the projects main.
-Such as: python -m main auto --process "ex/auto/calc/odev_add_range_data/start.py"
-"""
 from __future__ import annotations
+import uno
+from com.sun.star.sheet import XSpreadsheet
+
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
 from ooodev.office.calc import Calc
-from com.sun.star.sheet import XSpreadsheet
+from ooodev.format.calc.direct.cell.borders import Borders, Side
+from ooodev.utils.color import CommonColor
 
 
 def do_cell_range(sheet: XSpreadsheet) -> None:
-    Calc.highlight_range(sheet=sheet, headline="Range Data Example", range_name="A2:C24")
     vals = (
         ("Name", "Fruit", "Quantity"),
         ("Alice", "Apples", 3),
@@ -41,6 +39,10 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
     Calc.set_val("Total", sheet=sheet, cell_name="A24")
     Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
 
+    # set Border around data and summary.
+    bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
+    Calc.set_style_range(sheet=sheet, range_name="A2:C24", styles=[bdr])
+
 
 def main() -> int:
     _ = Lo.load_office(Lo.ConnectSocket())
@@ -48,6 +50,9 @@ def main() -> int:
         doc = Calc.create_doc()
         sheet = Calc.get_sheet(doc=doc, index=0)
         GUI.set_visible(is_visible=True, odoc=doc)
+        Lo.delay(300)
+        Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
+
         do_cell_range(sheet=sheet)
         Lo.delay(1_500)
         msg_result = MsgBox.msgbox(

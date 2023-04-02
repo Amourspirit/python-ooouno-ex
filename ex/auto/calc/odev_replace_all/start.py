@@ -2,7 +2,6 @@
 import sys
 import argparse
 
-from ooodev.utils.file_io import FileIO
 from replace_all import ReplaceAll
 
 

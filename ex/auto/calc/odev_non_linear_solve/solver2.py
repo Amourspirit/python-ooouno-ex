@@ -3,6 +3,7 @@ from __future__ import annotations
 import uno
 from com.sun.star.sheet import XSolver
 
+from ooodev.exceptions import ex
 from ooodev.office.calc import Calc
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
@@ -38,7 +39,12 @@ class Solver2:
             constraints = (sc1, sc2)
 
             # initialize the nonlinear solver (SCO)
-            solver = Lo.create_instance_mcf(XSolver, "com.sun.star.comp.Calc.NLPSolver.SCOSolverImpl", raise_err=True)
+            try:
+                solver = Lo.create_instance_mcf(XSolver, "com.sun.star.comp.Calc.NLPSolver.SCOSolverImpl", raise_err=True)
+            except ex.MissingInterfaceError:
+                print('Solver not available on this system: "com.sun.star.comp.Calc.NLPSolver.SCOSolverImpl"')
+                Lo.close_doc(doc)
+                return
             solver.Document = doc
             solver.Objective = objective
             solver.Variables = vars

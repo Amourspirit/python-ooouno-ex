@@ -43,7 +43,7 @@ python -m start --file "../../../../resources/odt/cicero_dummy.odt" --word pleas
 From project root folder.
 
 ```sh
-python ./ex/auto.writer/odev_italics_styler/start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python ./ex/auto/writer/odev_italics_styler/start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ### Windows

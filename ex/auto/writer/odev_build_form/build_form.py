@@ -33,7 +33,10 @@ from com.sun.star.view import XSelectionChangeListener
 from com.sun.star.view import XSelectionSupplier
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.format.writer.direct.char.font import Font
 from ooodev.office.write import Write
+from ooodev.theme import ThemeGeneral
+from ooodev.utils import color as color_util
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.forms import Forms, FormComponentKind, FormComponentType
 from ooodev.utils.gui import GUI
@@ -103,14 +106,45 @@ class BuildForm(
 
         # Form has four sections: text, command_button, list_box, grid_control
         # Section 1 has two columns
-        _doc = BuildForm.doc
+        if Info.version_info < (7, 5, 0, 0):
+            dark = False
+        else:
+            gen_theme = ThemeGeneral()
+            if gen_theme.background_color < 0:
+                # automatic color, assume light
+                dark = False
+            else:
+                rgb = color_util.RGB.from_int(gen_theme.background_color)
+                dark = rgb.is_dark()
+        if dark:
+            font_color = color_util.StandardColor.WHITE
+        else:
+            font_color = color_util.StandardColor.BLACK
 
-        props = Forms.add_labelled_control(doc=_doc, label="FIRSTNAME", comp_kind=FormComponentKind.TEXT_FIELD, y=11)
+        _doc = BuildForm.doc
+        
+        font_colored = Font(color=font_color)
+
+        props = Forms.add_labelled_control(
+            doc=_doc,
+            label="FIRSTNAME",
+            comp_kind=FormComponentKind.TEXT_FIELD,
+            y=11,
+            lbl_styles=[font_colored],
+        )
         self.listen_to_text_field(props)
 
-        Forms.add_labelled_control(doc=_doc, label="LASTNAME", comp_kind=FormComponentKind.TEXT_FIELD, y=19)
+        Forms.add_labelled_control(
+            doc=_doc,
+            label="LASTNAME",
+            comp_kind=FormComponentKind.TEXT_FIELD,
+            y=19,
+            lbl_styles=[font_colored],
+        )
 
-        props = Forms.add_labelled_control(doc=_doc, label="AGE", comp_kind=FormComponentKind.NUMERIC_FIELD, y=43)
+        props = Forms.add_labelled_control(
+            doc=_doc, label="AGE", comp_kind=FormComponentKind.NUMERIC_FIELD, y=43, lbl_styles=[font_colored]
+        )
         Props.set_property(props, "DecimalAccuracy", 0)
 
         Forms.add_labelled_control(
@@ -118,6 +152,7 @@ class BuildForm(
             label="BIRTHDATE",
             comp_kind=FormComponentKind.FORMATTED_FIELD,
             y=51,
+            lbl_styles=[font_colored],
         )
 
         # buttons, all with listeners
@@ -175,6 +210,7 @@ class BuildForm(
             y=y,
             width=width,
             height=height,
+            styles=[font_colored],
         )
 
         #  radio buttons inside a group box; use a property change listener
@@ -193,6 +229,7 @@ class BuildForm(
             y=y,
             width=box_width,
             height=25,
+            styles=[font_colored],
         )
 
         # these three radio buttons have the same name ("Option"), and
@@ -218,6 +255,7 @@ class BuildForm(
                 y=y + (i + 1) * height,
                 width=width,
                 height=height,
+                styles=[font_colored],
             )
             props.addPropertyChangeListener("State", self)
 
@@ -237,6 +275,7 @@ class BuildForm(
             y=35,
             width=box_width,
             height=25,
+            styles=[font_colored],
         )
 
         comp_kind = FormComponentKind.CHECK_BOX
@@ -276,6 +315,7 @@ class BuildForm(
                 y=y + (i + 1) * height,
                 width=width,
                 height=height,
+                styles=[font_colored],
             )
             props.addPropertyChangeListener("State", self)
             Props.set_property(props, "HelpText", HelpTexts[i])
@@ -453,7 +493,7 @@ class BuildForm(
 
         cmodel = Forms.get_event_control_model(ev)
         list_box = Lo.qi(XListBox, ev.Source)
-        if not list_box is None:
+        if list_box is not None:
             selected_item = list_box.getItem(selection)
         print(f'List: "{Forms.get_name(cmodel)}" selection: {selected_item}')
 
