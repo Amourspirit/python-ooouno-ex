@@ -1,10 +1,8 @@
 # region Imports
 from __future__ import annotations
-import time
-import sys
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any
 
-from ooodev.adapter.frame.terminate_listener import TerminateListener, GenericArgs
+from ooodev.adapter.frame.terminate_listener import TerminateListener
 from ooodev.adapter.lang.event_listener import EventListener
 from ooodev.events.args.event_args import EventArgs
 from ooodev.events.lo_events import Events
@@ -13,9 +11,6 @@ from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
-if TYPE_CHECKING:
-    # only need types in design time and not at run time.
-    from com.sun.star.lang import EventObject
 # endregion Imports
 
 # region DocMonitor Class
@@ -27,46 +22,69 @@ class DocMonitor:
         self.closed = False
         self.bridge_disposed = False
         loader = Lo.load_office(Lo.ConnectPipe())
-        xdesktop = Lo.XSCRIPTCONTEXT.getDesktop()
+        _ = Lo.XSCRIPTCONTEXT.getDesktop()
 
-        # create a new instance of listener.
-        # pass GenericArgs with listener arg of self.
-        # this will allow for this instance to be passed to events.
-        self._term_listener = TerminateListener(trigger_args=GenericArgs(listener=self))
-        self._term_listener.on("notifyTermination", DocMonitor.on_notify_termination)
-        self._term_listener.on("queryTermination", DocMonitor.on_query_termination)
-        self._term_listener.on("disposing", DocMonitor.on_disposing)
-
-        # using an event is redundant here and is included for example purposes.
-        # below a listener is attached to Lo.birdge that does the same job.
-        self.events = Events(source=self)
-        self.events.on(LoNamedEvent.BRIDGE_DISPOSED, DocMonitor.on_disposed)
-
-        # attach a listener to the bridge connection that gets notified if
-        # office bridge connection terminates unexpectly.
-        # Lo.bridge is not available if a script is run as a macro.
-        self._bridge_listen = EventListener(trigger_args=GenericArgs(listener=self))
-        self._bridge_listen.on("disposing", DocMonitor.on_disposing_bridge)
-        Lo.bridge.addEventListener(self._bridge_listen)
+        self._set_internal_events()
 
         self.doc = Calc.create_doc(loader=loader)
 
         GUI.set_visible(True, self.doc)
 
-    @staticmethod
-    def on_notify_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def _set_internal_events(self):
+        # Event handlers are defined as methods on the class.
+        # However class methods are not callable by the event system.
+        # The solution is to create a function that calls the class method and pass that function to the event system.
+        # Also the function must be a member of the class so that it is not garbage collected.
+        def _on_notify_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_notify_termination(source=source, event_args=event_args, *args, **kwargs)
+
+        def _on_query_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_query_termination(source=source, event_args=event_args, *args, **kwargs)
+
+        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_disposing(source=source, event_args=event_args, *args, **kwargs)
+
+        def _on_disposing_bridge(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_disposing_bridge(source=source, event_args=event_args, *args, **kwargs)
+
+        def _on_disposed(source: Any, event_args: EventArgs) -> None:
+            self.on_disposed(source, event_args)
+
+        self._fn_on_notify_termination = _on_notify_termination
+        self._fn_on_query_termination = _on_query_termination
+        self._fn_on_disposing = _on_disposing
+        self._fn_on_disposing_bridge = _on_disposing_bridge
+        self._fn_on_disposed = _on_disposed
+
+        # create a new instance of listener.
+        self._term_listener = TerminateListener()
+        self._term_listener.on("notifyTermination", _on_notify_termination)
+        self._term_listener.on("queryTermination", _on_query_termination)
+        self._term_listener.on("disposing", _on_disposing)
+
+        # using an event is redundant here and is included for example purposes.
+        # below a listener is attached to Lo.birdge that does the same job.
+        self.events = Events(source=self)
+        self.events.on(LoNamedEvent.BRIDGE_DISPOSED, _on_disposed)
+
+        # attach a listener to the bridge connection that gets notified if
+        # office bridge connection terminates unexpectly.
+        # Lo.bridge is not available if a script is run as a macro.
+        self._bridge_listen = EventListener()
+        self._bridge_listen.on("disposing", _on_disposing_bridge)
+        Lo.bridge.addEventListener(self._bridge_listen)
+
+    def on_notify_termination(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
         is called when the master environment is finally terminated.
 
         No veto will be accepted then.
         """
         print("TL: Finished Closing")
-        dm = cast(DocMonitor, kwargs["listener"])
-        dm.bridge_disposed = True
-        dm.closed = True
+        self.bridge_disposed = True
+        self.closed = True
 
-    @staticmethod
-    def on_query_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_query_termination(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
         is called when the master environment (e.g., desktop) is about to terminate.
 
@@ -78,8 +96,7 @@ class DocMonitor:
         """
         print("TL: Starting Closing")
 
-    @staticmethod
-    def on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_disposing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
         gets called when the broadcaster is about to be disposed.
 
@@ -95,19 +112,17 @@ class DocMonitor:
         # script will stop before dispose is called
         print("TL: Disposing")
 
-    @staticmethod
-    def on_disposing_bridge(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_disposing_bridge(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         # do not try and exit script here.
         # for some reason when office triggers this method calls such as:
         # raise SystemExit(1)
         # does not exit the script
         print("BR: Office bridge has gone!!")
 
-    @staticmethod
-    def on_disposed(source: Any, event: EventArgs) -> None:
+    def on_disposed(self, source: Any, event_args: EventArgs) -> None:
         # just another way of knowing when bridge is gone.
         print("LO: Office bridge has gone!!")
-        dm = cast(DocMonitor, event.event_source)
-        dm.bridge_disposed = True
+        self.bridge_disposed = True
+
 
 # endregion DocMonitor Class
