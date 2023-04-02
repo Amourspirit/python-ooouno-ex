@@ -20,6 +20,7 @@ from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs,
 if TYPE_CHECKING:
     from com.sun.star.lang import EventObject
 
+
 class ModifyListener(unohelper.Base, XModifyListener):
     def __init__(self, out_fnm: PathOrStr) -> None:
         super().__init__()
@@ -42,19 +43,26 @@ class ModifyListener(unohelper.Base, XModifyListener):
         mb = Lo.qi(XModifyBroadcaster, self._doc, True)
         mb.addModifyListener(self)
 
-        # close down when window closes
-        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
-        self._twl.on("windowClosing", ModifyListener.on_window_closing)
+        # Event handlers are defined as methods on the class.
+        # However class methods are not callable by the event system.
+        # The solution is to create a function that calls the class method and pass that function to the event system.
+        # Also the function must be a member of the class so that it is not garbage collected.
 
-    @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_window_closing(source, event_args, *args, **kwargs)
+
+        self._fn_on_window_closing = _on_window_closing
+
+        # close down when window closes
+        self._twl = TopWindowListener()
+        self._twl.on("windowClosing", _on_window_closing)
+
+    def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
         try:
-            ml = cast(ModifyListener, kwargs.get("listener", None))
-            if ml:
-                Lo.close_doc(ml._doc)
-                Lo.close_office()
-                ml.closed = True
+            Lo.close_doc(self._doc)
+            Lo.close_office()
+            self.closed = True
         except Exception as e:
             print(f"  {e}")
 

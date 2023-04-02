@@ -35,41 +35,53 @@ class ModifyListenerAdapter:
         # insert some data
         Calc.set_col(sheet=self._sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
 
+        # Event handlers are defined as methods on the class.
+        # However class methods are not callable by the event system.
+        # The solution is to create a function that calls the class method and pass that function to the event system.
+        # Also the function must be a member of the class so that it is not garbage collected.
+
+        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_window_closing(source, event_args, *args, **kwargs)
+
+        def _on_modified(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_modified(source, event_args, *args, **kwargs)
+
+        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+            self.on_disposing(source, event_args, *args, **kwargs)
+
+        self._fn_on_window_closing = _on_window_closing
+        self._fn_on_modified = _on_modified
+        self._fn_on_disposing = _on_disposing
+
         # pass GenericArgs with listener arg of self.
         # this will allow for this instance to be passed to events.
         # pass doc to constructor, this will allow listener to be automatically attached to document.
-        self._m_listener = ModifyListener(trigger_args=GenericArgs(listener=self), doc=self._doc)
-        self._m_listener.on("modified", ModifyListenerAdapter.on_modified)
-        self._m_listener.on("disposing", ModifyListenerAdapter.on_disposing)
+        self._m_listener = ModifyListener(doc=self._doc)
+        self._m_listener.on("modified", _on_modified)
+        self._m_listener.on("disposing", _on_disposing)
 
         # close down when window closes
-        self._twl = TopWindowListener(trigger_args=GenericArgs(listener=self))
-        self._twl.on("windowClosing", ModifyListenerAdapter.on_window_closing)
+        self._twl = TopWindowListener()
+        self._twl.on("windowClosing", _on_window_closing)
 
-    @staticmethod
-    def on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
         try:
-            ml = cast(ModifyListenerAdapter, kwargs.get("listener", None))
-            if ml:
-                Lo.close_doc(ml._doc)
-                Lo.close_office()
-                ml.closed = True
+            Lo.close_doc(self._doc)
+            Lo.close_office()
+            self.closed = True
         except Exception as e:
             print(f"  {e}")
 
-    @staticmethod
-    def on_modified(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_modified(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Modified")
         try:
             event = cast("EventObject", event_args.event_data)
-            ml = cast(ModifyListenerAdapter, kwargs["listener"])
             doc = Lo.qi(XSpreadsheetDocument, event.Source, True)
             addr = Calc.get_selected_cell_addr(doc)
-            print(f"  {Calc.get_cell_str(addr=addr)} = {Calc.get_val(sheet=ml._sheet, addr=addr)}")
+            print(f"  {Calc.get_cell_str(addr=addr)} = {Calc.get_val(sheet=self._sheet, addr=addr)}")
         except Exception as e:
             print(e)
 
-    @staticmethod
-    def on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_disposing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Disposing")
