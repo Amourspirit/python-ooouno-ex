@@ -30,6 +30,7 @@ ooo-dev-tools-gui-win = { version = ">=0.3.1", markers = "sys_platform == 'win32
 
 [tool.poetry.group.dev.dependencies]
 black = ">=22.12.0"
+oooenv = ">=0.1.1"
 
 [tool.ruff]
 ignore=["E501"]
