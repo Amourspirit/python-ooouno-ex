@@ -383,7 +383,7 @@ class Chart2View:
         Chart2.calc_regressions(chart_doc)
 
         Chart2.draw_regression_curve(chart_doc=chart_doc, curve_kind=CurveKind.LINEAR)
-        return XChartDocument
+        return chart_doc
 
     def _scatter_line_log_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> XChartDocument:
         # draw a x-y scatter chart using log scaling
