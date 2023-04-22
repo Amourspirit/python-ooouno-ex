@@ -25,7 +25,7 @@ types-unopy = ">=1.0.3"
 unotools = ">=0.3.3"
 verr = ">=1.1.2"
 kwargshelper = ">=2.7.1"
-ooo-dev-tools = ">=0.9.2"
+ooo-dev-tools = ">=0.9.4"
 ooo-dev-tools-gui-win = { version = ">=0.3.1", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.group.dev.dependencies]
