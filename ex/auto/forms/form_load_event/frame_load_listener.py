@@ -4,21 +4,20 @@ from typing import TYPE_CHECKING
 import uno
 from ooodev.events.args.event_args import EventArgs as EventArgs
 from ooodev.adapter.adapter_base import AdapterBase, GenericArgs
-from com.sun.star.document import DocumentEvent
 
-from com.sun.star.document import XDocumentEventListener
-from com.sun.star.document import XEventListener
+from com.sun.star.frame import XLoadEventListener
+from com.sun.star.frame import XFrameLoader
 
 if TYPE_CHECKING:
     from com.sun.star.lang import EventObject
 
 
-class DocumentEventListener(AdapterBase, XEventListener, XDocumentEventListener):
+class FrameLoadListener(AdapterBase, XLoadEventListener):
     """
-    Allows notificaton of events happening in an OfficeDocument
+    is used to receive callbacks from an asynchronous frame loader.
 
     See Also:
-        - `API XDocumentEventListener <https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1document_1_1XDocumentEventListener.html>`_
+        `API XLoadEventListener <https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1frame_1_1XLoadEventListener.html>`_
     """
 
     def __init__(self, trigger_args: GenericArgs | None = None) -> None:
@@ -30,17 +29,17 @@ class DocumentEventListener(AdapterBase, XEventListener, XDocumentEventListener)
         """
         super().__init__(trigger_args=trigger_args)
 
-    def documentEventOccured(self, event: DocumentEvent) -> None:
+    def loadCancelled(self, loader: XFrameLoader) -> None:
         """
-        Is called whenever a document event occurred
+        is called when a frame load is canceled or failed.
         """
-        self._trigger_event("documentEventOccured", event)
+        self._trigger_event("loadCancelled", loader)
 
-    def notifyEvent(self, event: EventObject) -> None:
+    def loadFinished(self, loader: XFrameLoader) -> None:
         """
-        is called whenever a document event (see EventObject) occurs
+        is called when a new component is loaded into a frame successfully.
         """
-        self._trigger_event("notifyEvent", event)
+        self._trigger_event("loadFinished", loader)
 
     def disposing(self, event: EventObject) -> None:
         """
