@@ -111,5 +111,27 @@ python ./ex/auto/draw/odev_gradient/start.py -h
 python .\ex\auto\draw\odev_gradient\start.py -h
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/draw/odev_gradient'
+```
+
+This will copy the `odev_gradient` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_gradient
+python -m start -h
+```
+
 [CommonColor]: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/color.html#ooodev.utils.color.CommonColor
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
