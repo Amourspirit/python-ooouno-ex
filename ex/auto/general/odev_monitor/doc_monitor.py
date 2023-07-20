@@ -63,12 +63,12 @@ class DocMonitor:
         self._term_listener.on("disposing", _on_disposing)
 
         # using an event is redundant here and is included for example purposes.
-        # below a listener is attached to Lo.birdge that does the same job.
+        # below a listener is attached to Lo.bridge that does the same job.
         self.events = Events(source=self)
         self.events.on(LoNamedEvent.BRIDGE_DISPOSED, _on_disposed)
 
         # attach a listener to the bridge connection that gets notified if
-        # office bridge connection terminates unexpectly.
+        # office bridge connection terminates unexpected.
         # Lo.bridge is not available if a script is run as a macro.
         self._bridge_listen = EventListener()
         self._bridge_listen.on("disposing", _on_disposing_bridge)
