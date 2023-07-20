@@ -5,7 +5,6 @@ from __future__ import annotations
 import time
 import sys
 import argparse
-from typing import TYPE_CHECKING
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
@@ -84,7 +83,7 @@ if __name__ == "__main__":
     try:
         main_loop()
     except KeyboardInterrupt:
-        # ctrl+c exitst the script earily
+        # ctrl+c exists the script early
         print("\nExiting by user request.\n", file=sys.stderr)
         sys.exit(0)
 
