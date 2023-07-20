@@ -66,8 +66,8 @@ This will copy the `odev_doc_convert` example to the examples folder.
 In the terminal run:
 
 ```bash
-cd odev_doc_convert -h
-python -m start
+cd odev_doc_convert
+python -m start -h
 ```
 
 ![convert text to pdf](https://user-images.githubusercontent.com/4193389/178155989-1ec6e63a-ace3-4c60-8645-729245235d19.gif)
