@@ -88,4 +88,26 @@ or for other commands
 python .\ex\auto\general\odev_office_info\start.py -h
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_office_info'
+```
+
+This will copy the `odev_office_info` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_office_info
+python -m start
+```
+
 ![command line example](https://user-images.githubusercontent.com/4193389/179056343-deafd3b5-c16e-45fa-9e2d-c95a0dc6b71e.gif)

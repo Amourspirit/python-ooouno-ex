@@ -32,7 +32,7 @@ class Dispatcher:
             doc = Write.open_doc(self._fnm, loader)
 
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             Lo.delay(1_000)  # give time of zoom may no work.
             GUI.zoom(GUI.ZoomEnum.ZOOM_75_PERCENT)
             Lo.delay(1_000)

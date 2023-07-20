@@ -38,7 +38,7 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    # get extension from conmmand line input
+    # get extension from command line input
     ext = str(args.file_ext)
 
     # Using Lo.Loader context manager load Office and connect via socket.

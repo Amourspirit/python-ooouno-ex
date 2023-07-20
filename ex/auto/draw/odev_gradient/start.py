@@ -121,13 +121,7 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    fnm = Path("resources/image/crazy_blue.jpg")
-    p = FileIO.get_absolute_path(fnm)
-    if not p.exists():
-        fnm = Path("../../../../resources/image/crazy_blue.jpg")
-        p = FileIO.get_absolute_path(fnm)
-    if not p.exists():
-        raise FileNotFoundError("Unable to find path to crazy_blue.jpg")
+    fnm = Path(__file__).parent / "image" / "crazy_blue.jpg"
 
     kind = GradientKind(args.kind)
 

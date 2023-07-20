@@ -36,4 +36,26 @@ Run from project root folder.
 python .\ex\auto\general\odev_doc_prop\start.py --doc "ex/auto/general/odev_doc_prop/algs.odp"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_doc_prop'
+```
+
+This will copy the `odev_doc_prop` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_doc_prop
+python -m start -h
+```
+
 ![Properties Screen Shot](https://user-images.githubusercontent.com/4193389/179302791-d8373bd0-7b72-41a3-86b8-dcbd5bac6feb.png)

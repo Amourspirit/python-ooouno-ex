@@ -49,6 +49,28 @@ From project root folder
 python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_dispatch'
+```
+
+This will copy the `odev_dispatch` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_dispatch -h
+python -m start
+```
+
 ### Example console output
 
 ```text

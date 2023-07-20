@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # region Imports
 from __future__ import annotations
 import time
@@ -41,7 +40,7 @@ if __name__ == "__main__":
     except SystemExit as e:
         sys.exit(e.code)
     except KeyboardInterrupt:
-        # ctrl+c exitst the script earily
+        # ctrl+c exists the script early
         print("\nExiting by user request.\n", file=sys.stderr)
         sys.exit(0)
 

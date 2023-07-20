@@ -38,4 +38,26 @@ python ./ex/auto/general/odev_doc_info/start.py --doc "ex/auto/general/odev_doc_
 python .\ex\auto\general\odev_doc_info\start.py --doc "ex\auto\general\odev_doc_info\story.odt" --service --interface --xdoc --property
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_doc_info'
+```
+
+This will copy the `odev_doc_info` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_doc_info
+python -m start -h
+```
+
 ![Terminal Example](https://user-images.githubusercontent.com/4193389/179373247-0b9d34b2-9457-44c8-8823-e405272d3c80.gif)

@@ -87,5 +87,10 @@
         "**/.idea/**": true,
         "**/__pycache__/**": true,
         "**/.hypothesis/**": true
-    }
+    },
+    "cSpell.words": [
+        "Codespace",
+        "msgbox",
+        "ooodev"
+    ]
 }
