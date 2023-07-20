@@ -89,6 +89,8 @@
         "**/.hypothesis/**": true
     },
     "cSpell.words": [
-        "Codespace"
+        "Codespace",
+        "msgbox",
+        "ooodev"
     ]
 }
