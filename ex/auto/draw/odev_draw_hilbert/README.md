@@ -54,5 +54,27 @@ python ./ex/auto/draw/odev_draw_hilbert/start.py 4
 python .\ex\auto\draw\odev_draw_hilbert\start.py 4
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/draw/odev_draw_hilbert'
+```
+
+This will copy the `odev_draw_hilbert` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_draw_hilbert
+python -m start
+```
+
 [Hilbert curve]: https://en.wikipedia.org/wiki/Hilbert_curve
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
