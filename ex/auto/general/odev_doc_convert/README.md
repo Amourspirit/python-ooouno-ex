@@ -48,4 +48,26 @@ From project root folder.
 python .\ex\auto\general\odev_doc_convert\start.py -e "pdf" -f "LICENSE"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_doc_convert'
+```
+
+This will copy the `odev_doc_convert` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_doc_convert -h
+python -m start
+```
+
 ![convert text to pdf](https://user-images.githubusercontent.com/4193389/178155989-1ec6e63a-ace3-4c60-8645-729245235d19.gif)
