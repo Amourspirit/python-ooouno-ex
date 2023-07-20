@@ -34,11 +34,33 @@ From project root folder
 python .\ex\auto\forms\form_load_event\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/forms/form_load_event'
+```
+
+This will copy the `form_load_event` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd form_load_event
+python -m start
+```
+
 ## Output
 
 ```text
 Loading Office...
-Opening D:\Users\user\Projects\python-ooouno-ex\resources\odb\Example_Sport.odb
+Opening /home/user/Projects/ooouno_ex/ex/auto/forms/form_load_event/data/Example_Sport.odb
 Notify Event: OnVisAreaChanged
 Notify Event: OnPageCountChange
 Notify Event: OnLoad

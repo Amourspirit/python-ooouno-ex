@@ -129,6 +129,28 @@ Office terminated
 Exiting by document close.
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/general/odev_listen'
+```
+
+This will copy the `odev_listen` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_listen
+python -m start
+```
+
 [XTopWindowListener]: https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1awt_1_1XTopWindowListener.html
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

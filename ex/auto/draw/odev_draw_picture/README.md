@@ -36,4 +36,26 @@ python ./ex/auto/draw/odev_draw_picture/start.py
 python .\ex\auto\draw\odev_draw_picture\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/draw/odev_draw_picture'
+```
+
+This will copy the `odev_draw_picture` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_draw_picture
+python -m start
+```
+
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
