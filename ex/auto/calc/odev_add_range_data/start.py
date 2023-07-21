@@ -49,7 +49,7 @@ def main() -> int:
     try:
         doc = Calc.create_doc()
         sheet = Calc.get_sheet(doc=doc, index=0)
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
         Lo.delay(300)
         Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
 
