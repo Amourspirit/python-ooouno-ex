@@ -23,9 +23,9 @@ from ooodev.utils.type_var import PathOrStr
 class CellTexts:
     def __init__(self, out_fnm: PathOrStr, **kwargs) -> None:
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_f = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_f)
+            self._out_fnm = out_f
         else:
             self._out_fnm = ""
 
@@ -35,17 +35,17 @@ class CellTexts:
         try:
             doc = Calc.create_doc(loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
 
             Calc.highlight_range(sheet=sheet, range_name="A2:C7", headline="Cells and Cell Ranges")
 
-            xcell = Calc.get_cell(sheet=sheet, cell_name="B4")
+            x_cell = Calc.get_cell(sheet=sheet, cell_name="B4")
 
             # Insert two text paragraphs and a hyperlink into the cell
-            xtext = Lo.qi(XText, xcell, True)
-            cursor = xtext.createTextCursor()
+            x_text = Lo.qi(XText, x_cell, True)
+            cursor = x_text.createTextCursor()
             Write.append_para(cursor=cursor, text="Text in first line.")
             Write.append(cursor=cursor, text="And a ")
             Write.add_hyperlink(
@@ -55,9 +55,9 @@ class CellTexts:
             # beautify the cell
             font = Font(color=CommonColor.DARK_BLUE, size=18.0)
             bdr = Borders(padding=Padding(left=UnitMM(5)))
-            Styler.apply(xcell, font, bdr)
+            Styler.apply(x_cell, font, bdr)
 
-            self._print_cell_text(xcell)
+            self._print_cell_text(x_cell)
 
             Calc.add_annotation(sheet=sheet, cell_name="B4", msg="This annotation is located at B4")
 

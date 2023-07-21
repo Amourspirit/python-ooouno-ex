@@ -1,14 +1,13 @@
-#!/usr/bin/env python
-# coding: utf-8
 #
 # on wayland (some versions of Linux)
 # may get error:
 #    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
-# This seems to be a Wayland/Java compatability issues.
+# This seems to be a Wayland/Java compatibility issues.
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 
-import sys
 import argparse
+import uno
+from pathlib import Path
 
 from ooodev.utils.file_io import FileIO
 from build_table import BuildTable
@@ -63,9 +62,7 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    im_fnm = "resources/image/skinner.png"
-    if not FileIO.is_exist_file(im_fnm):
-        im_fnm = "../../../../resources/image/skinner.png"
+    im_fnm = Path(__file__).parent / "image"/ "skinner.png"
 
     bt = BuildTable(im_fnm=im_fnm, out_fnm=args.out_file, add_pic=args.add_pic, add_chart=args.add_chart, add_style=args.add_style)
     bt.main()
