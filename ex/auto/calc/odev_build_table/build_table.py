@@ -39,9 +39,9 @@ class BuildTable:
         _ = FileIO.is_exist_file(im_fnm, True)
         self._im_fnm = FileIO.get_absolute_path(im_fnm)
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_f = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_f)
+            self._out_fnm = out_f
         else:
             self._out_fnm = ""
         self._add_pic = bool(kwargs.get("add_pic", False))
@@ -54,7 +54,7 @@ class BuildTable:
         try:
             doc = Calc.create_doc(loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             Lo.delay(300)
             Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
 
@@ -63,7 +63,7 @@ class BuildTable:
             self._convert_addresses(sheet)
 
             # other possible build methods
-            # self._buld_cells(sheet)
+            # self._build_cells(sheet)
             # self._build_rows(sheet)
             # self._build_cols(sheet)
 
@@ -106,7 +106,7 @@ class BuildTable:
 
     # region Private Methods
 
-    def _buld_cells(self, sheet: XSpreadsheet) -> None:
+    def _build_cells(self, sheet: XSpreadsheet) -> None:
         # column -- row
         header_vals = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
         for i, val in enumerate(header_vals):
@@ -176,7 +176,7 @@ class BuildTable:
     def _convert_addresses(self, sheet: XSpreadsheet) -> None:
         # cell name <--> position
         pos = Calc.get_cell_position(cell_name="AA2")
-        print(f"Positon of AA2: ({pos.X}, {pos.Y})")
+        print(f"Position of AA2: ({pos.X}, {pos.Y})")
 
         cell = Calc.get_cell(sheet=sheet, col=pos.X, row=pos.Y)
         Calc.print_cell_address(cell)

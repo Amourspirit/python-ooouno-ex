@@ -39,6 +39,28 @@ python ./ex/auto/calc/odev_build_table/start.py -h
 python .\ex\auto\calc\odev_build_table\start.py -h
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/calc/odev_build_table'
+```
+
+This will copy the `odev_build_table` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_build_table -h
+python -m start
+```
+
 ## Example Usage
 
 Starts LibreOffice Calc, Builds spreadsheet tables, adds an image, inserts chart and saves output to `tmp/Build.ods`
