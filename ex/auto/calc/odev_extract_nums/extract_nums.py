@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import cast
 
-
 import uno
 from com.sun.star.sheet import XCellRangesQuery
 
@@ -27,7 +26,7 @@ class ExtractNums:
         try:
             doc = Calc.open_doc(fnm=self._fnm, loader=loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc)
 
@@ -56,20 +55,24 @@ class ExtractNums:
             # add a custom row item formatter for first and last row only and pad items 9 spaces.
             fl.row_formats.append(FormatTableItem(format=">9", idxs_inc=(start_idx, end_idx)))
 
-            # add a custom columm formatter that formats the first column as integer values and move center in the column
-            fl.col_formats.append(FormatTableItem(format=(".0f", "^9"), idxs_inc=(start_idx,), row_idxs_exc=(start_idx, end_idx)))
+            # add a custom column formatter that formats the first column as integer values and move center in the column
+            fl.col_formats.append(
+                FormatTableItem(format=(".0f", "^9"), idxs_inc=(start_idx,), row_idxs_exc=(start_idx, end_idx))
+            )
 
-            # add a custom column formatter that formats the last columon as percent
-            fl.col_formats.append(FormatTableItem(format=(".0%", ">9"), idxs_inc=(4,), row_idxs_exc=(start_idx, end_idx)))
+            # add a custom column formatter that formats the last column as percent
+            fl.col_formats.append(
+                FormatTableItem(format=(".0%", ">9"), idxs_inc=(4,), row_idxs_exc=(start_idx, end_idx))
+            )
             Calc.print_array(data, fl)
 
             ids = Calc.get_float_array(sheet=sheet, range_name="A2:A7")
             fl = FormatterTable(format=(".1f", ">9"))
             Calc.print_array(ids, fl)
 
-            projs = Calc.convert_to_floats(cast(Column, Calc.get_col(sheet=sheet, range_name="B2:B7")))
+            projects = Calc.convert_to_floats(cast(Column, Calc.get_col(sheet=sheet, range_name="B2:B7")))
             print("Project scores")
-            for proj in projs:
+            for proj in projects:
                 print(f"  {proj:.2f}")
 
             stud = Calc.convert_to_floats(cast(Row, Calc.get_row(sheet=sheet, range_name="A4:E4")))
@@ -96,12 +99,12 @@ class ExtractNums:
             else:
                 print(f"Found cell ranges: {cell_ranges.getRangeAddressesAsString()}")
                 print()
-                addrs = cell_ranges.getRangeAddresses()
-                print(f'Cell Ranges: ({len(addrs)}):')
+                addresses = cell_ranges.getRangeAddresses()
+                print(f"Cell Ranges: ({len(addresses)}):")
                 fl = FormatterTable(format=(".2f", "<7"))
                 # format the first col as integers
                 fl.col_formats.append(FormatTableItem(format=(".0f", "<7"), idxs_inc=(start_idx,)))
-                for addr in addrs:
+                for addr in addresses:
                     Calc.print_address(addr)
                     vals = Calc.get_float_array(sheet=sheet, range_name=Calc.get_range_str(addr))
                     print("WITH FORMATTING")

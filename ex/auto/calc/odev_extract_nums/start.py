@@ -1,13 +1,9 @@
-#!/usr/bin/env python
-from ooodev.utils.file_io import FileIO
+from pathlib import Path
 from extract_nums import ExtractNums
 
 
-
 def main() -> int:
-    fnm = "resources/ods/small_totals.ods"
-    if not FileIO.is_exist_file(fnm):
-        fnm = "../../../../resources/ods/small_totals.ods"
+    fnm = Path(__file__).parent / "data" / "small_totals.ods"
 
     en = ExtractNums(fnm)
     en.main()

@@ -15,12 +15,11 @@ from ooo.dyn.table.table_sort_field import TableSortField
 
 
 class DataSort:
-
     def __init__(self, out_fnm: PathOrStr, **kwargs) -> None:
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_f = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_f)
+            self._out_fnm = out_f
         else:
             self._out_fnm = ""
 
@@ -30,10 +29,10 @@ class DataSort:
         try:
             doc = Calc.create_doc(loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
-            
+
             # create the table that needs sorting
             vals = (
                 ("Level", "Code", "No.", "Team", "Name"),
@@ -49,7 +48,7 @@ class DataSort:
 
             # 1. obtain an XSortable interface for the cell range
             source_range = Calc.get_cell_range(sheet=sheet, range_name="A1:E8")
-            xsort = Lo.qi(XSortable, source_range, True)
+            x_sort = Lo.qi(XSortable, source_range, True)
 
             # 2. specify the sorting criteria as a TableSortField array
             sort_fields = (self._make_sort_asc(1, True), self._make_sort_asc(2, True))
@@ -60,7 +59,7 @@ class DataSort:
             Lo.wait(2_000)  # wait so user can see original before it is sorted
             # 4. do the sort
             print("Sorting...")
-            xsort.sort(props)
+            x_sort.sort(props)
 
             if self._out_fnm:
                 Lo.save_doc(doc=doc, fnm=self._out_fnm)
