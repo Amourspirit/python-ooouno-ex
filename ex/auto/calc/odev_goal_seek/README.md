@@ -35,6 +35,29 @@ python ./ex/auto/calc/odev_goal_seek/start.py
 python .\ex\auto\calc\odev_goal_seek\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/calc/odev_goal_seek'
+```
+
+This will copy the `odev_goal_seek` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_goal_seek
+python -m start
+```
+
+
 ## Output
 
 ```text
