@@ -57,7 +57,6 @@ cd odev_goal_seek
 python -m start
 ```
 
-
 ## Output
 
 ```text

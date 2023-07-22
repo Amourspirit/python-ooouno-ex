@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import argparse
 from linear_solve import LinearSolve
 
