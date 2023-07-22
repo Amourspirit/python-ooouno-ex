@@ -58,7 +58,6 @@ cd odev_linear_solve
 python -m start
 ```
 
-
 ## Output
 
 ```text

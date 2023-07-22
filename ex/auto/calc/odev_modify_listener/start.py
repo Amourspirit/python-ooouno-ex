@@ -74,6 +74,6 @@ if __name__ == "__main__":
     try:
         main_loop()
     except KeyboardInterrupt:
-        # ctrl+c exitst the script earily
+        # ctrl+c exist the script early
         print("\nExiting by user request.\n", file=sys.stderr)
         sys.exit(0)
