@@ -4,7 +4,6 @@ import uno
 from com.sun.star.sheet import XCellRangesQuery
 from com.sun.star.sheet import XSpreadsheet
 from com.sun.star.sheet import XSpreadsheetDocument
-from com.sun.star.util import XMergeable
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.calc import Calc, GeneralFunction
@@ -27,9 +26,9 @@ class GarlicSecrets:
         _ = FileIO.is_exist_file(fnm, True)
         self._fnm = FileIO.get_absolute_path(fnm)
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
 
@@ -39,7 +38,7 @@ class GarlicSecrets:
         try:
             doc = Calc.open_doc(fnm=self._fnm, loader=loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
             Calc.goto_cell(cell_name="A1", doc=doc)
@@ -115,7 +114,7 @@ class GarlicSecrets:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                Lo.close_doc(doc=doc)
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -162,14 +161,14 @@ class GarlicSecrets:
         Calc.print_address(cell_range=cell_range)
         cr_query = Lo.qi(XCellRangesQuery, cell_range)
         sc_ranges = cr_query.queryEmptyCells()
-        addrs = sc_ranges.getRangeAddresses()
-        Calc.print_addresses(*addrs)
+        addresses = sc_ranges.getRangeAddresses()
+        Calc.print_addresses(*addresses)
 
         # find smallest row index
         row = -1
-        if addrs is not None and len(addrs) > 0:
-            row = addrs[0].StartRow
-            for addr in addrs:
+        if addresses is not None and len(addresses) > 0:
+            row = addresses[0].StartRow
+            for addr in addresses:
                 if row < addr.StartRow:
                     row = addr.StartRow
             print(f"First empty row is at position: {row}")

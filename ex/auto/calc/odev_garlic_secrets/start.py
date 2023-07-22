@@ -1,14 +1,13 @@
-#!/usr/bin/env python
-# coding: utf-8
 #
 # on wayland (some versions of Linux)
 # may get error:
 #    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
-# This seems to be a Wayland/Java compatability issues.
+# This seems to be a Wayland/Java compatibility issues.
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 
 import sys
 import argparse
+from pathlib import Path
 
 from ooodev.utils.file_io import FileIO
 from garlic_secrets import GarlicSecrets
@@ -38,10 +37,7 @@ def main() -> int:
 
     # read the current command line args
     args = parser.parse_args()
-
-    fnm = "resources/data/produceSales.ods"
-    if not FileIO.is_exist_file(fnm):
-        fnm = "../../../../resources/data/produceSales.ods"
+    fnm = Path(__file__).parent / "data" / "produceSales.ods"
 
     gs = GarlicSecrets(fnm=fnm, out_fnm=args.out_file)
     gs.main()
