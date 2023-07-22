@@ -57,7 +57,7 @@ This will copy the `odev_build_table` example to the examples folder.
 In the terminal run:
 
 ```bash
-cd odev_build_table -h
+cd odev_build_table
 python -m start
 ```
 

@@ -18,9 +18,9 @@ from ooo.dyn.sheet.fill_mode import FillMode
 class Filler:
     def __init__(self, out_fnm: PathOrStr, **kwargs) -> None:
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
 
@@ -30,7 +30,7 @@ class Filler:
         try:
             doc = Calc.create_doc(loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc, index=0)
 
