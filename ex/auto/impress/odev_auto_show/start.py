@@ -1,18 +1,16 @@
 import sys
+from pathlib import Path
 from ooodev.utils.file_io import FileIO
 from auto_show import AutoShow  # , FadeEffect
 
 
-# region maind()
+# region main()
 def main() -> int:
     if len(sys.argv) > 1:
         fnm = sys.argv[1]
         FileIO.is_exist_file(fnm, True)
     else:
-        fnm = "resources/presentation/algs.ppt"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/presentation/algs.ppt"
-            FileIO.is_exist_file(fnm, True)
+        fnm = Path(__file__).parent / "data" / "algs.ppt"
 
     auto_show = AutoShow(fnm)
     # auto_show.duration = 2
@@ -22,7 +20,7 @@ def main() -> int:
     return 0
 
 
-# endregion maind()
+# endregion main()
 
 if __name__ == "__main__":
     SystemExit(main())
