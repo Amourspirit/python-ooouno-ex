@@ -63,7 +63,7 @@ In the terminal run:
 
 ```bash
 cd odev_non_linear_solve
-python -m start
+python -m start -h
 ```
 
 ## Output
