@@ -4,7 +4,7 @@
 from __future__ import annotations
 import sys
 import argparse
-from typing import cast, Any
+from typing import cast
 
 
 from ooodev.office.write import Write
@@ -60,7 +60,7 @@ def main() -> int:
     # print(args)
     # return
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
+    # Using Lo.Loader context manager warped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader

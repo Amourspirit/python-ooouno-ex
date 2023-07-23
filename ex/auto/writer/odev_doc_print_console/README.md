@@ -66,7 +66,6 @@ cd odev_doc_print_console
 python -m start
 ```
 
-
 ### Output
 
 ```text
