@@ -26,7 +26,7 @@ class CustomShow:
         try:
             doc = Lo.open_doc(fnm=self._fnm, loader=loader)
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             if len(self._idxs) > 0:
                 _ = Draw.build_play_list(doc, "ShortPlay", *self._idxs)
