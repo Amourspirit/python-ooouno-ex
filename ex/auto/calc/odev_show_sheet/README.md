@@ -28,31 +28,31 @@ The following command will run automation that opens Calc document and ask for p
 From this folder.
 
 ```sh
-python -m start --show --file "../../../../resources/ods/totals.ods"
+python -m start --show --file "./data/totals.ods"
 ```
 
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/calc/odev_show_sheet/start.py --show --file "resources/ods/totals.ods" --out "tmp/totals.pdf"
+python ./ex/auto/calc/odev_show_sheet/start.py --show --file "ex/auto/calc/odev_show_sheet/data/totals.ods" --out "tmp/totals.pdf"
 ```
 
 Alternatively
 
 ```sh
-python ./ex/auto/calc/odev_show_sheet/start.py --show --file "resources\data\sorted.csv" --out "tmp/totals.html"
+python ./ex/auto/calc/odev_show_sheet/start.py --show --file "ex/auto/calc/odev_show_sheet/data/sorted.csv" --out "tmp/totals.html"
 ```
 
 ### Windows
 
 ```ps
-python .\ex\auto\calc\odev_show_sheet\start.py --show --file "resources\ods\totals.ods" --out "tmp/totals.pdf"
+python .\ex\auto\calc\odev_show_sheet\start.py --show --file "ex/auto/calc/odev_show_sheet/data/totals.ods" --out "tmp/totals.pdf"
 ```
 
 Alternatively
 
 ```ps
-python .\ex\auto\calc\odev_show_sheet\start.py --show --file "resources\data\sorted.csv" --out "tmp/totals.html"
+python .\ex\auto\calc\odev_show_sheet\start.py --show --file "ex/auto/calc/odev_show_sheet/data/sorted.csv" --out "tmp/totals.html"
 ```
 
 ## Live LibreOffice Python
