@@ -82,5 +82,27 @@ python ./ex/auto/impress/odev_append_slides/start.py
 python .\ex\auto\impress\odev_append_slides\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/impress/odev_append_slides'
+```
+
+This will copy the `odev_append_slides` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_append_slides
+python -m start
+```
+
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 [ooo-dev-tools-gui-win]: https://ooo-dev-tools-gui-win.readthedocs.io/en/latest/index.html
