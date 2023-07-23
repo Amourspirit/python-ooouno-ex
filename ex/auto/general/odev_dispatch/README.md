@@ -67,8 +67,8 @@ This will copy the `odev_dispatch` example to the examples folder.
 In the terminal run:
 
 ```bash
-cd odev_dispatch -h
-python -m start
+cd odev_dispatch
+python -m start -h
 ```
 
 ### Example console output
