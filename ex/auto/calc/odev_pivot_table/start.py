@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-
 import sys
+from pathlib import Path
 import argparse
 
 from ooodev.utils.file_io import FileIO
@@ -40,15 +39,11 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.ex == 1:
-        fnm = "resources/ods/pivottable1.ods"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/ods/pivottable1.ods"
+        fnm = Path(__file__).parent / "data" / "pivottable1.ods"
         pt = PivotTable1(fnm=fnm, out_fnm=args.out_file)
         pt.main()
     else:
-        fnm = "resources/ods/pivottable2.ods"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/ods/pivottable2.odsx"
+        fnm = Path(__file__).parent / "data" / "pivottable2.ods"
         pt = PivotTable2(fnm=fnm, out_fnm=args.out_file)
         pt.main()
 

@@ -25,16 +25,16 @@ class ModifyListener(unohelper.Base, XModifyListener):
     def __init__(self, out_fnm: PathOrStr) -> None:
         super().__init__()
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
         self.closed = False
         loader = Lo.load_office(Lo.ConnectPipe())
         self._doc = Calc.create_doc(loader)
 
-        GUI.set_visible(is_visible=True, odoc=self._doc)
+        GUI.set_visible(visible=True, doc=self._doc)
         self._sheet = Calc.get_sheet(doc=self._doc, index=0)
 
         # insert some data

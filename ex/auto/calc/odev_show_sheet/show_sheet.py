@@ -16,9 +16,9 @@ class ShowSheet:
         _ = FileIO.is_exist_file(input_fnm, True)
         self._input_fnm = FileIO.get_absolute_path(input_fnm)
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
         self._visible = visible
@@ -33,7 +33,7 @@ class ShowSheet:
             # doc = Calc.get_ss_doc(doc)
 
             if self._visible:
-                GUI.set_visible(is_visible=True, odoc=doc)
+                GUI.set_visible(visible=True, doc=doc)
 
 
             Calc.goto_cell(cell_name="A1", doc=doc)

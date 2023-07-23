@@ -29,7 +29,7 @@ class ModifyListenerAdapter:
         loader = Lo.load_office(Lo.ConnectPipe())
         self._doc = Calc.create_doc(loader)
 
-        GUI.set_visible(is_visible=True, odoc=self._doc)
+        GUI.set_visible(visible=True, doc=self._doc)
         self._sheet = Calc.get_sheet(doc=self._doc, index=0)
 
         # insert some data

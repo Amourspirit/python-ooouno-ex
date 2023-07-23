@@ -11,15 +11,15 @@ from ooodev.utils.props import Props
 
 class Solver2:
     @staticmethod
-    def main(verose: bool = False) -> None:
-        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verose)) as loader:
+    def main(verbose: bool = False) -> None:
+        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)) as loader:
             doc = Calc.create_doc(loader)
             sheet = Calc.get_sheet(doc=doc)
 
             # specify the variable cells
-            xpos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
-            ypos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
-            vars = (xpos, ypos)
+            x_pos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
+            y_pos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
+            vars = (x_pos, y_pos)
 
             # specify profit equation
             Calc.set_val(value="=B1+B2", sheet=sheet, cell_name="B3")

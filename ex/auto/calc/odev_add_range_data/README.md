@@ -56,7 +56,7 @@ This will copy the `odev_add_range_data` example to the examples folder.
 In the terminal run:
 
 ```bash
-cd odev_add_range_data -h
+cd odev_add_range_data
 python -m start
 ```
 
