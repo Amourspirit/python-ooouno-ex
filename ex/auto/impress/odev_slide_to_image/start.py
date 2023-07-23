@@ -17,7 +17,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-i",
         "--idx",
-        help="Optonal index of slide to convert to image. Default: %(default)i",
+        help="Optional index of slide to convert to image. Default: %(default)i",
         action="store",
         dest="idx",
         type=int,

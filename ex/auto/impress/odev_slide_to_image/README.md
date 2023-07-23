@@ -29,19 +29,41 @@ If `--output_dir` arg is omitted then a temporary dir is created in the systems 
 From current example folder.
 
 ```sh
-python -m start --file "../../../../resources/presentation/algs.ppt" --out_fmt "jpeg" --idx 0
+python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0
 ```
 
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/impress/odev_slide_to_image/start.py --file "resources/presentation/algs.ppt" --out_fmt "jpeg" --idx 0
+python ./ex/auto/impress/odev_slide_to_image/start.py --file "ex/auto/impress/odev_slide_to_image/data/algs.ppt" --out_fmt "jpeg" --idx 0
 ```
 
 ### Windows
 
 ```ps
-    python .\ex\auto\impress\odev_slide_to_image\start.py --file "resources/presentation/algs.ppt" --out_fmt "jpeg" --idx 0
+    python .\ex\auto\impress\odev_slide_to_image\start.py --file "ex/auto/impress/odev_slide_to_image/data/algs.ppt" --out_fmt "jpeg" --idx 0
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/impress/odev_slide_to_image'
+```
+
+This will copy the `odev_slide_to_image` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_slide_to_image
+python -m start -h
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
