@@ -11,16 +11,16 @@ from ooodev.utils.props import Props
 
 class Solver1:
     @staticmethod
-    def main(verose: bool = False) -> None:
-        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verose)) as loader:
+    def main(verbose: bool = False) -> None:
+        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)) as loader:
             doc = Calc.create_doc(loader)
             sheet = Calc.get_sheet(doc=doc)
 
             # specify the variable cells
-            xpos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
-            ypos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
-            zpos = Calc.get_cell_address(sheet=sheet, cell_name="B3")  # z
-            vars = (xpos, ypos, zpos)
+            x_pos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
+            y_pos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
+            z_pos = Calc.get_cell_address(sheet=sheet, cell_name="B3")  # z
+            vars = (x_pos, y_pos, z_pos)
 
             # set up equation formula without inequality
             Calc.set_val(value="=B1+B2-B3", sheet=sheet, cell_name="B4")
