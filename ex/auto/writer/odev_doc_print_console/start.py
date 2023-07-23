@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
 from __future__ import annotations
+import sys
 import argparse
+from pathlib import Path
 from typing import cast
 
 from ooodev.office.write import Write
@@ -26,11 +26,16 @@ def main() -> int:
 
     # add args to parser
     args_add(parser=parser)
+    
+    if len(sys.argv) == 1:
+        fnm = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("-f")
+        sys.argv.append(str(fnm))
 
     # read the current command line args
     args = parser.parse_args()
     
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
+    # Using Lo.Loader context manager warped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # Note the use of the headless flag. Not using GUI for process.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
