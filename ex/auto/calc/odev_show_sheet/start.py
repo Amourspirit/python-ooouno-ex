@@ -4,7 +4,7 @@
 # on wayland (some versions of Linux)
 # may get error:
 #    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
-# This seems to be a Wayland/Java compatability issues.
+# This seems to be a Wayland/Java compatibility issues.
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 
 import sys
@@ -44,7 +44,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 def on_lo_print(source: Any, e: CancelEventArgs) -> None:
     # this method is a callback for ooodev internal printing
-    # by setting e.canecl = True all internal printing of ooodev is suppressed
+    # by setting e.cancel = True all internal printing of ooodev is suppressed
     e.cancel = True
 
 
