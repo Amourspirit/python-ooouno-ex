@@ -28,7 +28,7 @@ Next a Get Involved wep page is opened in local web browser.
 From current example folder.
 
 ```sh
-python -m start -d "../../../../resources/odt/story.odt"
+python -m start -d "./data/story.odt"
 ```
 
 ### Linux
@@ -38,7 +38,7 @@ From project root folder
 Linux/Mac
 
 ```sh
-python ./ex/auto/general/odev_dispatch/start.py -d "resources/odt/story.odt"
+python "./ex/auto/general/odev_dispatch/start.py" -d "ex/auto/general/odev_dispatch/data/story.odt"
 ```
 
 ### Windows
@@ -46,7 +46,7 @@ python ./ex/auto/general/odev_dispatch/start.py -d "resources/odt/story.odt"
 From project root folder
 
 ```ps
-python .\ex\auto\general\odev_dispatch\start.py -d "resources\odt\story.odt"
+python ".\ex\auto\general\odev_dispatch\start.py" -d "ex/auto/general/odev_dispatch/data/story.odt"
 ```
 
 ## Live LibreOffice Python
@@ -67,8 +67,8 @@ This will copy the `odev_dispatch` example to the examples folder.
 In the terminal run:
 
 ```bash
-cd odev_dispatch -h
-python -m start
+cd odev_dispatch
+python -m start -h
 ```
 
 ### Example console output

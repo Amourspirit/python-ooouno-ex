@@ -34,7 +34,7 @@ class PointsBuilder:
 
             print(f"Total no. of slides: {Draw.get_slides_count(doc)}")
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             Lo.delay(2000)
 
             msg_result = MsgBox.msgbox(
@@ -58,10 +58,10 @@ class PointsBuilder:
         for dir in template_dirs:
             print(f"  {dir}")
 
-        temmplate_dir = Draw.get_slide_template_path()
+        template_dir = Draw.get_slide_template_path()
         print()
-        print(f'Templates files in "{temmplate_dir}"')
-        template_fnms = FileIO.get_file_paths(temmplate_dir)
+        print(f'Templates files in "{template_dir}"')
+        template_fnms = FileIO.get_file_paths(template_dir)
         for fnm in template_fnms:
             print(f"  {fnm}")
 

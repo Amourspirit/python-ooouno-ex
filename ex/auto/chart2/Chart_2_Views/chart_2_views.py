@@ -12,7 +12,6 @@ from ooodev.office.chart2 import Chart2, Angle, DataPointLabelTypeKind, CurveKin
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.info import Info
 from ooodev.utils.kind.chart2_types import ChartTypes
 from ooodev.utils.kind.data_point_lable_placement_kind import DataPointLabelPlacementKind
 from ooodev.utils.lo import Lo
@@ -60,7 +59,7 @@ class Chart2View:
 
         try:
             doc = Calc.open_doc(fnm=self._data_fnm)
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             sheet = Calc.get_sheet(doc=doc)
 
             chart_doc = None
@@ -75,7 +74,7 @@ class Chart2View:
             elif self._chart_kind == ChartKind.COLUMN_LINE:
                 chart_doc = self._col_line_chart(doc=doc, sheet=sheet)
             elif self._chart_kind == ChartKind.COLUMN_MULTI:
-                chart_doc = self._mult_col_chart(doc=doc, sheet=sheet)
+                chart_doc = self._multi_col_chart(doc=doc, sheet=sheet)
             elif self._chart_kind == ChartKind.DONUT:
                 chart_doc = self._donut_chart(doc=doc, sheet=sheet)
             elif self._chart_kind == ChartKind.HAPPY_STOCK:
@@ -143,7 +142,7 @@ class Chart2View:
         Chart2.rotate_y_axis_title(chart_doc=chart_doc, angle=Angle(90))
         return chart_doc
 
-    def _mult_col_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> XChartDocument:
+    def _multi_col_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> XChartDocument:
         # draws a multiple column chart: 2D and 3D
         # uses "States with the Most Colleges and Universities by Type"
         range_addr = Calc.get_address(sheet=sheet, range_name="E15:G21")

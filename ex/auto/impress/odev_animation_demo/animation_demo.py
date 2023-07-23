@@ -84,7 +84,7 @@ class AnimationDemo:
                     print(e)
 
                 # slideshow start() crashes if the doc is not visible
-                GUI.set_visible(is_visible=True, odoc=doc)
+                GUI.set_visible(visible=True, doc=doc)
 
                 Lo.delay(500)
                 Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION)

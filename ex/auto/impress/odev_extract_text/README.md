@@ -51,6 +51,28 @@ python ./ex/auto/impress/odev_extract_text/start.py
 python .\ex\auto\impress\odev_extract_text\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/impress/odev_extract_text'
+```
+
+This will copy the `odev_extract_text` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_extract_text
+python -m start
+```
+
 ## OUTPUT
 
 This is the output from `tests/fixtures/presentation/algs.odp`

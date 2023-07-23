@@ -72,7 +72,7 @@ class MasterUse:
             Props.set(ellipse, FillColor=CommonColor.GREEN_YELLOW)
             _ = Draw.draw_text(slide=master2, msg="Master Page 2", x=10, y=15, width=100, height=10, font_size=24)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             Lo.delay(2_000)
 

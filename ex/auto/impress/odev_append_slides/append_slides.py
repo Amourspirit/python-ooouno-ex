@@ -14,6 +14,7 @@ from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
+
 try:
     # only in windows
     from odevgui_win.dialog_auto import DialogAuto
@@ -22,7 +23,7 @@ except ImportError:
 
 if TYPE_CHECKING:
     # these import are only being used for typing
-    # therefore not needed at runitme.
+    # therefore not needed at runtime.
     # from __future__ import annotations takes care of the rest.
     from com.sun.star.drawing import XDrawPage
     from com.sun.star.frame import XController
@@ -44,7 +45,7 @@ class AppendSlides:
         try:
             doc = Lo.open_doc(fnm=self._fnms[0], loader=loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             self._to_ctrl = GUI.get_current_controller(doc)
             self._to_frame = GUI.get_frame(doc)
@@ -54,10 +55,10 @@ class AppendSlides:
             Lo.dispatch_cmd(cmd=DrawViewDispatch.DIA_MODE, frame=self._to_frame)
 
             to_slides = Draw.get_slides(doc)
-            
+
             # monitor for Confirmation dialog
             if DialogAuto:
-                DialogAuto.monitor_dialog('y')
+                DialogAuto.monitor_dialog("y")
 
             for fnm in self._fnms[1:]:  # start at 1
                 try:
@@ -81,7 +82,7 @@ class AppendSlides:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc,deliver_ownership=True)
+                Lo.close_doc(doc=doc, deliver_ownership=True)
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -93,7 +94,7 @@ class AppendSlides:
         # Append doc to the end of  toSlides.
         # Access the slides in the document, and the document's controller and frame refs.
         # Switch to slide sorter view so that slides can be copied.
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         from_ctrl = GUI.get_current_controller(doc)
         from_frame = GUI.get_frame(doc)
@@ -157,4 +158,3 @@ class AppendSlides:
         # for windows use ooo-dev-tools-gui-win - https://ooo-dev-tools-gui-win.readthedocs.io/en/latest/index.html
 
         Lo.dispatch_cmd(cmd=GlobalEditDispatch.PASTE, frame=to_frame)
-

@@ -20,7 +20,7 @@ class BasicShow:
             doc = Lo.open_doc(fnm=self._fnm, loader=loader)
             try:
                 # slideshow start() crashes if the doc is not visible
-                GUI.set_visible(is_visible=True, odoc=doc)
+                GUI.set_visible(visible=True, doc=doc)
 
                 show = Draw.get_show(doc=doc)
                 Props.show_obj_props("Slide show", show)

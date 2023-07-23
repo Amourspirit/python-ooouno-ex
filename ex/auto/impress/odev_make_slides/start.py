@@ -1,24 +1,17 @@
-from ooodev.utils.file_io import FileIO
+from __future__ import annotations
+from pathlib import Path
 from make_slides import MakeSlides
 
 # region main()
 def main() -> int:
-    fnm_img = "resources/image/skinner.png"
-    if not FileIO.is_exist_file(fnm_img):
-        fnm_img = "../../../../resources/image/skinner.png"
-
-    fnm_clock = "resources/video/clock.avi"
-    if not FileIO.is_exist_file(fnm_clock):
-        fnm_clock = "../../../../resources/video/clock.avi"
-
-    fnm_wildlife = "resources/video/wildlife.mp4"
-    if not FileIO.is_exist_file(fnm_wildlife):
-        fnm_wildlife = "../../../../resources/video/wildlife.mp4"
+    data_dir = Path(__file__).parent / "data"
+    fnm_img = data_dir / "skinner.png"
+    fnm_clock = data_dir / "clock.avi"
+    fnm_wildlife = data_dir / "wildlife.mp4"
 
     m_slides = MakeSlides(fnm_wildlife=fnm_wildlife, fnm_clock=fnm_clock, fnm_img=fnm_img)
     m_slides.main()
     return 0
-
 
 # endregion main()
 

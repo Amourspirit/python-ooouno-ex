@@ -14,11 +14,7 @@ def main() -> int:
     else:
         from_idx = 2
         to_idx = 4
-        fnm = "resources/presentation/algs.odp"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/presentation/algs.odp"
-            FileIO.is_exist_file(fnm, True)
-        p = Path(fnm)
+        p = Path(__file__).parent / "data" / "algs.odp"
     # slide indexes are zero based indexes.
     cs = CopySlide(fnm=p, from_idx=from_idx, to_idx=to_idx)
     cs.main()

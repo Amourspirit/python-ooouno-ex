@@ -14,6 +14,7 @@ from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
+
 class ChartKind(str, Enum):
     AREA = "area"
     BAR = "bar"
@@ -41,7 +42,7 @@ class ChartViews:
 
         try:
             doc = Calc.open_doc(fnm=self._data_fnm, loader=loader)
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             sheet = Calc.get_sheet(doc=doc, index=0)
 
             if self._chart_kind == ChartKind.AREA:
