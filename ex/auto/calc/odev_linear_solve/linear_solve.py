@@ -13,16 +13,16 @@ from ooo.dyn.sheet.solver_constraint_operator import SolverConstraintOperator
 
 class LinearSolve:
     @staticmethod
-    def main(verose: bool = False) -> None:
-        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verose)) as loader:
+    def main(verbose: bool = False) -> None:
+        with Lo.Loader(connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)) as loader:
             doc = Calc.create_doc(loader)
             sheet = Calc.get_sheet(doc=doc)
             Calc.list_solvers()
 
             # specify the variable cells
-            xpos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
-            ypos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
-            vars = (xpos, ypos)
+            x_pos = Calc.get_cell_address(sheet=sheet, cell_name="B1")  # X
+            y_pos = Calc.get_cell_address(sheet=sheet, cell_name="B2")  # Y
+            vars = (x_pos, y_pos)
 
             # specify profit equation
             Calc.set_val(value="=143*B1 + 60*B2", sheet=sheet, cell_name="B3")
@@ -49,7 +49,7 @@ class LinearSolve:
             # for unknown reason CoinMPSolver stopped working on linux.
             # Ubuntu 22.04 LibreOffice 7.3 no-longer list com.sun.star.comp.Calc.CoinMPSolver
             # as a reported service.
-            # strangly Windows 10, LibreOffice 7.3 does still list com.sun.star.comp.Calc.CoinMPSolver
+            # strangely Windows 10, LibreOffice 7.3 does still list com.sun.star.comp.Calc.CoinMPSolver
             # as a service.
             # srv_solver = "com.sun.star.comp.Calc.LpsolveSolver"
             solvers = Info.get_service_names(service_name="com.sun.star.sheet.Solver")
@@ -62,7 +62,7 @@ class LinearSolve:
                     break
 
             if not srv_solver:
-                raise ValueError("No valid solvert was found")
+                raise ValueError("No valid solver was found")
             # initialize the linear solver (CoinMP or basic linear)
             solver = Lo.create_instance_mcf(XSolver, srv_solver, raise_err=True)
 

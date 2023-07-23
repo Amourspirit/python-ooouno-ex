@@ -73,7 +73,29 @@ From project root folder.
 python .\ex\auto\calc\odev_modify_listener\start.py
 ```
 
-### Example console output
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/calc/odev_modify_listener'
+```
+
+This will copy the `odev_modify_listener` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_modify_listener
+python -m start
+```
+
+## Example console output
 
 User interactions with window are reflected in console window.
 

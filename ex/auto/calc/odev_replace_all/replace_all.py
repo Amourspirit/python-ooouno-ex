@@ -81,7 +81,7 @@ class ReplaceAll:
         try:
             doc = Calc.create_doc(loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             Lo.delay(300)
             GUI.zoom(view=GUI.ZoomEnum.ZOOM_150_PERCENT)
 
@@ -103,8 +103,8 @@ class ReplaceAll:
             
             # create styles that can be applied to the cells via Calc.set_array_range().
             inner_side = Side()
-            outter_side = Side(width=LineSize.THICK)
-            bdr = Borders(border_side=outter_side, vertical=inner_side, horizontal=inner_side)
+            outer_side = Side(width=LineSize.THICK)
+            bdr = Borders(border_side=outer_side, vertical=inner_side, horizontal=inner_side)
             bg_color = BgColor(StandardColor.BLUE)
             ft = Font(color=StandardColor.WHITE)
 
@@ -146,8 +146,8 @@ class ReplaceAll:
         # highlight by make cell bold, with text color of Light purple and a background color of light blue.
         ft = Font(b=True, color=StandardColor.PURPLE_LIGHT1)
         bg_color = BgColor(StandardColor.DEFAULT_BLUE)
-        bdrs = Borders(border_side=Side(line=BorderLineKind.SOLID, color=StandardColor.RED_DARK3))
-        Styler.apply(cr, ft, bg_color, bdrs)
+        borders = Borders(border_side=Side(line=BorderLineKind.SOLID, color=StandardColor.RED_DARK3))
+        Styler.apply(cr, ft, bg_color, borders)
 
     def _search_iter(self, sheet: XSpreadsheet, cell_rng: XCellRange, srch_str: str) -> None:
         print(f'Searching (iterating) for all occurrences of "{srch_str}"')

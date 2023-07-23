@@ -6,7 +6,7 @@
 
 Example of getting style information for a spreadsheet.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 
@@ -42,20 +42,20 @@ No. of names: 3
 From this folder.
 
 ```sh
-python -m start -f "../../../../resources/ods/totals.ods"
+python -m start -f "./data/totals.ods"
 ```
 
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/calc/odev_styles_all_info/start.py -f "resources/ods/totals.ods"
+python -m ./ex/auto/calc/odev_styles_all_info/start -f "ex/auto/calc/odev_styles_all_info/data/totals.ods"
 ```
 
 
 ### Windows
 
 ```ps
-python .\ex\auto\calc\odev_styles_all_info\start.py -f "resources/ods/totals.ods"
+python -m .\ex\auto\calc\odev_styles_all_info\start -f "ex/auto/calc/odev_styles_all_info/data/totals.ods"
 ```
 
 ## Long Output
@@ -67,8 +67,29 @@ For example
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/calc/odev_styles_all_info/start.py -r -f "resources/ods/totals.ods"
+python -m ./ex/auto/calc/odev_styles_all_info/start -r -f "ex/auto/calc/odev_styles_all_info/data/totals.ods"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/calc/odev_styles_all_info'
+```
+
+This will copy the `odev_styles_all_info` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_styles_all_info
+python -m start -h
+```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

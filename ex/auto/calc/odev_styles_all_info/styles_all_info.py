@@ -19,10 +19,8 @@ class StylesAllInfo:
 
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectSocket(headless=True)) as loader:
-
             doc = Calc.open_doc(fnm=self._fnm, loader=loader)
             try:
-
                 # get all the style families for this document
                 style_families = Info.get_style_family_names(doc)
                 print(f"Style Family Names ({len(style_families)})")

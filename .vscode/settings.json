@@ -91,9 +91,12 @@
     "cSpell.words": [
         "boxtype",
         "Codespace",
+        "INFOBOX",
         "msgbox",
         "ooodev",
+        "Protectable",
         "QUERYBOX",
-        "soffice"
+        "soffice",
+        "unprotect"
     ]
 }

@@ -53,4 +53,26 @@ python ./ex/auto/calc/odev_replace_all/start.py -h
 python .\ex\auto\calc\odev_replace_all\start.py -h
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/calc/odev_replace_all'
+```
+
+This will copy the `odev_replace_all` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_replace_all
+python -m start
+```
+
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

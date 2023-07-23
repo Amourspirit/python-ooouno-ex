@@ -21,9 +21,9 @@ class PivotTable1:
         _ = FileIO.is_exist_file(fnm, True)
         self._fnm = FileIO.get_absolute_path(fnm)
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
 
@@ -33,7 +33,7 @@ class PivotTable1:
         try:
             doc = Calc.open_doc(fnm=self._fnm, loader=loader)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             sheet = Calc.get_sheet(doc=doc)
             dp_sheet = Calc.insert_sheet(doc=doc, name="Pivot Table", idx=1)

@@ -31,9 +31,9 @@ class CalcFunctions:
             arr = [[1.0, 2.0, 3.0], [3.0, 6.0, 9.0]]
             Calc.set_array(values=arr, sheet=sheet, name="A1")
             Lo.delay(500)
-            xrng = Calc.get_cell_range(sheet=sheet, range_name="A1:C1")
-            yrng = Calc.get_cell_range(sheet=sheet, range_name="A2:C2")
-            slope = float(Calc.call_fun("SLOPE", yrng, xrng))
+            x_rng = Calc.get_cell_range(sheet=sheet, range_name="A1:C1")
+            y_rng = Calc.get_cell_range(sheet=sheet, range_name="A2:C2")
+            slope = float(Calc.call_fun("SLOPE", y_rng, x_rng))
             print(f"SLOPE of the line: {slope}")
             print()
 

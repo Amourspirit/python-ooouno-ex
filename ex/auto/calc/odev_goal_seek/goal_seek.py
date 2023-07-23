@@ -29,7 +29,7 @@ class GoalSeek:
                 # The formula is still y = sqrt(x)
                 # Find x when sqrt(x) == -4, which is impossible
                 print(f"x == {x} when sqrt(x) == -4\n")
-                
+
             except GoalDivergenceError as e:
                 print(e)
                 print()
