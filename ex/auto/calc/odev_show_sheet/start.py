@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-#
 # on wayland (some versions of Linux)
 # may get error:
 #    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
