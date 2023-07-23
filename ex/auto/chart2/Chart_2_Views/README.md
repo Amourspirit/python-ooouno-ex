@@ -57,3 +57,25 @@ python ./ex/auto/chart2/Chart_2_Views/start.py -k happy_stock
 ```ps
 python .\ex\auto\chart2\Chart_2_Views\start.py -k happy_stock
 ```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/chart2/Chart_2_Views'
+```
+
+This will copy the `Chart_2_Views` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd Chart_2_Views
+python -m start
+```
