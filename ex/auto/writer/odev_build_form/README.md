@@ -37,4 +37,27 @@ python .\ex\auto\writer\odev_build_form\start.py
 ![Form-screenshot](https://user-images.githubusercontent.com/4193389/194674585-8252bf4b-3ada-4746-a70a-234e91767b85.png)
 
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_build_form'
+```
+
+This will copy the `odev_build_form` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_build_form
+python -m start
+```
+
+
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
