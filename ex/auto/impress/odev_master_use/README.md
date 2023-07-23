@@ -43,4 +43,26 @@ python ./ex/auto/impress/odev_master_use/start.py
 python .\ex\auto\impress\odev_master_use\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/impress/odev_master_use'
+```
+
+This will copy the `odev_master_use` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_master_use
+python -m start
+```
+
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
