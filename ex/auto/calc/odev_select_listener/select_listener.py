@@ -23,7 +23,7 @@ class SelectionListener:
         loader = Lo.load_office(Lo.ConnectSocket())
         self._doc = Calc.create_doc(loader)
 
-        GUI.set_visible(is_visible=True, odoc=self._doc)
+        GUI.set_visible(visible=True, doc=self._doc)
         self.sheet = Calc.get_sheet(doc=self._doc, index=0)
 
         self.curr_addr = Calc.get_selected_cell_addr(self._doc)
@@ -35,7 +35,7 @@ class SelectionListener:
         Calc.set_col(sheet=self.sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
 
     def _get_cell_float(self, addr: CellAddress) -> float | None:
-        # get_val returns floats as float intance
+        # get_val returns floats as float instance
         obj = Calc.get_val(sheet=self.sheet, addr=addr)
         if isinstance(obj, float):
             return obj
@@ -97,7 +97,7 @@ class SelectionListener:
             return
         try:
             # better to wrap in try block.
-            # otherwise errors crahses office
+            # otherwise errors crashes office
             if not Calc.is_equal_addresses(addr, self.curr_addr):
                 flt = self._get_cell_float(self.curr_addr)
                 if flt is not None:
