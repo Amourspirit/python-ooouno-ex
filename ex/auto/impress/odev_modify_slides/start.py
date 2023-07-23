@@ -1,23 +1,19 @@
 from __future__ import annotations
+from pathlib import Path
 from ooodev.utils.file_io import FileIO
 from modify_slides import ModifySlides
 import sys
 
 
 def main() -> int:
-    im_fnm = "resources/image/questions.png"
-    if not FileIO.is_exist_file(im_fnm):
-        im_fnm = "../../../../resources/image/questions.png"
-        FileIO.is_exist_file(im_fnm, True)
+    data_dir = Path(__file__).parent / "data"
+    im_fnm = data_dir / "questions.png"
 
     if len(sys.argv) > 1:
         fnm = sys.argv[1]
         _ = FileIO.is_exist_file(fnm, True)
     else:
-        fnm = "resources/presentation/algsSmall.ppt"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/presentation/algsSmall.ppt"
-            _ = FileIO.is_exist_file(fnm, True)
+        fnm = data_dir / "algsSmall.ppt"
 
     modify = ModifySlides(fnm=fnm, im_fnm=im_fnm)
     modify.main()

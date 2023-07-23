@@ -3,7 +3,7 @@ from pathlib import Path
 from ooodev.utils.file_io import FileIO
 from custom_show import CustomShow
 
-# region maind()
+# region main()
 def main() -> int:
     if len(sys.argv) > 1:
         idxs = [int(s) for s in sys.argv[1:]]
@@ -13,7 +13,7 @@ def main() -> int:
         idxs = [5, 6, 7, 8]
     fnm = "resources/presentation/algs.odp"
     if not FileIO.is_exist_file(fnm):
-        fnm = "../../../../resources/presentation/algs.odp"
+        fnm = Path(__file__).parent / "data" / "algs.odp"
         FileIO.is_exist_file(fnm, True)
 
     custom_show = CustomShow(fnm, *idxs)  # 56 is too high
@@ -21,7 +21,7 @@ def main() -> int:
     return 0
 
 
-# endregion maind()
+# endregion main()
 
 if __name__ == "__main__":
     SystemExit(main())

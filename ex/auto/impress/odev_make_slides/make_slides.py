@@ -50,7 +50,7 @@ class MakeSlides:
             doc = Draw.create_impress_doc(loader)
             curr_slide = Draw.get_slide(doc=doc, idx=0)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             Lo.delay(1_000)  # delay to make sure zoom takes
             GUI.zoom(GUI.ZoomEnum.ENTIRE_PAGE)
 
@@ -143,12 +143,8 @@ class MakeSlides:
 
         Draw.add_text(shape=ellipse, msg="Start Video", font_size=30)
         Props.set(ellipse, OnClick=ClickAction.DOCUMENT, Bookmark=FileIO.fnm_to_url(self._fnm_wildlife))
-        # set Animtion
-        Props.set(
-            ellipse,
-            Effect=AnimationEffect.MOVE_FROM_LEFT,
-            Speed=AnimationSpeed.FAST
-        )
+        # set Animation
+        Props.set(ellipse, Effect=AnimationEffect.MOVE_FROM_LEFT, Speed=AnimationSpeed.FAST)
 
         # draw a rounded rectangle with text
         button = Draw.draw_rectangle(
@@ -189,7 +185,7 @@ class MakeSlides:
             height=30,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        dshape = Draw.add_dispatch_shape(
+        dispatch_shape = Draw.add_dispatch_shape(
             slide=curr_slide,
             shape_dispatch=ShapeDispatchKind.CALLOUT_SHAPES_CLOUD_CALLOUT,
             x=140,
@@ -198,9 +194,9 @@ class MakeSlides:
             height=30,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        Draw.set_bitmap_color(shape=dshape, name=DrawingBitmapKind.LITTLE_CLOUDS)
+        Draw.set_bitmap_color(shape=dispatch_shape, name=DrawingBitmapKind.LITTLE_CLOUDS)
 
-        dshape = Draw.add_dispatch_shape(
+        dispatch_shape = Draw.add_dispatch_shape(
             slide=curr_slide,
             shape_dispatch=ShapeDispatchKind.FLOW_CHART_SHAPES_FLOWCHART_CARD,
             x=200,
@@ -209,16 +205,16 @@ class MakeSlides:
             height=30,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        Draw.set_hatch_color(shape=dshape, name=DrawingHatchingKind.BLUE_NEG_45_DEGREES)
+        Draw.set_hatch_color(shape=dispatch_shape, name=DrawingHatchingKind.BLUE_NEG_45_DEGREES)
         # convert blue to black manually
-        dhatch = cast(Hatch, Props.get(dshape, "FillHatch"))
+        dhatch = cast(Hatch, Props.get(dispatch_shape, "FillHatch"))
         dhatch.Color = CommonColor.BLACK
-        Props.set(dshape, LineColor=CommonColor.BLACK, FillHatch=dhatch)
-        # Props.show_obj_props("Hatch Shape", dshape)
+        Props.set(dispatch_shape, LineColor=CommonColor.BLACK, FillHatch=dhatch)
+        # Props.show_obj_props("Hatch Shape", dispatch_shape)
 
         # second row
         y = 100
-        dshape = Draw.add_dispatch_shape(
+        dispatch_shape = Draw.add_dispatch_shape(
             slide=curr_slide,
             shape_dispatch=ShapeDispatchKind.STAR_SHAPES_STAR_12,
             x=20,
@@ -227,10 +223,10 @@ class MakeSlides:
             height=40,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        Draw.set_gradient_color(shape=dshape, name=DrawingGradientKind.SUNSHINE)
-        Props.set(dshape, LineStyle=LineStyle.NONE)
+        Draw.set_gradient_color(shape=dispatch_shape, name=DrawingGradientKind.SUNSHINE)
+        Props.set(dispatch_shape, LineStyle=LineStyle.NONE)
 
-        dshape = Draw.add_dispatch_shape(
+        dispatch_shape = Draw.add_dispatch_shape(
             slide=curr_slide,
             shape_dispatch=ShapeDispatchKind.SYMBOL_SHAPES_HEART,
             x=80,
@@ -239,7 +235,7 @@ class MakeSlides:
             height=40,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        Props.set(dshape, FillColor=CommonColor.RED)
+        Props.set(dispatch_shape, FillColor=CommonColor.RED)
 
         _ = Draw.add_dispatch_shape(
             slide=curr_slide,
@@ -250,7 +246,7 @@ class MakeSlides:
             height=30,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        dshape = Draw.add_dispatch_shape(
+        dispatch_shape = Draw.add_dispatch_shape(
             slide=curr_slide,
             shape_dispatch=ShapeDispatchKind.THREE_D_CYRAMID,
             x=200,
@@ -259,6 +255,6 @@ class MakeSlides:
             height=50,
             fn=DrawDispatcher.create_dispatch_shape,
         )
-        Draw.set_bitmap_color(shape=dshape, name=DrawingBitmapKind.STONE)
+        Draw.set_bitmap_color(shape=dispatch_shape, name=DrawingBitmapKind.STONE)
 
         Draw.show_shapes_info(curr_slide)

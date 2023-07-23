@@ -1,6 +1,5 @@
 from __future__ import annotations
 from pathlib import Path
-from ooodev.utils.file_io import FileIO
 from append_slides import AppendSlides
 import sys
 
@@ -12,15 +11,12 @@ def main() -> int:
     else:
 
         files = ("algs.odp", "points.odp")
-        dir_path = Path("resources/presentation")
-        p = FileIO.get_absolute_path(dir_path)
-        if not p.exists():
-            dir_path = Path("../../../../resources/presentation")
+        dir_path = Path(__file__).parent / "data"
         for file in files:
             fnm_lst.append(Path(dir_path, file))
 
-    appender = AppendSlides(*fnm_lst)
-    appender.main()
+    appended = AppendSlides(*fnm_lst)
+    appended.main()
 
     return 0
 

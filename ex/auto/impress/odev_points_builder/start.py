@@ -10,10 +10,7 @@ def main() -> int:
         data_fnm = sys.argv[1]
         FileIO.is_exist_file(data_fnm, True)
     else:
-        data_fnm = "resources/data/pointsInfo.txt"
-        if not FileIO.is_exist_file(data_fnm):
-            data_fnm = "../../../../resources/data/pointsInfo.txt"
-            FileIO.is_exist_file(data_fnm, True)
+        data_fnm = Path(__file__).parent / "data" / "pointsInfo.txt"
 
     pb = PointsBuilder(data_fnm)
     pb.main()

@@ -40,9 +40,9 @@ class CopySlide:
             num_slides = Draw.get_slides_count(doc)
             if self._from_idx >= num_slides or self._to_idx >= num_slides:
                 Lo.close_office()
-                raise IndexError("One or both indicies are out of range")
+                raise IndexError("One or both indices are out of range")
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             self._copy_to(doc=doc)
 
