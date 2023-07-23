@@ -16,7 +16,7 @@
             "titleBar.activeForeground": "#77f5ac"
         }
     },
-    "workbench.colorTheme": "Monokai",
+    "workbench.colorTheme": "Visual Studio 2019 Light",
     "esbonio.sphinx.confDir": "",
     "python.testing.pytestArgs": [
         "tests"
