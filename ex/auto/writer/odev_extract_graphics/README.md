@@ -41,6 +41,29 @@ From project root folder.
 python .\ex\auto\writer\odev_extract_graphics\start.py --file "resources/odt/build.odt"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_extract_graphics'
+```
+
+This will copy the `odev_extract_graphics` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_extract_graphics
+python -m start
+```
+
+
 ## Output
 
 ```text
