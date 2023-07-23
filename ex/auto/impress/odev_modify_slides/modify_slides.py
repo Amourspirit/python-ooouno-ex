@@ -24,7 +24,7 @@ class ModifySlides:
             doc = Lo.open_doc(self._fnm, loader)
 
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             if not Info.is_doc_type(obj=doc, doc_type=Lo.Service.IMPRESS):
                 print("-- Not a slides presentation")
