@@ -30,7 +30,7 @@ class TextChart:
 
             doc = Write.create_doc(loader)
             # to make the construction visible
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
 
             cursor = Write.get_cursor(doc)
             # make sure at end of doc before appending
@@ -66,7 +66,7 @@ class TextChart:
     def _make_col_chart(self, loader: XComponentLoader) -> bool:
         ssdoc = Calc.open_doc(fnm=self._data_fnm, loader=loader)
         try:
-            GUI.set_visible(is_visible=True, odoc=ssdoc)  # or selection is not copied
+            GUI.set_visible(visible=True, doc=ssdoc)  # or selection is not copied
             sheet = Calc.get_sheet(doc=ssdoc, index=0)
 
             range_addr = Calc.get_address(sheet=sheet, range_name="A2:B8")
