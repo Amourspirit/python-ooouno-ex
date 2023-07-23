@@ -35,13 +35,7 @@ def main() -> int:
     #     return 0
     args = parser.parse_args()
 
-    fnm = Path("resources/ods/chartsData.ods")
-    p = FileIO.get_absolute_path(fnm)
-    if not p.exists():
-        fnm = Path("../../../../resources/ods/chartsData.ods")
-        p = FileIO.get_absolute_path(fnm)
-    if not p.exists():
-        raise FileNotFoundError("Unable to find path to chartsData.ods")
+    fnm = Path(__file__).parent / "data" / "chartsData.ods"
 
     kind = ChartKind(args.kind)
 
