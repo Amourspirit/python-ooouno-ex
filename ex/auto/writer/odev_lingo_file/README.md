@@ -64,7 +64,6 @@ cd odev_lingo_file
 python -m start
 ```
 
-
 ## Output
 
 ```text
