@@ -66,7 +66,7 @@ In the terminal run:
 
 ```bash
 cd odev_docs_append
-python -m start -h
+python -m start
 ```
 
 

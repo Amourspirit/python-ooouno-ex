@@ -63,7 +63,6 @@ cd odev_extract_graphics
 python -m start
 ```
 
-
 ## Output
 
 ```text
