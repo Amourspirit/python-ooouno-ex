@@ -22,25 +22,47 @@ See [source code](./start.py)
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
 
 Run from current example folder.
 
-From project root folder.
+From project root folder (default file).
 
 ```sh
-python ./ex/auto/writer/odev_show_book/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_show_book/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (default file).
 
 ```ps
-python .\ex\auto\writer\odev_show_book\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_show_book\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_show_book'
+```
+
+This will copy the `odev_show_book` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_show_book
+python -m start
 ```
 
 ## Output
