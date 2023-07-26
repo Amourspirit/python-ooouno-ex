@@ -52,6 +52,28 @@ From project root folder
 python .\ex\auto\writer\odev_lingo\start.py
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_lingo'
+```
+
+This will copy the `odev_lingo` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_lingo
+python -m start
+```
+
 ## Output
 
 ```text

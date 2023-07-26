@@ -2,7 +2,7 @@
 
 This example creates a new text document, containing two short paragraphs, and saves it as "hello.odt".
 
-In this example the file "hello.odt" is saved in the project root folder.
+In this example the file "hello.odt" is saved in a `tmp` directory of the current working directory.
 
 ## Automate
 
