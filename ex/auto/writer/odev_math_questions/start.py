@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
+from __future__ import annotations
 import random
+from pathlib import Path
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
 from ooodev.office.write import Write
@@ -18,7 +18,7 @@ def main() -> int:
     doc = Write.create_doc(loader=loader)
 
     try:
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         cursor = Write.get_cursor(doc)
         Write.append_para(cursor, "Math Questions")
@@ -39,7 +39,7 @@ def main() -> int:
 
                 choice = random.randint(0, 2)
 
-                # formulas should be wrapped in {} but for fromatting reasons it is easier to work with [] and replace later.
+                # formulas should be wrapped in {} but for formatting reasons it is easier to work with [] and replace later.
                 if choice == 0:
                     formula = f"[[[sqrt[{iA}x]] over {iB}] + [{iC} over {iD}]=[{iE} over {iF1} ]]"
                 elif choice == 1:
@@ -61,7 +61,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.save_doc(doc, "mathQuestions.pdf")
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(exist_ok=True)
+            Lo.save_doc(doc, pth / "mathQuestions.pdf")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -70,7 +72,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_doc(doc=doc)
             Lo.close_office()
         else:
             print("Keeping document open")
