@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
 from __future__ import annotations
 
 from ooodev.utils.lo import Lo
@@ -14,7 +12,9 @@ def main() -> int:
 
         doc = Write.create_doc(loader)
 
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
+        Lo.delay(300) # small delay before dispatching zoom command
+        GUI.zoom(view=GUI.ZoomEnum.PAGE_WIDTH)
 
         cursor = Write.get_cursor(doc)
         cursor.gotoEnd(False)  # make sure at end of doc before appending
