@@ -25,6 +25,21 @@ The output is written into `build` folder in the projects root.
 oooscript compile --embed --config "ex/calc/lib_o_con_2021/config.json" --embed-doc "ex/calc/lib_o_con_2021/lib_o_con_2021.ods"
 ```
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd macro
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/calc/lib_o_con_2021'
+```
+
+This will copy the `lib_o_con_2021` example to the macro folder.
+
 ## Screenshot
 
 ![lib_o_con_2021_ods](https://user-images.githubusercontent.com/4193389/163496918-1f0a171c-b939-4f18-b674-a9b4cd35fc5a.png)
