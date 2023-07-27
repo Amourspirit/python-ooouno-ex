@@ -13,25 +13,47 @@ See [source code](./start.py)
 From this folder.
 
 ```sh
-python -m start --file "../../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./cicero_dummy.odt"
 ```
 
 ### Linux/Mac
 
 Run from current example folder.
 
-From project root folder.
+From project root folder (for default file).
 
 ```sh
-python ./ex/auto/writer/odev_formatting/page_margin/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_formatting/page_margin/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (for default file).
 
 ```ps
-python .\ex\auto\writer\odev_formatting\page_margin\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_formatting\page_margin\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_formatting/page_margin'
+```
+
+This will copy the `page_margin` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd page_margin
+python -m start
 ```
 
 ## Screenshots

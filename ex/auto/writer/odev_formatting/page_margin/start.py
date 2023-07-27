@@ -1,7 +1,8 @@
 from __future__ import annotations
-from typing import cast
 import sys
 import argparse
+from pathlib import Path
+from typing import cast
 
 import uno
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
@@ -31,8 +32,11 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
 
     # read the current command line args
     args = parser.parse_args()
@@ -48,7 +52,7 @@ def main() -> int:
 
         # show the document
         GUI.set_visible()
-        GUI.zoom(GUI.ZoomEnum.OPTIMAL)
+        GUI.zoom(GUI.ZoomEnum.ENTIRE_PAGE)
         Lo.delay(4_000) # give user time to see the document before styling.
 
         # create a style margin object

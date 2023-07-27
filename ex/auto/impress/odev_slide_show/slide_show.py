@@ -84,7 +84,7 @@ class SlideShow:
             Props.set(sq2, Effect=AnimationEffect.FADE_FROM_BOTTOM, OnClick=ClickAction.BOOKMARK, Bookmark=name_slide)
 
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             show = Draw.get_show(doc)
 
             # a full-screen slide show

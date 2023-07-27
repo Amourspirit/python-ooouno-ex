@@ -4,7 +4,7 @@
 
 # Math Questions
 
-Create a new writer document, add random formula involving "x",  a fraction using x, or sqrt of x, and save it as "mathQuestions.pdf" in the current working folder.
+Create a new writer document, add random formula involving "x",  a fraction using x, or sqrt of x, and save it as "mathQuestions.pdf" in tmp folder of the current working folder.
 
 ## See
 
@@ -44,6 +44,28 @@ From project root folder.
 
 ```ps
 python .\ex\auto\writer\odev_math_questions\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_math_questions'
+```
+
+This will copy the `odev_math_questions` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_math_questions
+python -m start
 ```
 
 [Text Content Other than Strings]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html

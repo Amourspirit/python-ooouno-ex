@@ -43,7 +43,29 @@ From project root folder.
 python .\ex\auto\writer\odev_make_table\start.py
 ```
 
-## Source (bondMovies.txt) CSV Data
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_make_table'
+```
+
+This will copy the `odev_make_table` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_make_table
+python -m start
+```
+
+## Source (./data/bondMovies.txt) CSV Data
 
 ```csv
 

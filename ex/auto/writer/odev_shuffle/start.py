@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
 from __future__ import annotations
+import sys
 import argparse
 from typing import cast
+from pathlib import Path
 import random
 
 from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
@@ -88,6 +88,11 @@ def main() -> int:
 
     # add args to parser
     args_add(parser=parser)
+    
+    if len(sys.argv) == 1:
+        pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
 
     # read the current command line args
     args = parser.parse_args()
@@ -98,7 +103,7 @@ def main() -> int:
 
     try:
         doc = Write.open_doc(fnm=fnm, loader=loader)
-        GUI.set_visible(is_visible=visible, odoc=doc)
+        GUI.set_visible(visible=visible, doc=doc)
         apply_shuffle(doc, loop_delay, visible)
 
         Lo.delay(1_000)
@@ -109,7 +114,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Write.save_doc(text_doc=doc, fnm="shuffled.odt")
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(exist_ok=True)
+            Write.save_doc(text_doc=doc, fnm=pth / "shuffled.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",

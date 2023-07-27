@@ -28,7 +28,7 @@ See [source code](./start.py)
 From current example folder.
 
 ```shell
-python -m start --file "../../../../resources/odt/blank.odt" "../../../../resources/odt/story.odt" "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/blank.odt" "./data/story.odt" "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
@@ -36,7 +36,7 @@ python -m start --file "../../../../resources/odt/blank.odt" "../../../../resour
 From project root folder
 
 ```sh
-python ./ex/auto/writer/odev_docs_append/start.py -f "resources/odt/blank.odt" "resources/odt/story.odt" "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_docs_append/start.py -f "ex/auto/writer/odev_docs_append/data/blank.odt" "ex/auto/writer/odev_docs_append/data/story.odt" "ex/auto/writer/odev_docs_append/data/cicero_dummy.odt"
 ```
 
 ### Windows
@@ -44,8 +44,31 @@ python ./ex/auto/writer/odev_docs_append/start.py -f "resources/odt/blank.odt" "
 From project root folder
 
 ```ps
-python .\ex\auto\writer\odev_docs_append\start.py -f "resources/odt/blank.odt" "resources/odt/story.odt" "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_docs_append\start.py -f "ex/auto/writer/odev_docs_append/data/blank.odt" "ex/auto/writer/odev_docs_append/data/story.odt" "rex/auto/writer/odev_docs_append/data/cicero_dummy.odt"
 ```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_docs_append'
+```
+
+This will copy the `odev_docs_append` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_docs_append
+python -m start
+```
+
 
 [Text API Overview]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter05.html
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

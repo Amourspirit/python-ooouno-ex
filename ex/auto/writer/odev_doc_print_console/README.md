@@ -25,7 +25,7 @@ See [source code](./start.py)
 From project root folder.
 
 ```sh
-python start.py --file "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
@@ -33,7 +33,7 @@ python start.py --file "../../../../resources/odt/cicero_dummy.odt"
 Run from current example folder.
 
 ```sh
-python ./ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_doc_print_console/start.py --file "ex/auto/writer/odev_doc_print_console/data/cicero_dummy.odt"
 ```
 
 ### Windows
@@ -41,7 +41,29 @@ python ./ex/auto/writer/odev_doc_print_console/start.py --file "resources/odt/ci
 From project root folder.
 
 ```ps
-python .\ex\auto\writer\odev_doc_print_console\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_doc_print_console\start.py --file "ex/auto/writer/odev_doc_print_console/data/cicero_dummy.odt"
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_doc_print_console'
+```
+
+This will copy the `odev_doc_print_console` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_doc_print_console
+python -m start
 ```
 
 ### Output

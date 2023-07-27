@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
 #
 # Examples using the Linguistics API (the com.sun.star.linguistic2 module).
 # See Dev Guide, ch.6, p.706, "Linguistics".
@@ -43,8 +41,8 @@ def main() -> int:
         # load spell checker
         speller = Lo.create_instance_mcf(XSpellChecker, "com.sun.star.linguistic2.SpellChecker")
         # it is possible to age a spell checker from lingo_mgr;
-        # however, it results in a error when passed to Write.spell_word for unknow reason.
-        # For this reason we go wiht the speller above and not the next line.
+        # however, it results in a error when passed to Write.spell_word for unknown reason.
+        # For this reason we go with the speller above and not the next line.
         # speller = lingo_mgr.getSpellChecker()
 
         # load thesaurus
