@@ -32,23 +32,45 @@ Display a message box asking if you want to close document.
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/bigStory.doc"
+python -m start --file "./data/bigStory.doc"
 ```
 
 ### Linux/Mac
 
-From project root folder.
+From project root folder (for default document).
 
 ```sh
-python ./ex/auto/writer/odev_text_replace/start.py --file "resources/odt/bigStory.doc"
+python ./ex/auto/writer/odev_text_replace/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (for default document).
 
 ```ps
-python .\ex\auto\writer\odev_text_replace\start.py --file "resources/odt/bigStory.doc"
+python .\ex\auto\writer\odev_text_replace\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_text_replace'
+```
+
+This will copy the `odev_text_replace` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_text_replace
+python -m start --file "./data/bigStory.doc"
 ```
 
 [Text Search and Replace]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter09.html

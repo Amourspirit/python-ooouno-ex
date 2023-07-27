@@ -25,23 +25,45 @@ See [source code](./start.py)
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
 
-From project root folder.
+From project root folder (for default document).
 
 ```sh
-python ./ex/auto/writer/odev_styles_info/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_styles_info/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (for default document).
 
 ```ps
-python .\ex\auto\writer\odev_styles_info\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_styles_info\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_styles_info'
+```
+
+This will copy the `odev_styles_info` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_styles_info
+python -m start --show --verbose  --file "./data/cicero_dummy.odt"
 ```
 
 ## Output

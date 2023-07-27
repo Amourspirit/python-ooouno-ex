@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
 import sys
 import argparse
-from typing import Any, Sequence, cast
+from typing import Sequence, cast
+from pathlib import Path
 
 import uno
 from com.sun.star.beans import XPropertySet
@@ -55,7 +54,7 @@ def find_words(doc: XTextDocument, words: Sequence[str]) -> None:
             print(f"    - on page {page_cursor.getPage()}")
             # tvc.gotoStart(True)
             tvc.goRight(len(match_tr.getString()), True)
-            print(f"    - at char postion: {len(tvc.getString())}")
+            print(f"    - at char position: {len(tvc.getString())}")
             Lo.delay(500)
 
 
@@ -77,8 +76,11 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        pth = Path(__file__).parent / "data" / "bigStory.doc"
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
 
     # read the current command line args
     args = parser.parse_args()
@@ -94,7 +96,7 @@ def main() -> int:
         uk_words = ("colour", "neighbour", "centre", "behaviour", "metre", "through")
         us_words = ("color", "neighbor", "center", "behavior", "meter", "thru")
 
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         words = (
             "(G|g)rit",
@@ -112,7 +114,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Write.save_doc(text_doc=doc, fnm="replaced.doc")
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(parents=True, exist_ok=True)
+            Write.save_doc(text_doc=doc, fnm=pth / "replaced.doc")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -121,7 +125,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            Lo.close_doc(doc=doc)
             Lo.close_office()
         else:
             print("Keeping document open")
