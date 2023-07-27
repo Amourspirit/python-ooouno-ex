@@ -19,4 +19,19 @@ oooscript compile --embed --config "ex/calc/cell_events/config.json" --embed-doc
 
 ![calc_on_sel_change](https://user-images.githubusercontent.com/4193389/166338567-e597c1e9-854c-4254-bbf8-fb8f94598797.gif)
 
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd macro
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/calc/cell_events'
+```
+
+This will copy the `cell_events` example to the macro folder.
+
 [ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge
