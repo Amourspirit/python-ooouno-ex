@@ -64,7 +64,6 @@ def read_text(fnm: Path, cursor: XTextCursor) -> None:
 
 def create_para_style(doc: XTextDocument, style_name: str) -> bool:
     try:
-
         # font 12 pt
         font = Font(name=Info.get_font_general_name(), size=12.0)
 
@@ -92,8 +91,13 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        if len(sys.argv) == 1:
+            pth = Path(__file__).parent / "data" / "scandal.txt"
+            sys.argv.append("--show")
+            sys.argv.append("-f")
+            sys.argv.append(str(pth))
 
     # read the current command line args
     args = parser.parse_args()
@@ -111,7 +115,7 @@ def main() -> int:
     try:
         doc = Write.create_doc(loader=loader)
         if visible:
-            GUI.set_visible(is_visible=visible, odoc=doc)
+            GUI.set_visible(visible=visible, doc=doc)
 
         if not create_para_style(doc, "adParagraph"):
             raise RuntimeError("Could not create new paragraph style")
@@ -120,10 +124,10 @@ def main() -> int:
         print("Paragraph Styles")
         Lo.print_names(styles)
 
-        xtext_range = doc.getText().getStart()
+        text_range = doc.getText().getStart()
         # Load the paragraph style and apply it to the text range.
         para_style = StylePara("adParagraph")
-        para_style.apply(xtext_range)
+        para_style.apply(text_range)
 
         # header formatting
         # create a header font style with a size of 9 pt, italic and dark green.
@@ -160,6 +164,9 @@ def main() -> int:
         Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
 
         Lo.delay(delay)
+        pth = Path.cwd() / "tmp"
+        pth.mkdir(exist_ok=True)
+        doc_pth = pth / "bigStory.doc"
         if visible:
             msg_result = MsgBox.msgbox(
                 "Do you wish to save document?",
@@ -168,9 +175,11 @@ def main() -> int:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Write.save_doc(text_doc=doc, fnm="bigStory.doc")
+                Write.save_doc(text_doc=doc, fnm=doc_pth)
+                print(f'Saved to: "{doc_pth}"')
         else:
-            Write.save_doc(text_doc=doc, fnm="bigStory.doc")
+            Write.save_doc(text_doc=doc, fnm=doc_pth)
+            print(f'Saved to: "{doc_pth}"')
         if visible:
             msg_result = MsgBox.msgbox(
                 "Do you wish to close document?",

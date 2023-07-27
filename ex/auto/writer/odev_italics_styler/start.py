@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
+from __future__ import annotations
 import sys
 import argparse
 from typing import cast
+from pathlib import Path
 
 import uno
 from com.sun.star.text import XTextDocument
@@ -44,18 +44,18 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
     page_cursor = Write.get_page_cursor(doc)
     result = 0
     try:
-        xsearchable = Lo.qi(XSearchable, doc, True)
-        srch_desc = xsearchable.createSearchDescriptor()
+        searchable = Lo.qi(XSearchable, doc, True)
+        search_desc = searchable.createSearchDescriptor()
         print(f"Searching for all occurrences of '{phrase}'")
-        pharse_len = len(phrase)
-        srch_desc.setSearchString(phrase)
+        phrase_len = len(phrase)
+        search_desc.setSearchString(phrase)
         # for props see: https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1util_1_1SearchDescriptor.html
-        Props.set_property(obj=srch_desc, name="SearchCaseSensitive", value=False)
+        Props.set_property(obj=search_desc, name="SearchCaseSensitive", value=False)
         Props.set_property(
-            obj=srch_desc, name="SearchWords", value=True
+            obj=search_desc, name="SearchWords", value=True
         )  # If TRUE, only complete words will be found.
 
-        matches = xsearchable.findAll(srch_desc)
+        matches = searchable.findAll(search_desc)
         result = matches.getCount()
 
         print(f"No. of matches: {result}")
@@ -69,7 +69,7 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
                 print(f"  - found: '{match_tr.getString()}'")
                 print(f"    - on page {page_cursor.getPage()}")
                 cursor.gotoStart(True)
-                print(f"    - starting at char position: {len(cursor.getString()) - pharse_len}")
+                print(f"    - starting at char position: {len(cursor.getString()) - phrase_len}")
 
                 font_effect.apply(match_tr)
 
@@ -94,8 +94,17 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
+        sys.argv.append("--word")
+        sys.argv.append("pleasure")
+        sys.argv.append("green")
+        sys.argv.append("--word")
+        sys.argv.append("pain")
+        sys.argv.append("red")
 
     # read the current command line args
     args = parser.parse_args()
@@ -109,7 +118,7 @@ def main() -> int:
     try:
         doc = Write.open_doc(fnm=fnm, loader=loader)
 
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         with Lo.ControllerLock():
             for word, color in args.word:

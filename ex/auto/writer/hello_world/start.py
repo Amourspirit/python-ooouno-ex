@@ -57,7 +57,7 @@ def main() -> int:
     # launch soffice (LibreOffice server)
     lo.connect()
 
-    # Connect ScritForge to the running soffice server
+    # Connect ScriptForge to the running soffice server
     SF.ScriptForge(hostname=lo.host, port=lo.port)
 
     # connect to ui

@@ -31,23 +31,45 @@ Display a message box asking if you want to close document.
 From this folder.
 
 ```shell
-python -m start --file "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
 
-From project root folder.
+From project root folder (for default file).
 
 ```sh
-python ./ex/auto/writer/odev_shuffle/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_shuffle/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (for default file).
 
 ```ps
-python .\ex\auto\writer\odev_shuffle\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_shuffle\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_shuffle'
+```
+
+This will copy the `odev_shuffle` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_shuffle
+python -m start
 ```
 
 ![shuffle text](https://user-images.githubusercontent.com/4193389/184251513-a8c96a5d-85b0-42ff-a891-ee5762e46a24.gif)

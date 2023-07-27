@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
+from __future__ import annotations
 import csv
 from pathlib import Path
 from typing import List
@@ -31,14 +30,7 @@ def read_table(fnm: Path) -> List[list]:
 
 
 def main() -> int:
-
-    fnm = FileIO.get_absolute_path("../../../../resources/txt/bondMovies.txt")  # source csv file
-    if not fnm.exists():
-        fnm = FileIO.get_absolute_path("resources/txt/bondMovies.txt")
-    if not fnm.exists():
-        print("resource image 'bondMovies.txt' not found.")
-        print("Unable to continue.")
-        return 1
+    fnm = Path(__file__).parent / "data" / "bondMovies.txt"  # source csv file
 
     tbl_data = read_table(fnm)
 
@@ -46,10 +38,9 @@ def main() -> int:
 
     loader = Lo.load_office(Lo.ConnectSocket())
 
-
     try:
         doc = Write.create_doc(loader=loader)
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         cursor = Write.get_cursor(doc)
 
@@ -72,7 +63,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.save_doc(doc, "table.odt")
+            tmp = Path.cwd() / "tmp"
+            tmp.mkdir(exist_ok=True)
+            Lo.save_doc(doc, tmp / "table.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",

@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from ooodev.utils.file_io import FileIO
 from slides_info import SlidesInfo
 
@@ -9,10 +10,7 @@ def main() -> int:
         fnm = sys.argv[1]
         FileIO.is_exist_file(fnm, True)
     else:
-        fnm = "resources/presentation/algs.odp"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/presentation/algs.odp"
-            FileIO.is_exist_file(fnm, True)
+        fnm = Path(__file__).parent / "data" / "algs.odp"
 
     slides_info = SlidesInfo(fnm)
     slides_info.main()

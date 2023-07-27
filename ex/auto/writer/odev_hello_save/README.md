@@ -2,7 +2,7 @@
 
 This example creates a new text document, containing two short paragraphs, and saves it as "hello.odt".
 
-In this example the file "hello.odt" is saved in the project root folder.
+In this example the file "hello.odt" is saved in a `tmp` directory of the current working directory.
 
 ## Automate
 
@@ -28,6 +28,28 @@ From project root folder.
 
 ```ps
 python .\ex\auto\writer\odev_hello_save\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_hello_save'
+```
+
+This will copy the `odev_hello_save` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_hello_save
+python -m start
 ```
 
 ## See

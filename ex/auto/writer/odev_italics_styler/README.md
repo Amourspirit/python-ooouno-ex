@@ -35,7 +35,7 @@ Display a message box asking if you want to close document.
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python -m start --file "./data/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ### Linux/Mac
@@ -43,7 +43,7 @@ python -m start --file "../../../../resources/odt/cicero_dummy.odt" --word pleas
 From project root folder.
 
 ```sh
-python ./ex/auto/writer/odev_italics_styler/start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python ./ex/auto/writer/odev_italics_styler/start.py --file "ex/auto/writer/odev_italics_styler/data/cicero_dummy.odt" --word pleasure green --word pain red
 ```
 
 ### Windows
@@ -51,7 +51,29 @@ python ./ex/auto/writer/odev_italics_styler/start.py --file "resources/odt/cicer
 From project root folder.
 
 ```ps
-python .\ex\auto\writer\odev_italics_styler\start.py --file "resources/odt/cicero_dummy.odt" --word pleasure green --word pain red
+python .\ex\auto\writer\odev_italics_styler\start.py --file "ex/auto/writer/odev_italics_styler/data/cicero_dummy.odt" --word pleasure green --word pain red
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_italics_styler'
+```
+
+This will copy the `odev_italics_styler` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_italics_styler
+python -m start
 ```
 
 ## Output

@@ -1,8 +1,7 @@
 from __future__ import annotations
 import argparse
 import sys
-
-from ooodev.utils.file_io import FileIO
+from pathlib import Path
 
 from extract_graphics import ExtractGraphics
 
@@ -29,11 +28,9 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 def main() -> int:
     if len(sys.argv) == 1:
-        fnm = "resources/odt/build.odt"
-        if not FileIO.is_exist_file(fnm):
-            fnm = "../../../../resources/odt/build.odt"
+        fnm = Path(__file__).parent / "data" / "build.odt"
         sys.argv.append("-f")
-        sys.argv.append(fnm)
+        sys.argv.append(str(fnm))
 
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")

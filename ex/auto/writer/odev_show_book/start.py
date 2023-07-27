@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
 # Print all the text in every paragraph using enumeration access.
 
 from __future__ import annotations
 import sys
 import argparse
-from typing import cast, Any
+from typing import cast
+from pathlib import Path
 
 import uno
 from com.sun.star.text import XText
@@ -63,15 +62,19 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("--show")
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
 
     # read the current command line args
     args = parser.parse_args()
 
     visible = args.show
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
+    # Using Lo.Loader context manager wrapped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
@@ -89,7 +92,7 @@ def main() -> int:
 
         try:
             if visible:
-                GUI.set_visible(is_visible=visible, odoc=doc)
+                GUI.set_visible(visible=visible, doc=doc)
             print_paras(doc.getText())
 
         finally:

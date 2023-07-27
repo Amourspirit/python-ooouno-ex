@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
-#
 # on wayland (some versions of Linux)
 # may get error:
 #    (soffice:67106): Gdk-WARNING **: 02:35:12.168: XSetErrorHandler() called with a GDK error trap pushed. Don't do that.
-# This seems to be a Wayland/Java compatability issues.
+# This seems to be a Wayland/Java compatibility issues.
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
-
+from __future__ import annotations
 import sys
 import argparse
+from pathlib import Path
 from typing import cast
 
 import uno
@@ -66,8 +64,13 @@ def main() -> int:
     args_add(parser=parser)
 
     if len(sys.argv) <= 1:
-        parser.print_help()
-        return 0
+        # parser.print_help()
+        # return 0
+        pth = Path(__file__).parent / "data" / "badGrammar.odt"
+        sys.argv.append("-s")
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
+        
 
     # read the current command line args
     args = parser.parse_args()
@@ -78,14 +81,13 @@ def main() -> int:
     else:
         delay = 0
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
+    # Using Lo.Loader context manager warped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with BreakContext(
         Lo.Loader(connector=Lo.ConnectSocket(headless=not visible), opt=Lo.Options(verbose=args.verbose))
     ) as loader:
-
         fnm = cast(str, args.file_path)
 
         try:
@@ -97,9 +99,8 @@ def main() -> int:
             raise BreakContext.Break
 
         try:
-
             if visible:
-                GUI.set_visible(is_visible=visible, odoc=doc)
+                GUI.set_visible(visible=visible, doc=doc)
 
             check_sentences(doc)
 

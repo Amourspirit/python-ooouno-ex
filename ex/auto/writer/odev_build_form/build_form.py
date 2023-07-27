@@ -73,7 +73,7 @@ class BuildForm(
             GUI.set_visible(True, BuildForm.doc)
             with Lo.ControllerLock():
                 # use a controller lock to lock screen updating.
-                # This will cut down and screen flashiing and add controls faster.
+                # This will cut down and screen flashing and add controls faster.
                 BuildForm.doc.addEventListener(self)
 
                 tvc = Write.get_view_cursor(BuildForm.doc)
@@ -103,7 +103,6 @@ class BuildForm(
             raise
 
     def create_form(self, doc: XTextDocument) -> None:
-
         # Form has four sections: text, command_button, list_box, grid_control
         # Section 1 has two columns
         if Info.version_info < (7, 5, 0, 0):
@@ -122,7 +121,7 @@ class BuildForm(
             font_color = color_util.StandardColor.BLACK
 
         _doc = BuildForm.doc
-        
+
         font_colored = Font(color=font_color)
 
         props = Forms.add_labelled_control(
