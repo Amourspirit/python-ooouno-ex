@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
 from __future__ import annotations
 import argparse
+import sys
 from typing import cast
+from pathlib import Path
 
 import uno
 from com.sun.star.text import XTextDocument
@@ -81,6 +81,11 @@ def main() -> int:
     # add args to parser
     args_add(parser=parser)
 
+    if len(sys.argv) == 1:
+        pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
+        sys.argv.append("-f")
+        sys.argv.append(str(pth))
+
     # read the current command line args
     args = parser.parse_args()
 
@@ -90,7 +95,7 @@ def main() -> int:
 
     try:
         doc = Write.open_doc(fnm=fnm, loader=loader)
-        GUI.set_visible(is_visible=True, odoc=doc)
+        GUI.set_visible(visible=True, doc=doc)
 
         show_paragraphs(doc)
         print(f"Word count: {count_words(doc)}")
