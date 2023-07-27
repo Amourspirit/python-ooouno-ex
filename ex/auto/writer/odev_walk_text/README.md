@@ -4,10 +4,10 @@
 
 # Walk Text
 
-Using [OOO Development Tools] (ODEV) this example demonstrates how to control Writer application's visible cursor.
+Using [OOO Development Tools] (OooDev) this example demonstrates how to control Writer application's visible cursor.
 Moves cursor by paragraph, line and word.
 
-See [Extract Writer Text] for an example how to silence ODEV extra terminal output.
+See [Extract Writer Text] for an example how to silence OooDev extra terminal output.
 
 ## See
 
@@ -26,23 +26,45 @@ See [source code](./start.py)
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/cicero_dummy.odt"
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Linux/Mac
 
-From project root folder.
+From project root folder (for default file).
 
 ```sh
-python ./ex/auto/writer/odev_walk_text/start.py --file "resources/odt/cicero_dummy.odt"
+python ./ex/auto/writer/odev_walk_text/start.py
 ```
 
 ### Windows
 
-From project root folder.
+From project root folder (for default file).
 
 ```ps
-python .\ex\auto\writer\odev_walk_text\start.py --file "resources/odt/cicero_dummy.odt"
+python .\ex\auto\writer\odev_walk_text\start.py
+```
+
+## Live LibreOffice Python
+
+Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
+
+Start Live-LibreOffice-Python in a Codespace or in a Dev Container.
+
+In the terminal run:
+
+```bash
+cd examples
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_walk_text'
+```
+
+This will copy the `odev_walk_text` example to the examples folder.
+
+In the terminal run:
+
+```bash
+cd odev_walk_text
+python -m start --file "./data/cicero_dummy.odt"
 ```
 
 ### Output
