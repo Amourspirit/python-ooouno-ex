@@ -10,6 +10,14 @@ See [source code](./start.py)
 
 The following command will run automation that generates a new Writer document and writes "Hello World" into it.
 
+### Dev Container
+
+Run from this example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 Run from this example folder.

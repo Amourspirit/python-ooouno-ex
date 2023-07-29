@@ -133,7 +133,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Write.save_doc(text_doc=doc, fnm="italicized.doc")
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(exist_ok=True)
+            Write.save_doc(text_doc=doc, fnm=pth / "italicized.doc")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",

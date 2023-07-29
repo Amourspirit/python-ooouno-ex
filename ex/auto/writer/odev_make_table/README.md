@@ -19,6 +19,14 @@ Displays a message box asking if you want to save document.
 
 Display a message box asking if you want to close document.
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From this folder.

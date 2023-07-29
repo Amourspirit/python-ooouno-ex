@@ -1,10 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 from __future__ import annotations
 import sys
 import argparse
 from typing import cast
+from pathlib import Path
 
 
 from ooodev.office.write import Write
@@ -78,7 +76,10 @@ def main() -> int:
 
         try:
             append_text_files(doc, *args.docs)
-            Lo.save_doc(doc, Info.get_name(fnm) + "_APPENDED." + Info.get_ext(fnm))
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(exist_ok=True)
+            doc_pth = pth / (Info.get_name(fnm) + "_APPENDED." + Info.get_ext(fnm))
+            Lo.save_doc(doc, doc_pth)
         finally:
             Lo.close_doc(doc)
 

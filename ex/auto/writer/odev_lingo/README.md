@@ -28,6 +28,14 @@ See [source code](./start.py)
 
 ## Automate
 
+### Dev Container
+
+From this folder.
+
+```sh
+python start.py
+```
+
 ### Cross Platform
 
 From this folder.

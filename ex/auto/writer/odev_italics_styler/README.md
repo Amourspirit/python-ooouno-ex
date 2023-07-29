@@ -12,7 +12,7 @@ In this example:
 Search for all occurrences of a `pleasure` (case-insensitive) and set their style to be in green italics.
 Search for all occurrences of a `pain` (case-insensitive) and set their style to be in red italics.
 
-Save changed  text to "italicized.doc" in current working folder.
+Save changed  text to "tmp/italicized.doc" of current working folder.
 
 ## See
 
@@ -29,6 +29,14 @@ See [source code](./start.py)
 Displays a message box asking if you want to save document.
 
 Display a message box asking if you want to close document.
+
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start --file "./data/cicero_dummy.odt" --word pleasure green --word pain red
+```
 
 ### Cross Platform
 

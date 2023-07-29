@@ -52,6 +52,7 @@ def main() -> int:
 
         # show the document
         GUI.set_visible()
+        Lo.delay(300) # add delay to give dispatch a little time.
         GUI.zoom(GUI.ZoomEnum.ENTIRE_PAGE)
         Lo.delay(4_000) # give user time to see the document before styling.
 

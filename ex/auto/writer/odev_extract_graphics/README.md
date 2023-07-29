@@ -17,12 +17,20 @@ See Also:
 
 ## Automate
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start --file "./data/build.odt"
+```
+
 ### Cross Platform
 
 From this folder.
 
 ```sh
-python -m start --file "../../../../resources/odt/build.odt"
+python -m start --file "./data/build.odt"
 ```
 
 ### Linux/Mac
