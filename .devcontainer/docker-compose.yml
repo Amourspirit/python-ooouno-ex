@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  libreoffice_ex:
+    network_mode: "bridge"
+    # env_file: user.env
+    build:
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        LO_VERSION: "7.5.3"
+        CONFIG_DIR: /config
+    # user: root
+    container_name: libreoffice_ex
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - TZ=Etc/UTC
+      - PUID=0
+      - PGID=0
+      - CONFIG_DIR=/config
+      - DEV_CONTAINER=1
+      - WORK_DIR=/workspace/libreoffice_ex
+    volumes:
+      - type: bind
+        source: ../
+        target: /workspace/libreoffice_ex
+      - type: bind
+        source: ../Documents
+        target: /config/Documents
+      - type: bind
+        source: ../macro
+        target: /config/.config/libreoffice/4/user/Scripts/python
+      - type: volume
+        source: app_lo_config
+        target: /config
+      - type: volume
+        source: app_virtual_env
+        target: /workspace/libreoffice_ex/.venv
+    
+    ports:
+      - 3004:3000
+      - 3005:3001
+    restart: unless-stopped
+
+volumes:
+  app_virtual_env:
+  app_lo_config:
