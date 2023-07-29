@@ -23,6 +23,14 @@ A message box is display once the document has been processed asking if you want
 
 The following command will run automation that opens Calc document and ask for password.
 
+### Dev Container
+
+Run from this folder.
+
+```sh
+python -m start --show --file "./data/totals.ods"
+```
+
 ### Cross Platform
 
 From this folder.

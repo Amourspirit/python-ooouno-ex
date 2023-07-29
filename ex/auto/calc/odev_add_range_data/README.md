@@ -2,9 +2,9 @@
 
 This is a basic example that opens up a new Calc document and inserts array of data and a formula.
 
-This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
+This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (OooDev).
 
-ODEV makes this demo possible with just a few lines of code.
+OooDev makes this demo possible with just a few lines of code.
 
 See [source code](./start.py)
 
@@ -16,7 +16,13 @@ A message box is display once the document has been created asking if you want t
 
 The following command will run automation that generates a new Calc with data.
 
-From Project Root
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start
+```
 
 ### Cross platform
 

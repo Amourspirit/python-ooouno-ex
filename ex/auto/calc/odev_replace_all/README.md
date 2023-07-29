@@ -33,24 +33,32 @@ Starts
 
 A message box is display once the document has been processed asking if you want to close the document.
 
+### Dev Container
+
+Run from this folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From this folder.
 
 ```sh
-python -m start -h
+python -m start
 ```
 
 ### Linux/Mac
 
 ```sh
-python ./ex/auto/calc/odev_replace_all/start.py -h
+python ./ex/auto/calc/odev_replace_all/start.py
 ```
 
 ### Windows
 
 ```ps
-python .\ex\auto\calc\odev_replace_all\start.py -h
+python .\ex\auto\calc\odev_replace_all\start.py
 ```
 
 ## Live LibreOffice Python

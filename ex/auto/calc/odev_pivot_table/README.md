@@ -25,6 +25,14 @@ A message box is display once the document has been processed asking if you want
 - `-o` Optional output path such as `-o "tmp/piviot.ods"`
 - `-h` Displays help on options.
 
+### Dev Container
+
+Run from this folder.
+
+```sh
+python -m start -p 1
+```
+
 ### Cross Platform
 
 From this folder.
