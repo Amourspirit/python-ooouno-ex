@@ -12,7 +12,7 @@ Example creates a deck of four or five slides, illustrating different aspects of
 - Slide 2. A slide with a title, bullet points, and an image.
 - Slide 3. A slide with a title, and an embedded video which plays automatically when that slide appears during a slide show.
 - Slide 4. A slide with an ellipse and a rounded rectangle acting as buttons. During a slide show, clicking on the ellipse starts a video playing in an external viewer. Clicking on the rounded rectangle causes the slide show to jump to the first slide in the deck.
-- Slide 5. (Windows only) This slide contains eight shapes generated using dispatches, including special symbols, block arrows, 3D shapes, flowchart elements, callouts, and stars.
+- Slide 5. (Windows only) This slide contains eight shapes generated using dispatches, including special symbols, block arrows, 3D shapes, flowchart elements, call-outs, and stars.
 
 This demo uses [OOO Development Tools]
 
@@ -26,6 +26,14 @@ See Also:
 ## Automate
 
 A message box is display once the slide show has ended asking if you want to close the document.
+
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
 
 ### Cross Platform
 

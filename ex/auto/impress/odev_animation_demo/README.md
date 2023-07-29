@@ -14,6 +14,14 @@ See Also:
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.
@@ -33,8 +41,6 @@ python ./ex/auto/impress/odev_animation_demo/start.py
 ```ps
 python .\ex\auto\impress\odev_animation_demo\start.py
 ```
-
-[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 
 ## Live LibreOffice Python
 
@@ -57,3 +63,5 @@ In the terminal run:
 cd odev_animation_demo
 python -m start
 ```
+
+[OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

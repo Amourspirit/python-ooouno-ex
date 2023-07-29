@@ -24,6 +24,14 @@ python -m start --help
 
 If `--output_dir` arg is omitted then a temporary dir is created in the systems temp dir and the output image is saved there.
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0
+```
+
 ### Cross Platform
 
 From current example folder.

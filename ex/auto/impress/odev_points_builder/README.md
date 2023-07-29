@@ -26,6 +26,14 @@ python ./ex/auto/impress/odev_points_builder/start.py "resources/data/pointsInfo
 
 If no parameters are passed then the script is run with the above parameters.
 
+### Dev Contanier
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.
