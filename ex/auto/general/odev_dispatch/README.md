@@ -4,7 +4,7 @@
 
 # Dispatch Commands Example
 
-This example demonstrates how to dispatch commands using [OOO Development Tools] (ODEV).
+This example demonstrates how to dispatch commands using [OOO Development Tools] (OooDev).
 
 Also demonstrates how to create message dialog.
 
@@ -22,6 +22,14 @@ A message box is display once the document has been processed asking if you want
 
 Running the following command opens a Write document, puts it into read-only mode.
 Next a Get Involved wep page is opened in local web browser.
+
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start -d "./data/story.odt"
+```
 
 ### Cross Platform
 

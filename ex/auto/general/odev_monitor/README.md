@@ -23,7 +23,7 @@ when bridge is gone away but both are included for example purposes.
 
 A `main_loop()` method is called that watches until Office is closed.
 
-This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (ODEV).
+This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (OooDev).
 
 See Also:
 
@@ -34,6 +34,14 @@ See Also:
 - [Office Window Listener Example](../odev_listen/)
 
 ## Automate
+
+### Dev Container
+
+Run from this example folder.
+
+```sh
+python start.py
+```
 
 ### Cross Platform
 

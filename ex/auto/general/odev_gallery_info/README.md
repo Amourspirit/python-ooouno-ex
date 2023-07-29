@@ -14,6 +14,14 @@ See Also:
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.
