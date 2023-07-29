@@ -34,6 +34,14 @@ An integer value the determines the levels to draw [Hilbert curve]. The default 
 python -m start 4
 ```
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start 4
+```
+
 ### Cross Platform
 
 From current example folder.
