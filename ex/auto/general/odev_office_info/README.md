@@ -46,6 +46,14 @@ User Data Properties
 
 ## Automate
 
+### Dev Container
+
+Run from current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 Run from current example folder.

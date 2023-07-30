@@ -62,6 +62,14 @@ The document is not saved by default.
 
 A message box is display once the document has been created asking if you want to close the document.
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.

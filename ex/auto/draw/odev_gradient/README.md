@@ -91,6 +91,14 @@ Creates *bitmap file*
 
 A message box is display once the document has been created asking if you want to close the document.
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start -h
+```
+
 ### Cross Platform
 
 From current example folder.

@@ -38,6 +38,14 @@ Possible `-k` options are:
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start -k happy_stock
+```
+
 ### Cross Platform
 
 From current example folder.

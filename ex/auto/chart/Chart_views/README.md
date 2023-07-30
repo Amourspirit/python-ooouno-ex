@@ -26,6 +26,14 @@ Possible `-k` options are:
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start -k bar
+```
+
 ### Cross Platform
 
 From current example folder.

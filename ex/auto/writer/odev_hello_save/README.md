@@ -6,6 +6,14 @@ In this example the file "hello.odt" is saved in a `tmp` directory of the curren
 
 ## Automate
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From this folder.

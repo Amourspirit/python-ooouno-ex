@@ -37,6 +37,14 @@ No. of names: 3
 
 ## Automate
 
+### Dev Container
+
+Run from this folder.
+
+```sh
+python -m start -f "./data/totals.ods"
+```
+
 ### Cross Platform
 
 From this folder.

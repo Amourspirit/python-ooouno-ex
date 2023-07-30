@@ -12,11 +12,11 @@ When the script starts it will call `minimize()` and `maximize()` several times 
 
 As (*Write in this case*) window is min, max, activated etc. The events are captured and printed to the screen.
 
-This demo uses [OOO Development Tools] (ODEV).
+This demo uses [OOO Development Tools] (OooDev).
 
 A `main_loop()` method is called that watches until Office is closed.
 
-[ODEV] makes this demo possible with just a few lines of code.
+[OooDev] makes this demo possible with just a few lines of code.
 
 See Also:
 
@@ -51,6 +51,14 @@ This means there is no need to create a class that inherits from [XTopWindowList
 - `-a` runs demo using `DocWindowAdapter` else `DocWindow` is used.
 - `-t` runs demo and automatically closes office.
 - `-h` Displays help on options.
+
+### Dev Container
+
+Run from this folder.
+
+```sh
+python start.py
+```
 
 ### Cross Platform
 
@@ -154,4 +162,4 @@ python -m start
 [XTopWindowListener]: https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1awt_1_1XTopWindowListener.html
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-[ODEV]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OooDev]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

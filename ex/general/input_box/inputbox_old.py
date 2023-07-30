@@ -23,7 +23,7 @@ class InputBox:
             message (str): message message to show on the dialog
             title (str, optional): title window title. Defaults to "".
             default (str, optional): default value in dialog. Defaults to "".
-            x (int, optional): dialog positio in twips. Defaults to -1.
+            x (int, optional): dialog position in twips. Defaults to -1.
             y (int, optional): dialog position in twips. Defaults to -1.
         """
         self._message: str = message

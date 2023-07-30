@@ -8,7 +8,7 @@ Example of building different kinds of Spreadsheet Tables.
 
 Also demonstrates create a chart and inserting an image.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 
@@ -18,6 +18,14 @@ See Also:
 ## Automate
 
 A message box is display once the document has been processed asking if you want to close the document.
+
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start -h
+```
 
 ### Cross Platform
 

@@ -1,0 +1,4 @@
+psutil>=5.9.5
+lo-dev-search>=2.0.2
+oooenv>=0.2.2
+ooo-dev-odh>=0.1.4

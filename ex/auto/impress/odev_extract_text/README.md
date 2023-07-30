@@ -31,6 +31,14 @@ python ./ex/auto/impress/odev_extract_text/start.py "resources/presentation/algs
 
 If no parameters are passed then the script is run with the above parameters.
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.

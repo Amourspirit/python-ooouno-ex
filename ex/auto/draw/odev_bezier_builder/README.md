@@ -23,6 +23,14 @@ Each value represents a different Bezier curve file.
 python -m start 1
 ```
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.
