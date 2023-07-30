@@ -57,13 +57,21 @@ elif result == MessageBoxResultsEnum.NO:
 
 ## Build
 
+For automatic build run the following command from this folder.
+
+```sh
+make build
+```
+
+The following instructions are for manual build.
+
 Build will compile the python scripts for this example into a single python script.
 
 The following command will compile script as `msgbox.py` and embed it into`msgbox.odt`
-The output is written into `build` folder in the projects root.
+The output is written into `build/message_box` folder in the projects root.
 
 ```sh
-oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt"
+oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt" --build-dir "build/message_box"
 ```
 
 ## Source

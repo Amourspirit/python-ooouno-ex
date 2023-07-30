@@ -17,6 +17,12 @@ The output is written into `build` folder in the projects root.
 oooscript compile --embed --config "ex/calc/cell_events/config.json" --embed-doc "ex/calc/cell_events/cell_events.ods"
 ```
 
+Alternatively run `make` from this folder.
+
+```bash
+make build
+```
+
 ![calc_on_sel_change](https://user-images.githubusercontent.com/4193389/166338567-e597c1e9-854c-4254-bbf8-fb8f94598797.gif)
 
 ## Live LibreOffice Python

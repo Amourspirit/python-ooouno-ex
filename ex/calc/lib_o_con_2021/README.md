@@ -16,14 +16,25 @@ For the supporting files the res folder must be located in the same folder as [l
 
 ## Build
 
+If not on windows you can run the following command to build the example from this folder.
+
+```sh
+make build
+```
+
+The following instructions are for manual build.
+
 Build will compile the python scripts for this example into a single python script.
 
 The following command will compile script as `lib_o_con_2021.py` and embed it into `lib_o_con_2021.ods`
-The output is written into `build` folder in the projects root.
+The output is written into `build/lib_o_con_2021` folder in the projects root.
 
 ```sh
-oooscript compile --embed --config "ex/calc/lib_o_con_2021/config.json" --embed-doc "ex/calc/lib_o_con_2021/lib_o_con_2021.ods"
+oooscript compile --embed --config "ex/calc/lib_o_con_2021/config.json" --embed-doc "ex/calc/lib_o_con_2021/lib_o_con_2021.ods" --build-dir "build/lib_o_con_2021"
 ```
+
+Also the `res` folder of this example needs copied to the `build/lib_o_con_2021` folder.
+
 
 ## Live LibreOffice Python
 

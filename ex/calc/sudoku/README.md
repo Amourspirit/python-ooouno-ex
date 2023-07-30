@@ -11,10 +11,10 @@ To run the example you need to use LibreOffice >= `7.2`.
 Build will compile the python scripts for this example into a single python script.
 
 The following command will compile script as `calc-sudoku.py` and embed it into `calc-sudoku.ods`
-The output is written into `build` folder in the projects root.
+The output is written into `build/sudoku` folder in the projects root.
 
 ```sh
-oooscript compile --embed --config "ex/calc/sudoku/config.json" --embed-doc "ex/calc/sudoku/calc-sudoku.ods"
+oooscript compile --embed --config "ex/calc/sudoku/config.json" --embed-doc "ex/calc/sudoku/calc-sudoku.ods" --build-dir "build/sudoku"
 ```
 
 ## Sample Document
