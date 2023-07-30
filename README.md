@@ -1,4 +1,4 @@
-# LibreOffice Python UNO Examples
+# Live LibreOffice Python UNO Examples
 
 Examples for [ooouno], [OOO Development Tools], [ScriptForge] projects and more.
 
@@ -25,7 +25,17 @@ Checkout the LibreOffice Calc [Sudoku example](./ex/calc/sudoku).
 
 ![calc_sudoku](https://user-images.githubusercontent.com/4193389/165391098-883a7647-5fc8-47de-b028-4c2c98337abe.png)
 
+## Running Project Examples
+
+This project is set up to work with [Vs Code](https://code.visualstudio.com/) and [Github Codespaces](https://docs.github.com/en/codespaces/overview) or in a in a Development Container on your local computer.
+
+All of the examples can be run from a web browser using [Github Codespaces](https://docs.github.com/en/codespaces/overview) or in a in a Development Container on your local computer.
+
+This project's Development container is based off [Live LibreOffice Python](https://github.com/Amourspirit/live-libreoffice-python) template. See the [Live LibreOffice Python Wiki](https://github.com/Amourspirit/live-libreoffice-python/wiki) for more information.
+
 ## Project Installation
+
+Installing this project is not necessary if you are using [Github Codespaces](https://docs.github.com/en/codespaces/overview) or in a in a Development Container on your local computer, However; if you want to install locally follow the instructions below.
 
 This project use a virtual environment for development purposes.
 
