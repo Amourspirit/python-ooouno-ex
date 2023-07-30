@@ -2,9 +2,11 @@
 
 Message box is a dialog box give user feedback.
 
-## sample document
+See Also: [OooDev Message Box](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/dialog/msgbox.html)
 
-see sample LibreOffice Writer document, [msgbox.odt](msgbox.odt)
+## Sample document
+
+See sample LibreOffice Writer document, [msgbox.odt](msgbox.odt)
 
 ### sample code
 
@@ -15,14 +17,12 @@ see [script.py](script.py) for sample usage.
 ### Simple user info
 
 ```python
-from src.examples.message_box.msgbox import (
-    msgbox,
-    MessageBoxButtonsEnum,
-    MessageBoxType
+from ooodev.dialog.msgbox import (
+    MsgBox,  MessageBoxButtonsEnum, MessageBoxType
 )
 
-msgbox(
-    message="Hello World",
+results = MsgBox.msgbox(
+    msg="Hello World",
     title="Nice Day!",
     buttons=MessageBoxButtonsEnum.BUTTONS_OK,
     boxtype=MessageBoxType.INFOBOX,
@@ -32,15 +32,12 @@ msgbox(
 ### Ask user Yes or No
 
 ```python
-from src.examples.message_box.msgbox import (
-    msgbox,
-    MessageBoxButtonsEnum,
-    MessageBoxResultsEnum,
-    MessageBoxType
+from ooodev.dialog.msgbox import (
+    MsgBox,  MessageBoxButtonsEnum, MessageBoxResultsEnum, MessageBoxType
 )
 
-result = msgbox(
-        message="Are you sure you want to by coffee?",
+result = MsgBox.msgbox(
+        msg="Are you sure you want to by coffee?",
         buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         title="☕ - coffee - ☕",
         boxtype=MessageBoxType.QUERYBOX,
@@ -57,15 +54,52 @@ elif result == MessageBoxResultsEnum.NO:
 
 ## Build
 
+For automatic build run the following command from this folder.
+
+```sh
+make build
+```
+
+The following instructions are for manual build.
+
 Build will compile the python scripts for this example into a single python script.
 
 The following command will compile script as `msgbox.py` and embed it into`msgbox.odt`
-The output is written into `build` folder in the projects root.
+The output is written into `build/message_box` folder in the projects root.
 
 ```sh
-oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt"
+oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt" --build-dir "build/message_box"
 ```
 
-## Source
+## Run Directly
 
-see [msgbox.py](msgbox.py)
+To start LibreOffice and display a message box run the following command from this folder.
+
+```sh
+make msg-short
+```
+
+or
+
+```sh
+make msg-long
+```
+
+or
+
+```sh
+make msg-warn
+```
+
+or
+
+```sh
+make msg-error
+```
+
+or
+
+```sh
+make msg-yes
+```
+

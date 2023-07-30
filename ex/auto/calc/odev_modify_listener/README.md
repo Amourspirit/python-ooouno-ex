@@ -49,12 +49,20 @@ Both classes are responsible for starting office.
 - `-t` runs demo and automatically closes office.
 - `-h` Displays help on options.
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 Run from this folder.
 
 ```sh
-python start.py
+python -m start
 ```
 
 ### Linus/Mac

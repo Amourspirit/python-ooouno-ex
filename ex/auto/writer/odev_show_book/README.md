@@ -17,6 +17,14 @@ See [source code](./start.py)
 
 ## Automate
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start --file "./data/cicero_dummy.odt"
+```
+
 ### Cross Platform
 
 From this folder.

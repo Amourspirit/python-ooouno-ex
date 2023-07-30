@@ -1,5 +1,3 @@
-
-
 # TAB CONTROL DIALOG BOX
 
 LibreOffice do not a Tab Control in the macro editor.
@@ -44,13 +42,31 @@ For instance [XItemListener](https://api.libreoffice.org/docs/idl/ref/interfacec
 
 ## Build
 
+For automatic build run the following command from this folder.
+
+```sh
+make build
+```
+
+The following instructions are for manual build.
+
 Build will compile the python scripts for this example into a single python script.
 
 The following command will compile script as `tab_dialog.py` and embed it into `tab_dialog.odt`
 The output is written into `build` folder in the projects root.
 
 ```sh
-oooscript compile --embed --config "ex/general/tab_dialog/config.json" --embed-doc "ex/general/tab_dialog/tab_dialog.odt"
+oooscript compile --embed --config "ex/general/tab_dialog/config.json" --embed-doc "ex/general/tab_dialog/tab_dialog.odt" --build-dir "build/tab_dialog"
+```
+
+## Run Directly
+
+Even though this is a multi-script example, it is possible to run and debug the example directly from this source folder. See the `run.py` script in this folder.
+
+To start LibreOffice and display a message box run the following command from this folder.
+
+```sh
+make run
 ```
 
 ## Source

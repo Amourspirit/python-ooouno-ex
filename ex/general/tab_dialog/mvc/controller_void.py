@@ -2,7 +2,8 @@
 from typing import List, Union
 from .interface import IViewMultiSyntax, IControllerMultiSyntax, IControllerVoid
 from .enums import VoidEnum
-from ...message_box.lib.msgbox import msgbox, MessageBoxType
+# from ...message_box.lib.msgbox import msgbox, MessageBoxType
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType
 
 
 class ControllerVoid(IControllerVoid):
@@ -15,13 +16,13 @@ class ControllerVoid(IControllerVoid):
 
     def write(self):
         if self._void:
-            msgbox(
-                message=f"Selected Void Value of {self._void.name}",
+            _ =  MsgBox.msgbox(
+                msg=f"Selected Void Value of {self._void.name}",
                 title="VOID",
                 boxtype=MessageBoxType.INFOBOX,
             )
         else:
-            msgbox("Nothing selected.", title="VOID", boxtype=MessageBoxType.WARNINGBOX)
+            _= MsgBox.msgbox("Nothing selected.", title="VOID", boxtype=MessageBoxType.WARNINGBOX)
 
     def get_list_data(self) -> List[str]:
         return self._model.get_void_list_data()

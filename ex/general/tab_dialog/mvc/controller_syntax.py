@@ -2,7 +2,8 @@
 from typing import List, Union
 from .interface import IViewMultiSyntax, IControllerMultiSyntax, IControllerSyntax
 from .enums import TextEnum, TimeEnum, SyntaxEnum
-from ...message_box.lib.msgbox import msgbox, MessageBoxType
+# from ...message_box.lib.msgbox import msgbox, MessageBoxType
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType
 
 class ControllerSyntax(IControllerSyntax):
     def __init__(self, controller: IControllerMultiSyntax, view: IViewMultiSyntax):
@@ -25,13 +26,13 @@ class ControllerSyntax(IControllerSyntax):
             msg = f"Selected: {self._syntax.name}\nTime: {self.time.name}\nSuffix: {self.text.name}"
             msg += f"\nDPV: {self.dpv}"
             
-            msgbox(
-                message=msg,
+            _ = MsgBox.msgbox(
+                msg=msg,
                 title="SYNTAX",
                 boxtype=MessageBoxType.INFOBOX,
             )
         else:
-            msgbox("Nothing selected.", title="SYNTAX", boxtype=MessageBoxType.WARNINGBOX)
+            _ =  MsgBox.msgbox("Nothing selected.", title="SYNTAX", boxtype=MessageBoxType.WARNINGBOX)
 
     # endregion Handler Methods
 

@@ -10,6 +10,14 @@ The other Event Listening Classes are not needed for this example but are includ
 
 This a simple example only.
 
+## Dev Container
+
+From current example folder.
+
+```shell
+python -m start
+```
+
 ## Cross Platform
 
 From current example folder.

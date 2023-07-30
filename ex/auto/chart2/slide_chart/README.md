@@ -15,6 +15,14 @@ The `Chart2` has been tested with LibreOffice `7.3`
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 From current example folder.

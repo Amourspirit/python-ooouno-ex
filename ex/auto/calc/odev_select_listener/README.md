@@ -30,12 +30,20 @@ See Also:
 - `-t` runs demo and automatically closes office.
 - `-h` Displays help on options.
 
+### Dev Container
+
+Run from this folder.
+
+```sh
+python -m start
+```
+
 ### Cross Platform
 
 Run from this folder.
 
 ```sh
-python start.py
+python -m start
 ```
 
 ### Linus/Mac

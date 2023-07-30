@@ -11,7 +11,7 @@ Demonstrates the following:
 - Access the text.
 - Add an annotation.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 
@@ -20,6 +20,14 @@ See Also:
 ## Automate
 
 A message box is display once the document has been processed asking if you want to close the document.
+
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start
+```
 
 ### Cross Platform
 

@@ -2,11 +2,11 @@
 
 This example shows how to print the contents of a Writer document to the console/terminal.
 
-This example uses [OOO Development Tools] (ODEV).
+This example uses [OOO Development Tools] (OooDev).
 
 ## Events
 
-This example also use ODEV's events to hook and suppress internal printing via [Class LoEvents].
+This example also use OooDev's events to hook and suppress internal printing via [Class LoEvents].
 
 ## See
 
@@ -19,6 +19,14 @@ See Also:
 See [source code](./start.py)
 
 ## Automate
+
+### Dev Container
+
+From project root folder.
+
+```sh
+python -m start --file "./data/cicero_dummy.odt"
+```
 
 ### Cross Platform
 

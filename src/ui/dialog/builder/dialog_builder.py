@@ -1,6 +1,7 @@
 # coding: utf-8
+from ooodev.utils.lo import Lo
 from ooo.dyn.awt.pos_size import PosSize
-from typing import Dict, Set, Union, TYPE_CHECKING, overload, TypeVar
+from typing import cast, Set, Union, TYPE_CHECKING, TypeVar
 import uno
 from .control_wrapper import ControlWrapper
 if TYPE_CHECKING:
@@ -36,7 +37,8 @@ class DialogBuilder:
         self._x: int = 0
         self._y: int = 0
         self._ctl_names: Set[str] = set()
-        self._ctx: 'XComponentContext' = uno.getComponentContext()
+        # self._ctx = cast('XComponentContext', uno.getComponentContext())
+        self._ctx  = Lo.XSCRIPTCONTEXT.getComponentContext()
         self._dialog: 'UnoControlDialog' = self._create(
             "com.sun.star.awt.UnoControlDialog")
         self._dialog_model: 'UnoControlDialogModel' = self._create(

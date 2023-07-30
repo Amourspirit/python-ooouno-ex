@@ -23,6 +23,14 @@ See [source code](./start.py)
 
 ## Automate
 
+### Dev Container
+
+From current example folder.
+
+```shell
+python -m start --file "./data/blank.odt" "./data/story.odt" "./data/cicero_dummy.odt"
+```
+
 ### Cross Platform
 
 From current example folder.

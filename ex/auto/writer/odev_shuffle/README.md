@@ -26,6 +26,14 @@ Displays a message box asking if you want to save document.
 
 Display a message box asking if you want to close document.
 
+### Dev Container
+
+From this folder.
+
+```shell
+python -m start --file "./data/cicero_dummy.odt"
+```
+
 ### Cross Platform
 
 From this folder.

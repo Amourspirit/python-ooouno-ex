@@ -23,6 +23,13 @@ See Also:
 - `-s <num>` runs demo for pivot table example one (`-s 1`) or two (`-s 2`).
 - `-h` Displays help on options.
 
+### Cross Platform
+
+Run from this folder.
+
+```sh
+python -m start -s 1
+```
 
 ### Cross Platform
 

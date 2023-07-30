@@ -2,7 +2,7 @@
     "terminal.integrated.shellIntegration.enabled": true,
     "terminal.integrated.shellIntegration.decorationsEnabled":"gutter",
     "python.formatting.provider": "black",
-    "python.defaultInterpreterPath": "${workspaceRoot}/.venv/bin/python",
+    "python.defaultInterpreterPath": "${workspaceRoot}/.venv/bin/python3",
     "autoDocstring.docstringFormat": "google",
     "workbench.colorCustomizations": {
         "[Monokai]": {
@@ -95,9 +95,12 @@
         "INFOBOX",
         "msgbox",
         "ooodev",
+        "oooscript",
         "Protectable",
         "QUERYBOX",
         "soffice",
-        "unprotect"
+        "unprotect",
+        "WARNINGBOX",
+        "XSCRIPTCONTEXT"
     ]
 }

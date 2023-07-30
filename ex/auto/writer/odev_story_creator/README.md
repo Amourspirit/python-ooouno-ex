@@ -23,6 +23,14 @@ See [source code](./start.py)
 
 ## Automate
 
+### Dev Container
+
+From this folder.
+
+```sh
+python -m start --show --verbose  --file "./data/scandal.txt"
+```
+
 ### Cross Platform
 
 From this folder.
