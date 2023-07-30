@@ -1,34 +1,27 @@
-# coding: utf-8
-from ex.general.message_box.lib.msgbox import (
-    msgbox,
-    MessageBoxButtonsEnum,
-    MessageBoxType,
-)
-from inputbox import InputBox
+from ooodev.dialog.input import Input
+from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum
+from ooodev.macro.macro_loader import MacroLoader
 
 
 def show_msg_value(msg: str) -> None:
-    msgbox(
-        message=msg,
-        title="Input box Result",
-        buttons=MessageBoxButtonsEnum.BUTTONS_OK,
-        boxtype=MessageBoxType.INFOBOX,
+    _ = MsgBox.msgbox(
+        msg=msg, title="Input box Result", boxtype=MessageBoxType.INFOBOX, buttons=MessageBoxButtonsEnum.BUTTONS_OK
     )
 
 
 def show_msg_no_value() -> None:
-    msgbox(
-        message="No input",
+    _ = MsgBox.msgbox(
+        msg="No Input",
         title="Input box Result",
-        buttons=MessageBoxButtonsEnum.BUTTONS_OK,
         boxtype=MessageBoxType.WARNINGBOX,
+        buttons=MessageBoxButtonsEnum.BUTTONS_OK,
     )
 
 
 def input_box(*args, **kwargs):
-    box = InputBox("", title="Input")
-    result = box.show()
-    if len(result) == 0:
-        show_msg_no_value()
-    else:
-        show_msg_value(result)
+    with MacroLoader():
+        result = Input.get_input(title="Input", msg="")
+        if len(result) == 0:
+            show_msg_no_value()
+        else:
+            show_msg_value(result)

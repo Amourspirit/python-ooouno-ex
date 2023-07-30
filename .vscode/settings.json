@@ -95,9 +95,12 @@
         "INFOBOX",
         "msgbox",
         "ooodev",
+        "oooscript",
         "Protectable",
         "QUERYBOX",
         "soffice",
-        "unprotect"
+        "unprotect",
+        "WARNINGBOX",
+        "XSCRIPTCONTEXT"
     ]
 }
