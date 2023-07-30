@@ -9,7 +9,8 @@ ARG CONFIG_DIR=/config
 RUN apk update \
     && apk add --no-cache --update htop \
     linux-headers \
-    libc-dev \  
+    libc-dev \
+    rsync \
     gcc \
     python3-dev \
     git \
