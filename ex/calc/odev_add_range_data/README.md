@@ -9,7 +9,6 @@ See [Add Range Automation](../../auto/calc/odev_add_range_data)
 
 See [odev_add_range.ods](odev_add_range.ods).
 
-
 ## Build
 
 For automatic build run the following command from this folder.
@@ -27,6 +26,14 @@ The output is written into `build` folder in the projects root.
 
 ```sh
 oooscript compile --embed --config "ex/calc/odev_add_range_data/config.json" --embed-doc "ex/calc/odev_add_range_data/odev_add_range.ods" -build-dir "build/add_range_data"
+```
+
+## Run Directly
+
+To start LibreOffice and display a message box run the following command from this folder.
+
+```sh
+make run
 ```
 
 ![calc_range_macro](https://user-images.githubusercontent.com/4193389/173204999-924f12f6-59df-4bfe-8c2c-bee4cc5b9d6b.gif)

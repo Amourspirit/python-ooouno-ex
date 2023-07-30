@@ -41,7 +41,7 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
 
 def create_array() -> None:
     # get access to current Calc Document
-    doc = Calc.get_ss_doc(Lo.ThisComponent)
+    doc = Calc.get_ss_doc(Lo.xscript_context.getDocument())
 
     # get access to current spreadsheet
     sheet = Calc.get_active_sheet(doc=doc)
@@ -52,7 +52,7 @@ def create_array() -> None:
 
 def clear_range() -> None:
     # get access to current Calc Document
-    doc = Calc.get_ss_doc(Lo.ThisComponent)
+    doc = Calc.get_ss_doc(Lo.xscript_context.getDocument())
 
     # get access to current spreadsheet
     sheet = Calc.get_active_sheet(doc=doc)

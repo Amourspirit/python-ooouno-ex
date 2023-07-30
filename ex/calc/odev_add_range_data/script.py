@@ -1,7 +1,10 @@
 from range_action import create_array, clear_range
+from ooodev.macro.macro_loader import MacroLoader
 
 def fill(*args, **kwargs) -> None:
-    create_array()
+    with MacroLoader():
+        create_array()
 
 def clear(*args, **kwargs) -> None:
-    clear_range()
+    with MacroLoader():
+        clear_range()

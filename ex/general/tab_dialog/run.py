@@ -1,7 +1,7 @@
 # This example depends on code outside the this source folder.
 # For this reason the project path is inserted into sys.path
 #
-# The tab dialog used the ooodev library, therefore, MacroLoader is used to load the library context in the macro methods.
+# The tab dialog uses the ooodev library, therefore, MacroLoader is used to load the library context in the macro methods.
 # In this script we don't want the MacroLoader to reset the context, so we set the environment variable ODEV_MACRO_LOADER_OVERRIDE to 1.
 #
 # Lo.Loader() context manager is used to start LibreOffice and close it when the context manager exits.
