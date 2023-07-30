@@ -8,7 +8,7 @@ services:
       context: ../
       dockerfile: .devcontainer/Dockerfile
       args:
-        LO_VERSION: "7.5.3"
+        LO_VERSION: "7.5.5"
         CONFIG_DIR: /config
     # user: root
     container_name: libreoffice_ex
