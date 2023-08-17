@@ -1,9 +1,11 @@
 # Live LibreOffice Python UNO Examples
 
-Examples for [ooouno], [OOO Development Tools], [ScriptForge] projects and more.
+Examples for [ooouno], [OOO Development Tools] (OooDev), [ScriptForge] projects and more.
 
-[ooouno](https://github.com/Amourspirit/python-ooouno) project has made it possible to have a much more
-user friendly way of programming for [LibreOffice](https://www.libreoffice.org/).
+[OooDev] is a powerful python library for LibreOffice and is also available as an [extension](https://extensions.libreoffice.org/en/extensions/show/41700) for LibreOffice
+
+[ooouno] project has made it possible to have a much more
+user friendly way of programming for [LibreOffice](https://www.libreoffice.org/). When you use [OooDev] you also get [ooouno] automatically.
 
 The goal of this project is to have ever expanding practical examples for programming
 using python in [LibreOffice](https://www.libreoffice.org/) in a truly [OOP](https://en.wikipedia.org/wiki/Object-oriented_programming) way.
@@ -16,8 +18,7 @@ This makes it easy to use as a LibreOffice macro.
 
 Another fantastic resource is [LibreOffice Programming],
 great documentation and many java examples.
-
-Work in progress... more to come.
+An archive of the Java code is available at https://github.com/Amourspirit/libreoffice_lop_java.
 
 ## I NEED A BREAK ...
 
@@ -133,6 +134,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 [ooouno]: https://pypi.org/project/ooouno/
 [oooscript]: https://pypi.org/project/oooscript/
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OooDev]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[ooouno]: https://github.com/Amourspirit/python-ooouno
 [ScriptForge]: https://gitlab.com/LibreOfficiant/scriptforge
 [ex]: ./ex/
 [LibreOffice Programming]: https://github.com/flywire/lo-p
