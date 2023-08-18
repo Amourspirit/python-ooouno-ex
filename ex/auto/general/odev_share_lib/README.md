@@ -1,17 +1,17 @@
 # Shared Library Access
 
-Example of importing a python module from share library using [OOO Development Tools] (ODEV)
+Example of importing a python module from share library using [OOO Development Tools] (OooDev)
 
 The path of LibreOffice user shared python Libraries can be different from
 user to user and machine to machine.
 
-Also ODEV has options to set these paths to a new location temporarily.
+Also OooDev has options to set these paths to a new location temporarily.
 
 Getting the locations of these paths can be challenging.
 
-ODEV can discover and register the path automatically as shown in this example.
+OooDev can discover and register the path automatically as shown in this example.
 
-Note that ODEV requires a connection to LibreOffice as it is the LibreOffice API
+Note that OooDev requires a connection to LibreOffice as it is the LibreOffice API
 that allows then paths to be discovered. Without a connection automatic registering of path is not possible.
 
 There is a macro example of importing from shared library [here](../../../general/odev_share_lib/).

@@ -33,9 +33,9 @@ Functionally these two classes are identical.
 
 Both classes are responsible for starting office.
 
-### Using ODEV TopWindowListener Class
+### Using OooDev TopWindowListener Class
 
-[ODEV] has a `TopWindowListener` class that raise events that can be subscribed to.
+[OooDev] has a `TopWindowListener` class that raise events that can be subscribed to.
 
 [doc_window_adapter.py](./doc_window_adapter.py) (`DocWindowAdapter` class) demonstrates how `TopWindowListener` is implemented.
 This means there is no need to create a class that inherits from [XTopWindowListener]

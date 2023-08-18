@@ -12,7 +12,7 @@ Also demos how to attach a window listener to office.
 
 This script will stay running until office is closed or `ctl+c` is pressed unless `-t` is passed as a parameter.
 
-This demo uses [OOO Development Tools] (ODEV).
+This demo uses [OOO Development Tools] (OooDev).
 
 A `main_loop()` method is called that watches until Office is closed.
 
@@ -31,9 +31,9 @@ Functionally these two classes are identical.
 
 Both classes are responsible for starting office.
 
-### Using ODEV TopWindowListener Class
+### Using OooDev TopWindowListener Class
 
-[ODEV] has a `ModifyListener` class that raise events that can be subscribed to.
+[OooDev] has a `ModifyListener` class that raise events that can be subscribed to.
 
 [modify_listener_adapter.py](./modify_listener_adapter.py) (`ModifyListenerAdapter` class) demonstrates how `ModifyListener` is implemented. This means there is no need to create a class that inherits from [XModifyListener]
 
@@ -138,4 +138,4 @@ Exiting by document close.
 [XModifyListener]: https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1util_1_1XModifyListener.html
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-[ODEV]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OooDev]: https://python-ooo-dev-tools.readthedocs.io/en/latest/

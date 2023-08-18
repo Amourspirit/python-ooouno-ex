@@ -3,7 +3,7 @@
 Demonstrates how to control Writer application's visible cursor.
 Moves cursor by paragraph and sentence while reading out loud each sentence using [text-to-speech].
 
-See [Extract Writer Text] for an example how to silence ODEV extra terminal output.
+See [Extract Writer Text] for an example how to silence OooDev extra terminal output.
 
 ## Requirements
 

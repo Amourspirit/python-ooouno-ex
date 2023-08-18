@@ -9,7 +9,7 @@ Example of Non-Linear Solve in a spreadsheet.
 Two different examples are included. Include parameter `-s 1` for the first example and
 `-s 2` for the second example.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

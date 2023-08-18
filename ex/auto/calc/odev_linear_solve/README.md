@@ -6,7 +6,7 @@
 
 Examples of Linear Solve in a spreadsheet.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

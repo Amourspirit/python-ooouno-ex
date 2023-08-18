@@ -42,7 +42,7 @@ class ModifySlides:
 
             # add a title/subtitle slide at the start
             first_page = slides.insertNewByIndex(0)
-            Draw.title_slide(slide=first_page, title="Interesting Slides", sub_title="Brought to you by ODEV")
+            Draw.title_slide(slide=first_page, title="Interesting Slides", sub_title="Brought to you by OooDev")
 
             Lo.delay(2000)
             msg_result = MsgBox.msgbox(

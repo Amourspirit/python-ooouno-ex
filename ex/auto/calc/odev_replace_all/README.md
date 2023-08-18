@@ -6,7 +6,7 @@
 
 Demonstrates Searching Iteratively; Searching For All Matches; Replacing All Matches in a spreadsheet.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

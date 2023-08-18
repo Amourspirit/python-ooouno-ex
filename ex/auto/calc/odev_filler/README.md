@@ -6,7 +6,7 @@
 
 Example of using a fill series in a spreadsheet.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

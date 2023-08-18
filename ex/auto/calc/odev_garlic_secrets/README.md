@@ -6,7 +6,7 @@
 
 This example illustrates how data can be extracted from an existing spreadsheet (`produceSales.xlsx`) using 'general' functions, sheet searching, and sheet range queries. It also has more examples of cell styling, and demonstrates sheet freezing, view pane splitting, pane activation, and the insertion of new rows into a sheet.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 
