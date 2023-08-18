@@ -12,7 +12,7 @@ Also demos how to attach a window listener to office.
 
 This script will stay running until office is closed or `ctl+c` is pressed unless `-t` is passed as a parameter.
 
-This demo uses [OOO Development Tools] (ODEV).
+This demo uses [OOO Development Tools] (OooDev).
 
 A `main_loop()` method is called that watches until Office is closed.
 
@@ -112,6 +112,6 @@ python -m start
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
-[ODEV]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OooDev]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 
 [XModifyBroadcaster]: https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1util_1_1XModifyBroadcaster.html

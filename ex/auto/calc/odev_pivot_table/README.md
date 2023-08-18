@@ -9,7 +9,7 @@ Example create a new sheet containing pivot table in the document.
 Two different examples are included. Include parameter `-p 1` for the first example and
 `-p 2` for the second example.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

@@ -27,7 +27,7 @@ Date and Time.
 The “Add-ins” documentation starts at [Calc Add-in Functions](https://help.libreoffice.org/latest/en-US/text/scalc/01/04060111.html), and continues in
 [Add-in Functions, List of Analysis Functions Part One](https://help.libreoffice.org/latest/en-US/text/scalc/01/04060115.html) and [Add-in Functions, List of Analysis Functions Part Two](https://help.libreoffice.org/latest/en-US/text/scalc/01/04060116.html).
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

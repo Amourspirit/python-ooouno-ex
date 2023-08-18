@@ -6,7 +6,7 @@
 
 Example of adding data and sorting data in a Spreadsheet
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

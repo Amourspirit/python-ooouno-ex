@@ -10,7 +10,7 @@ Also demonstrates how to create input password dialog and message dialog.
 
 Optionally saves the input file as a new file.
 
-This demo uses This demo uses [OOO Development Tools] (ODEV).
+This demo uses This demo uses [OOO Development Tools] (OooDev).
 
 See Also:
 

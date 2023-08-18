@@ -10,7 +10,7 @@ Also demonstrates how to create message dialog.
 
 LibreOffice has a comprehensive web page listing all the dispatch commands [Development/DispatchCommands](https://wiki.documentfoundation.org/Development/DispatchCommands).
 
-This example also demonstrates hooking ODEV events that in this case allow for finer control over which commands are dispatched.
+This example also demonstrates hooking OooDev events that in this case allow for finer control over which commands are dispatched.
 
 See Also: [OOO Development Tools - Chapter 4. Listening, and Other Techniques](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part1/chapter04.html)
 
