@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import contextlib
+
 # load variables before other imports
 # this prevents other imports from being loaded into the console such as
 # code, readline, psutils, etc.
 variables = globals().copy()
 variables.update(locals())
 from typing import cast, Any, TYPE_CHECKING
+import subprocess
 import code
 import rlcompleter
 import readline
@@ -16,12 +19,6 @@ try:
     from ooo_dev_cli_hlp.cli.interactive_hlp import interactive_hlp
 except ImportError:
     interactive_hlp = None
-
-try:
-    import psutil
-except ImportError:
-    print("psutil is not installed. Please install it with 'poetry add --group=dev psutil'")
-    SystemExit(1)
 
 try:
     from ooodev.utils.lo import Lo
@@ -40,15 +37,16 @@ def check_if_process_running(process_name: str) -> bool:
     """
     Check if there is any running process that contains the given name process_name.
     """
-    # Iterate over the all the running process
-    for proc in psutil.process_iter():
-        try:
-            # Check if process name contains the given name string.
-            if process_name.lower() in proc.name().lower():
-                return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-    return False
+    result = False
+    with contextlib.suppress(Exception):
+        cmd = f"ps -ef | grep '{process_name}' | grep -v grep | awk '{{print $2}}'"
+        ps_command = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        pid_str = ps_command.stdout.read()  # type: ignore
+        ret_code = ps_command.wait()
+        assert ret_code == 0, "ps command returned %d" % ret_code
+        with contextlib.suppress(Exception):
+            result = int(pid_str) > 0
+    return result
 
 
 lo_port = int(getenv("LO_CONN_PORT", 2002))
