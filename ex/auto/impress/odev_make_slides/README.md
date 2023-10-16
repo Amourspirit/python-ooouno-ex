@@ -16,8 +16,7 @@ Example creates a deck of four or five slides, illustrating different aspects of
 
 This demo uses [OOO Development Tools]
 
-Creation of slide five requires GUI automation provided by [ooo-dev-tools-gui-win] in this case.
-For this reason slide five is only created in windows.
+Creation of slide five requires GUI automation provided by [ooo-dev-tools-gui-win], also available as a [LibreOffice Extension](https://extensions.libreoffice.org/en/extensions/show/41986) for Windows.
 
 See Also:
 

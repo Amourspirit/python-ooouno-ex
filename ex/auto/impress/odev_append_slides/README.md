@@ -7,7 +7,7 @@
 This example demonstrates how to combine Slide show documents using Impress.
 
 One challenge is for every slide that is appended a confirmation dialog pops up needing to click **yes** ( five time when adding `points.odp` ) in a dialog prompt.
-This is where [ooo-dev-tools-gui-win] come in, it can monitor for a dialog box and press a button automatically.
+This is where [ooo-dev-tools-gui-win] come in, it can monitor for a dialog box and press a button automatically. `ooo-dev-tools-gui-win` is also available as a [LibreOffice Extension](https://extensions.libreoffice.org/en/extensions/show/41986) for Windows.
 
 You can see here how [ooo-dev-tools-gui-win] is called.
 

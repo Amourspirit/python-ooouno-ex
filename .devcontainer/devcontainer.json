@@ -15,14 +15,6 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [3004, 3005],
 	"portsAttributes": {
-		"3004": {
-			"visibility": "private",
-			"label": "LibreOffice http Server"
-		},
-		"3005": {
-			"visibility": "private",
-			"label": "LibreOffice https Server"
-		},
 		"2002": {
 			"onAutoForward": "silent",
 			"visibility": "private"
