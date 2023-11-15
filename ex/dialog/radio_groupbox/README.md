@@ -35,7 +35,7 @@ python -m start
 ### Linux/Mac
 
 ```sh
-python ./ex/dialog/radio_group_box/start.py
+python ./ex/dialog/radio_groupbox/start.py
 ```
 
 ### Windows
@@ -54,15 +54,15 @@ In the terminal run:
 
 ```bash
 cd examples
-gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/dialog/radio_group_box'
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/dialog/radio_groupbox'
 ```
 
-This will copy the `radio_group_box` example to the examples folder.
+This will copy the `radio_groupbox` example to the examples folder.
 
 In the terminal run:
 
 ```bash
-cd radio_group_box
+cd radio_groupbox
 python -m start
 ```
 
