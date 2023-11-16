@@ -56,25 +56,22 @@ class GridEx:
 
     def _init_handlers(self) -> None:
         """
-        Add event handlers for when the grid selection changes.
+        Add event handlers for when changes occur.
 
-        Python does not allow class methods to be used as callback;
-        However, functions are permitted.
-        For this reason we are creating functions here.
-        the functions are then assigned to the class to keep them in
-        scope while the class instance exist.
+        Methods can not be assigned directly to control callbacks.
+        This is a python thing. However, methods can be assigned to class
+        variable an in turn those can be assigned to callbacks.
+
+        Example:
+            ``self._ctl_btn_info.add_event_action_performed(self.on_button_action_preformed)``
+            This would not work!
+
+            ``self._ctl_btn_info.add_event_action_performed(self._fn_button_action_preformed)``
+            This will work.
         """
 
-        def on_grid_selection_changed(src: Any, event: EventArgs, control_src: CtlGrid, *args, **kwargs) -> None:
-            # create function that call method on self
-            self.on_grid_selection_changed(src, event, control_src, *args, **kwargs)
-
-        def on_button_action_preformed(src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
-            self.on_button_action_preformed(src, event, control_src, *args, **kwargs)
-
-        # keep function in scope
-        self._fn_grid_selection_changed = on_grid_selection_changed
-        self._fn_button_action_preformed = on_button_action_preformed
+        self._fn_grid_selection_changed = self.on_grid_selection_changed
+        self._fn_button_action_preformed = self.on_button_action_preformed
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
