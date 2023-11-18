@@ -6,15 +6,15 @@ import uno
 from typing import Any, cast, TYPE_CHECKING, Tuple
 
 from ooo.dyn.style.vertical_alignment import VerticalAlignment
-from ooo.dyn.awt.selection import Selection
 
 from ooodev.dialog import Dialogs, BorderKind, TriStateKind
+from ooodev.dialog.input import Input
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
-    from com.sun.star.awt import ItemEvent
+
+    # from com.sun.star.awt import ItemEvent
     from com.sun.star.awt import KeyEvent
     from com.sun.star.awt import XControl
     from com.sun.star.awt.tree import MutableTreeNode
@@ -108,9 +108,10 @@ class TreeSimple:
             dialog_ctrl=self._control,
             label=self.get_label_msg(),
             x=self._margin,
-            y=self._padding,
+            y=self._margin,
             width=self._width - (self._margin * 2),
-            height=self._box_height,
+            height=self._box_height * 2,
+            MultiLine=True,
         )
 
     def _init_tree(self) -> None:
@@ -171,6 +172,19 @@ class TreeSimple:
         self._ctl_btn_clear.model.HelpText = "Clear contents"
         self._ctl_btn_clear.add_event_action_performed(self._fn_on_action_preformed_btn)
 
+        sz_btn = self._ctl_btn_clear.view.getPosSize()
+        self._ctl_btn_search = Dialogs.insert_button(
+            dialog_ctrl=self._control,
+            label="Search...",
+            x=sz_btn.X - sz_btn.Width - self._padding,
+            y=sz_btn.Y,
+            width=self._btn_width,
+            height=self._btn_height,
+        )
+        self._ctl_btn_search.view.setActionCommand("SEARCH")
+        self._ctl_btn_search.model.HelpText = "Search the Tree nodes"
+        self._ctl_btn_search.add_event_action_performed(self._fn_on_action_preformed_btn)
+
     def _init_options(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
         sz_tree = self._ctl_tree.view.getPosSize()
@@ -223,6 +237,38 @@ class TreeSimple:
                     _ = self._ctl_tree.add_sub_node(parent_node=sub_sub_node, display_value=f"Sub Sub Node {i + 1}")
 
     # endregion Data
+
+    # region Search
+    def _search_nodes(self) -> None:
+        """Search the tree nodes for the search text."""
+        search_text = ""
+        if self._selected_node is not None:
+            search_text = Input.get_input("Search Text", "Enter the text to search for:", search_text)
+            if search_text:
+                self._event_text.write_line(
+                    f"Searching for '{search_text}' in '{self._selected_node.getDisplayValue()}'"
+                )
+                node = cast(
+                    "MutableTreeNode",
+                    self._ctl_tree.find_node(
+                        node=self._selected_node, value=search_text, case_sensitive=False, search_data_value=True
+                    ),
+                )
+                if node:
+                    parent = cast("MutableTreeNode", node.getParent())
+                    while parent:
+                        self._ctl_tree.view.expandNode(parent)
+                        parent = cast("MutableTreeNode", parent.getParent())
+                    # self._ctl_tree.view.expandNode(node)
+                    self._ctl_tree.view.clearSelection()
+                    self._ctl_tree.view.addSelection(node)
+                    self._event_text.write_line(f"Found: '{node.getDisplayValue()}'")
+                    if node.DataValue:
+                        self._event_text.write_line(f"Data Value: '{node.DataValue}'")
+                else:
+                    self._event_text.write_line(f"Node Not Found: '{search_text}'")
+
+    # endregion Search
 
     # region Event Handlers
     def on_option_edit_state_changed(
@@ -323,6 +369,8 @@ class TreeSimple:
         itm_event = cast("ActionEvent", event.event_data)
         if itm_event.ActionCommand == "CLEAR":
             self._event_text.text = ""
+        elif itm_event.ActionCommand == "SEARCH":
+            self._search_nodes()
 
     # endregion Event Handlers
 

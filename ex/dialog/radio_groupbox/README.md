@@ -1,4 +1,4 @@
-# Grid Example
+# Radio Button Example
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/4193389/283243452-94e5910a-86fb-4d45-ad47-2cb21b266ac4.png" width="335" height="277">

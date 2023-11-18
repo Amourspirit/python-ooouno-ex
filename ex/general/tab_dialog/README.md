@@ -5,6 +5,9 @@ However LibreOffice does have a [Tab Container](<https://api.libreoffice.org/doc
 
 This example demonstrates how to use Tabs in a Dialog Box.
 
+**Update**: [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/index.html) has a much better implementation of Tab Control.
+See the [tree](../../dialog/tree/) and [list box](../../dialog/tab_list_box/) examples.
+
 Example is created in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) style.
 
 Example also demonstrates usage of [Radio Button](https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1UnoControlRadioButton.html) Controls and [List Box](https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1awt_1_1UnoControlListBox.html) controls.
