@@ -14,12 +14,14 @@ from ooodev.office.calc import Calc
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
-    from com.sun.star.awt import ItemEvent
-    from com.sun.star.awt.tree import MutableTreeNode
-    from com.sun.star.sheet import XSpreadsheetDocument
+    from com.sun.star.awt import KeyEvent
     from com.sun.star.awt import XControl
-    from ooodev.dialog.dl_control.ctl_tree import CtlTree
+    from com.sun.star.awt.tree import MutableTreeNode
+    from com.sun.star.awt.tree import TreeDataModelEvent
     from com.sun.star.awt.tree import TreeExpansionEvent
+    from com.sun.star.sheet import XSpreadsheetDocument
+    from ooodev.adapter.tree.tree_data_model_comp import TreeDataModelComp
+    from ooodev.dialog.dl_control.ctl_tree import CtlTree
 
 
 # endregion Imports
@@ -88,6 +90,13 @@ class TreeSimple:
         self._fn_on_tree_node_expanded = self.on_tree_node_expanded
         self._fn_on_tree_request_child_nodes = self.on_tree_request_child_nodes
         self._fn_on_action_preformed_btn = self.on_action_preformed_btn
+        self._fn_on_tree_nodes_changed = self.on_tree_nodes_changed
+        self._fn_on_tree_nodes_inserted = self.on_tree_nodes_inserted
+        self._fn_on_tree_nodes_removed = self.on_tree_nodes_removed
+        self._fn_on_tree_tree_structure_changed = self.on_tree_tree_structure_changed
+        self._fn_on_tree_key_released = self.on_tree_key_released
+        self._fn_on_focus_gained = self.on_focus_gained
+        self._fn_on_focus_lost = self.on_focus_lost
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
@@ -111,8 +120,18 @@ class TreeSimple:
             height=self._height - sz.Height - self._vert_margin,
             border=self._border_kind,
         )
-
+        self._ctl_tree.model.InvokesStopNodeEditing = True
+        self._ctl_tree.model.Editable = True
         self._init_tree_events()
+        self._data_model = self._ctl_tree.data_model
+        self._init_data_model_events()
+
+    def _init_data_model_events(self) -> None:
+        if self._data_model is not None:
+            self._data_model.add_event_tree_nodes_changed(self._fn_on_tree_nodes_changed)
+            self._data_model.add_event_tree_nodes_inserted(self._fn_on_tree_nodes_inserted)
+            self._data_model.add_event_tree_nodes_removed(self._fn_on_tree_nodes_removed)
+            self._data_model.add_event_tree_structure_changed(self._fn_on_tree_tree_structure_changed)
 
     def _init_event_text(self) -> None:
         sz = self._ctl_tree.view.getPosSize()
@@ -152,6 +171,9 @@ class TreeSimple:
         self.control_tree.add_event_tree_expanded(self._fn_on_tree_node_expanded)
         self.control_tree.add_event_tree_collapsed(self._fn_on_tree_node_collapsed)
         self.control_tree.add_event_request_child_nodes(self._fn_on_tree_request_child_nodes)
+        self.control_tree.add_event_key_released(self._fn_on_tree_key_released)
+        self.control_tree.add_event_focus_gained(self._fn_on_focus_gained)
+        self.control_tree.add_event_focus_lost(self._fn_on_focus_lost)
 
     # endregion Init
 
@@ -180,10 +202,23 @@ class TreeSimple:
     # endregion Data
 
     # region Event Handlers
+    def on_tree_key_released(self, src: Any, event: EventArgs, control_src: CtlTree, *args, **kwargs) -> None:
+        itm_event = cast("KeyEvent", event.event_data)
+        self._event_text.write_line(f"Key Released KeyCode: {itm_event.KeyCode}")
+        self._event_text.write_line(f"Key Released Modifiers: {itm_event.Modifiers}")
+
+    def on_focus_gained(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+        self._event_text.write_line(f"Focus Gained: {control_src.name}")
+
+    def on_focus_lost(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+        self._event_text.write_line(f"Focus Lost: {control_src.name}")
+
     def on_tree_selection_changed(self, src: Any, event: EventArgs, control_src: CtlTree, *args, **kwargs) -> None:
-        self._selected_node = cast("MutableTreeNode", control_src.view.getSelection())
+        self._selected_node = control_src.current_selection
         if self._selected_node is not None:
             self._event_text.write_line(f"Selection changed: {self._selected_node.getDisplayValue()}")
+            if self._selected_node.DataValue is not None:
+                self._event_text.write_line(f"Node Data Value: {self._selected_node.DataValue}")
         else:
             self._event_text.write_line("Selection changed: None")
 
@@ -206,6 +241,50 @@ class TreeSimple:
     def on_tree_request_child_nodes(self, src: Any, event: EventArgs, control_src: CtlTree, *args, **kwargs) -> None:
         itm_event = cast("TreeExpansionEvent", event.event_data)
         self._event_text.write_line(f"Node Request Child Nodes: {itm_event.Node.getDisplayValue()}")
+
+    def on_tree_nodes_changed(
+        self, src: Any, event: EventArgs, control_src: TreeDataModelComp, *args, **kwargs
+    ) -> None:
+        itm_event = cast("TreeDataModelEvent", event.event_data)
+        parent_name = itm_event.ParentNode.getDisplayValue() if itm_event.ParentNode is not None else ""
+        for node in itm_event.Nodes:
+            if parent_name:
+                self._event_text.write_line(f"Node Changed: {parent_name} -> {node.getDisplayValue()}")
+            else:
+                self._event_text.write_line(f"Node Changed: {node.getDisplayValue()}")
+
+    def on_tree_nodes_inserted(
+        self, src: Any, event: EventArgs, control_src: TreeDataModelComp, *args, **kwargs
+    ) -> None:
+        itm_event = cast("TreeDataModelEvent", event.event_data)
+        parent_name = itm_event.ParentNode.getDisplayValue() if itm_event.ParentNode is not None else ""
+        for node in itm_event.Nodes:
+            if parent_name:
+                self._event_text.write_line(f"Node Inserted: {parent_name} -> {node.getDisplayValue()}")
+            else:
+                self._event_text.write_line(f"Node Inserted: {node.getDisplayValue()}")
+
+    def on_tree_nodes_removed(
+        self, src: Any, event: EventArgs, control_src: TreeDataModelComp, *args, **kwargs
+    ) -> None:
+        itm_event = cast("TreeDataModelEvent", event.event_data)
+        parent_name = itm_event.ParentNode.getDisplayValue() if itm_event.ParentNode is not None else ""
+        for node in itm_event.Nodes:
+            if parent_name:
+                self._event_text.write_line(f"Node Removed: {parent_name} -> {node.getDisplayValue()}")
+            else:
+                self._event_text.write_line(f"Node Removed: {node.getDisplayValue()}")
+
+    def on_tree_tree_structure_changed(
+        self, src: Any, event: EventArgs, control_src: TreeDataModelComp, *args, **kwargs
+    ) -> None:
+        itm_event = cast("TreeDataModelEvent", event.event_data)
+        parent_name = itm_event.ParentNode.getDisplayValue() if itm_event.ParentNode is not None else ""
+        for node in itm_event.Nodes:
+            if parent_name:
+                self._event_text.write_line(f"Tree Structure Changed: {parent_name} -> {node.getDisplayValue()}")
+            else:
+                self._event_text.write_line(f"Tree Structure Changed: {node.getDisplayValue()}")
 
     def on_action_preformed_btn(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
         itm_event = cast("ActionEvent", event.event_data)
