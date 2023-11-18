@@ -102,13 +102,13 @@ files = [
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.13.1"
+version = "0.13.3"
 description = "LibreOffice Developer Tools"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "ooo_dev_tools-0.13.1-py3-none-any.whl", hash = "sha256:37b836f1b52954c19aa7ca546587b159c663f43e402e25c9f63699c01a9bbe43"},
-    {file = "ooo_dev_tools-0.13.1.tar.gz", hash = "sha256:2a5b4f33e3af10af93aa237f429cfda5f966b2f7a20a966ffa0e3cfce79b5b54"},
+    {file = "ooo_dev_tools-0.13.3-py3-none-any.whl", hash = "sha256:887b44144248bdc6a9dda585e4fb73b4c711cf671259ae1586a0e52980e253fd"},
+    {file = "ooo_dev_tools-0.13.3.tar.gz", hash = "sha256:9c054cf26d0bc8945c56ccdabbd3ab5b993509d6494ea1d1fdcbc557d32c3803"},
 ]
 
 [package.dependencies]
@@ -116,17 +116,17 @@ ooouno = ">=2.1.2"
 
 [[package]]
 name = "ooo-dev-tools-gui-win"
-version = "0.3.1"
+version = "0.3.2"
 description = "Methods for ooo-dev-tools and LibreOffice that require automatic GUI interaction for windows."
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "ooo-dev-tools-gui-win-0.3.1.tar.gz", hash = "sha256:534a313706319a10ba3ddbec918fb86c983cedd9202ad59c72058ebf64241af6"},
-    {file = "ooo_dev_tools_gui_win-0.3.1-py3-none-any.whl", hash = "sha256:02315c053899a99187850e7db6627fdb6dd87851f9a3f86ec6f0adbcc1748dda"},
+    {file = "ooo_dev_tools_gui_win-0.3.2-py3-none-any.whl", hash = "sha256:2f78dc1c2505efc3457d8ad53b3a17fbba782642ef735ab05fda39a1dcb354c0"},
+    {file = "ooo_dev_tools_gui_win-0.3.2.tar.gz", hash = "sha256:477344f1270817d8eb5e6b07c65513ddde33c2c6e84ec4416a1315455528ebc8"},
 ]
 
 [package.dependencies]
-ooo-dev-tools = ">=0.6.3"
+ooo-dev-tools = ">=0.12.2"
 pywinauto = ">=0.6.8"
 
 [[package]]
@@ -453,4 +453,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "6fc8580352f6cba62d7c67c471b57dc068bb75cd805f3070bfeaf380116b04cd"
+content-hash = "4ef9fef5b7f40d9326cdf840b8d7a39ff05ff29610c1e7cef167f9ce8e37cf29"

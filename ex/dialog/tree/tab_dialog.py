@@ -14,6 +14,8 @@ from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from tree_simple import TreeSimple
 from tree_flat import TreeFlat
+from tree_flat_data_value import TreeFlatDataValue
+from tree_search_re import TreeSearchRe
 
 
 if TYPE_CHECKING:
@@ -31,7 +33,7 @@ class Tabs:
         self._btn_height = 30
         self._margin = 4
         self._box_height = 30
-        self._title = "Listbox Examples"
+        self._title = "Tree Control Examples"
         if self._border_kind != BorderKind.BORDER_3D:
             self._padding = 10
         else:
@@ -68,6 +70,8 @@ class Tabs:
         self._ctl_tab.add_event_tab_page_activated(self._fn_tab_activated)
         self._init_tab_tree_simple()
         self._init_tab_tree_flat()
+        self._init_tab_tree_flat_data_value()
+        self._init_tab_tree_search_re()
         self._init_buttons()
 
     def _init_tab_tree_simple(self) -> None:
@@ -107,6 +111,44 @@ class Tabs:
             border_kind=self._border_kind,
         )
         self._tree_flat.set_data()
+
+    def _init_tab_tree_flat_data_value(self) -> None:
+        self._tab_count += 1
+        self._tab_main = Dialogs.insert_tab_page(
+            dialog_ctrl=self._dialog,
+            tab_ctrl=self._ctl_tab,
+            title="Flat Data Tree (Data Value)",
+            tab_position=self._tab_count,
+        )
+        tab_sz = self._ctl_tab.view.getPosSize()
+        self._tree_flat_data_value = TreeFlatDataValue(
+            ctrl=self._tab_main.view,
+            x=tab_sz.X + self._margin,
+            y=tab_sz.Y + self._tab_offset_vert,
+            height=tab_sz.Height - self._tab_offset_vert - self._margin,
+            width=tab_sz.Width - (self._margin * 2),
+            border_kind=self._border_kind,
+        )
+        self._tree_flat_data_value.set_data()
+
+    def _init_tab_tree_search_re(self) -> None:
+        self._tab_count += 1
+        self._tab_main = Dialogs.insert_tab_page(
+            dialog_ctrl=self._dialog,
+            tab_ctrl=self._ctl_tab,
+            title="Search Tree - Regular Expressions",
+            tab_position=self._tab_count,
+        )
+        tab_sz = self._ctl_tab.view.getPosSize()
+        self._tree_search_re = TreeSearchRe(
+            ctrl=self._tab_main.view,
+            x=tab_sz.X + self._margin,
+            y=tab_sz.Y + self._tab_offset_vert,
+            height=tab_sz.Height - self._tab_offset_vert - self._margin,
+            width=tab_sz.Width - (self._margin * 2),
+            border_kind=self._border_kind,
+        )
+        self._tree_search_re.set_data()
 
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
