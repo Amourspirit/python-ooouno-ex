@@ -5,6 +5,7 @@ The examples in the sub folders demonstrate creating a dialog programmatically a
 Open a sub folder to get to an example.
 
 - [grid](./grid) An example that demonstrates adding a grid (table) to a dialog control.
-- [radio_groupbox](./radio_groupbox) An example that demonstrates adding group boxes and radio controls to a dialog control.
-- [tabs_list_box](./tabs_list_box) An example that demonstrates adding tabs and list boxes to a dialog control.
+- [progress scroll](./progress_scroll) An example that demonstrates adding Progress Bar and Scroll Bar to a dialog control.
+- [radio group box](./radio_groupbox) An example that demonstrates adding group boxes and radio controls to a dialog control.
+- [tabs and listbox](./tabs_list_box) An example that demonstrates adding tabs and list boxes to a dialog control.
 - [tree](./tree) An example that demonstrates adding tabs and tree controls to a dialog control.
