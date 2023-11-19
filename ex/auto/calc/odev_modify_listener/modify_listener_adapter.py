@@ -1,28 +1,25 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any
 
 import uno
-from com.sun.star.sheet import XSpreadsheetDocument
 
-from ooodev.utils.lo import Lo
-from ooodev.utils.gui import GUI
+from ooodev.adapter.awt.top_window_events import TopWindowEvents
+from ooodev.adapter.util.modify_events import ModifyEvents
+from ooodev.events.args.event_args import EventArgs
 from ooodev.office.calc import Calc
-from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.file_io import FileIO
-from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
-from ooodev.adapter.util.modify_listener import ModifyListener
-
-if TYPE_CHECKING:
-    from com.sun.star.lang import EventObject
+from ooodev.utils.gui import GUI
+from ooodev.utils.lo import Lo
+from ooodev.utils.type_var import PathOrStr
 
 
 class ModifyListenerAdapter:
     def __init__(self, out_fnm: PathOrStr) -> None:
         super().__init__()
         if out_fnm:
-            outf = FileIO.get_absolute_path(out_fnm)
-            _ = FileIO.make_directory(outf)
-            self._out_fnm = outf
+            out_file = FileIO.get_absolute_path(out_fnm)
+            _ = FileIO.make_directory(out_file)
+            self._out_fnm = out_file
         else:
             self._out_fnm = ""
         self.closed = False
@@ -37,30 +34,19 @@ class ModifyListenerAdapter:
 
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
-        # The solution is to create a function that calls the class method and pass that function to the event system.
-        # Also the function must be a member of the class so that it is not garbage collected.
-
-        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_closing(source, event_args, *args, **kwargs)
-
-        def _on_modified(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_modified(source, event_args, *args, **kwargs)
-
-        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_disposing(source, event_args, *args, **kwargs)
-
-        self._fn_on_window_closing = _on_window_closing
-        self._fn_on_modified = _on_modified
-        self._fn_on_disposing = _on_disposing
+        # The solution is to assign the method to class fields and use them to add the event callbacks.
+        self._fn_on_window_closing = self.on_window_closing
+        self._fn_on_modified = self.on_modified
+        self._fn_on_disposing = self.on_disposing
 
         # pass doc to constructor, this will allow listener to be automatically attached to document.
-        self._m_listener = ModifyListener(doc=self._doc)
-        self._m_listener.on("modified", _on_modified)
-        self._m_listener.on("disposing", _on_disposing)
+        self._m_events = ModifyEvents(subscriber=self._doc)
+        self._m_events.add_event_modified(self._fn_on_modified)
+        self._m_events.add_event_modify_events_disposing(self._fn_on_disposing)
 
         # close down when window closes
-        self._twl = TopWindowListener()
-        self._twl.on("windowClosing", _on_window_closing)
+        self._top_win_ev = TopWindowEvents(add_window_listener=True)
+        self._top_win_ev.add_event_window_closing(self._fn_on_window_closing)
 
     def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")

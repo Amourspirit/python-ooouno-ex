@@ -99,9 +99,9 @@ Closing Office
 TL: Starting Closing
 TL: Finished Closing
 Office terminated
-BR: Office bridge has gone!!
-
-Exiting by document close.
+Office bridge has gone!!
+LO: Office bridge has gone!!
+TL: Disposing
 ```
 
 ## Live LibreOffice Python

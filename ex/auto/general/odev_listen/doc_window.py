@@ -40,13 +40,13 @@ class DocWindow(unohelper.Base, XTopWindowListener):
     def windowOpened(self, event: EventObject) -> None:
         """is invoked when a window is activated."""
         print("WL: Opened")
-        xwin = Lo.qi(XWindow, event.Source)
-        GUI.print_rect(xwin.getPosSize())
+        x_win = Lo.qi(XWindow, event.Source)
+        GUI.print_rect(x_win.getPosSize())
 
     def windowActivated(self, event: EventObject) -> None:
         """is invoked when a window is activated."""
         print("WL: Activated")
-        print(f"  Titile bar: {GUI.get_title_bar()}")
+        print(f"  Title bar: {GUI.get_title_bar()}")
 
     def windowDeactivated(self, event: EventObject) -> None:
         """is invoked when a window is deactivated."""
