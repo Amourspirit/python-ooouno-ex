@@ -2,7 +2,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, cast
 
-from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
+from ooodev.events.args.event_args import EventArgs
+from ooodev.adapter.awt.top_window_events import TopWindowEvents
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
@@ -27,53 +28,31 @@ class DocWindowAdapter:
 
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
-        # The solution is to create a function that calls the class method and pass that function to the event system.
-        # Also the function must be a member of the class so that it is not garbage collected.
+        # The solution is to assign the method to class fields and use them to add the event callbacks.
+        self._fn_on_disposing = self.on_disposing
+        self._fn_on_window_activated = self.on_window_activated
+        self._fn_on_window_closed = self.on_window_closed
+        self._fn_on_window_closing = self.on_window_closing
+        self._fn_on_window_deactivated = self.on_window_deactivated
+        self._fn_on_window_minimized = self.on_window_minimized
+        self._fn_on_window_normalized = self.on_window_normalized
+        self._fn_on_window_opened = self.on_window_opened
 
-        def _on_window_opened(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_opened(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_activated(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_activated(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_deactivated(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_deactivated(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_minimized(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_minimized(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_normalized(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_normalized(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_closing(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_window_closed(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_closed(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_disposing(source=source, event_args=event_args, *args, **kwargs)
-
-        self._fn_on_window_openeed = _on_window_opened
-        self._fn_on_window_activated = _on_window_activated
-        self._fn_on_window_deactivated = _on_window_deactivated
-        self._fn_on_window_minimized = _on_window_minimized
-        self._fn_on_window_normalized = _on_window_normalized
-        self._fn_on_window_closing = _on_window_closing
-        self._fn_on_window_closed = _on_window_closed
-        self._fn_on_disposing = _on_disposing
-
-        # assigning TopWindowListener to class is important.
-        # if not assigned then tk get garbage collected after class __init__() is called.
-        self._twl = TopWindowListener()
-        self._twl.on("windowOpened", _on_window_opened)
-        self._twl.on("windowActivated", _on_window_activated)
-        self._twl.on("windowDeactivated", _on_window_deactivated)
-        self._twl.on("windowMinimized", _on_window_minimized)
-        self._twl.on("windowNormalized", _on_window_normalized)
-        self._twl.on("windowClosing", _on_window_closing)
-        self._twl.on("windowClosed", _on_window_closed)
-        self._twl.on("disposing", _on_disposing)
+        # Assigning TopWindowEvents to class is important,
+        # if not assigned then it may get garbage collected after class __init__() is called.
+        # By setting add_window_listener=True The TopWindowEvents instance creates a window listener and attaches itself to it.
+        self._top_events = TopWindowEvents(add_window_listener=True)
+        # The Listener could be accessed via the property: self._top_events.events_listener_top_window
+        # Now that _top_events has a listener attached to it we can simply subscribe to it events
+        self._top_events.add_event_top_window_events_disposing(self._fn_on_disposing)
+        self._top_events.add_event_window_opened(self._fn_on_window_opened)
+        self._top_events.add_event_window_activated(self._fn_on_window_activated)
+        self._top_events.add_event_window_closed(self._fn_on_window_closed)
+        self._top_events.add_event_window_closing(self._fn_on_window_closing)
+        self._top_events.add_event_window_deactivated(self._fn_on_window_deactivated)
+        self._top_events.add_event_window_minimized(self._fn_on_window_minimized)
+        self._top_events.add_event_window_normalized(self._fn_on_window_normalized)
+        self._top_events.add_event_window_opened(self._fn_on_window_opened)
 
         GUI.set_visible(True, self.doc)
         # triggers 2 opened and 2 activated events
@@ -82,13 +61,13 @@ class DocWindowAdapter:
         """is invoked when a window is activated."""
         event = cast("EventObject", event_args.event_data)
         print("WA: Opened")
-        xwin = Lo.qi(XWindow, event.Source)
-        GUI.print_rect(xwin.getPosSize())
+        x_win = Lo.qi(XWindow, event.Source)
+        GUI.print_rect(x_win.getPosSize())
 
     def on_window_activated(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is activated."""
         print("WA: Activated")
-        print(f"  Titile bar: {GUI.get_title_bar()}")
+        print(f"  Title bar: {GUI.get_title_bar()}")
 
     def on_window_deactivated(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """is invoked when a window is deactivated."""

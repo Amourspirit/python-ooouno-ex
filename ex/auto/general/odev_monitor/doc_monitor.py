@@ -2,8 +2,8 @@
 from __future__ import annotations
 from typing import Any
 
-from ooodev.adapter.frame.terminate_listener import TerminateListener
-from ooodev.adapter.lang.event_listener import EventListener
+from ooodev.adapter.frame.terminate_events import TerminateEvents
+from ooodev.adapter.lang.event_events import EventEvents
 from ooodev.events.args.event_args import EventArgs
 from ooodev.events.lo_events import Events
 from ooodev.events.lo_named_event import LoNamedEvent
@@ -33,46 +33,32 @@ class DocMonitor:
     def _set_internal_events(self):
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
-        # The solution is to create a function that calls the class method and pass that function to the event system.
-        # Also the function must be a member of the class so that it is not garbage collected.
-        def _on_notify_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_notify_termination(source=source, event_args=event_args, *args, **kwargs)
+        # The solution is to assign the method to class fields and use them to add the event callbacks.
+        self._fn_on_notify_termination = self.on_notify_termination
+        self._fn_on_query_termination = self.on_query_termination
+        self._fn_on_disposing = self.on_disposing
+        self._fn_on_disposing_bridge = self.on_disposing_bridge
+        self._fn_on_disposed = self.on_disposed
 
-        def _on_query_termination(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_query_termination(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_disposing(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_disposing_bridge(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_disposing_bridge(source=source, event_args=event_args, *args, **kwargs)
-
-        def _on_disposed(source: Any, event_args: EventArgs) -> None:
-            self.on_disposed(source, event_args)
-
-        self._fn_on_notify_termination = _on_notify_termination
-        self._fn_on_query_termination = _on_query_termination
-        self._fn_on_disposing = _on_disposing
-        self._fn_on_disposing_bridge = _on_disposing_bridge
-        self._fn_on_disposed = _on_disposed
-
-        # create a new instance of listener.
-        self._term_listener = TerminateListener()
-        self._term_listener.on("notifyTermination", _on_notify_termination)
-        self._term_listener.on("queryTermination", _on_query_termination)
-        self._term_listener.on("disposing", _on_disposing)
+        # create a new instance of listener events.
+        # By default TerminateEvents will create a listener and attach itself to the current XDesktop instance.
+        self._term_events = TerminateEvents()
+        # The Listener could be accessed via the property: self._term_events.events_listener_terminate
+        self._term_events.add_event_notify_termination(self._fn_on_notify_termination)
+        self._term_events.add_event_query_termination(self._fn_on_query_termination)
+        self._term_events.add_event_terminate_events_disposing(self._fn_on_disposing)
 
         # using an event is redundant here and is included for example purposes.
         # below a listener is attached to Lo.bridge that does the same job.
         self.events = Events(source=self)
-        self.events.on(LoNamedEvent.BRIDGE_DISPOSED, _on_disposed)
+        self.events.on(LoNamedEvent.BRIDGE_DISPOSED, self._fn_on_disposed)
 
         # attach a listener to the bridge connection that gets notified if
         # office bridge connection terminates unexpected.
         # Lo.bridge is not available if a script is run as a macro.
-        self._bridge_listen = EventListener()
-        self._bridge_listen.on("disposing", _on_disposing_bridge)
-        Lo.bridge.addEventListener(self._bridge_listen)
+        self._bridge_events = EventEvents()
+        self._bridge_events.add_event_disposing(self._fn_on_disposing)
+        Lo.bridge.addEventListener(self._bridge_events.events_listener_event)
 
     def on_notify_termination(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         """
