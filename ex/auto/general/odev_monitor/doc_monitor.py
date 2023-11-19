@@ -21,7 +21,7 @@ class DocMonitor:
         super().__init__()
         self.closed = False
         self.bridge_disposed = False
-        loader = Lo.load_office(Lo.ConnectPipe())
+        loader = Lo.load_office(Lo.ConnectPipe(), opt=Lo.Options(verbose=True))
         _ = Lo.XSCRIPTCONTEXT.getDesktop()
 
         self._set_internal_events()
