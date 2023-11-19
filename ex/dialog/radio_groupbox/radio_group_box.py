@@ -8,9 +8,7 @@ from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
 from ooodev.utils.lo import Lo
-from ooodev.utils.gui import GUI
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
