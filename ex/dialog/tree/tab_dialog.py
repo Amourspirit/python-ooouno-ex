@@ -7,7 +7,6 @@ from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
 
 from ooodev.dialog import Dialogs, BorderKind
-from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 from ooodev.events.args.event_args import EventArgs
 from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
@@ -19,7 +18,6 @@ from tree_search_re import TreeSearchRe
 
 
 if TYPE_CHECKING:
-    from com.sun.star.awt import ActionEvent
     from com.sun.star.awt.tab import TabPageActivatedEvent
 
 
@@ -27,8 +25,8 @@ class Tabs:
     # pylint: disable=unused-argument
     def __init__(self) -> None:
         self._border_kind = BorderKind.BORDER_SIMPLE
-        self._width = 600
-        self._height = 500
+        self._width = 700
+        self._height = 600
         self._btn_width = 100
         self._btn_height = 30
         self._margin = 4
@@ -39,6 +37,7 @@ class Tabs:
         else:
             self._padding = 14
         self._tab_count = 0
+        self._tab_offset_vert = 50
         self._init_dialog()
 
     def _init_dialog(self) -> None:
@@ -55,13 +54,13 @@ class Tabs:
         Dialogs.create_dialog_peer(self._dialog)
 
         # tab offset will vary depending on border kind and Operating System
-        self._tab_offset_vert = (self._margin * 3) + 30
+        
         self._init_tab_control()
         self._active_page_page_id = 1
 
     def _init_tab_control(self) -> None:
         self._ctl_tab = Dialogs.insert_tab_control(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
@@ -77,7 +76,7 @@ class Tabs:
     def _init_tab_tree_simple(self) -> None:
         self._tab_count += 1
         self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Simple Tree",
             tab_position=self._tab_count,
@@ -96,7 +95,7 @@ class Tabs:
     def _init_tab_tree_flat(self) -> None:
         self._tab_count += 1
         self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Flat Data Tree",
             tab_position=self._tab_count,
@@ -115,7 +114,7 @@ class Tabs:
     def _init_tab_tree_flat_data_value(self) -> None:
         self._tab_count += 1
         self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Flat Data Tree (Data Value)",
             tab_position=self._tab_count,
@@ -134,7 +133,7 @@ class Tabs:
     def _init_tab_tree_search_re(self) -> None:
         self._tab_count += 1
         self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Search Tree - Regular Expressions",
             tab_position=self._tab_count,
