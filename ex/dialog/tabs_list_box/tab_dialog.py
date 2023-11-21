@@ -26,7 +26,7 @@ class Tabs:
     # pylint: disable=unused-argument
     def __init__(self, doc: XSpreadsheetDocument) -> None:
         self._border_kind = BorderKind.BORDER_SIMPLE
-        self._width = 600
+        self._width = 320
         self._height = 500
         self._btn_width = 100
         self._btn_height = 30
@@ -61,7 +61,7 @@ class Tabs:
 
     def _init_tab_control(self) -> None:
         self._ctl_tab = Dialogs.insert_tab_control(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
@@ -76,7 +76,7 @@ class Tabs:
     def _init_tab_list_box(self) -> None:
         self._tab_count += 1
         self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Listbox",
             tab_position=self._tab_count,
@@ -95,7 +95,7 @@ class Tabs:
     def _init_tab_drop_down(self) -> None:
         self._tab_count += 1
         self._tab_oth = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Drop Down",
             tab_position=self._tab_count,
@@ -114,7 +114,7 @@ class Tabs:
     def _init_tab_multi_select(self) -> None:
         self._tab_count += 1
         self._tab_oth = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog,
+            dialog_ctrl=self._dialog.control,
             tab_ctrl=self._ctl_tab,
             title="Multi Select",
             tab_position=self._tab_count,

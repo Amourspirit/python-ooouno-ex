@@ -59,7 +59,7 @@ class TreeSearchRe(TreeSimple):
         search_text = ".*P3\d"
         if self._selected_node is not None:
             search_text = Input.get_input(
-                "Regular Expression Search", "Enter the regular expression to search for:", search_text
+                title="Regular Expression Search", msg= "Enter the regular expression to search for:", input_value=search_text
             )
             if search_text:
                 try:

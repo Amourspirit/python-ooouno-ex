@@ -17,6 +17,7 @@ def main() -> int:
         doc = Calc.create_doc()
         GUI.set_visible(visible=True, doc=doc)
         Lo.delay(300)
+        Calc.zoom_value(doc, 100)
         tabs = Tabs()
         tabs.show()
     return 0
