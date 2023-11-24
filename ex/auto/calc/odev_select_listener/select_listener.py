@@ -1,16 +1,18 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, cast
 
-import uno
+import uno  # noqa: F401
 from com.sun.star.frame import XController
 
-from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
-from ooodev.adapter.view.selection_change_listener import SelectionChangeListener
+from ooo.dyn.table.cell_address import CellAddress
+
+from ooodev.adapter.awt.top_window_events import TopWindowEvents
+from ooodev.adapter.view.selection_change_events import SelectionChangeEvents
+from ooodev.events.args.event_args import EventArgs
 from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
-from ooo.dyn.table.cell_address import CellAddress
 
 if TYPE_CHECKING:
     from com.sun.star.lang import EventObject
@@ -45,30 +47,20 @@ class SelectionListener:
 
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
-        # The solution is to create a function that calls the class method and pass that function to the event system.
-        # Also the function must be a member of the class so that it is not garbage collected.
-
-        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_window_closing(source, event_args, *args, **kwargs)
-
-        def _on_selection_changed(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_selection_changed(source, event_args, *args, **kwargs)
-
-        def _on_disposing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
-            self.on_disposing(source, event_args, *args, **kwargs)
-
-        self._fn_on_window_closing = _on_window_closing
-        self._on_selection_changed = _on_selection_changed
-        self._on_disposing = _on_disposing
+        # The solution is to assign the method to class fields and use them to add the event callbacks.
+        self._fn_on_window_closing = self.on_window_closing
+        self._on_selection_changed = self.on_selection_changed
+        self._on_disposing = self.on_disposing
 
         # close down when window closes
-        self._twl = TopWindowListener()
-        self._twl.on("windowClosing", _on_window_closing)
+        self._twe = TopWindowEvents(add_window_listener=True)
+        self._twe.add_event_window_closing(self._fn_on_window_closing)
 
-        # pass doc to constructor, this will allow listener to be automatically attached to document.
-        self._s_listener = SelectionChangeListener(doc=self._doc)
-        self._s_listener.on("selectionChanged", _on_selection_changed)
-        self._s_listener.on("disposing", _on_disposing)
+        # pass doc to constructor, this will allow listener events to be automatically attached to document.
+        self._sel_events = SelectionChangeEvents(doc=self._doc)
+        self._sel_events.add_event_selection_changed(self._on_selection_changed)
+        self._sel_events.add_event_selection_change_events_disposing(self._on_disposing)
+
 
     def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
         print("Closing")
