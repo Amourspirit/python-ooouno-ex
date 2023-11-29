@@ -318,7 +318,6 @@ class BuildForm(
             )
             props.addPropertyChangeListener("State", self)
             Props.set_property(props, "HelpText", HelpTexts[i])
-            props.addPropertyChangeListener("State", self)
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
