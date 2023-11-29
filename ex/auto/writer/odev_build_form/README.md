@@ -6,9 +6,12 @@ This example uses [OOO Development Tools]
 
 See [start source code](./start.py) and [build_form source code](./build_form.py)
 
+There is a [Build Form2](../odev_build_form2) example that uses the `ooodev.form.controls` modules to create controls.
+The `Form2` example is the recommended way to create forms with controls.
+
 ## Automate
 
-A message box is display once the document has been created asking if you want to close the document.
+This example when run will wait for you to close the document and will print various event information to the console.
 
 ### Dev Container
 

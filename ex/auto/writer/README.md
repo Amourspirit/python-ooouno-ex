@@ -6,6 +6,7 @@ Welcome to Writer Automation folder. Open a sub folder to get to an example.
 - [hello_world](./hello_world/) - Simple Hello World example using [ScriptForge].
 - [odev_build_doc](./odev_build_doc/) - example creates a new Writer document, add a few lines, styles, images, text frame, bookmark.
 - [odev_build_form](./odev_build_form/) - example shows how to build a form using [OOO Development Tools].
+- [odev_build_form2](./odev_build_form2/) - example shows how to build a form using [OOO Development Tools] using controls.
 - [odev_doc_print_console](./odev_doc_print_console/) - example shows how to print the contents of a Writer document to the console.
 - [odev_docs_append](./odev_docs_append/) - example show how to append documents to an existing document.
 - [odev_extract_graphics](./odev_extract_graphics/) - example of how to extract graphics from a document.
