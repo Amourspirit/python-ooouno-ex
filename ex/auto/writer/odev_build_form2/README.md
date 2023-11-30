@@ -1,4 +1,4 @@
-# Build Form
+# Build Form2
 
 Demonstrates how to build a form from code and attach form to a database.
 
@@ -6,8 +6,9 @@ This example uses [OOO Development Tools]
 
 See [start source code](./start.py) and [build_form source code](./build_form.py)
 
-There is a [Build Form2](../odev_build_form2) example that uses the `ooodev.form.controls` modules to create controls.
-The `Form2` example is the recommended way to create forms with controls.
+Unlike [Build Form](../odev_build_form) this example uses the form controls in the `ooodev.form.controls` modules by using the
+various `ooodev.utils.forms.Forms` insert control methods. By using the `ooodev.form.controls` modules you can create
+controls without having to implement listeners on the class. The controls can subscribe to any event that it supports.
 
 ## Automate
 
@@ -34,7 +35,7 @@ python -m start
 From project root folder
 
 ```sh
-python ./ex/auto/writer/odev_build_form/start.py
+python ./ex/auto/writer/odev_build_form2/start.py
 ```
 
 ### Windows
@@ -42,7 +43,7 @@ python ./ex/auto/writer/odev_build_form/start.py
 From project root folder
 
 ```ps
-python .\ex\auto\writer\odev_build_form\start.py
+python .\ex\auto\writer\odev_build_form2\start.py
 ```
 
 ![Form-screenshot](https://user-images.githubusercontent.com/4193389/194674585-8252bf4b-3ada-4746-a70a-234e91767b85.png)
@@ -57,15 +58,15 @@ In the terminal run:
 
 ```bash
 cd examples
-gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_build_form'
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_build_form2'
 ```
 
-This will copy the `odev_build_form` example to the examples folder.
+This will copy the `odev_build_form2` example to the examples folder.
 
 In the terminal run:
 
 ```bash
-cd odev_build_form
+cd odev_build_form2
 python -m start
 ```
 

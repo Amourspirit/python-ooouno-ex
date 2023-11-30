@@ -1,5 +1,6 @@
 # region imports
 from __future__ import annotations
+from typing import Any
 from pathlib import Path
 
 import uno
@@ -32,7 +33,14 @@ from com.sun.star.text import XTextDocument
 from com.sun.star.view import XSelectionChangeListener
 from com.sun.star.view import XSelectionSupplier
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.adapter.awt.top_window_events import TopWindowEvents
+from ooodev.events.args.event_args import EventArgs
 from ooodev.format.writer.direct.char.font import Font
 from ooodev.office.write import Write
 from ooodev.theme import ThemeGeneral
@@ -65,12 +73,16 @@ class BuildForm(
         super().__init__()
 
         self._db_fnm = db_path
+        self.closed = False
+        self._init_callbacks()
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
             BuildForm.doc = Write.create_doc(loader)
 
             GUI.set_visible(True, BuildForm.doc)
+            self._top_win_ev = TopWindowEvents(add_window_listener=True)
+            self._top_win_ev.add_event_window_closing(self._fn_on_window_closing)
             with Lo.ControllerLock():
                 # use a controller lock to lock screen updating.
                 # This will cut down and screen flashing and add controls faster.
@@ -83,24 +95,15 @@ class BuildForm(
                 self.create_form(BuildForm.doc)
             Lo.dispatch_cmd("SwitchControlDesignMode")
 
-            # Lo.wait_enter()
-            # Lo.close_doc(BuildForm.doc)
-            Lo.delay(2000)
-            msg_result = MsgBox.msgbox(
-                "Do you wish to close document?",
-                "All done",
-                boxtype=MessageBoxType.QUERYBOX,
-                buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
-            )
-            if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=BuildForm.doc)
-                BuildForm.doc = None
-                Lo.close_office()
-            else:
-                print("Keeping document open")
         except Exception:
             Lo.close_office()
             raise
+
+    def _init_callbacks(self) -> None:
+        # Event handlers are defined as methods on the class.
+        # However class methods are not callable by the event system.
+        # The solution is to assign the method to class fields and use them to add the event callbacks.
+        self._fn_on_window_closing = self.on_window_closing
 
     def create_form(self, doc: XTextDocument) -> None:
         # Form has four sections: text, command_button, list_box, grid_control
@@ -108,13 +111,16 @@ class BuildForm(
         if Info.version_info < (7, 5, 0, 0):
             dark = False
         else:
-            gen_theme = ThemeGeneral()
-            if gen_theme.background_color < 0:
-                # automatic color, assume light
+            try:
+                gen_theme = ThemeGeneral()
+                if gen_theme.background_color < 0:
+                    # automatic color, assume light
+                    dark = False
+                else:
+                    rgb = color_util.RGB.from_int(gen_theme.background_color)
+                    dark = rgb.is_dark()
+            except Exception:
                 dark = False
-            else:
-                rgb = color_util.RGB.from_int(gen_theme.background_color)
-                dark = rgb.is_dark()
         if dark:
             font_color = color_util.StandardColor.WHITE
         else:
@@ -142,7 +148,11 @@ class BuildForm(
         )
 
         props = Forms.add_labelled_control(
-            doc=_doc, label="AGE", comp_kind=FormComponentKind.NUMERIC_FIELD, y=43, lbl_styles=[font_colored]
+            doc=_doc,
+            label="AGE",
+            comp_kind=FormComponentKind.NUMERIC_FIELD,
+            y=43,
+            lbl_styles=[font_colored],
         )
         Props.set_property(props, "DecimalAccuracy", 0)
 
@@ -318,7 +328,6 @@ class BuildForm(
             )
             props.addPropertyChangeListener("State", self)
             Props.set_property(props, "HelpText", HelpTexts[i])
-            props.addPropertyChangeListener("State", self)
 
         # a list using simple text
         fruits = ("apple", "orange", "pear", "grape")
@@ -326,12 +335,22 @@ class BuildForm(
         height = 6
         y = 90
         x = 2
-        props = Forms.add_list(doc=_doc, name="Fruits", entries=fruits, x=x, y=y, width=width, height=height)
+        props = Forms.add_list(
+            doc=_doc,
+            name="Fruits",
+            entries=fruits,
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+        )
         self.listen_to_list(props)
 
         # set Form's data source to be the DB_FNM database
         def_form = Forms.get_form(doc, "Form")
-        Forms.bind_form_to_table(xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course")
+        Forms.bind_form_to_table(
+            xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course"
+        )
 
         # a list filled using an SQL query on the form's data source
         x = 60
@@ -391,7 +410,9 @@ class BuildForm(
             col_kind="TextField",
             width=25,
         )
-        Forms.create_grid_column(grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25)
+        Forms.create_grid_column(
+            grid_model=grid_model, data_field="lastName", col_kind="TextField", width=25
+        )
 
         self.listen_to_gird(grid_model)
 
@@ -452,7 +473,9 @@ class BuildForm(
     # region XTextListener
     def textChanged(self, ev: TextEvent) -> None:
         cmodel = Forms.get_event_control_model(ev)
-        print(f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}")
+        print(
+            f"{Forms.get_event_control_model(ev)}, Text: {Props.get_property(cmodel, 'Text')}"
+        )
 
     # endregion XTextListener
 
@@ -543,3 +566,15 @@ class BuildForm(
         print("Grid Column change")
 
     # endregion XGridControlListener
+
+    def on_window_closing(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
+        print("Closing")
+        try:
+            Lo.close_doc(BuildForm.doc)
+            Lo.close_office()
+            self.closed = True
+            BuildForm.doc = None
+        except Exception as e:
+            print(f"  {e}")

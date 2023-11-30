@@ -154,3 +154,5 @@ dist/
 user.env
 
 !.devcontainer/res/scripts
+
+.lck
