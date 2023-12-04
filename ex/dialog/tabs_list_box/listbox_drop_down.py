@@ -3,12 +3,12 @@ from __future__ import annotations
 import uno
 from typing import TYPE_CHECKING
 
+from ooodev.calc import CalcDoc
 from ooodev.dialog import Dialogs, BorderKind
 
 from listbox import Listbox
 
 if TYPE_CHECKING:
-    from com.sun.star.sheet import XSpreadsheetDocument
     from com.sun.star.awt import XControl
 
 
@@ -17,11 +17,12 @@ if TYPE_CHECKING:
 
 class ListboxDropDown(Listbox):
     """Drop down listbox example."""
+
     # region Init
     def __init__(
         self,
         ctrl: XControl,
-        doc: XSpreadsheetDocument,
+        doc: CalcDoc,
         x: int,
         y: int,
         width: int,

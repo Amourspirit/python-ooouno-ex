@@ -8,7 +8,8 @@ from __future__ import annotations
 from pathlib import Path
 import uno
 from ooodev.utils.lo import Lo
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.gui import GUI
 from tab_dialog import Tabs
 
@@ -16,9 +17,9 @@ from tab_dialog import Tabs
 def main() -> int:
     fnm = Path(__file__).parent / "data" / "sales_data.ods"
     with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
-        doc = Calc.open_doc(fnm=fnm)
+        doc = CalcDoc(Calc.open_doc(fnm=fnm))
 
-        GUI.set_visible(visible=True, doc=doc)
+        GUI.set_visible(visible=True, doc=doc.component)
         tabs = Tabs(doc=doc)
         Lo.delay(500)
         tabs.show()
