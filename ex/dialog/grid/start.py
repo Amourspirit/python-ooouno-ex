@@ -10,7 +10,6 @@ import uno
 from ooodev.utils.lo import Lo
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
-from ooodev.utils.gui import GUI
 from grid_ex import GridEx
 
 
@@ -18,8 +17,7 @@ def main() -> int:
     fnm = Path(__file__).parent / "data" / "sales_data.ods"
     with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
         doc = CalcDoc(Calc.open_doc(fnm=fnm))
-
-        GUI.set_visible(visible=True, doc=doc.component)
+        doc.set_visible()
         grid_ex = GridEx(doc=doc)
         Lo.delay(500)
         grid_ex.show()
