@@ -8,13 +8,12 @@ from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.lo import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
     from com.sun.star.awt.grid import GridSelectionEvent
-    from com.sun.star.sheet import XSpreadsheetDocument
     from ooodev.dialog.dl_control.ctl_grid import CtlGrid
 
 
@@ -24,7 +23,7 @@ if TYPE_CHECKING:
 class GridEx:
     # pylint: disable=unused-argument
     # region Init
-    def __init__(self, doc: XSpreadsheetDocument) -> None:
+    def __init__(self, doc: CalcDoc) -> None:
         self._border_kind = BorderKind.BORDER_SIMPLE
         self._width = 600
         self._height = 410
@@ -42,14 +41,16 @@ class GridEx:
         self._row_index = -1
         self._init_dialog()
         self._doc = doc
-        self._sheet = Calc.get_active_sheet()
-        Calc.goto_cell(cell_name="A1", doc=doc)
+        self._sheet = doc.get_active_sheet()
+        self._sheet.goto_cell(cell_name="A1")
         self._set_table_data()
 
     def _init_dialog(self) -> None:
         """Create dialog and add controls."""
         self._init_handlers()
-        self._dialog = Dialogs.create_dialog(x=-1, y=-1, width=self._width, height=self._height, title=self._title)
+        self._dialog = Dialogs.create_dialog(
+            x=-1, y=-1, width=self._width, height=self._height, title=self._title
+        )
         self._init_label()
         self._init_table()
         self._init_buttons()
@@ -139,8 +140,8 @@ class GridEx:
     # region Data
     def _set_table_data(self) -> None:
         """Find all the data in the spreadsheet and add it to the dialog grid control."""
-        rng = Calc.find_used_range_obj(sheet=self._sheet)
-        tbl = Calc.get_array(sheet=self._sheet, range_obj=rng)
+        rng = self._sheet.find_used_range()
+        tbl = rng.get_array()
         self._ctl_table1.set_table_data(
             data=tbl,
             align="RLC",
@@ -174,15 +175,21 @@ class GridEx:
     # endregion Handle Results
 
     # region Event Handlers
-    def on_grid_selection_changed(self, src: Any, event: EventArgs, control_src: CtlGrid, *args, **kwargs) -> None:
+    def on_grid_selection_changed(
+        self, src: Any, event: EventArgs, control_src: CtlGrid, *args, **kwargs
+    ) -> None:
         """Method that is fired each time the selection changes in the grid."""
         print("Grid Selection Changed:", control_src.name)
         itm_event = cast("GridSelectionEvent", event.event_data)
-        self._row_index = itm_event.SelectedRowIndexes[0] if itm_event.SelectedRowIndexes else -1
+        self._row_index = (
+            itm_event.SelectedRowIndexes[0] if itm_event.SelectedRowIndexes else -1
+        )
         print("Selected row indexes:", itm_event.SelectedRowIndexes)
         print("Selected row index:", self._row_index)
 
-    def on_button_action_preformed(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_button_action_preformed(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         """Method that is fired when Info button is clicked."""
         itm_event = cast("ActionEvent", event.event_data)
         if itm_event.ActionCommand == "INFO":
