@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 from __future__ import annotations
 import uno
-from com.sun.star.sheet import XSpreadsheet
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc, CalcDoc, CalcSheet, ZoomKind
 from ooodev.format.calc.direct.cell.borders import Borders, Side
 from ooodev.utils.color import CommonColor
 
 
-def do_cell_range(sheet: XSpreadsheet) -> None:
+def do_cell_range(sheet: CalcSheet) -> None:
     vals = (
         ("Name", "Fruit", "Quantity"),
         ("Alice", "Apples", 3),
@@ -35,23 +39,28 @@ def do_cell_range(sheet: XSpreadsheet) -> None:
         ("Alice", "Oranges", 4),
         ("Alice", "Apples", 9),
     )
-    Calc.set_array(values=vals, sheet=sheet, name="A3:C23")  # or just "A3"
-    Calc.set_val("Total", sheet=sheet, cell_name="A24")
-    Calc.set_val("=SUM(C4:C23)", sheet=sheet, cell_name="C24")
+    sheet.set_array(values=vals, name="A3:C23")  # or just "A3"
+    cell = sheet.get_cell(cell_name="A24")
+    cell.set_val("Total")
+
+    cell = sheet.get_cell(cell_name="C24")
+    cell.set_val("=SUM(C4:C23)")
 
     # set Border around data and summary.
     bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
-    Calc.set_style_range(sheet=sheet, range_name="A2:C24", styles=[bdr])
+    rng = sheet.get_range(range_name="A2:C24")
+    rng.set_style([bdr])
 
 
 def main() -> int:
     _ = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = Calc.create_doc()
-        sheet = Calc.get_sheet(doc=doc, index=0)
-        GUI.set_visible(visible=True, doc=doc)
+        doc = CalcDoc(Calc.create_doc())
+        sheet = doc.get_sheet(idx=0)
+        doc.set_visible()
         Lo.delay(300)
-        Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
+
+        doc.zoom(ZoomKind.ZOOM_100_PERCENT)
 
         do_cell_range(sheet=sheet)
         Lo.delay(1_500)
@@ -62,7 +71,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
