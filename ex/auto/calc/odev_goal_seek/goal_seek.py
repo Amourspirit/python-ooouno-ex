@@ -5,7 +5,7 @@ from com.sun.star.sheet import XGoalSeek
 
 from ooodev.exceptions.ex import GoalDivergenceError
 from ooodev.calc import Calc
-from ooodev.calc import CalcDoc, CalcSheet
+from ooodev.calc import CalcDoc
 from ooodev.utils.lo import Lo
 
 
