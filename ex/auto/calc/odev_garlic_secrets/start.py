@@ -9,7 +9,6 @@ import sys
 import argparse
 from pathlib import Path
 
-from ooodev.utils.file_io import FileIO
 from garlic_secrets import GarlicSecrets
 
 
