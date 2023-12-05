@@ -12,7 +12,6 @@ from ooodev.dialog.msgbox import (
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
