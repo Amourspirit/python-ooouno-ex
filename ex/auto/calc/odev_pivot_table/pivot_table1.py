@@ -3,7 +3,6 @@ from __future__ import annotations
 import uno
 from com.sun.star.sheet import XDataPilotTable
 from com.sun.star.sheet import XDataPilotTables
-from com.sun.star.sheet import XSpreadsheet
 
 from ooodev.dialog.msgbox import (
     MsgBox,
