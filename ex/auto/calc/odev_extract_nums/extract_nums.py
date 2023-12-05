@@ -14,7 +14,6 @@ from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from ooodev.formatters.formatter_table import FormatterTable, FormatTableItem
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr, Row, Column
 
