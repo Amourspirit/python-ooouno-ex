@@ -5,10 +5,15 @@ from com.sun.star.sheet import XDataPilotTable
 from com.sun.star.sheet import XDataPilotTables
 from com.sun.star.sheet import XSpreadsheet
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.calc import Calc, GeneralFunction
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.calc import Calc, GeneralFunction
+from ooodev.calc import CalcDoc, CalcSheet
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
@@ -31,18 +36,18 @@ class PivotTable1:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = Calc.open_doc(fnm=self._fnm, loader=loader)
+            doc = CalcDoc(Calc.open_doc(fnm=self._fnm, loader=loader))
 
-            GUI.set_visible(visible=True, doc=doc)
+            doc.set_visible()
 
-            sheet = Calc.get_sheet(doc=doc)
-            dp_sheet = Calc.insert_sheet(doc=doc, name="Pivot Table", idx=1)
+            sheet = doc.get_sheet()
+            dp_sheet = doc.insert_sheet(name="Pivot Table", idx=1)
 
             self._create_pivot_table(sheet=sheet, dp_sheet=dp_sheet)
-            Calc.set_active_sheet(doc=doc, sheet=dp_sheet)
+            dp_sheet.set_active()
 
             if self._out_fnm:
-                Lo.save_doc(doc=doc, fnm=self._out_fnm)
+                doc.save_doc(fnm=self._out_fnm)
 
             msg_result = MsgBox.msgbox(
                 "Do you wish to close document?",
@@ -51,7 +56,7 @@ class PivotTable1:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -60,14 +65,16 @@ class PivotTable1:
             Lo.close_office()
             raise
 
-    def _create_pivot_table(self, sheet: XSpreadsheet, dp_sheet: XSpreadsheet) -> XDataPilotTable | None:
-        cell_range = Calc.find_used_range(sheet)
-        print(f"The used area is: { Calc.get_range_str(cell_range)}")
+    def _create_pivot_table(
+        self, sheet: CalcSheet, dp_sheet: CalcSheet
+    ) -> XDataPilotTable | None:
+        cell_range = sheet.find_used_range()
+        print(f"The used area is: { cell_range.get_range_str()}")
         print()
 
-        dp_tables = Calc.get_pilot_tables(sheet)
+        dp_tables = sheet.get_pilot_tables()
         dp_desc = dp_tables.createDataPilotDescriptor()
-        dp_desc.setSourceRange(Calc.get_address(cell_range))
+        dp_desc.setSourceRange(cell_range.get_address())
 
         # XIndexAccess fields = dpDesc.getDataPilotFields();
         fields = dp_desc.getHiddenFields()
@@ -92,9 +99,9 @@ class PivotTable1:
         Props.set(props, Function=GeneralFunction.SUM)
 
         # place onto sheet
-        dest_addr = Calc.get_cell_address(sheet=dp_sheet, cell_name="A1")
+        dest_addr = dp_sheet.get_cell_address(cell_name="A1")
         dp_tables.insertNewByName("PivotTableExample", dest_addr, dp_desc)
-        Calc.set_col_width(sheet=dp_sheet, width=60, idx=0)
+        dp_sheet.set_col_width(width=60, idx=0)
         # A column; in mm
 
         # Usually the table is not fully updated. The cells are often
@@ -104,10 +111,12 @@ class PivotTable1:
         # be accessed via the sheet or the tables container is considered
         # empty, and the table is not found.
 
-        dp_tables2 = Calc.get_pilot_tables(sheet=dp_sheet)
+        dp_tables2 = dp_sheet.get_pilot_tables()
         return self._refresh_table(dp_tables=dp_tables2, table_name="PivotTableExample")
 
-    def _refresh_table(self, dp_tables: XDataPilotTables, table_name: str) -> XDataPilotTable | None:
+    def _refresh_table(
+        self, dp_tables: XDataPilotTables, table_name: str
+    ) -> XDataPilotTable | None:
         nms = dp_tables.getElementNames()
         print(f"No. of DP tables: {len(nms)}")
         for nm in nms:
