@@ -9,12 +9,17 @@ from com.sun.star.util import XModifyBroadcaster
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.gui import GUI
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.file_io import FileIO
 
 # from ooodev.listeners.x_top_window_adapter import XTopWindowAdapter
-from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs, GenericArgs
+from ooodev.adapter.awt.top_window_listener import (
+    TopWindowListener,
+    EventArgs,
+    GenericArgs,
+)
 
 
 if TYPE_CHECKING:
@@ -32,15 +37,18 @@ class ModifyListener(unohelper.Base, XModifyListener):
             self._out_fnm = ""
         self.closed = False
         loader = Lo.load_office(Lo.ConnectPipe())
-        self._doc = Calc.create_doc(loader)
+        self._doc = CalcDoc(Calc.create_doc(loader))
 
-        GUI.set_visible(visible=True, doc=self._doc)
-        self._sheet = Calc.get_sheet(doc=self._doc, index=0)
+        self._doc.set_visible()
+        self._sheet = self._doc.get_sheet(0)
 
         # insert some data
-        Calc.set_col(sheet=self._sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
+        self._sheet.set_col(
+            cell_name="A1",
+            values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3),
+        )
 
-        mb = Lo.qi(XModifyBroadcaster, self._doc, True)
+        mb = self._doc.qi(XModifyBroadcaster, True)
         mb.addModifyListener(self)
 
         # Event handlers are defined as methods on the class.
@@ -48,7 +56,9 @@ class ModifyListener(unohelper.Base, XModifyListener):
         # The solution is to create a function that calls the class method and pass that function to the event system.
         # Also the function must be a member of the class so that it is not garbage collected.
 
-        def _on_window_closing(source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+        def _on_window_closing(
+            source: Any, event_args: EventArgs, *args, **kwargs
+        ) -> None:
             self.on_window_closing(source, event_args, *args, **kwargs)
 
         self._fn_on_window_closing = _on_window_closing
@@ -57,10 +67,12 @@ class ModifyListener(unohelper.Base, XModifyListener):
         self._twl = TopWindowListener()
         self._twl.on("windowClosing", _on_window_closing)
 
-    def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_closing(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         print("Closing")
         try:
-            Lo.close_doc(self._doc)
+            self._doc.close_doc()
             Lo.close_office()
             self.closed = True
         except Exception as e:
@@ -78,7 +90,7 @@ class ModifyListener(unohelper.Base, XModifyListener):
         print("Modified")
         doc = Lo.qi(XSpreadsheetDocument, event.Source, True)
         addr = Calc.get_selected_cell_addr(doc)
-        print(f"  {Calc.get_cell_str(addr=addr)} = {Calc.get_val(sheet=self._sheet, addr=addr)}")
+        print(f"  {Calc.get_cell_str(addr=addr)} = {self._sheet.get_val(addr=addr)}")
 
     def disposing(self, event: EventObject) -> None:
         """
