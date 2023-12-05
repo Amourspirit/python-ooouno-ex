@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import uno
-from com.sun.star.sheet import XSpreadsheet
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -12,7 +11,6 @@ from ooodev.dialog.msgbox import (
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc, CalcSheet
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
