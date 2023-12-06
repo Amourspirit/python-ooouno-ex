@@ -4,28 +4,36 @@ import uno
 from com.sun.star.sheet import XGoalSeek
 
 from ooodev.exceptions.ex import GoalDivergenceError
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.lo import Lo
 
 
 class GoalSeek:
     def main(self) -> None:
         with Lo.Loader(connector=Lo.ConnectPipe()) as loader:
-            doc = Calc.create_doc(loader)
-            sheet = Calc.get_sheet(doc=doc)
-            gs = Lo.qi(XGoalSeek, doc)
+            doc = CalcDoc(Calc.create_doc(loader))
+            sheet = doc.get_sheet(0)
+            gs = doc.qi(XGoalSeek, True)
 
             # -------------------------------------------------
             # x-variable and starting value
-            Calc.set_val(value=9, sheet=sheet, cell_name="C1")
+            cell1 = sheet.get_cell(cell_name="C1")
+            cell1.set_val(9)
             # formula
-            Calc.set_val(value="=SQRT(C1)", sheet=sheet, cell_name="C2")
-            x = Calc.goal_seek(gs=gs, sheet=sheet, cell_name="C1", formula_cell_name="C2", result=4.0)
+            cell2 = cell1.get_cell_down()
+            cell2.set_val("=SQRT(C1)")
+
+            x = cell1.goal_seek(gs=gs, formula_cell_name=cell2.cell_obj, result=4.0)
             print(f"x == {x}\n")  # 16.0
 
             # -------------------------------------------------
             try:
-                x = Calc.goal_seek(gs=gs, sheet=sheet, cell_name="C1", formula_cell_name="C2", result=-4.0)
+                x = cell1.goal_seek(
+                    gs=gs,
+                    formula_cell_name=cell2.cell_obj,
+                    result=-4.0,
+                )
                 # The formula is still y = sqrt(x)
                 # Find x when sqrt(x) == -4, which is impossible
                 print(f"x == {x} when sqrt(x) == -4\n")
@@ -35,43 +43,54 @@ class GoalSeek:
                 print()
             # -------------------------------------------------
             # x-variable and starting value
-            Calc.set_val(sheet=sheet, cell_name="D1", value=0.8)
+            cell1 = cell1.get_cell_right()  # D1
+            cell2 = cell2.get_cell_down()  # D2
+
+            cell1.set_val(0.8)
             # formula
-            Calc.set_val(sheet=sheet, cell_name="D2", value="=(D1^2 - 1)/(D1 - 1)")
+            cell2.set_val("=(D1^2 - 1)/(D1 - 1)")
             # The formula is y = (x^2 -1)/(x-1)
             # After factoring, this is just y = x+1
-            x = Calc.goal_seek(gs=gs, sheet=sheet, cell_name="D1", formula_cell_name="D2", result=2)
+            x = cell1.goal_seek(gs=gs, formula_cell_name=cell2.cell_obj, result=2)
             print(f"x == {x} when x+1 == 2\n")
 
             # -------------------------------------------------
             #  x-variable; starting capital
-            Calc.set_val(value=100000, sheet=sheet, cell_name="B1")
+            cell1 = sheet.get_cell(cell_name="B1")
+            cell2 = cell1.get_cell_down()  # B2
+            cell3 = cell2.get_cell_down()  # B3
+            cell4 = cell3.get_cell_down()  # B4
+
+            cell1.set_val(100000)
             # n, no. of years
-            Calc.set_val(value=1, sheet=sheet, cell_name="B2")
+            cell2.set_val(1)
             # i, interest rate (7.5%)
-            Calc.set_val(value=0.075, sheet=sheet, cell_name="B3")
+            cell3.set_val(0.075)
             # formula
-            Calc.set_val("=B1*B2*B3", sheet, "B4")
+            cell4.set_val("=B1*B2*B3")
             # The formula is Annual interest = x*n*r
             # where capital (x), number of years (n), and interest rate (r).
             # Find the capital, if the other values are given.
-            x = Calc.goal_seek(gs=gs, sheet=sheet, cell_name="B1", formula_cell_name="B4", result=15000)
+            x = cell1.goal_seek(gs=gs, formula_cell_name=cell4.cell_obj, result=15000)
             # x is 200,000
             print(
                 (
                     f"x == {x} when x*"
-                    f'{Calc.get_val(sheet=sheet, cell_name="B2")}*'
-                    f'{Calc.get_val(sheet=sheet, cell_name="B3")}'
+                    f"{cell2.get_val()}*"
+                    f"{cell3.get_val()}"
                     " == 15000\n"
                 )
             )
 
             # -------------------------------------------------
             # x-variable and starting value
-            Calc.set_val(value=0, sheet=sheet, cell_name="E1")
+            cell1 = sheet.get_cell(cell_name="E1")
+            cell2 = cell1.get_cell_down()
+            cell1.set_val(0)
+
             # formula
-            Calc.set_val(value="=(E1^3 - 2*E1 + 2", sheet=sheet, cell_name="E2")
-            x = Calc.goal_seek(gs=gs, sheet=sheet, cell_name="E1", formula_cell_name="E2", result=0)
+            cell2.set_val("=(E1^3 - 2*E1 + 2")
+            x = cell1.goal_seek(gs=gs, formula_cell_name=cell2.cell_obj, result=0)
             # x is -1.7692923428381226 so not using Newton's method which oscillates between 0 and 1
             print(f"x == {x} when formula == 0\n")
-            Lo.close_doc(doc)
+            doc.close_doc()

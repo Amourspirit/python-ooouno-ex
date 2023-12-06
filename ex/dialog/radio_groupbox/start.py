@@ -7,16 +7,16 @@
 from __future__ import annotations
 import uno
 from ooodev.utils.lo import Lo
-from ooodev.office.calc import Calc
-from ooodev.utils.gui import GUI
+from ooodev.calc import Calc, CalcDoc
 from radio_group_box import RadioGroupBox
 
 
 def main() -> int:
     with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
-        doc = Calc.create_doc()
-        GUI.set_visible(visible=True, doc=doc)
+        doc = CalcDoc(Calc.create_doc())
+        doc.set_visible()
         Lo.delay(300)
+        doc.zoom_value(100)
         rgb = RadioGroupBox()
         rgb.show()
     return 0

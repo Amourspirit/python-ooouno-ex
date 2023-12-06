@@ -6,9 +6,9 @@ import uno
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
 from ooodev.adapter.util.modify_events import ModifyEvents
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
@@ -24,13 +24,16 @@ class ModifyListenerAdapter:
             self._out_fnm = ""
         self.closed = False
         loader = Lo.load_office(Lo.ConnectPipe())
-        self._doc = Calc.create_doc(loader)
+        self._doc = CalcDoc(Calc.create_doc(loader))
 
-        GUI.set_visible(visible=True, doc=self._doc)
-        self._sheet = Calc.get_sheet(doc=self._doc, index=0)
+        self._doc.set_visible()
+        self._sheet = self._doc.get_sheet(0)
 
         # insert some data
-        Calc.set_col(sheet=self._sheet, cell_name="A1", values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3))
+        self._sheet.set_col(
+            cell_name="A1",
+            values=("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3),
+        )
 
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
@@ -39,19 +42,28 @@ class ModifyListenerAdapter:
         self._fn_on_modified = self.on_modified
         self._fn_on_disposing = self.on_disposing
 
+        # Since OooDev 0.15.0 it is possible to set call backs directly on the document.
+        # No deed to create a ModifyEvents object.
+        # It is possible to subscribe to event for document, sheets, ranges, cells, etc.
+        self._doc.add_event_modified(self._fn_on_modified)
+        self._doc.add_event_modify_events_disposing(self._fn_on_disposing)
+
+        # This is the pre 0.15.0 way of doing it.
         # pass doc to constructor, this will allow listener to be automatically attached to document.
-        self._m_events = ModifyEvents(subscriber=self._doc)
-        self._m_events.add_event_modified(self._fn_on_modified)
-        self._m_events.add_event_modify_events_disposing(self._fn_on_disposing)
+        # self._m_events = ModifyEvents(subscriber=self._doc.component)
+        # self._m_events.add_event_modified(self._fn_on_modified)
+        # self._m_events.add_event_modify_events_disposing(self._fn_on_disposing)
 
         # close down when window closes
         self._top_win_ev = TopWindowEvents(add_window_listener=True)
         self._top_win_ev.add_event_window_closing(self._fn_on_window_closing)
 
-    def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_closing(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         print("Closing")
         try:
-            Lo.close_doc(self._doc)
+            self._doc.close_doc()
             Lo.close_office()
             self.closed = True
         except Exception as e:
@@ -63,8 +75,10 @@ class ModifyListenerAdapter:
             # event = cast("EventObject", event_args.event_data)
             # doc = Lo.qi(XSpreadsheetDocument, event.Source, True)
             doc = self._doc
-            addr = Calc.get_selected_cell_addr(doc)
-            print(f"  {Calc.get_cell_str(addr=addr)} = {Calc.get_val(sheet=self._sheet, addr=addr)}")
+            addr = doc.get_selected_cell_addr()
+            print(
+                f"  {Calc.get_cell_str(addr=addr)} = {self._sheet.get_val(addr=addr)}"
+            )
         except Exception as e:
             print(e)
 

@@ -5,11 +5,9 @@
 # This seems to be a Wayland/Java compatibility issues.
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 
-import sys
 import argparse
 from pathlib import Path
 
-from ooodev.utils.file_io import FileIO
 from garlic_secrets import GarlicSecrets
 
 

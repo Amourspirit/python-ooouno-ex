@@ -9,9 +9,8 @@ from ooo.dyn.awt.pos_size import PosSize
 from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
+from ooodev.calc import CalcDoc
 from ooodev.utils.lo import Lo
-from ooodev.utils.gui import GUI
 from listbox import Listbox
 from listbox_drop_down import ListboxDropDown
 from listbox_multi_select import ListboxMultiSelect
@@ -24,7 +23,7 @@ if TYPE_CHECKING:
 
 class Tabs:
     # pylint: disable=unused-argument
-    def __init__(self, doc: XSpreadsheetDocument) -> None:
+    def __init__(self, doc: CalcDoc) -> None:
         self._border_kind = BorderKind.BORDER_SIMPLE
         self._width = 320
         self._height = 500
@@ -65,7 +64,10 @@ class Tabs:
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
-            height=self._height - (self._margin * 2) - self._btn_height - (self._padding * 2),
+            height=self._height
+            - (self._margin * 2)
+            - self._btn_height
+            - (self._padding * 2),
         )
         self._ctl_tab.add_event_tab_page_activated(self._fn_tab_activated)
         self._init_tab_list_box()
@@ -202,13 +204,17 @@ class Tabs:
         self._fn_tab_activated = self.on_tab_activated
         self._fn_button_action_preformed = self.on_button_action_preformed
 
-    def on_tab_activated(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_tab_activated(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         print("Tab Changed:", control_src.name)
         itm_event = cast("TabPageActivatedEvent", event.event_data)
         self._active_page_page_id = itm_event.TabPageID
         print("Active ID:", self._active_page_page_id)
 
-    def on_button_action_preformed(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_button_action_preformed(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         """Method that is fired when Info button is clicked."""
         itm_event = cast("ActionEvent", event.event_data)
         if itm_event.ActionCommand == "INFO":

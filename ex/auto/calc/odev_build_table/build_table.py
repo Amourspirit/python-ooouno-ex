@@ -4,22 +4,28 @@ import uno
 from com.sun.star.drawing import XDrawPagesSupplier
 from com.sun.star.drawing import XDrawPageSupplier
 from com.sun.star.lang import XComponent
-from com.sun.star.sheet import XSpreadsheet
-from com.sun.star.sheet import XSpreadsheetDocument
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.format import Styler
 from ooodev.format.calc.direct.cell import borders as direct_borders
 from ooodev.format.calc.modify.cell import borders as modify_borders
-from ooodev.format.calc.modify.cell.alignment import HoriAlignKind, VertAlignKind, TextAlign
+from ooodev.format.calc.modify.cell.alignment import (
+    HoriAlignKind,
+    VertAlignKind,
+    TextAlign,
+)
 from ooodev.format.calc.modify.cell.background import Color as BgColor
 from ooodev.format.calc.modify.cell.font import FontEffects
-from ooodev.office.calc import Calc
+from ooodev.calc import Calc, CalcDoc, CalcSheet, ZoomKind
 from ooodev.office.draw import Draw
 from ooodev.units import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.table_helper import TableHelper
 from ooodev.utils.type_var import PathOrStr
@@ -52,13 +58,13 @@ class BuildTable:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = Calc.create_doc(loader)
+            doc = CalcDoc(Calc.create_doc(loader))
 
-            GUI.set_visible(visible=True, doc=doc)
+            doc.set_visible()
             Lo.delay(300)
-            Calc.zoom(doc=doc, type=GUI.ZoomEnum.ZOOM_100_PERCENT)
+            doc.zoom(ZoomKind.ZOOM_100_PERCENT)
 
-            sheet = Calc.get_sheet(doc=doc, index=0)
+            sheet = doc.get_sheet(0)
 
             self._convert_addresses(sheet)
 
@@ -70,15 +76,20 @@ class BuildTable:
             self._build_array(sheet)
 
             if self._add_pic:
-                self._add_picture(sheet=sheet, doc=doc)
+                self._add_picture(sheet)
 
             # add a chart
             if self._add_chart and Chart2:
                 # assumes _build_array() has filled the spreadsheet with data
-                rng_addr = Calc.get_address(sheet=sheet, range_name="B2:M4")
+                rng_addr = sheet.get_address(range_name="B2:M4")
                 chart_cell = "B6" if self._add_pic else "D6"
                 Chart2.insert_chart(
-                    sheet=sheet, cells_range=rng_addr, cell_name=chart_cell, width=21, height=11, diagram_name="Column"
+                    sheet=sheet.component,
+                    cells_range=rng_addr,
+                    cell_name=chart_cell,
+                    width=21,
+                    height=11,
+                    diagram_name="Column",
                 )
 
             if self._add_style:
@@ -86,7 +97,7 @@ class BuildTable:
                 self._apply_styles(sheet)
 
             if self._out_fnm:
-                Lo.save_doc(doc=doc, fnm=self._out_fnm)
+                doc.save_doc(fnm=self._out_fnm)
 
             msg_result = MsgBox.msgbox(
                 "Do you wish to close document?",
@@ -95,7 +106,7 @@ class BuildTable:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -106,82 +117,217 @@ class BuildTable:
 
     # region Private Methods
 
-    def _build_cells(self, sheet: XSpreadsheet) -> None:
+    def _build_cells(self, sheet: CalcSheet) -> None:
         # column -- row
-        header_vals = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
+        header_vals = (
+            "JAN",
+            "FEB",
+            "MAR",
+            "APR",
+            "MAY",
+            "JUN",
+            "JUL",
+            "AUG",
+            "SEP",
+            "OCT",
+            "NOV",
+            "DEC",
+        )
+
         for i, val in enumerate(header_vals):
-            Calc.set_val(value=val, sheet=sheet, col=i + 1, row=0)
+            sheet.set_val(value=val, col=i + 1, row=0)
 
         # name
-        vals = (31.45, 20.9, 117.5, 23.4, 114.5, 115.3, 171.3, 89.5, 41.2, 71.3, 25.4, 38.5)
+        vals = (
+            31.45,
+            20.9,
+            117.5,
+            23.4,
+            114.5,
+            115.3,
+            171.3,
+            89.5,
+            41.2,
+            71.3,
+            25.4,
+            38.5,
+        )
         # start at B2
         for i, val in enumerate(vals):
             cell_name = TableHelper.make_cell_name(row=2, col=i + 2)
-            Calc.set_val(value=val, sheet=sheet, cell_name=cell_name)
+            sheet.set_val(value=val, cell_name=cell_name)
 
-    def _build_rows(self, sheet: XSpreadsheet) -> None:
-        vals = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
-        Calc.set_row(sheet=sheet, values=vals, cell_name="B1")
-        Calc.set_val(value="SUM", sheet=sheet, cell_name="N1")
-
-        Calc.set_val(value="Smith", sheet=sheet, cell_name="A2")
-        vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
-        Calc.set_row(sheet=sheet, values=vals, cell_name="B2")
-        Calc.set_val(value="=SUM(B2:M2)", sheet=sheet, cell_name="N2")
-
-        Calc.set_val(value="Jones", sheet=sheet, col=0, row=2)
-        vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
-        Calc.set_row(sheet=sheet, values=vals, col_start=1, row_start=2)
-        Calc.set_val(value="=SUM(B3:M3)", sheet=sheet, col=13, row=2)
-
-        Calc.set_val(value="Brown", sheet=sheet, col=0, row=3)
-        vals = (31.45, -20.9, -117.5, 23.4, -114.5, 115.3, -171.3, 89.5, 41.2, 71.3, 25.4, 38.5)
-        Calc.set_row(sheet=sheet, values=vals, col_start=1, row_start=3)
-        Calc.set_val(value="=SUM(A4:L4)", sheet=sheet, col=13, row=3)
-
-    def _build_cols(self, sheet: XSpreadsheet) -> None:
-        vals = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
-        Calc.set_col(sheet=sheet, values=vals, cell_name="A2")
-        Calc.set_val(value="SUM", sheet=sheet, cell_name="A14")
-
-        Calc.set_val(value="Smith", sheet=sheet, cell_name="B1")
-        vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
-        Calc.set_col(sheet=sheet, values=vals, cell_name="B2")
-        Calc.set_val(value="=SUM(B2:M2)", sheet=sheet, cell_name="B14")
-
-        Calc.set_val(value="Jones", sheet=sheet, col=2, row=0)
-        vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
-        Calc.set_col(sheet=sheet, values=vals, col_start=2, row_start=1)
-        Calc.set_val(value="=SUM(B3:M3)", sheet=sheet, col=2, row=13)
-
-        Calc.set_val(value="Brown", sheet=sheet, col=3, row=0)
-        vals = (31.45, -20.9, -117.5, 23.4, -114.5, 115.3, -171.3, 89.5, 41.2, 71.3, 25.4, 38.5)
-        Calc.set_col(sheet=sheet, values=vals, col_start=3, row_start=1)
-        Calc.set_val(value="=SUM(A4:L4)", sheet=sheet, col=3, row=13)
-
-    def _build_array(self, sheet: XSpreadsheet) -> None:
+    def _build_rows(self, sheet: CalcSheet) -> None:
         vals = (
-            ("", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"),
-            ("Smith", 42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5),
-            ("Jones", 21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5),
-            ("Brown", 31.45, -20.9, -117.5, 23.4, -114.5, 115.3, -171.3, 89.5, 41.2, 71.3, 25.4, 38.5),
+            "JAN",
+            "FEB",
+            "MAR",
+            "APR",
+            "MAY",
+            "JUN",
+            "JUL",
+            "AUG",
+            "SEP",
+            "OCT",
+            "NOV",
+            "DEC",
         )
-        Calc.set_array(values=vals, sheet=sheet, name="A1:M4")  # or just A1
+        sheet.set_row(values=vals, cell_name="B1")
+        sheet.set_val(value="SUM", cell_name="N1")
 
-        Calc.set_val(sheet=sheet, cell_name="N1", value="SUM")
-        Calc.set_val(sheet=sheet, cell_name="N2", value="=SUM(B2:M2)")
-        Calc.set_val(sheet=sheet, cell_name="N3", value="=SUM(B3:M3)")
-        Calc.set_val(sheet=sheet, cell_name="N4", value="=SUM(B4:M4)")
+        sheet.set_val(value="Smith", cell_name="A2")
+        vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
+        sheet.set_row(values=vals, cell_name="B2")
+        sheet.set_val(value="=SUM(B2:M2)", cell_name="N2")
 
-    def _convert_addresses(self, sheet: XSpreadsheet) -> None:
+        sheet.set_val(value="Jones", col=0, row=2)
+        vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
+        sheet.set_row(values=vals, col_start=1, row_start=2)
+        sheet.set_val(value="=SUM(B3:M3)", col=13, row=2)
+
+        sheet.set_val(value="Brown", col=0, row=3)
+        vals = (
+            31.45,
+            -20.9,
+            -117.5,
+            23.4,
+            -114.5,
+            115.3,
+            -171.3,
+            89.5,
+            41.2,
+            71.3,
+            25.4,
+            38.5,
+        )
+        sheet.set_row(values=vals, col_start=1, row_start=3)
+        sheet.set_val(value="=SUM(A4:L4)", col=13, row=3)
+
+    def _build_cols(self, sheet: CalcSheet) -> None:
+        vals = (
+            "JAN",
+            "FEB",
+            "MAR",
+            "APR",
+            "MAY",
+            "JUN",
+            "JUL",
+            "AUG",
+            "SEP",
+            "OCT",
+            "NOV",
+            "DEC",
+        )
+        sheet.set_col(values=vals, cell_name="A2")
+        sheet.set_val(value="SUM", cell_name="A14")
+
+        sheet.set_val(value="Smith", cell_name="B1")
+        vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
+        sheet.set_col(values=vals, cell_name="B2")
+        sheet.set_val(value="=SUM(B2:M2)", cell_name="B14")
+
+        sheet.set_val(value="Jones", col=2, row=0)
+        vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
+        sheet.set_col(values=vals, col_start=2, row_start=1)
+        sheet.set_val(value="=SUM(B3:M3)", col=2, row=13)
+
+        sheet.set_val(value="Brown", col=3, row=0)
+        vals = (
+            31.45,
+            -20.9,
+            -117.5,
+            23.4,
+            -114.5,
+            115.3,
+            -171.3,
+            89.5,
+            41.2,
+            71.3,
+            25.4,
+            38.5,
+        )
+        sheet.set_col(values=vals, col_start=3, row_start=1)
+        sheet.set_val(value="=SUM(A4:L4)", col=3, row=13)
+
+    def _build_array(self, sheet: CalcSheet) -> None:
+        vals = (
+            (
+                "",
+                "JAN",
+                "FEB",
+                "MAR",
+                "APR",
+                "MAY",
+                "JUN",
+                "JUL",
+                "AUG",
+                "SEP",
+                "OCT",
+                "NOV",
+                "DEC",
+            ),
+            (
+                "Smith",
+                42,
+                58.9,
+                -66.5,
+                43.4,
+                44.5,
+                45.3,
+                -67.3,
+                30.5,
+                23.2,
+                -97.3,
+                22.4,
+                23.5,
+            ),
+            (
+                "Jones",
+                21,
+                40.9,
+                -57.5,
+                -23.4,
+                34.5,
+                59.3,
+                27.3,
+                -38.5,
+                43.2,
+                57.3,
+                25.4,
+                28.5,
+            ),
+            (
+                "Brown",
+                31.45,
+                -20.9,
+                -117.5,
+                23.4,
+                -114.5,
+                115.3,
+                -171.3,
+                89.5,
+                41.2,
+                71.3,
+                25.4,
+                38.5,
+            ),
+        )
+        sheet.set_array(values=vals, name="A1:M4")  # or just A1
+
+        sheet.set_val(cell_name="N1", value="SUM")
+        sheet.set_val(cell_name="N2", value="=SUM(B2:M2)")
+        sheet.set_val(cell_name="N3", value="=SUM(B3:M3)")
+        sheet.set_val(cell_name="N4", value="=SUM(B4:M4)")
+
+    def _convert_addresses(self, sheet: CalcSheet) -> None:
         # cell name <--> position
-        pos = Calc.get_cell_position(cell_name="AA2")
+        pos = sheet.get_cell(cell_name="A22").get_cell_position()
         print(f"Position of AA2: ({pos.X}, {pos.Y})")
 
-        cell = Calc.get_cell(sheet=sheet, col=pos.X, row=pos.Y)
-        Calc.print_cell_address(cell)
+        cell = sheet.get_cell(col=pos.X, row=pos.Y)
+        Calc.print_cell_address(cell.component)
 
-        print(f"AA2: {Calc.get_cell_str(col=pos.X, row=pos.Y)}")
+        print(f"AA2: {cell.get_cell_str()}")
         print()
 
         # cell range name <--> position
@@ -189,51 +335,73 @@ class BuildTable:
         print(f"Range of A1:D5: ({rng[0].X}, {rng[0].Y}) -- ({rng[1].X}, {rng[1].Y})")
 
         cell_rng = Calc.get_cell_range(
-            sheet=sheet, col_start=rng[0].X, row_start=rng[0].Y, col_end=rng[1].X, row_end=rng[1].Y
+            sheet=sheet.component,
+            col_start=rng[0].X,
+            row_start=rng[0].Y,
+            col_end=rng[1].X,
+            row_end=rng[1].Y,
         )
         Calc.print_address(cell_rng)
         print(
-            "A1:D5: " + Calc.get_range_str(col_start=rng[0].X, row_start=rng[0].Y, col_end=rng[1].X, row_end=rng[1].Y)
+            "A1:D5: "
+            + Calc.get_range_str(
+                col_start=rng[0].X,
+                row_start=rng[0].Y,
+                col_end=rng[1].X,
+                row_end=rng[1].Y,
+            )
         )
         print()
 
-    def _add_picture(self, sheet: XSpreadsheet, doc: XSpreadsheetDocument) -> None:
+    def _add_picture(self, sheet: CalcSheet) -> None:
         # add a picture to the draw page for this sheet
-        dp_sup = Lo.qi(XDrawPageSupplier, sheet, True)
+        dp_sup = sheet.qi(XDrawPageSupplier, True)
         page = dp_sup.getDrawPage()
         x = 230 if self._add_chart else 125
         Draw.draw_image(slide=page, fnm=self._im_fnm, x=x, y=32)
 
         # look at all the draw pages
-        supplier = Lo.qi(XDrawPagesSupplier, doc, True)
+        supplier = sheet.calc_doc.qi(XDrawPagesSupplier, True)
         pages = supplier.getDrawPages()
         print(f"1. No. of draw pages: {pages.getCount()}")
 
-        comp_doc = Lo.qi(XComponent, doc, True)
+        comp_doc = sheet.calc_doc.qi(XComponent, True)
         print(f"2. No. of draw pages: {Draw.get_slides_count(comp_doc)}")
 
-    def _create_styles(self, doc: XSpreadsheetDocument) -> None:
+    def _create_styles(self, doc: CalcDoc) -> None:
         try:
             # create a style using Calc
-            header_style = Calc.create_cell_style(doc=doc, style_name=BuildTable.HEADER_STYLE_NAME)
+            header_style = doc.create_cell_style(
+                style_name=BuildTable.HEADER_STYLE_NAME
+            )
 
             # create formats to apply to header_style
-            header_bg_color_style = BgColor(color=CommonColor.ROYAL_BLUE, style_name=BuildTable.HEADER_STYLE_NAME)
-            effects_style = FontEffects(color=CommonColor.WHITE, style_name=BuildTable.HEADER_STYLE_NAME)
+            header_bg_color_style = BgColor(
+                color=CommonColor.ROYAL_BLUE, style_name=BuildTable.HEADER_STYLE_NAME
+            )
+            effects_style = FontEffects(
+                color=CommonColor.WHITE, style_name=BuildTable.HEADER_STYLE_NAME
+            )
             txt_align_style = TextAlign(
                 hori_align=HoriAlignKind.CENTER,
                 vert_align=VertAlignKind.MIDDLE,
                 style_name=BuildTable.HEADER_STYLE_NAME,
             )
             # Apply formatting to header_style
-            Styler.apply(header_style, header_bg_color_style, effects_style, txt_align_style)
+            Styler.apply(
+                header_style, header_bg_color_style, effects_style, txt_align_style
+            )
 
             # create style
-            data_style = Calc.create_cell_style(doc=doc, style_name=BuildTable.DATA_STYLE_NAME)
+            data_style = doc.create_cell_style(style_name=BuildTable.DATA_STYLE_NAME)
 
             # create formats to apply to data_style
-            footer_bg_color_style = BgColor(color=CommonColor.LIGHT_BLUE, style_name=BuildTable.DATA_STYLE_NAME)
-            bdr_style = modify_borders.Borders(padding=modify_borders.Padding(left=UnitMM(5)))
+            footer_bg_color_style = BgColor(
+                color=CommonColor.LIGHT_BLUE, style_name=BuildTable.DATA_STYLE_NAME
+            )
+            bdr_style = modify_borders.Borders(
+                padding=modify_borders.Padding(left=UnitMM(5))
+            )
 
             # Apply formatting to data_style
             Styler.apply(data_style, footer_bg_color_style, bdr_style, txt_align_style)
@@ -241,23 +409,26 @@ class BuildTable:
         except Exception as e:
             print(e)
 
-    def _apply_styles(self, sheet: XSpreadsheet) -> None:
+    def _apply_styles(self, sheet: CalcSheet) -> None:
+        sheet.change_style(style_name=BuildTable.HEADER_STYLE_NAME, range_name="B1:N1")
 
-        Calc.change_style(sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, range_name="B1:N1")
-        Calc.change_style(sheet=sheet, style_name=BuildTable.HEADER_STYLE_NAME, range_name="A2:A4")
-        Calc.change_style(sheet=sheet, style_name=BuildTable.DATA_STYLE_NAME, range_name="B2:N4")
+        sheet.change_style(style_name=BuildTable.HEADER_STYLE_NAME, range_name="A2:A4")
+        rng = sheet.get_range(range_name="B2:N4")
+        rng.change_style(style_name=BuildTable.DATA_STYLE_NAME)
 
         # create a border side, default width units are points
         side = direct_borders.Side(width=2.85, color=CommonColor.DARK_BLUE)
         # create a border setting bottom side
         bdr = direct_borders.Borders(bottom=side)
         # Apply border to range
-        Calc.set_style_range(sheet=sheet, range_name="A4:N4", styles=[bdr])
+
+        sheet.set_style_range(range_name="A4:N4", styles=[bdr])
 
         # create a border with left and right
         bdr = direct_borders.Borders(left=side, right=side)
         # Apply border to range
-        Calc.set_style_range(sheet=sheet, range_name="N1:N4", styles=[bdr])
+        rng = sheet.get_range(range_name="N1:N4")
+        rng.set_style(styles=[bdr])
 
     # endregion Private Methods
 

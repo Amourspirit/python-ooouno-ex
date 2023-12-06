@@ -3,6 +3,7 @@ from __future__ import annotations
 import uno
 from typing import Any, cast, TYPE_CHECKING, Tuple
 
+from ooodev.calc import CalcDoc
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
 
@@ -20,11 +21,12 @@ if TYPE_CHECKING:
 
 class ListboxMultiSelect(Listbox):
     """Multi-selection listbox example."""
+
     # region Init
     def __init__(
         self,
         ctrl: XControl,
-        doc: XSpreadsheetDocument,
+        doc: CalcDoc,
         x: int,
         y: int,
         width: int,
@@ -60,7 +62,9 @@ class ListboxMultiSelect(Listbox):
         else:
             return "Drop Down List: Nothing was selected"
 
-    def on_item_state_changed(self, src: Any, event: EventArgs, control_src: CtlListBox, *args, **kwargs) -> None:
+    def on_item_state_changed(
+        self, src: Any, event: EventArgs, control_src: CtlListBox, *args, **kwargs
+    ) -> None:
         """This Event fires when the selected item changes in the Listbox."""
         itm_event = cast("ItemEvent", event.event_data)
         print("State Changed: ItemID:", itm_event.ItemId)

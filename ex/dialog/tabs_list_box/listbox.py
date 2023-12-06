@@ -5,12 +5,12 @@ from typing import Any, cast, TYPE_CHECKING, Tuple
 
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
+from ooodev.calc import CalcDoc
+from ooodev.utils.data_type.range_obj import RangeObj
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
     from com.sun.star.awt import ItemEvent
-    from com.sun.star.sheet import XSpreadsheetDocument
     from ooodev.dialog.dl_control.ctl_list_box import CtlListBox
     from com.sun.star.awt import XControl
 
@@ -20,12 +20,13 @@ if TYPE_CHECKING:
 
 class Listbox:
     """Listbox example."""
+
     # pylint: disable=unused-argument
     # region Init
     def __init__(
         self,
         ctrl: XControl,
-        doc: XSpreadsheetDocument,
+        doc: CalcDoc,
         x: int,
         y: int,
         width: int,
@@ -50,7 +51,7 @@ class Listbox:
             self._padding = 14
         self._row_index = -1
         self._selected_item = ""
-        self._sheet = Calc.get_active_sheet()
+        self._sheet = self._doc.get_active_sheet()
         self._init()
 
     def _init(self) -> None:
@@ -120,13 +121,16 @@ class Listbox:
     def _set_list_data(self) -> None:
         """Set the data in the listbox from the first column of the spreadsheet."""
         # find the used range in the sheet
-        rng = Calc.find_used_range_obj(sheet=self._sheet)
+        rng = self._sheet.find_used_range()
+
         # we only want the first column and skip the first row because it is a header
-        rng_col1 = Calc.get_range_obj(
-            col_start=0, row_start=rng.start_row_index + 1, col_end=0, row_end=rng.end_row_index
-        )
+        # 1 - rng.range_obj.get_start_col() will give us first column minus the first row.
+        # rng.range_obj.get_start_col() -1 would give us first column minus the last row.
+        rng_col1 = 1 - rng.range_obj.get_start_col()
+
         # get the data from the range, this will be 2 dimensional tuple.
-        tbl = Calc.get_array(sheet=self._sheet, range_obj=rng_col1)
+        cell_range = self._sheet.get_range(range_obj=rng_col1)
+        tbl = cell_range.get_array()
 
         # convert the tuple to a set. This will remove duplicates.
         data_set = set(val[0] for val in tbl)
@@ -153,7 +157,9 @@ class Listbox:
     # endregion get data message
 
     # region Event Handlers
-    def on_item_state_changed(self, src: Any, event: EventArgs, control_src: CtlListBox, *args, **kwargs) -> None:
+    def on_item_state_changed(
+        self, src: Any, event: EventArgs, control_src: CtlListBox, *args, **kwargs
+    ) -> None:
         """This Event fires when the selected item changes in the Listbox."""
         itm_event = cast("ItemEvent", event.event_data)
         print("State Changed: ItemID:", itm_event.ItemId)
@@ -166,7 +172,9 @@ class Listbox:
             self._selected_item = ""
         print("State Changed: Selected_item:", self._selected_item)
 
-    def on_action_preformed(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_action_preformed(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         itm_event = cast("ActionEvent", event.event_data)
         print("Action: ActionCommand:", itm_event.ActionCommand)
 
@@ -218,7 +226,7 @@ class Listbox:
         return self._padding
 
     @property
-    def doc(self) -> XSpreadsheetDocument:
+    def doc(self) -> CalcDoc:
         return self._doc
 
     @property
