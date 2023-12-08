@@ -5,7 +5,7 @@ from pathlib import Path
 import datetime
 import contextlib
 
-import uno   # noqa: F401
+import uno  # noqa: F401
 from com.sun.star.form import XForm
 from com.sun.star.sdbc import XResultSet
 
@@ -14,7 +14,7 @@ from ooodev.events.args.event_args import EventArgs
 from ooodev.form import BorderKind, TriStateKind
 from ooodev.form import ListSourceType
 from ooodev.format.writer.direct.char.font import Font
-from ooodev.office.write import Write
+from ooodev.write import Write, WriteDoc
 from ooodev.theme import ThemeGeneral
 from ooodev.utils import color as color_util
 from ooodev.utils.file_io import FileIO
@@ -38,7 +38,6 @@ if TYPE_CHECKING:
 
 
 class BuildForm:
-
     # region Init
     def __init__(self, db_path: Path) -> None:
         super().__init__()
@@ -50,18 +49,18 @@ class BuildForm:
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            self._doc = Write.create_doc(loader)
+            self._doc = WriteDoc(Write.create_doc(loader))
 
-            GUI.set_visible(True, self._doc)
+            self._doc.set_visible()
             self._top_win_ev = TopWindowEvents(add_window_listener=True)
             self._top_win_ev.add_event_window_closing(self._fn_on_window_closing)
             with Lo.ControllerLock():
                 # use a controller lock to lock screen updating.
                 # This will cut down and screen flashing and add controls faster.
 
-                tvc = Write.get_view_cursor(self._doc)
-                Write.append(tvc, "Building a Form\n")
-                Write.end_paragraph(tvc)
+                tvc = self._doc.get_view_cursor()
+                tvc.append("Building a Form\n")
+                tvc.end_paragraph()
 
                 self.create_form()
             Lo.dispatch_cmd("SwitchControlDesignMode")
@@ -113,7 +112,6 @@ class BuildForm:
         else:
             font_color = color_util.StandardColor.BLACK
 
-
         font_colored = Font(color=font_color)
         x1 = 2
         x2 = 44
@@ -123,7 +121,7 @@ class BuildForm:
         width2 = 40
 
         self._ctl_lbl_first_name = Forms.insert_control_label(
-            doc=self._doc,
+            doc=self._doc.component,
             label="FIRSTNAME",
             x=x1,
             y=y,
@@ -133,7 +131,7 @@ class BuildForm:
         )
 
         self._ctl_txt_first_name = Forms.insert_control_text_field(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x2,
             y=y,
             width=width2,
@@ -146,7 +144,7 @@ class BuildForm:
 
         y = 19
         self._ctl_lbl_last_name = Forms.insert_control_label(
-            doc=self._doc,
+            doc=self._doc.component,
             label="LASTNAME",
             x=x1,
             y=y,
@@ -156,7 +154,7 @@ class BuildForm:
         )
 
         self._ctl_txt_last_name = Forms.insert_control_text_field(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x2,
             y=y,
             width=width2,
@@ -170,7 +168,7 @@ class BuildForm:
         y = 43
 
         self._ctl_lbl_age = Forms.insert_control_label(
-            doc=self._doc,
+            doc=self._doc.component,
             label="AGE",
             x=x1,
             y=y,
@@ -180,7 +178,7 @@ class BuildForm:
         )
 
         self._ctl_num_age = Forms.insert_control_numeric_field(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x2,
             y=y,
             width=width2,
@@ -196,7 +194,7 @@ class BuildForm:
 
         y = 51
         self._ctl_lbl_birth_date = Forms.insert_control_label(
-            doc=self._doc,
+            doc=self._doc.component,
             label="BIRTHDATE",
             x=x1,
             y=y,
@@ -208,7 +206,7 @@ class BuildForm:
         min_date = datetime.datetime.now() - datetime.timedelta(days=365 * 100)
         max_date = datetime.datetime.now()
         self._ctl_date_birth_date = Forms.insert_control_date_field(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x2,
             y=y,
             width=width2,
@@ -242,11 +240,11 @@ class BuildForm:
 
         for i in range(len(labels)):
             btn = Forms.insert_control_button(
-                doc=self._doc,
+                doc=self._doc.component,
                 x=x + i * spacing,
                 y=y,
                 width=width,
-                name = names[i],
+                name=names[i],
             )
             btn.label = labels[i]
             btn.add_event_action_performed(self._fn_FormCtlButton)
@@ -254,7 +252,11 @@ class BuildForm:
             self._set_tab_index(btn)
 
         self._ctl_btn_reload = Forms.insert_control_button(
-            doc=self._doc, x=x + 4 * spacing + 16, y=y, width=13, name="BtnReload"
+            doc=self._doc.component,
+            x=x + 4 * spacing + 16,
+            y=y,
+            width=13,
+            name="BtnReload",
         )
         self._ctl_btn_reload.label = "reload"
         self._ctl_btn_reload.add_event_action_performed(self._fn_FormCtlButton)
@@ -269,7 +271,7 @@ class BuildForm:
         height = 6
 
         _ = Forms.insert_control_label(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             width=width,
@@ -285,7 +287,7 @@ class BuildForm:
         name = "Options"
 
         _ = Forms.insert_control_group_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=col2_x,
             y=y,
             width=box_width,
@@ -308,7 +310,7 @@ class BuildForm:
 
         for i in range(len(labels)):
             radio_btn = Forms.insert_control_radio_button(
-                doc=self._doc,
+                doc=self._doc.component,
                 name=name,
                 # label=labels[i],
                 x=x,
@@ -329,7 +331,7 @@ class BuildForm:
         x = col2_x
         width = width
         _ = Forms.insert_control_group_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             width=box_width,
@@ -348,7 +350,7 @@ class BuildForm:
         # use the same property change listener
 
         self._ctl_chk_default_date = Forms.insert_control_check_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="ChkDefaultDate",
@@ -369,7 +371,7 @@ class BuildForm:
 
         y += height
         self._ctl_chk_protect = Forms.insert_control_check_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="ChkProtect",
@@ -388,7 +390,7 @@ class BuildForm:
 
         y += height
         self._ctl_chk_empty = Forms.insert_control_check_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="ChkEmpty",
@@ -412,7 +414,7 @@ class BuildForm:
         y = 90
         x = 2
         self._ctl_lst_fruits = Forms.insert_control_list_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="LstFruits",
@@ -425,7 +427,7 @@ class BuildForm:
         self._set_tab_index(self._ctl_lst_fruits)
 
         # set Form's data source to be the DB_FNM database
-        def_form = Forms.get_form(self._doc, "Form")
+        def_form = Forms.get_form(self._doc.component, "Form")
         Forms.bind_form_to_table(
             xform=def_form, src_name=FileIO.fnm_to_url(self._db_fnm), tbl_name="Course"
         )
@@ -434,7 +436,7 @@ class BuildForm:
         x = 60
 
         self._ctl_db_lst_course_names = Forms.insert_db_control_list_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="LstCourseNames",
@@ -455,7 +457,7 @@ class BuildForm:
         x = 120
         # ------------------------ set up database grid/table ----------------
         self._ctl_db_lst_stud_names = Forms.insert_db_control_list_box(
-            doc=self._doc,
+            doc=self._doc.component,
             x=x,
             y=y,
             name="LstStudNames",
@@ -473,7 +475,7 @@ class BuildForm:
         self._set_tab_index(self._ctl_db_lst_stud_names)
 
         # create a new form, gridForm,
-        grid_con = Forms.insert_form(doc=self._doc)
+        grid_con = Forms.insert_form(doc=self._doc.component)
         grid_form = Lo.qi(XForm, grid_con, True)
 
         # which uses an SQL query as its data source
@@ -485,7 +487,7 @@ class BuildForm:
 
         # create the grid/table component and set its columns
         self._ctl_grid_sales_tbl = Forms.insert_control_grid(
-            doc=self._doc,
+            doc=self._doc.component,
             name="GridSalesTable",
             x=2,
             y=100,
@@ -631,7 +633,7 @@ class BuildForm:
     ) -> None:
         print("Closing")
         try:
-            Lo.close_doc(self._doc)
+            self._doc.close_doc()
             Lo.close_office()
             self.closed = True
         except Exception as e:
