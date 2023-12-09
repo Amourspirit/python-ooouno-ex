@@ -26,7 +26,7 @@ unotools = ">=0.3.3"
 verr = ">=1.1.2"
 kwargshelper = ">=2.7.1"
 ooo-dev-tools-gui-win = { version = ">=0.3.1", markers = "sys_platform == 'win32'" }
-ooo-dev-tools = ">=0.15.1"
+ooo-dev-tools = ">=0.16.0"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=22.12.0"
