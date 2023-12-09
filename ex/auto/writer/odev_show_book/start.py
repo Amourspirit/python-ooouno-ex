@@ -11,8 +11,7 @@ from com.sun.star.text import XText
 from com.sun.star.text import XTextContent
 from com.sun.star.text import XTextRange
 
-from ooodev.office.write import Write
-from ooodev.utils.gui import GUI
+from ooodev.write import Write, WriteDoc
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
@@ -28,28 +27,35 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-s",
+        "--show",
+        help="Show Document",
+        action="store_true",
+        dest="show",
+        default=False,
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
-def print_paras(xtext: XText) -> None:
+def print_paras(doc: WriteDoc) -> None:
     # iterate through the document contents, printing all the text portions in each paragraph
     try:
-        text_enum = Write.get_enumeration(xtext)
-        while text_enum.hasMoreElements():
-            # return a paragraph (or text table)
-            tc = Lo.qi(XTextContent, text_enum.nextElement(), True)
+        text_enum = doc.get_text()
+        paragraphs = text_enum.get_paragraphs()
 
-            if not Info.support_service(tc, "com.sun.star.text.TextTable"):
-                print("P--")
-                para_enum = Write.get_enumeration(tc)
-                while para_enum.hasMoreElements():
-                    txt_range = Lo.qi(XTextRange, para_enum.nextElement(), True)
-
-                    # return a text portion
-                    print(f'  {Props.get_property(txt_range, "TextPortionType")} = "{txt_range.getString()}"')
-            else:
-                print("Text table")
+        for para in paragraphs:
+            print("P--")
+            portions = para.get_text_portions()
+            for portion in portions:
+                print(f' {portion.text_portion_type} = "{portion.get_string()}"')
     except Exception as e:
         print(e)
 
@@ -78,12 +84,13 @@ def main() -> int:
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
-    with BreakContext(Lo.Loader(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))) as loader:
-
+    with BreakContext(
+        Lo.Loader(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
+    ) as loader:
         fnm = cast(str, args.file_path)
 
         try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
+            doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
         except Exception as e:
             print(f"Could not open '{fnm}'")
             print(f"  {e}")
@@ -92,11 +99,11 @@ def main() -> int:
 
         try:
             if visible:
-                GUI.set_visible(visible=visible, doc=doc)
-            print_paras(doc.getText())
+                doc.set_visible()
+            print_paras(doc)
 
         finally:
-            Lo.close_doc(doc)
+            doc.close_doc()
 
     return 0
 
