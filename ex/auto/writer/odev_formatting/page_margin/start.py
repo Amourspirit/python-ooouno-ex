@@ -5,9 +5,14 @@ from pathlib import Path
 from typing import cast
 
 import uno
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.format.writer.modify.page.page import Margins
-from ooodev.office.write import Write
+from ooodev.write import Write, WriteDoc, ZoomKind
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
@@ -21,7 +26,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
 def main() -> int:
@@ -48,18 +60,18 @@ def main() -> int:
     _ = Lo.load_office(Lo.ConnectPipe(), opt=Lo.Options(verbose=args.verbose))
 
     try:
-        doc = Write.open_doc(fnm=fnm)
+        doc = WriteDoc(Write.open_doc(fnm=fnm))
 
         # show the document
-        GUI.set_visible()
-        Lo.delay(300) # add delay to give dispatch a little time.
-        GUI.zoom(GUI.ZoomEnum.ENTIRE_PAGE)
-        Lo.delay(4_000) # give user time to see the document before styling.
+        doc.set_visible()
+        Lo.delay(300)  # add delay to give dispatch a little time.
+        doc.zoom(ZoomKind.ENTIRE_PAGE)
+        Lo.delay(4_000)  # give user time to see the document before styling.
 
         # create a style margin object
         style = Margins(left=30, right=30, top=40, bottom=18, gutter=8)
         # apply margin style to the document
-        style.apply(doc)
+        style.apply(doc.component)
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -68,7 +80,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
