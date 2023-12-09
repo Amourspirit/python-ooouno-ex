@@ -2,29 +2,33 @@ from __future__ import annotations
 import random
 from pathlib import Path
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.write import Write
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.write import Write, WriteDoc
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
 
 def main() -> int:
-
     delay = 2_000  # delay so users can see changes.
 
     loader = Lo.load_office(Lo.ConnectPipe())
 
-    doc = Write.create_doc(loader=loader)
+    doc = WriteDoc(Write.create_doc(loader=loader))
 
     try:
-        GUI.set_visible(visible=True, doc=doc)
+        doc.set_visible()
 
-        cursor = Write.get_cursor(doc)
-        Write.append_para(cursor, "Math Questions")
-        Write.style_prev_paragraph(cursor, "Heading 1")
+        cursor = doc.get_cursor()
+        cursor.append_para("Math Questions")
+        cursor.style_prev_paragraph("Heading 1")
 
-        Write.append_para(cursor, "Solve the following formulae for x:\n")
+        cursor.append_para("Solve the following formulae for x:\n")
 
         # lock screen updating and add formulas
         # locking screen is not strictly necessary but is faster when add lost of input.
@@ -43,15 +47,17 @@ def main() -> int:
                 if choice == 0:
                     formula = f"[[[sqrt[{iA}x]] over {iB}] + [{iC} over {iD}]=[{iE} over {iF1} ]]"
                 elif choice == 1:
-                    formula = f"[[[{iA}x] over {iB}] + [{iC} over {iD}]=[{iE} over {iF1}]]"
+                    formula = (
+                        f"[[[{iA}x] over {iB}] + [{iC} over {iD}]=[{iE} over {iF1}]]"
+                    )
                 else:
                     formula = f"[{iA}x + {iB} = {iC}]"
 
                 # replace [] with {}
-                Write.add_formula(cursor, formula.replace("[", "{").replace("]", "}"))
-                Write.end_paragraph(cursor)
+                cursor.add_formula(formula.replace("[", "{").replace("]", "}"))
+                cursor.end_paragraph()
 
-        Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
+        cursor.append_para(f"Timestamp: {DateUtil.time_stamp()}")
 
         Lo.delay(delay)
         msg_result = MsgBox.msgbox(
@@ -63,7 +69,7 @@ def main() -> int:
         if msg_result == MessageBoxResultsEnum.YES:
             pth = Path.cwd() / "tmp"
             pth.mkdir(exist_ok=True)
-            Lo.save_doc(doc, pth / "mathQuestions.pdf")
+            doc.save_doc(pth / "mathQuestions.pdf")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -72,7 +78,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
