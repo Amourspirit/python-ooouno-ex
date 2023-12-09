@@ -7,7 +7,7 @@ from pathlib import Path
 import uno
 from com.sun.star.text import XTextDocument
 
-from ooodev.office.write import Write
+from ooodev.write import Write, WriteDoc, FamilyNamesKind
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
@@ -24,13 +24,30 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-s",
+        "--show",
+        help="Show Document",
+        action="store_true",
+        dest="show",
+        default=False,
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
-def show_styles(doc: XTextDocument) -> None:
+def show_styles(doc: WriteDoc) -> None:
     # get all the style families for this document
-    style_families = Info.get_style_family_names(doc)
+    # style_families = Info.get_style_family_names(doc)
+    families = doc.get_style_families()
+    style_families = families.get_names()
+
     print(f"No. of Style Family Names: {len(style_families)}")
     for style_family in style_families:
         print(f"  {style_family}")
@@ -39,11 +56,14 @@ def show_styles(doc: XTextDocument) -> None:
     # list all the style names for each style family
     for i, style_family in enumerate(style_families):
         print(f'{i} "{style_family}" Style Family contains containers:')
-        style_names = Info.get_style_names(doc, style_family)
+        style_names = Info.get_style_names(doc.component, style_family)
         Lo.print_names(style_names)
 
     # Report the properties for the paragraph styles family under the "Standard" name
-    Props.show_props('ParagraphStyles "Standard"', Info.get_style_props(doc, "ParagraphStyles", "Header"))
+    Props.show_props(
+        'ParagraphStyles "Standard"',
+        Info.get_style_props(doc.component, "ParagraphStyles", "Header"),
+    )
     print()
 
     # access other style families, other names...
@@ -81,13 +101,15 @@ def main() -> int:
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with BreakContext(
-        Lo.Loader(connector=Lo.ConnectSocket(headless=not visible), opt=Lo.Options(verbose=args.verbose))
+        Lo.Loader(
+            connector=Lo.ConnectSocket(headless=not visible),
+            opt=Lo.Options(verbose=args.verbose),
+        )
     ) as loader:
-
         fnm = cast(str, args.file_path)
 
         try:
-            doc = Write.open_doc(fnm=fnm, loader=loader)
+            doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
         except Exception as e:
             print(f"Could not open '{fnm}'")
             print(f"  {e}")
@@ -96,11 +118,11 @@ def main() -> int:
 
         try:
             if visible:
-                GUI.set_visible(visible=visible, doc=doc)
+                doc.set_visible()
             show_styles(doc)
 
         finally:
-            Lo.close_doc(doc)
+            doc.close_doc()
 
     return 0
 
