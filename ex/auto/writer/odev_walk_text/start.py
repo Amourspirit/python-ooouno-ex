@@ -8,10 +8,14 @@ import uno
 from com.sun.star.text import XTextDocument
 from com.sun.star.view import XLineCursor
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.utils.lo import Lo
-from ooodev.office.write import Write
-from ooodev.utils.gui import GUI
+from ooodev.write import Write, WriteDoc
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -25,53 +29,53 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def show_paragraphs(doc: XTextDocument) -> None:
-    tvc = Write.get_view_cursor(doc)
-    para_cursor = Write.get_paragraph_cursor(doc)
-    para_cursor.gotoStart(False)  # go to start test; no selection
+def show_paragraphs(doc: WriteDoc) -> None:
+    tvc = doc.get_view_cursor()
+    para_cursor = doc.get_paragraph_cursor()
+    para_cursor.goto_start(False)  # go to start test; no selection
 
     while 1:
-        para_cursor.gotoEndOfParagraph(True)  # select all of paragraph
-        curr_para = para_cursor.getString()
+        para_cursor.goto_end_of_paragraph(True)  # select all of paragraph
+        curr_para = para_cursor.get_string()
         if len(curr_para) > 0:
-            tvc.gotoRange(para_cursor.getStart(), False)
-            tvc.gotoRange(para_cursor.getEnd(), True)
+            tvc.goto_range(para_cursor.component.getStart())
+            tvc.goto_range(para_cursor.component.getEnd(), True)
 
             print(f"P<{curr_para}>")
             Lo.delay(500)  # delay half a second
 
-        if para_cursor.gotoNextParagraph(False) is False:
+        if para_cursor.goto_next_paragraph() is False:
             break
 
 
-def count_words(doc: XTextDocument) -> int:
-    word_cursor = Write.get_word_cursor(doc)
-    word_cursor.gotoStart(False)  # go to start of text
+def count_words(doc: WriteDoc) -> int:
+    word_cursor = doc.get_word_cursor()
+    word_cursor.goto_start()  # go to start of text
 
     word_count = 0
     while 1:
-        word_cursor.gotoEndOfWord(True)
-        curr_word = word_cursor.getString()
+        word_cursor.goto_end_of_word()
+        curr_word = word_cursor.get_string()
         if len(curr_word) > 0:
             word_count += 1
-        if word_cursor.gotoNextWord(False) is False:
+        if word_cursor.goto_next_word() is False:
             break
     return word_count
 
 
-def show_lines(doc: XTextDocument) -> None:
-    tvc = Write.get_view_cursor(doc)
-    tvc.gotoStart(False)  # go to start of text
+def show_lines(doc: WriteDoc) -> None:
+    tvc = doc.get_view_cursor()
+    tvc.goto_start()  # go to start of text
 
-    line_cursor = Lo.qi(XLineCursor, tvc, True)
+    line_cursor = tvc.qi(XLineCursor, True)
     have_text = True
     while have_text is True:
         line_cursor.gotoStartOfLine(False)
         line_cursor.gotoEndOfLine(True)
-        print(f"L<{tvc.getString()}>")  # no text selection in line cursor
+        print(f"L<{tvc.get_string()}>")  # no text selection in line cursor
         Lo.delay(500)  # delay half a second
-        tvc.collapseToEnd()
-        have_text = tvc.goRight(1, True)
+        tvc.collapse_to_end()
+        have_text = tvc.go_right(1, True)
 
 
 def main() -> int:
@@ -94,8 +98,8 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = Write.open_doc(fnm=fnm, loader=loader)
-        GUI.set_visible(visible=True, doc=doc)
+        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+        doc.set_visible()
 
         show_paragraphs(doc)
         print(f"Word count: {count_words(doc)}")
@@ -109,7 +113,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
