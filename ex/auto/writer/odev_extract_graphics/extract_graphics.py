@@ -7,7 +7,7 @@ import uno
 from com.sun.star.text import XTextShapesSupplier
 
 from ooodev.office.draw import Draw
-from ooodev.office.write import Write
+from ooodev.write import Write, WriteDoc
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.images_lo import ImagesLo
 from ooodev.utils.lo import Lo
@@ -29,11 +29,11 @@ class ExtractGraphics:
 
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectSocket(headless=True)) as loader:
-            text_doc = Write.open_doc(fnm=self._fnm, loader=loader)
+            text_doc = WriteDoc(Write.open_doc(fnm=self._fnm, loader=loader))
 
-            pics = Write.get_text_graphics(text_doc=text_doc)
+            pics = text_doc.get_text_graphics()
             if not pics:
-                Lo.close_doc(doc=text_doc)
+                text_doc.close_doc()
                 return
 
             print()
@@ -48,15 +48,15 @@ class ExtractGraphics:
             print()
 
             # this supplier is not created; Lo.qi() returns None
-            shps_supp = Lo.qi(XTextShapesSupplier, text_doc)
-            if shps_supp is None:
+            shape_supp = text_doc.qi(XTextShapesSupplier)
+            if shape_supp is None:
                 print("Could not obtain text shapes supplier")
             else:
-                print(f"No. of text shapes: {shps_supp.getShapes().getCount()}")
+                print(f"No. of text shapes: {shape_supp.getShapes().getCount()}")
 
             # report on shapes in the doc
-            draw_page = Write.get_shapes(text_doc)
-            shapes = Draw.get_shapes(draw_page)
+            draw_page = text_doc.get_draw_page()
+            shapes = Draw.get_shapes(draw_page.component)
             if shapes:
                 print()
                 print(f"No. of draw shapes: {len(shapes)}")
@@ -65,4 +65,4 @@ class ExtractGraphics:
                     Draw.report_pos_size(shape)
                 print()
 
-            Lo.close_doc(text_doc)
+            text_doc.close_doc()
