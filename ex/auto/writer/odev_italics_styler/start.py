@@ -5,12 +5,16 @@ from typing import cast
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XTextDocument
 from com.sun.star.text import XTextRange
 from com.sun.star.util import XSearchable
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.write import Write
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.write import Write, WriteDoc, ZoomKind
 from ooodev.utils.color import CommonColor, Color
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
@@ -27,7 +31,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
     parser.add_argument(
         "--word",
         action="append",
@@ -37,14 +48,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
+def italicize_all(doc: WriteDoc, phrase: str, color: Color) -> int:
     # cursor = Write.get_view_cursor(doc) # can be used when visible
-    cursor = Write.get_cursor(doc)
-    cursor.gotoStart(False)
-    page_cursor = Write.get_page_cursor(doc)
+    cursor = doc.get_cursor()
+    cursor.goto_start()
+    page_cursor = doc.get_view_cursor()
     result = 0
     try:
-        searchable = Lo.qi(XSearchable, doc, True)
+        searchable = doc.qi(XSearchable, True)
         search_desc = searchable.createSearchDescriptor()
         print(f"Searching for all occurrences of '{phrase}'")
         phrase_len = len(phrase)
@@ -65,11 +76,13 @@ def italicize_all(doc: XTextDocument, phrase: str, color: Color) -> int:
         for i in range(result):
             match_tr = Lo.qi(XTextRange, matches.getByIndex(i))
             if match_tr is not None:
-                cursor.gotoRange(match_tr, False)
+                cursor.goto_range(match_tr, False)
                 print(f"  - found: '{match_tr.getString()}'")
-                print(f"    - on page {page_cursor.getPage()}")
-                cursor.gotoStart(True)
-                print(f"    - starting at char position: {len(cursor.getString()) - phrase_len}")
+                print(f"    - on page {page_cursor.get_page()}")
+                cursor.goto_start(True)
+                print(
+                    f"    - starting at char position: {len(cursor.get_string()) - phrase_len}"
+                )
 
                 font_effect.apply(match_tr)
 
@@ -111,14 +124,18 @@ def main() -> int:
 
     delay = 3_000
 
-    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
+    loader = Lo.load_office(
+        connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose)
+    )
 
     fnm = cast(str, args.file_path)
 
     try:
-        doc = Write.open_doc(fnm=fnm, loader=loader)
+        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
 
-        GUI.set_visible(visible=True, doc=doc)
+        doc.set_visible()
+        Lo.delay(300)  # small delay before dispatching zoom command
+        doc.zoom(ZoomKind.ENTIRE_PAGE)
 
         with Lo.ControllerLock():
             for word, color in args.word:
@@ -135,7 +152,7 @@ def main() -> int:
         if msg_result == MessageBoxResultsEnum.YES:
             pth = Path.cwd() / "tmp"
             pth.mkdir(exist_ok=True)
-            Write.save_doc(text_doc=doc, fnm=pth / "italicized.doc")
+            doc.save_doc(fnm=pth / "italicized.doc")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -144,7 +161,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
