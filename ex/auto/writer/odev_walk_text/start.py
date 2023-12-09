@@ -5,7 +5,6 @@ from typing import cast
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XTextDocument
 from com.sun.star.view import XLineCursor
 
 from ooodev.dialog.msgbox import (

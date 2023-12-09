@@ -5,7 +5,6 @@ from pathlib import Path
 
 import uno
 from com.sun.star.beans import XPropertySet
-from com.sun.star.text import XTextDocument
 from com.sun.star.text import XTextRange
 from com.sun.star.util import XReplaceable
 from com.sun.star.util import XReplaceDescriptor
@@ -18,7 +17,6 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.write import Write, WriteDoc
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
 
@@ -46,19 +44,19 @@ def find_words(doc: WriteDoc, words: Sequence[str]) -> None:
     tvc = doc.get_view_cursor()
     tvc.goto_start()
     searchable = doc.qi(XSearchable, True)
-    srch_desc = searchable.createSearchDescriptor()
+    search_desc = searchable.createSearchDescriptor()
 
     for word in words:
         print(f"Searching for fist occurrence of '{word}'")
-        srch_desc.setSearchString(word)
+        search_desc.setSearchString(word)
 
-        srch_props = Lo.qi(XPropertySet, srch_desc, raise_err=True)
-        srch_props.setPropertyValue("SearchRegularExpression", True)
+        search_props = Lo.qi(XPropertySet, search_desc, raise_err=True)
+        search_props.setPropertyValue("SearchRegularExpression", True)
 
-        srch = searchable.findFirst(srch_desc)
+        search = searchable.findFirst(search_desc)
 
-        if srch is not None:
-            match_tr = Lo.qi(XTextRange, srch)
+        if search is not None:
+            match_tr = Lo.qi(XTextRange, search)
 
             tvc.goto_range(match_tr)
             print(f"  - found '{match_tr.getString()}'")
