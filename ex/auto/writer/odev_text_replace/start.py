@@ -11,8 +11,13 @@ from com.sun.star.util import XReplaceable
 from com.sun.star.util import XReplaceDescriptor
 from com.sun.star.util import XSearchable
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.write import Write
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.write import Write, WriteDoc
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
@@ -26,15 +31,21 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
-def find_words(doc: XTextDocument, words: Sequence[str]) -> None:
+def find_words(doc: WriteDoc, words: Sequence[str]) -> None:
     # get the view cursor and link the page cursor to it
-    tvc = Write.get_view_cursor(doc)
-    tvc.gotoStart(False)
-    page_cursor = Write.get_page_cursor(tvc)
-    searchable = Lo.qi(XSearchable, doc)
+    tvc = doc.get_view_cursor()
+    tvc.goto_start()
+    searchable = doc.qi(XSearchable, True)
     srch_desc = searchable.createSearchDescriptor()
 
     for word in words:
@@ -49,17 +60,19 @@ def find_words(doc: XTextDocument, words: Sequence[str]) -> None:
         if srch is not None:
             match_tr = Lo.qi(XTextRange, srch)
 
-            tvc.gotoRange(match_tr, False)
+            tvc.goto_range(match_tr)
             print(f"  - found '{match_tr.getString()}'")
-            print(f"    - on page {page_cursor.getPage()}")
+            print(f"    - on page {tvc.get_page()}")
             # tvc.gotoStart(True)
-            tvc.goRight(len(match_tr.getString()), True)
-            print(f"    - at char position: {len(tvc.getString())}")
+            tvc.go_right(len(match_tr.getString()), True)
+            print(f"    - at char position: {len(tvc.get_string())}")
             Lo.delay(500)
 
 
-def replace_words(doc: XTextDocument, old_words: Sequence[str], new_words: Sequence[str]) -> int:
-    replaceable = Lo.qi(XReplaceable, doc, raise_err=True)
+def replace_words(
+    doc: WriteDoc, old_words: Sequence[str], new_words: Sequence[str]
+) -> int:
+    replaceable = doc.qi(XReplaceable, True)
     replace_desc = Lo.qi(XReplaceDescriptor, replaceable.createSearchDescriptor())
 
     for old, new in zip(old_words, new_words):
@@ -87,16 +100,18 @@ def main() -> int:
 
     delay = 4_000
 
-    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
+    loader = Lo.load_office(
+        connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose)
+    )
 
     fnm = cast(str, args.file_path)
 
     try:
-        doc = Write.open_doc(fnm=fnm, loader=loader)
+        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
         uk_words = ("colour", "neighbour", "centre", "behaviour", "metre", "through")
         us_words = ("color", "neighbor", "center", "behavior", "meter", "thru")
 
-        GUI.set_visible(visible=True, doc=doc)
+        doc.set_visible()
 
         words = (
             "(G|g)rit",
@@ -116,7 +131,7 @@ def main() -> int:
         if msg_result == MessageBoxResultsEnum.YES:
             pth = Path.cwd() / "tmp"
             pth.mkdir(parents=True, exist_ok=True)
-            Write.save_doc(text_doc=doc, fnm=pth / "replaced.doc")
+            doc.save_doc(fnm=pth / "replaced.doc")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -125,7 +140,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
