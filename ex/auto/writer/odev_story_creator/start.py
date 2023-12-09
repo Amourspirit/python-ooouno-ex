@@ -7,15 +7,18 @@ from pathlib import Path
 
 import uno
 from com.sun.star.text import XTextCursor
-from com.sun.star.text import XTextDocument
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.format.writer.direct.char.font import Font
 from ooodev.format.writer.direct.para.indent_space import Spacing, LineSpacing, ModeKind
-from ooodev.office.write import Write
+from ooodev.write import Write, WriteDoc, WriteTextCursor, FamilyNamesKind
 from ooodev.units import UnitMM
 from ooodev.utils.date_time_util import DateUtil
-from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.format.writer.style.para import Para as StylePara, StyleParaKind
@@ -33,11 +36,25 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-s",
+        "--show",
+        help="Show Document",
+        action="store_true",
+        dest="show",
+        default=False,
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
-def read_text(fnm: Path, cursor: XTextCursor) -> None:
+def read_text(fnm: Path, cursor: WriteTextCursor) -> None:
     sb: List[str] = []
     with open(fnm, "r") as file:
         i = 0
@@ -45,24 +62,24 @@ def read_text(fnm: Path, cursor: XTextCursor) -> None:
             line = ln.rstrip()  # remove new line \n
             if len(line) == 0:
                 if len(sb) > 0:
-                    Write.append_para(cursor, " ".join(sb))
+                    cursor.append_para(" ".join(sb))
                 sb.clear()
             elif line.startswith("Title: "):
-                Write.append_para(cursor, line[7:], styles=[StylePara(StyleParaKind.TITLE)])
+                cursor.append_para(line[7:], styles=[StylePara(StyleParaKind.TITLE)])
             elif line.startswith("Author: "):
-                Write.append_para(cursor, line[8:], styles=[StylePara(StyleParaKind.SUBTITLE)])
+                cursor.append_para(line[8:], styles=[StylePara(StyleParaKind.SUBTITLE)])
             elif line.startswith("Part "):
-                Write.append_para(cursor, line, styles=[StylePara(StyleParaKind.HEADING_1)])
+                cursor.append_para(line, styles=[StylePara(StyleParaKind.HEADING_1)])
             else:
                 sb.append(line)
             i += 1
             # if i > 20:
             #     break
         if len(sb) > 0:
-            Write.append_para(cursor, " ".join(sb))
+            cursor.append_para(" ".join(sb))
 
 
-def create_para_style(doc: XTextDocument, style_name: str) -> bool:
+def create_para_style(doc: WriteDoc, style_name: str) -> bool:
     try:
         # font 12 pt
         font = Font(name=Info.get_font_general_name(), size=12.0)
@@ -73,7 +90,7 @@ def create_para_style(doc: XTextDocument, style_name: str) -> bool:
         # paragraph line spacing
         ln_spc = LineSpacing(mode=ModeKind.FIXED, value=UnitMM(6))
 
-        _ = Write.create_style_para(text_doc=doc, style_name=style_name, styles=[font, spc, ln_spc])
+        _ = doc.create_style_para(style_name=style_name, styles=[font, spc, ln_spc])
 
         return True
 
@@ -108,30 +125,37 @@ def main() -> int:
     else:
         delay = 0
 
-    loader = Lo.load_office(connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose))
+    loader = Lo.load_office(
+        connector=Lo.ConnectSocket(), opt=Lo.Options(verbose=args.verbose)
+    )
 
     fnm = Path(args.file_path)
 
     try:
-        doc = Write.create_doc(loader=loader)
+        doc = WriteDoc(Write.create_doc(loader=loader))
         if visible:
-            GUI.set_visible(visible=visible, doc=doc)
+            doc.set_visible(visible=visible)
 
         if not create_para_style(doc, "adParagraph"):
             raise RuntimeError("Could not create new paragraph style")
 
-        styles = Info.get_style_names(doc, "ParagraphStyles")
+        styles = doc.get_style_names(FamilyNamesKind.PARAGRAPH_STYLES)
         print("Paragraph Styles")
         Lo.print_names(styles)
 
-        text_range = doc.getText().getStart()
+        text_range = doc.component.getText().getStart()
         # Load the paragraph style and apply it to the text range.
         para_style = StylePara("adParagraph")
         para_style.apply(text_range)
 
         # header formatting
         # create a header font style with a size of 9 pt, italic and dark green.
-        header_font = Font(name=Info.get_font_general_name(), size=9.0, i=True, color=CommonColor.DARK_GREEN)
+        header_font = Font(
+            name=Info.get_font_general_name(),
+            size=9.0,
+            i=True,
+            color=CommonColor.DARK_GREEN,
+        )
         header_format = Header(
             on=True,
             shared_first=True,
@@ -145,23 +169,26 @@ def main() -> int:
         # create a header image from a preset
         header_img = Img.from_preset(PresetImageKind.MARBLE)
         # Set header can be passed a list of styles to format the header.
-        Write.set_header(text_doc=doc, text=f"From: {fnm.name}", styles=[header_font, header_format, header_img])
+        doc.set_header(
+            text=f"From: {fnm.name}",
+            styles=[header_font, header_format, header_img],
+        )
 
         # page format A4
-        Write.set_a4_page_format(doc)
+        _ = doc.set_a4_page_format()
         # alternative setting of page format
         # from ooodev.format.writer.modify.page.page import PaperFormat, PaperFormatKind
         # page_size_style = PaperFormat.from_preset(preset=PaperFormatKind.A4)
         # page_size_style.apply(doc)
 
-        Write.set_page_numbers(doc)
+        _ = doc.set_page_numbers()
 
-        cursor = Write.get_cursor(doc)
+        cursor = doc.get_cursor()
 
         read_text(fnm=fnm, cursor=cursor)
-        Write.end_paragraph(cursor)
+        cursor.end_paragraph()
 
-        Write.append_para(cursor, f"Timestamp: {DateUtil.time_stamp()}")
+        cursor.append_para(f"Timestamp: {DateUtil.time_stamp()}")
 
         Lo.delay(delay)
         pth = Path.cwd() / "tmp"
@@ -175,10 +202,10 @@ def main() -> int:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Write.save_doc(text_doc=doc, fnm=doc_pth)
+                doc.save_doc(fnm=doc_pth)
                 print(f'Saved to: "{doc_pth}"')
         else:
-            Write.save_doc(text_doc=doc, fnm=doc_pth)
+            doc.save_doc(fnm=doc_pth)
             print(f'Saved to: "{doc_pth}"')
         if visible:
             msg_result = MsgBox.msgbox(
@@ -188,12 +215,12 @@ def main() -> int:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
         else:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
     except Exception as e:
         Lo.print(e)
