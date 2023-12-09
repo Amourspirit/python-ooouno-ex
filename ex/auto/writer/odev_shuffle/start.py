@@ -5,12 +5,14 @@ from typing import cast
 from pathlib import Path
 import random
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.utils.lo import Lo
-from ooodev.office.write import Write
-from ooodev.utils.gui import GUI
-
-from com.sun.star.text import XTextDocument
+from ooodev.write import Write, WriteDoc
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -24,45 +26,47 @@ def args_add(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def apply_shuffle(doc: XTextDocument, delay: int, visible: bool) -> None:
-    doc_text = doc.getText()
+def apply_shuffle(doc: WriteDoc, delay: int, visible: bool) -> None:
+    doc_text = doc.get_text()
     if visible:
-        cursor = Write.get_view_cursor(doc)
+        cursor = doc.get_view_cursor()
     else:
-        cursor = Write.get_cursor(doc)
+        cursor = doc.get_cursor()
 
-    word_cursor = Write.get_word_cursor(doc)
-    word_cursor.gotoStart(False)  # go to start of text
+    word_cursor = doc.get_cursor()
+    word_cursor.goto_start()  # go to start of text
 
     while True:
-        word_cursor.gotoNextWord(True)
+        word_cursor.goto_next_word(True)
 
         # move the text view cursor, and highlight the current word
-        cursor.gotoRange(word_cursor.getStart(), False)
-        cursor.gotoRange(word_cursor.getEnd(), True)
-        curr_word = word_cursor.getString()
+        cursor.goto_range(word_cursor.component.getStart())
+        cursor.goto_range(word_cursor.component.getEnd(), True)
+        curr_word = word_cursor.get_string()
 
         # get whitespace padding amounts
         c_len = len(curr_word)
         curr_word = curr_word.lstrip()
         l_pad = c_len - len(curr_word)  # left whitespace padding amount
         curr_word = curr_word.rstrip()
-        r_pad = c_len - len(curr_word) - l_pad  # right whitespace padding ammount
+        r_pad = c_len - len(curr_word) - l_pad  # right whitespace padding amount
         if len(curr_word) > 0:
             pad_l = " " * l_pad  # recreate left padding
             pad_r = " " * r_pad  # recreate right padding
             Lo.delay(delay)
-            mid_shuff = mid_shuffle(curr_word)
-            doc_text.insertString(word_cursor, f"{pad_l}{mid_shuff}{pad_r}", True)
+            mid_shuffle = do_mid_shuffle(curr_word)
+            doc_text.insert_string(
+                word_cursor.component, f"{pad_l}{mid_shuffle}{pad_r}", True
+            )
 
-        if word_cursor.gotoNextWord(False) is False:
+        if word_cursor.goto_next_word() is False:
             break
 
-    word_cursor.gotoStart(False)  # go to start of text
-    cursor.gotoStart(False)
+    word_cursor.goto_start()  # go to start of text
+    cursor.goto_start()
 
 
-def mid_shuffle(s: str) -> str:
+def do_mid_shuffle(s: str) -> str:
     s_len = len(s)
     if s_len <= 3:  # not long enough
         return s
@@ -88,7 +92,7 @@ def main() -> int:
 
     # add args to parser
     args_add(parser=parser)
-    
+
     if len(sys.argv) == 1:
         pth = Path(__file__).parent / "data" / "cicero_dummy.odt"
         sys.argv.append("-f")
@@ -102,8 +106,11 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = Write.open_doc(fnm=fnm, loader=loader)
-        GUI.set_visible(visible=visible, doc=doc)
+        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+        doc.set_visible(visible)
+        if visible:
+            Lo.delay(300)  # delay for document to load
+            doc.zoom()
         apply_shuffle(doc, loop_delay, visible)
 
         Lo.delay(1_000)
@@ -116,7 +123,7 @@ def main() -> int:
         if msg_result == MessageBoxResultsEnum.YES:
             pth = Path.cwd() / "tmp"
             pth.mkdir(exist_ok=True)
-            Write.save_doc(text_doc=doc, fnm=pth / "shuffled.odt")
+            doc.save_doc(fnm=pth / "shuffled.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -125,7 +132,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")
