@@ -5,7 +5,12 @@ import uno
 from com.sun.star.drawing import XDrawPages
 from com.sun.star.lang import XComponent
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.office.draw import Draw, mEx
 from ooodev.utils.dispatch.draw_drawing_dispatch import DrawDrawingDispatch
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
@@ -14,6 +19,7 @@ from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
+
 
 try:
     # only in windows
@@ -103,7 +109,10 @@ class AppendSlides:
             from_slides = Draw.get_slides(doc)
             print("- Adding slides")
             self._append_slides(
-                to_slides=to_slides, from_slides=from_slides, from_ctrl=from_ctrl, from_frame=from_frame
+                to_slides=to_slides,
+                from_slides=from_slides,
+                from_ctrl=from_ctrl,
+                from_frame=from_frame,
             )
         except mEx.DrawPageMissingError:
             print("- No Slides Found")
@@ -114,7 +123,11 @@ class AppendSlides:
         print()
 
     def _append_slides(
-        self, to_slides: XDrawPages, from_slides: XDrawPages, from_ctrl: XController, from_frame: XFrame
+        self,
+        to_slides: XDrawPages,
+        from_slides: XDrawPages,
+        from_ctrl: XController,
+        from_frame: XFrame,
     ) -> None:
         # Append fromSlides to the end of toSlides
         # Loop through the fromSlides, copying each one.
