@@ -1,6 +1,7 @@
 import sys
-from grouper import Grouper, CombineElipseKind
+from grouper import Grouper, CombineEllipseKind
 import argparse
+
 
 # region args parse
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -11,7 +12,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         const="combine",
         nargs="?",
         dest="kind",
-        choices=[e.value for e in CombineElipseKind],
+        choices=[e.value for e in CombineEllipseKind],
         help="Kind of combining of ellipses combining to preform (default: %(default)s)",
     )
     parser.add_argument(
@@ -22,7 +23,10 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="overlap",
         default=False,
     )
+
+
 # endregion args parse
+
 
 # region main()
 def main() -> int:
@@ -39,7 +43,7 @@ def main() -> int:
     args = parser.parse_args()
 
     g = Grouper()
-    kind = CombineElipseKind(args.kind)
+    kind = CombineEllipseKind(args.kind)
     g.overlap = args.overlap
     g.combine_kind = kind
     g.main()
