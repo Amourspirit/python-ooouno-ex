@@ -4,12 +4,10 @@ from enum import Enum
 
 import uno
 from com.sun.star.container import XNameContainer
-from com.sun.star.drawing import XDrawPage
 from com.sun.star.drawing import XShape
 from com.sun.star.drawing import XShapeBinder
 from com.sun.star.drawing import XShapeCombiner
 from com.sun.star.drawing import XShapes
-from com.sun.star.lang import XComponent
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -29,10 +27,8 @@ from ooodev.draw import (
 )
 from ooodev.draw.shapes import DrawShape
 from ooodev.utils.color import CommonColor
-from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.utils.kind.graphic_arrow_style_kind import GraphicArrowStyleKind
 from ooodev.exceptions import ex as mEx
 

@@ -1,8 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, cast
 from enum import Enum
 
 import uno
+from ooo.dyn.awt.gradient import Gradient as Gradient
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -22,18 +22,8 @@ from ooodev.draw import (
 )
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
-
-from ooo.dyn.awt.gradient import Gradient as Gradient
-
-if TYPE_CHECKING:
-    # the following is only needed for typings.
-    # from __future__ import annotations takes care of the rest
-    from com.sun.star.drawing import FillProperties  # service
-    from com.sun.star.drawing import XDrawPage
 
 
 class GradientKind(str, Enum):

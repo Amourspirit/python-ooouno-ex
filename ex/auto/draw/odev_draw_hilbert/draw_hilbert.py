@@ -13,7 +13,6 @@ from __future__ import annotations
 import math
 
 import uno
-from com.sun.star.drawing import XDrawPage
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -21,7 +20,6 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.props import Props
 from ooodev.utils.lo import Lo
 from ooodev.draw import Draw, DrawDoc, DrawPage
 from ooodev.utils.color import CommonColor
