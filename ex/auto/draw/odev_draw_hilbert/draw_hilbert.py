@@ -15,10 +15,15 @@ import math
 import uno
 from com.sun.star.drawing import XDrawPage
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.utils.props import Props
 from ooodev.utils.lo import Lo
-from ooodev.office.draw import Draw
+from ooodev.draw import Draw, DrawDoc, DrawPage
 from ooodev.utils.color import CommonColor
 from ooodev.utils.gui import GUI
 
@@ -33,22 +38,28 @@ class DrawHilbert:
         self._incr = -1
         self._delay = -1
         self._level = -1
-        self._slide: XDrawPage = None
+        self._slide: DrawPage[DrawDoc] = None
         self._level_str = str(level)
 
     def draw(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
         try:
-            doc = Draw.create_draw_doc(loader)
+            doc = DrawDoc(Draw.create_draw_doc(loader))
             rect = GUI.get_screen_size()
-            GUI.set_pos_size(doc=doc, x=0, y=0, width=round(rect.Width / 2), height=round(rect.Height - 40))
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_pos_size(
+                doc=doc.component,
+                x=0,
+                y=0,
+                width=round(rect.Width / 2),
+                height=round(rect.Height - 40),
+            )
+            doc.set_visible()
             Lo.delay(2000)  # need delay or zoom may not occur
 
-            GUI.zoom_value(value=75)
+            doc.zoom_value(value=75)
 
-            self._slide = Draw.get_slide(doc=doc, idx=0)
-            self._start_hilbert(self._level_str, Draw.get_slide_size(self._slide))
+            self._slide = doc.get_slide(idx=0)
+            self._start_hilbert(self._level_str, self._slide.get_size_mm())
 
             Lo.delay(2000)
             msg_result = MsgBox.msgbox(
@@ -58,7 +69,7 @@ class DrawHilbert:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -142,7 +153,9 @@ class DrawHilbert:
         self._x += x_step
         self._y += y_step
 
-        line = Draw.draw_line(slide=self._slide, x1=x_old, y1=y_old, x2=self._x, y2=self._y)
+        line = self._slide.draw_line(x1=x_old, y1=y_old, x2=self._x, y2=self._y)
         # LineWidth in 1/100 mm units
         # LineCap: round off the line
-        Props.set(line, LineColor=CommonColor.BLUE, LineWidth=110, LineCap=LineCap.ROUND)
+        line.set_property(
+            LineColor=CommonColor.BLUE, LineWidth=110, LineCap=LineCap.ROUND
+        )
