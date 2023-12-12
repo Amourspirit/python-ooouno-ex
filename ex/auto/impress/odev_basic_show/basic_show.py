@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import uno
-from ooodev.office.draw import Draw
+from ooodev.draw import Draw, ImpressDoc
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
@@ -17,12 +16,12 @@ class BasicShow:
 
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectPipe()) as loader:
-            doc = Lo.open_doc(fnm=self._fnm, loader=loader)
+            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
             try:
                 # slideshow start() crashes if the doc is not visible
-                GUI.set_visible(visible=True, doc=doc)
+                doc.set_visible()
 
-                show = Draw.get_show(doc=doc)
+                show = doc.get_show()
                 Props.show_obj_props("Slide show", show)
 
                 Lo.delay(500)
@@ -30,8 +29,8 @@ class BasicShow:
                 # show.start() starts slideshow but not necessarily in 100% full screen
                 # show.start()
 
-                sc = Draw.get_show_controller(show)
+                sc = doc.get_show_controller()
                 Draw.wait_ended(sc)
 
             finally:
-                Lo.close_doc(doc)
+                doc.close_doc()
