@@ -2,13 +2,15 @@ from __future__ import annotations
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XText
-from com.sun.star.lang import XComponent
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.draw import Draw
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.draw import Draw, ImpressDoc, DrawText
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
@@ -28,13 +30,15 @@ class PointsBuilder:
             tmpl_name = "Inspiration.otp"  # "Piano.otp"
             template_fnm = Path(Draw.get_slide_template_path(), tmpl_name)
             _ = FileIO.is_exist_file(template_fnm, True)
-            doc = Lo.create_doc_from_template(template_path=template_fnm, loader=loader)
+            doc = ImpressDoc(
+                Lo.create_doc_from_template(template_path=template_fnm, loader=loader)
+            )
 
             self._read_points(doc)
 
-            print(f"Total no. of slides: {Draw.get_slides_count(doc)}")
+            print(f"Total no. of slides: {doc.get_slides_count()}")
 
-            GUI.set_visible(visible=True, doc=doc)
+            doc.set_visible()
             Lo.delay(2000)
 
             msg_result = MsgBox.msgbox(
@@ -44,7 +48,7 @@ class PointsBuilder:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -65,18 +69,23 @@ class PointsBuilder:
         for fnm in template_fnms:
             print(f"  {fnm}")
 
-    def _read_points(self, doc: XComponent) -> None:
+    def _read_points(self, doc: ImpressDoc) -> None:
         # Read in a text file of points which are converted to slides.
         # Formatting rules:
         # * ">", ">>", etc are points and their levels
         # * any other lines are the title text of a new slide
-        curr_slide = Draw.get_slide(doc=doc, idx=0)
-        Draw.title_slide(slide=curr_slide, title="Python-Generated Slides", sub_title="Using LibreOffice")
+        curr_slide = doc.get_slide(idx=0)
+        curr_slide.title_slide(
+            title="Python-Generated Slides",
+            sub_title="Using LibreOffice",
+        )
         try:
 
-            def process_bullet(line: str, xbody: XText) -> None:
+            def process_bullet(
+                line: str, draw_text: DrawText[ImpressDoc] | None
+            ) -> None:
                 # count the number of '>'s to determine the bullet level
-                if xbody is None:
+                if draw_text is None:
                     print(f"No slide body for {line}")
                     return
 
@@ -87,9 +96,10 @@ class PointsBuilder:
                     pos += 1
                     ch = s_lst[pos]
                 sub_str = "".join(s_lst[pos:]).strip()
-                Draw.add_bullet(bulls_txt=xbody, level=pos - 1, text=sub_str)
 
-            body: XText = None
+                draw_text.add_bullet(level=pos - 1, text=sub_str)
+
+            body: DrawText[ImpressDoc] | None = None
             with open(self._points_fnm, "r") as file:
                 # remove empty lines
                 data = (row for row in file if row.strip())
@@ -101,10 +111,10 @@ class PointsBuilder:
                 for row in data:
                     ch = row[:1]
                     if ch == ">":
-                        process_bullet(line=row, xbody=body)
+                        process_bullet(line=row, draw_text=body)
                     else:
-                        curr_slide = Draw.add_slide(doc)
-                        body = Draw.bullets_slide(slide=curr_slide, title=row.strip())
+                        curr_slide = doc.add_slide()
+                        body = curr_slide.bullets_slide(title=row.strip())
             print(f"Read in point file: {self._points_fnm.name}")
         except Exception as e:
             print(f"Error reading points file: {self._points_fnm}")

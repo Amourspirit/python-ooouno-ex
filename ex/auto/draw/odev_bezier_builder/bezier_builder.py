@@ -2,19 +2,22 @@ from __future__ import annotations
 from typing import List
 
 import uno
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.exceptions import ex as mEx
-from ooodev.office.draw import Draw
-from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
-from ooodev.utils.type_var import PathOrStr
-
-from com.sun.star.drawing import XDrawPage
-from com.sun.star.drawing import XShape
 
 from ooo.dyn.awt.point import Point
 from ooo.dyn.drawing.polygon_flags import PolygonFlags
+
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.exceptions import ex as mEx
+from ooodev.draw import Draw, DrawDoc, DrawPage
+from ooodev.draw.shapes import OpenBezierShape
+from ooodev.utils.file_io import FileIO
+from ooodev.utils.lo import Lo
+from ooodev.utils.type_var import PathOrStr
 
 
 class BezierBuilder:
@@ -28,17 +31,21 @@ class BezierBuilder:
 
         try:
             # create Impress page or Draw slide
-            doc = Draw.create_draw_doc(loader)
-            slide = Draw.get_slide(doc=doc, idx=0)
+            doc = DrawDoc(Draw.create_draw_doc(loader))
+            slide = doc.get_slide(idx=0)
 
-            GUI.set_visible(is_visible=True, odoc=doc)
+            doc.set_visible()
 
             # self._draw_curve(slide) # same as bpts3.txt
 
             start_pt = Point()
             curve_pts: List[Point] = []
-            is_open = self._read_points(fnm=self._fnm_point, start_pt=start_pt, curve_pts=curve_pts)
-            _ = self._create_bezier(slide=slide, start_pt=start_pt, curve_pts=curve_pts, is_open=is_open)
+            is_open = self._read_points(
+                fnm=self._fnm_point, start_pt=start_pt, curve_pts=curve_pts
+            )
+            _ = self._create_bezier(
+                slide=slide, start_pt=start_pt, curve_pts=curve_pts, is_open=is_open
+            )
 
             Lo.delay(2000)
 
@@ -49,13 +56,15 @@ class BezierBuilder:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
         except Exception:
             Lo.close_office()
             raise
 
-    def _read_points(self, fnm: PathOrStr, start_pt: Point, curve_pts: List[Point]) -> bool:
+    def _read_points(
+        self, fnm: PathOrStr, start_pt: Point, curve_pts: List[Point]
+    ) -> bool:
         is_open = True
 
         def process_line(line: str) -> None:
@@ -71,7 +80,7 @@ class BezierBuilder:
                 Lo.print("Reading curve points")
                 self._set_curve(curve_pts=curve_pts, pts_str=line[1:].strip())
             elif ch == "Z":
-                Lo.print("Read closedpath flag")
+                Lo.print("Read closed path flag")
                 is_open = False
             # yield line
 
@@ -82,7 +91,7 @@ class BezierBuilder:
             # chain generator
             # remove empty lines
             data = (row for row in data if row)
-            # each line should now start with M or C or Z or not reconzized
+            # each line should now start with M or C or Z or not recognized
             # remove all lines that do not match start Char
             data = (row for row in data if row[:1] in ("M", "C", "Z"))
             for row in data:
@@ -90,7 +99,7 @@ class BezierBuilder:
 
         return is_open
 
-    def _draw_curve(self, slide: XDrawPage) -> XShape:
+    def _draw_curve(self, slide: DrawPage[DrawDoc]) -> OpenBezierShape[DrawDoc]:
         # sample data, same as bpts3.txt
         path_pts: List[Point] = []
         path_flags: List[PolygonFlags] = []
@@ -107,7 +116,7 @@ class BezierBuilder:
         path_pts.append(Point(4_000, 2_500))
         path_flags.append(PolygonFlags.NORMAL)
 
-        return Draw.draw_bezier(slide=slide, pts=path_pts, flags=path_flags, is_open=True)
+        return slide.draw_bezier_open(pts=path_pts, flags=path_flags)
 
     def _get_integer(self, s: str) -> int:
         try:
@@ -120,7 +129,7 @@ class BezierBuilder:
         start_pt = Point()
         vals = [s.strip() for s in pt_str.split(",")]
         if len(vals) != 2:
-            Lo.print("Could not parese the pont string into 2 parts")
+            Lo.print("Could not parse the pont string into 2 parts")
         else:
             start_pt.X = self._get_integer(vals[0])
             start_pt.Y = self._get_integer(vals[1])
@@ -132,7 +141,13 @@ class BezierBuilder:
         for val in vals:
             curve_pts.append(self._extract_point(val))
 
-    def _create_bezier(self, slide: XDrawPage, start_pt: Point, curve_pts: List[Point], is_open: bool):
+    def _create_bezier(
+        self,
+        slide: DrawPage[DrawDoc],
+        start_pt: Point,
+        curve_pts: List[Point],
+        is_open: bool,
+    ) -> OpenBezierShape[DrawDoc]:
         # The assumption is that the curve points use the C format from the SVG path
         # specification. Namely (x1 y1 x2 y2 x y)+,	where each tuple defines a cubic
         # Bézier curve. It starts at the startPt and ends at (x,y), using (x1,y1) as the
@@ -163,5 +178,5 @@ class BezierBuilder:
             flags.append(PolygonFlags.CONTROL)
             start_pt = curve_pts[i * 3 + 2]  # and the next start point
 
-        shape = Draw.draw_bezier(slide=slide, pts=bez_pts, flags=flags, is_open=is_open)
+        shape = slide.draw_bezier_open(pts=bez_pts, flags=flags)
         return shape

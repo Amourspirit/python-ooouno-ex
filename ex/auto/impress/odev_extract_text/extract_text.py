@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from ooodev.utils.lo import Lo
-from ooodev.office.draw import Draw
+from ooodev.draw import Draw
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.file_io import FileIO
 

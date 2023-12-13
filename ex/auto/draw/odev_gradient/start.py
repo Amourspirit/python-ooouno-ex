@@ -1,9 +1,12 @@
 from __future__ import annotations
 import sys
 from pathlib import Path
-from ooodev.office.draw import DrawingHatchingKind, DrawingBitmapKind, DrawingGradientKind
+from ooodev.office.draw import (
+    DrawingHatchingKind,
+    DrawingBitmapKind,
+    DrawingGradientKind,
+)
 from draw_gradient import DrawGradient, GradientKind
-from ooodev.utils.file_io import FileIO
 from ooodev.utils.color import CommonColor
 import argparse
 
@@ -148,6 +151,8 @@ def main() -> int:
         cv.bitmap_gradient = DrawingBitmapKind.from_str(args.bitmap_kind)
     cv.main()
     return 0
+
+
 # endregion main()
 
 if __name__ == "__main__":

@@ -1,17 +1,26 @@
 from __future__ import annotations
-
+from typing import TYPE_CHECKING
 import uno
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.draw import Draw, DrawingSlideShowKind
+
+from ooo.dyn.presentation.animation_speed import AnimationSpeed as AnimationSpeed
+from ooo.dyn.presentation.fade_effect import FadeEffect as FadeEffect
+
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.draw import Draw, ImpressDoc, DrawingSlideShowKind
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 
-from ooo.dyn.presentation.animation_speed import AnimationSpeed as AnimationSpeed
-from ooo.dyn.presentation.fade_effect import FadeEffect as FadeEffect
+
+if TYPE_CHECKING:
+    from com.sun.star.presentation import XPresentation2
 
 
 class AutoShow:
@@ -28,23 +37,22 @@ class AutoShow:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = Lo.open_doc(self._fnm, loader)
+            doc = ImpressDoc(Lo.open_doc(self._fnm, loader))
 
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(visible=True, doc=doc)
+            doc.set_visible()
 
             # set up a fast automatic change between all the slides
-            slides = Draw.get_slides_list(doc)
+            slides = doc.get_slides_list()
             for slide in slides:
-                Draw.set_transition(
-                    slide=slide,
+                slide.set_transition(
                     fade_effect=self._fade_effect,
                     speed=AnimationSpeed.FAST,
                     change=DrawingSlideShowKind.AUTO_CHANGE,
                     duration=self._duration,
                 )
 
-            show = Draw.get_show(doc)
+            show = doc.get_show()
             Props.show_obj_props("Slide Show", show)
             self._set_show_prop(show)
             # Props.set(show, IsEndless=True, Pause=0)
@@ -53,7 +61,7 @@ class AutoShow:
             Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION)
             # show.start() starts slideshow but not necessarily in 100% full screen
 
-            sc = Draw.get_show_controller(show)
+            sc = doc.get_show_controller()
             Draw.wait_last(sc=sc, delay=self._end_delay)
             Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION_END)
             Lo.delay(500)
@@ -66,7 +74,7 @@ class AutoShow:
             )
             if msg_result == MessageBoxResultsEnum.YES:
                 print("Ending the slide show")
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -74,7 +82,7 @@ class AutoShow:
             Lo.close_office()
             raise
 
-    def _set_show_prop(self, show: object) -> None:
+    def _set_show_prop(self, show: XPresentation2) -> None:
         Props.set(show, IsEndless=self._is_endless, Pause=self._pause)
 
     @property

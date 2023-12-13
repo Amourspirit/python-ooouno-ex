@@ -1,9 +1,15 @@
 from __future__ import annotations
+import contextlib
 
 import uno
 from com.sun.star.lang import XComponent
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.office.draw import Draw, DrawingLayerKind
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
@@ -68,10 +74,8 @@ class SlidesInfo:
     def _report_layers(self, doc: XComponent) -> None:
         lm = Draw.get_layer_manager(doc)
         for i in range(lm.getCount()):
-            try:
+            with contextlib.suppress(Exception):
                 Props.show_obj_props(f" Layer {i}", lm.getByIndex(i))
-            except:
-                pass
         layer = Draw.get_layer(doc=doc, layer_name=DrawingLayerKind.BACK_GROUND_OBJECTS)
         Props.show_obj_props("Background Object Props", layer)
 

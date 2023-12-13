@@ -1,19 +1,16 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
 import uno
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.draw import Draw, Intensity
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.draw import Draw, DrawDoc, DrawPage, Intensity, ZoomKind
 from ooodev.utils.color import CommonColor
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
-
-if TYPE_CHECKING:
-    # the following is only needed for typings.
-    # from __future__ import annotations takes care of the rest
-    from com.sun.star.drawing import XDrawPage
 
 
 class DrawPicture:
@@ -21,21 +18,27 @@ class DrawPicture:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = Draw.create_draw_doc(loader)
-            GUI.set_visible(is_visible=True, odoc=doc)
+            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc.set_visible()
             Lo.delay(1_000)  # need delay or zoom may not occur
-            GUI.zoom(GUI.ZoomEnum.ENTIRE_PAGE)
+            doc.zoom(ZoomKind.ENTIRE_PAGE)
 
-            curr_slide = Draw.get_slide(doc=doc, idx=0)
+            curr_slide = doc.get_slide(idx=0)
             self._draw_shapes(curr_slide=curr_slide)
 
-            s = Draw.draw_formula(slide=curr_slide, formula="func e^{i %pi} + 1 = 0", x=70, y=20, width=75, height=40)
+            s = curr_slide.draw_formula(
+                formula="func e^{i %pi} + 1 = 0",
+                x=70,
+                y=20,
+                width=75,
+                height=40,
+            )
             # Draw.report_pos_size(s)
 
             self._anim_shapes(curr_slide=curr_slide)
 
-            s = Draw.find_shape_by_name(curr_slide, "text1")
-            Draw.report_pos_size(s)
+            s = curr_slide.find_shape_by_name("text1")
+            Draw.report_pos_size(s.component)
 
             Lo.delay(2000)
             msg_result = MsgBox.msgbox(
@@ -45,7 +48,7 @@ class DrawPicture:
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                Lo.close_doc(doc=doc, deliver_ownership=True)
+                doc.close_doc()
                 Lo.close_office()
             else:
                 print("Keeping document open")
@@ -53,35 +56,40 @@ class DrawPicture:
             Lo.close_office()
             raise
 
-    def _draw_shapes(self, curr_slide: XDrawPage) -> None:
-        line1 = Draw.draw_line(slide=curr_slide, x1=50, y1=50, x2=200, y2=200)
-        Props.set(line1, LineColor=CommonColor.BLACK)
-        Draw.set_dashed_line(shape=line1, is_dashed=True)
+    def _draw_shapes(self, curr_slide: DrawPage[DrawDoc]) -> None:
+        line1 = curr_slide.draw_line(x1=50, y1=50, x2=200, y2=200)
+        line1.component.LineColor = CommonColor.BLACK
+        line1.set_dashed_line(is_dashed=True)
 
         # red ellipse; uses (x, y) width, height
-        circle1 = Draw.draw_ellipse(slide=curr_slide, x=100, y=100, width=75, height=25)
-        Props.set(circle1, FillColor=CommonColor.RED)
+        circle1 = curr_slide.draw_ellipse(x=100, y=100, width=75, height=25)
+        circle1.component.FillColor = CommonColor.RED
 
         # rectangle with different fills; uses (x, y) width, height
-        rect1 = Draw.draw_rectangle(slide=curr_slide, x=70, y=100, width=75, height=25)
-        Props.set(rect1, FillColor=CommonColor.LIME)
+        rect1 = curr_slide.draw_rectangle(x=70, y=100, width=75, height=25)
+        rect1.component.FillColor = CommonColor.LIME
 
-        text1 = Draw.draw_text(
-            slide=curr_slide, msg="Hello LibreOffice", x=120, y=120, width=60, height=30, font_size=24
+        text1 = curr_slide.draw_text(
+            msg="Hello LibreOffice",
+            x=120,
+            y=120,
+            width=60,
+            height=30,
+            font_size=24,
         )
-        Props.set(text1, Name="text1")
-        # Props.show_props("TextShape's Text Properties", Draw.get_text_properties(text1))
+        text1.component.Name = "text1"
+        # Props.show_props("TextShape's Text Properties", Draw.get_text_properties(text1.component))
 
         # gray transparent circle; uses (x,y), radius
-        circle2 = Draw.draw_circle(slide=curr_slide, x=40, y=150, radius=20)
-        Props.set(circle2, FillColor=CommonColor.GRAY)
-        Draw.set_transparency(shape=circle2, level=Intensity(25))
+        circle2 = curr_slide.draw_circle(x=40, y=150, radius=20)
+        circle2.component.FillColor = CommonColor.GRAY
+        circle2.set_transparency(level=Intensity(25))
 
         # thick line; uses (x,y), angle clockwise from x-axis, length
-        line2 = Draw.draw_polar_line(slide=curr_slide, x=60, y=200, degrees=45, distance=100)
-        Props.set(line2, LineWidth=300)
+        line2 = curr_slide.draw_polar_line(x=60, y=200, degrees=45, distance=100)
+        line2.component.LineWidth = 300
 
-    def _anim_shapes(self, curr_slide: XDrawPage) -> None:
+    def _anim_shapes(self, curr_slide: DrawPage[DrawDoc]) -> None:
         # two animations of a circle and a line
         # he animation loop is:
         #    redraw shape, delay, update shape position/size
@@ -94,8 +102,8 @@ class DrawPicture:
         for _ in range(20):
             # move right
             if circle is not None:
-                curr_slide.remove(circle)
-            circle = Draw.draw_circle(slide=curr_slide, x=xc, y=yc, radius=radius)
+                curr_slide.remove(circle.component)
+            circle = curr_slide.draw_circle(x=xc, y=yc, radius=radius)
 
             Lo.delay(200)
             xc += 5
@@ -106,7 +114,7 @@ class DrawPicture:
         line = None
         for _ in range(25):
             if line is not None:
-                curr_slide.remove(line)
-            line = Draw.draw_line(slide=curr_slide, x1=40, y1=100, x2=x2, y2=y2)
+                curr_slide.remove(line.component)
+            line = curr_slide.draw_line(x1=40, y1=100, x2=x2, y2=y2)
             x2 -= 4
             y2 -= 4

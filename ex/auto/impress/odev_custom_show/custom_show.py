@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import uno
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
-from ooodev.office.draw import Draw
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.draw import Draw, ImpressDoc
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
@@ -24,20 +28,20 @@ class CustomShow:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = Lo.open_doc(fnm=self._fnm, loader=loader)
+            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
             # slideshow start() crashes if the doc is not visible
-            GUI.set_visible(visible=True, doc=doc)
+            doc.set_visible()
 
             if len(self._idxs) > 0:
-                _ = Draw.build_play_list(doc, "ShortPlay", *self._idxs)
-                show = Draw.get_show(doc=doc)
+                _ = doc.build_play_list("ShortPlay", *self._idxs)
+                show = doc.get_show()
                 Props.set(show, CustomShow="ShortPlay")
                 Props.show_obj_props("Slide show", show)
                 Lo.delay(500)
                 Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION)
                 # show.start() starts slideshow but not necessarily in 100% full screen
                 # show.start()
-                sc = Draw.get_show_controller(show)
+                sc = doc.get_show_controller()
                 Draw.wait_ended(sc)
 
                 Lo.delay(2000)
@@ -48,7 +52,7 @@ class CustomShow:
                     buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
                 )
                 if msg_result == MessageBoxResultsEnum.YES:
-                    Lo.close_doc(doc=doc, deliver_ownership=True)
+                    doc.close_doc()
                     Lo.close_office()
                 else:
                     print("Keeping document open")
