@@ -108,27 +108,24 @@ class MakeSlides:
         body = curr_slide.bullets_slide(title="What is an Algorithm?")
 
         # bullet levels are 0, 1, 2,...
-        Draw.add_bullet(
-            bulls_txt=body.component,
+        body.add_bullet(
             level=0,
             text="An algorithm is a finite set of unambiguous instructions for solving a problem.",
         )
 
-        Draw.add_bullet(
-            bulls_txt=body.component,
+        body.add_bullet(
             level=1,
             text="An algorithm is correct if on all legitimate inputs, it outputs the right answer in a finite amount of time",
         )
 
-        Draw.add_bullet(bulls_txt=body.component, level=0, text="Can be expressed as")
-        Draw.add_bullet(bulls_txt=body.component, level=1, text="pseudocode")
-        Draw.add_bullet(bulls_txt=body.component, level=0, text="flow charts")
-        Draw.add_bullet(
-            bulls_txt=body.component,
+        body.add_bullet(level=0, text="Can be expressed as")
+        body.add_bullet(level=1, text="pseudocode")
+        body.add_bullet(level=0, text="flow charts")
+        body.add_bullet(
             level=1,
             text="text in a natural language (e.g. English)",
         )
-        Draw.add_bullet(bulls_txt=body.component, level=1, text="computer code")
+        body.add_bullet(level=1, text="computer code")
         # add the image in bottom right corner, and scaled if necessary
         im = curr_slide.draw_image_offset(
             fnm=self._fnm_img,
