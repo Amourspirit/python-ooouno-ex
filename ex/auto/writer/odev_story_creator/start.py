@@ -6,7 +6,6 @@ from typing import List
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XTextCursor
 
 from ooodev.dialog.msgbox import (
     MsgBox,

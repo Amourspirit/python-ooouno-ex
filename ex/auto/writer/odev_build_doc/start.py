@@ -61,27 +61,27 @@ def main() -> int:
         cursor.append_para("The following points are important:")
 
         list_style = ListStyle(list_style=StyleListKind.NUM_123, num_start=-2)
-        list_style.apply(cursor)
+        list_style.apply(cursor.component)
 
         cursor.append_para("Have a good breakfast")
         cursor.append_para("Have a good lunch")
         cursor.append_para("Have a good dinner")
 
         # Reset to default which set cursor to No List Style
-        list_style.default.apply(cursor)
+        list_style.default.apply(cursor.component)
         cursor.end_paragraph()
 
         cursor.append_para("Breakfast should include:")
 
         # set cursor style to Number abc
         list_style = ListStyle(list_style=StyleListKind.NUM_abc, num_start=-2)
-        list_style.apply(cursor)
+        list_style.apply(cursor.component)
 
         cursor.append_para("Porridge")
         cursor.append_para("Orange Juice")
         cursor.append_para("A Cup of Tea")
         # reset cursor number style
-        list_style.default.apply(cursor)
+        list_style.default.apply(cursor.component)
 
         cursor.end_paragraph()
 
