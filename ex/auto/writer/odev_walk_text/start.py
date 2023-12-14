@@ -52,7 +52,7 @@ def count_words(doc: WriteDoc) -> int:
 
     word_count = 0
     while 1:
-        cursor.goto_end_of_word()
+        cursor.goto_end_of_word(True)
         curr_word = cursor.get_string()
         if len(curr_word) > 0:
             word_count += 1
