@@ -5,10 +5,8 @@ from typing import cast
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XTextDocument
 
-from ooodev.write import Write, WriteDoc, FamilyNamesKind
-from ooodev.utils.gui import GUI
+from ooodev.write import Write, WriteDoc
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
@@ -44,7 +42,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 def show_styles(doc: WriteDoc) -> None:
     # get all the style families for this document
-    # style_families = Info.get_style_family_names(doc)
+    # style_families = Info.get_style_family_names(doc.component)
     families = doc.get_style_families()
     style_families = families.get_names()
 
@@ -67,13 +65,13 @@ def show_styles(doc: WriteDoc) -> None:
     print()
 
     # access other style families, other names...
-    # Props.show_props('FrameStyles "Graphics"', Info.get_style_props(doc, "FrameStyles", "Graphics"))
+    # Props.show_props('FrameStyles "Graphics"', Info.get_style_props(doc.component, "FrameStyles", "Graphics"))
     # print()
 
-    # Props.show_props('NumberingStyles "List 1"', Info.get_style_props(doc, "NumberingStyles", "List 1"))
+    # Props.show_props('NumberingStyles "List 1"', Info.get_style_props(doc.component, "NumberingStyles", "List 1"))
     # print()
 
-    # Props.show_props('PageStyles "Envelope"', Info.get_style_props(doc, "PageStyles", "Standard"))
+    # Props.show_props('PageStyles "Envelope"', Info.get_style_props(doc.component, "PageStyles", "Standard"))
     # print()
 
 
