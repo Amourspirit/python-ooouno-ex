@@ -61,10 +61,8 @@ def italicize_all(doc: WriteDoc, phrase: str, color: Color) -> int:
         phrase_len = len(phrase)
         search_desc.setSearchString(phrase)
         # for props see: https://api.libreoffice.org/docs/idl/ref/servicecom_1_1sun_1_1star_1_1util_1_1SearchDescriptor.html
-        Props.set_property(obj=search_desc, name="SearchCaseSensitive", value=False)
-        Props.set_property(
-            obj=search_desc, name="SearchWords", value=True
-        )  # If TRUE, only complete words will be found.
+        # If SearchWords==True, only complete words will be found.
+        Props.set(search_desc, SearchCaseSensitive=False, SearchWords=True)
 
         matches = searchable.findAll(search_desc)
         result = matches.getCount()

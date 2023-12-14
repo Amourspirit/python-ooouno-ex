@@ -217,7 +217,7 @@ def main() -> int:
 
             cursor.append_line("Image as a shape: ")
             # add image as shape to page
-            # Write.add_image_shape(cursor=cursor, fnm=im_fnm)
+            cursor.add_image_shape(fnm=im_fnm)
             cursor.end_paragraph()
             Lo.delay(delay)
 

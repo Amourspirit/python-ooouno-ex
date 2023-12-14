@@ -10,7 +10,6 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.write import Write, WriteDoc
 from ooodev.utils.date_time_util import DateUtil
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
 
