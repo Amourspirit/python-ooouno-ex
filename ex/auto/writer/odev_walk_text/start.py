@@ -5,7 +5,6 @@ from typing import cast
 from pathlib import Path
 
 import uno
-from com.sun.star.view import XLineCursor
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -30,34 +29,34 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 def show_paragraphs(doc: WriteDoc) -> None:
     tvc = doc.get_view_cursor()
-    para_cursor = doc.get_paragraph_cursor()
-    para_cursor.goto_start(False)  # go to start test; no selection
+    cursor = doc.get_cursor()
+    cursor.goto_start(False)  # go to start test; no selection
 
     while 1:
-        para_cursor.goto_end_of_paragraph(True)  # select all of paragraph
-        curr_para = para_cursor.get_string()
+        cursor.goto_end_of_paragraph(True)  # select all of paragraph
+        curr_para = cursor.get_string()
         if len(curr_para) > 0:
-            tvc.goto_range(para_cursor.component.getStart())
-            tvc.goto_range(para_cursor.component.getEnd(), True)
+            tvc.goto_range(cursor.component.getStart())
+            tvc.goto_range(cursor.component.getEnd(), True)
 
             print(f"P<{curr_para}>")
             Lo.delay(500)  # delay half a second
 
-        if para_cursor.goto_next_paragraph() is False:
+        if cursor.goto_next_paragraph() is False:
             break
 
 
 def count_words(doc: WriteDoc) -> int:
-    word_cursor = doc.get_word_cursor()
-    word_cursor.goto_start()  # go to start of text
+    cursor = doc.get_cursor()
+    cursor.goto_start()  # go to start of text
 
     word_count = 0
     while 1:
-        word_cursor.goto_end_of_word()
-        curr_word = word_cursor.get_string()
+        cursor.goto_end_of_word()
+        curr_word = cursor.get_string()
         if len(curr_word) > 0:
             word_count += 1
-        if word_cursor.goto_next_word() is False:
+        if cursor.goto_next_word() is False:
             break
     return word_count
 
@@ -66,11 +65,10 @@ def show_lines(doc: WriteDoc) -> None:
     tvc = doc.get_view_cursor()
     tvc.goto_start()  # go to start of text
 
-    line_cursor = tvc.qi(XLineCursor, True)
     have_text = True
     while have_text is True:
-        line_cursor.gotoStartOfLine(False)
-        line_cursor.gotoEndOfLine(True)
+        tvc.goto_start_of_line()
+        tvc.goto_end_of_line(True)
         print(f"L<{tvc.get_string()}>")  # no text selection in line cursor
         Lo.delay(500)  # delay half a second
         tvc.collapse_to_end()
