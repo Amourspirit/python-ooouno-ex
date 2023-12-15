@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
-from ooodev.utils.file_io import FileIO
 from extract_text import ExtractText
+
 
 # region main()
 def main() -> int:
