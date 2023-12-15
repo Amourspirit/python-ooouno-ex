@@ -43,10 +43,10 @@ class CopySlide:
 
             self._copy_to(doc=doc)
 
-            # Draw.delete_slide(doc=doc, idx=self._from_idx)
+            # doc.delete_slide(idx=self._from_idx)
             # a problem if the copying changes the indices
 
-            # Lo.save(doc) # overwrites original
+            # Lo.save(doc.component) # overwrites original
 
             Lo.delay(2000)
             msg_result = MsgBox.msgbox(
