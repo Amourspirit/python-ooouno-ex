@@ -3,6 +3,7 @@ from typing import cast
 
 import uno
 from com.sun.star.sheet import XCellRangesQuery
+from ooo.dyn.sheet.cell_flags import CellFlags
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -16,8 +17,6 @@ from ooodev.formatters.formatter_table import FormatterTable, FormatTableItem
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr, Row, Column
-
-from ooo.dyn.sheet.cell_flags import CellFlags
 
 
 class ExtractNums:

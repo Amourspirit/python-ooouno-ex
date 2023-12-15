@@ -47,7 +47,7 @@ class GarlicSecrets:
             sheet.goto_cell(cell_name="A1")
 
             # freeze one row of view
-            # Calc.freeze_rows(doc=doc, num_rows=1)
+            # doc.freeze_rows(num_rows=1)
 
             # find total for the "Total" column
             total_range = sheet.get_col_range(idx=3)
