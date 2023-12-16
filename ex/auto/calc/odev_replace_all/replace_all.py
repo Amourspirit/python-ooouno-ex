@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import Iterable
 
 import uno
-from com.sun.star.sheet import XSpreadsheet
 from com.sun.star.table import XCellRange
 from com.sun.star.util import XReplaceable
 from com.sun.star.util import XSearchable
@@ -14,7 +13,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.calc import Calc
-from ooodev.calc import CalcDoc, CalcSheet, CalcCellRange, ZoomKind
+from ooodev.calc import CalcDoc, CalcCellRange, ZoomKind
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
