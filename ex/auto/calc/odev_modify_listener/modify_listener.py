@@ -8,18 +8,13 @@ from com.sun.star.sheet import XSpreadsheetDocument
 from com.sun.star.util import XModifyBroadcaster
 
 from ooodev.utils.lo import Lo
-from ooodev.utils.gui import GUI
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.file_io import FileIO
 
 # from ooodev.listeners.x_top_window_adapter import XTopWindowAdapter
-from ooodev.adapter.awt.top_window_listener import (
-    TopWindowListener,
-    EventArgs,
-    GenericArgs,
-)
+from ooodev.adapter.awt.top_window_listener import TopWindowListener, EventArgs
 
 
 if TYPE_CHECKING:

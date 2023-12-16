@@ -4,7 +4,6 @@ from typing import Any
 import uno
 
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
-from ooodev.adapter.util.modify_events import ModifyEvents
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc

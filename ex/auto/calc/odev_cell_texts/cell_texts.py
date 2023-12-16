@@ -16,7 +16,7 @@ from ooodev.format import Styler
 from ooodev.format.calc.direct.cell.borders import Borders, Padding
 from ooodev.format.calc.direct.cell.font import Font
 from ooodev.calc import Calc, CalcDoc
-from ooodev.write import WriteTextCursor, Write
+from ooodev.write import Write
 from ooodev.units.unit_mm import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
