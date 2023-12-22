@@ -4,12 +4,13 @@
   <img width="685" height="404" src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/14d208b5-0cca-437a-aeb7-9ca1a57c97f7">
 </p>
 
+This example demonstrates how to create a text document with columns using the [OOO Development Tools].
+The original is in Java and can be found at [LibreOffice Developer's Guide: Chapter 7 - Text Documents](https://wiki.documentfoundation.org/Documentation/DevGuide/Text_Documents#Columns).
+
 Text frames, text sections and page styles can be formatted to have columns. The width of columns is relative since the absolute width of the object is unknown in the model. The layout formatting is responsible for calculating the actual widths of the columns.
 
 Columns are applied using the property TextColumns. It expects a `com.sun.star.text.TextColumns` service that has to be created by the document factory. The interface `com.sun.star.text.XTextColumns` refines the characteristics of the text columns before applying the created TextColumns service to the property TextColumns.
 
-
-This demo uses [OOO Development Tools]
 
 ## Automate
 
