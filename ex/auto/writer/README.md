@@ -21,6 +21,7 @@ Welcome to Writer Automation folder. Open a sub folder to get to an example.
 - [odev_speak](./odev_speak/) - example how to control Writer application's visible cursor and speak each sentence.
 - [odev_story_creator](./odev_story_creator/) - example reads in a text file, apply a new paragraph style, header, page and more.
 - [odev_styles_info](./odev_styles_info/) - example on getting style info from a document.
+- [odev_text_columns](./odev_text_columns/) - example shows how to create a text document with columns.
 - [odev_text_replace](./odev_text_replace/) - example show how to find and replace text in a document.
 - [odev_walk_text](./odev_walk_text/) - example shows how to control Writer application's visible cursor.
 
