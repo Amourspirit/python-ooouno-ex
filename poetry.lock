@@ -102,17 +102,18 @@ files = [
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.17.7"
+version = "0.19.0"
 description = "LibreOffice Developer Tools"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "ooo_dev_tools-0.17.7-py3-none-any.whl", hash = "sha256:0b213a5556b7338697e1bf30d61a418f03aed39958fad05453a12f188de7afef"},
-    {file = "ooo_dev_tools-0.17.7.tar.gz", hash = "sha256:384ea6f44e8ea2c15fb5b83d7eace8e608af535b9e83e6529b76af7f62e1a0ad"},
+    {file = "ooo_dev_tools-0.19.0-py3-none-any.whl", hash = "sha256:f7e33e4c1e63a9d9e150670b2a8d21ee2d3019d067aeb683da7f0eaa9d545348"},
+    {file = "ooo_dev_tools-0.19.0.tar.gz", hash = "sha256:13c1151703186ac7bf4decba2b0624ce201222b69c718d9a9e9e0e67add9a4cd"},
 ]
 
 [package.dependencies]
 ooouno = ">=2.1.2"
+typing-extensions = ">=4.9.0"
 
 [[package]]
 name = "ooo-dev-tools-gui-win"
@@ -417,13 +418,13 @@ types-uno-script = ">=0.1.1"
 
 [[package]]
 name = "typing-extensions"
-version = "4.8.0"
+version = "4.9.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "typing_extensions-4.8.0-py3-none-any.whl", hash = "sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0"},
-    {file = "typing_extensions-4.8.0.tar.gz", hash = "sha256:df8e4339e9cb77357558cbdbceca33c303714cf861d1eef15e1070055ae8b7ef"},
+    {file = "typing_extensions-4.9.0-py3-none-any.whl", hash = "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"},
+    {file = "typing_extensions-4.9.0.tar.gz", hash = "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783"},
 ]
 
 [[package]]
@@ -453,4 +454,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "de878361b2ee14261ea3850c11c00d92f83e8c16848efdfb5ecd3204d518cb71"
+content-hash = "721708f52338e27699ac0d4ce8e2a3e7eb3e5ffc59a84f8a5a8cc4ab83afc8ec"
