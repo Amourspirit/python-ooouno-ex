@@ -2,7 +2,7 @@
 <img src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/cf9ef0e0-33dd-4210-8310-d0c2bbe00edc" width="600" height="573" alt="form"/>
 </p>
 
-# Build Form2
+# Build Form
 
 Demonstrates how to build a form from code and attach form to a database.
 

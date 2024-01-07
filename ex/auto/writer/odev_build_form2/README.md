@@ -14,7 +14,7 @@ Unlike [Build Form](../odev_build_form) this example uses the form controls in t
 
 This example also demonstrates adding a rectangle to the draw page as a background to the form.
 
-See also [Build Form2](../../draw/odev_build_form/) that demonstrates how to build a form from code and attach form to a database in Draw.
+See also Draw [Build Form](../../draw/odev_build_form/) that demonstrates how to build a form from code and attach form to a database in Draw.
 
 **Example code for creating a form and inserting controls**
 
