@@ -256,7 +256,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.save_doc(doc, "build.odt")
+            doc.save_doc("build.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",

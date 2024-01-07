@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/75fc2796-6e6b-43e9-b5d1-cf974b8b630f" width="577" height="581" alt="form"/>
+<img src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/cf9ef0e0-33dd-4210-8310-d0c2bbe00edc" width="600" height="573" alt="form"/>
 </p>
 
 # Build Form2
@@ -10,18 +10,20 @@ This example uses [OOO Development Tools] (OooDev)
 
 See [start source code](./start.py) and [build_form source code](./build_form.py)
 
-Unlike [Build Form](../odev_build_form) this example uses the form controls in the `ooodev.form.controls` modules by using the various `ooodev.write.WriteForm` insert control methods. By using the `ooodev.form.controls` modules you can create controls without having to implement listeners on the class. The controls can subscribe to any event that it supports.
+This example uses the form controls in the `ooodev.form.controls` modules by using the various `ooodev.Draw.DrawForm` insert control methods. By using the `ooodev.form.controls` modules you can create controls without having to implement listeners on the class. The controls can subscribe to any event that it supports.
 
 This example also demonstrates adding a rectangle to the draw page as a background to the form.
 
-See also [Build Form2](../../draw/odev_build_form/) that demonstrates how to build a form from code and attach form to a database in Draw.
+See also [Build Form2](../../writer/odev_build_form2/) that demonstrates how to build a form from code and attach form to a database in Writer.
 
 **Example code for creating a form and inserting controls**
 
 ```python
 def create_form(self) -> None:
     # ...
-    main_form = self._doc.draw_page.forms.add_form("MainForm")
+    draw_page = self._doc.slides[0]
+    # ...
+    main_form = draw_page.forms.add_form("MainForm")
     # ...
     self._ctl_lbl_age = main_form.insert_control_label(
         label="AGE",
@@ -74,7 +76,7 @@ python -m start
 From project root folder
 
 ```sh
-python ./ex/auto/writer/odev_build_form2/start.py
+python ./ex/auto/draw/odev_build_form/start.py
 ```
 
 ### Windows
@@ -82,7 +84,7 @@ python ./ex/auto/writer/odev_build_form2/start.py
 From project root folder
 
 ```ps
-python .\ex\auto\writer\odev_build_form2\start.py
+python .\ex\auto\draw\odev_build_form\start.py
 ```
 
 ## Live LibreOffice Python
@@ -95,21 +97,20 @@ In the terminal run:
 
 ```bash
 cd examples
-gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/writer/odev_build_form2'
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/auto/draw/odev_build_form'
 ```
 
-This will copy the `odev_build_form2` example to the examples folder.
+This will copy the `odev_build_form` example to the examples folder.
 
 In the terminal run:
 
 ```bash
-cd odev_build_form2
+cd odev_build_form
 python -m start
 ```
 
 ## Note
 
 If you get an error `No SDBC driver was found for the URL 'sdbc:embedded:hsqldb'.` you most likely need to enable Java in LibreOffice.
-
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
