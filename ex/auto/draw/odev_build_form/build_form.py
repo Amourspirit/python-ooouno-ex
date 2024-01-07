@@ -13,30 +13,13 @@ from ooodev.events.args.event_args import EventArgs
 from ooodev.form import BorderKind, TriStateKind
 from ooodev.form import ListSourceType
 from ooodev.format.writer.direct.char.font import Font
-from ooodev.units import UnitMM100
+from ooodev.units import UnitMM
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
-from ooodev.write import Write, WriteDoc, ZoomKind
-
+from ooodev.draw import Draw, DrawDoc, ZoomKind
 from ooodev.format.draw.direct.position_size.position_size import Protect
-from ooodev.format.writer.modify.page.page import Margins
-from ooodev.format.inner.direct.write.frame.frame_type.position import RelVertOrient
-from ooodev.format.writer.direct.obj.type import (
-    Anchor,
-    AnchorKind,
-    Position,
-    Horizontal,
-    HoriOrient,
-    Vertical,
-    VertOrient,
-    RelHoriOrient,
-)
-from ooodev.format.writer.direct.obj.wrap import (
-    Settings as WrapSettings,
-    WrapTextMode,
-    Options as WrapOptions,
-)
+
 from ooodev.format.draw.direct.area import (
     Gradient as DrawAreaGradient,
     PresetGradientKind,
@@ -68,7 +51,7 @@ class BuildForm:
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            self._doc = WriteDoc(Write.create_doc(loader))
+            self._doc = DrawDoc(Draw.create_draw_doc(loader))
 
             self._doc.set_visible()
             # Delay to let the doc become visible before zooming.
@@ -80,14 +63,6 @@ class BuildForm:
             with Lo.ControllerLock():
                 # use a controller lock to lock screen updating.
                 # This will cut down and screen flashing and add controls faster.
-
-                tvc = self._doc.get_view_cursor()
-                tvc.append(
-                    "Building a Form\n",
-                    [Font(color=StandardColor.PURPLE_DARK2, b=True)],
-                )
-                tvc.end_paragraph()
-
                 self.create_form()
             # dispatch a command that will turn off design mode.
             Lo.dispatch_cmd("SwitchControlDesignMode")
@@ -122,16 +97,20 @@ class BuildForm:
         # Form has four sections: text, command_button, list_box, grid_control
 
         font_colored = Font(color=StandardColor.PURPLE_DARK3)
-        x1 = 2
-        x2 = 44
-        y = 11
+        draw_page = self._doc.slides[0]
+        border_left = draw_page.border_left
+        border_top = draw_page.border_top
+        x1 = border_left + 2
+        x2 = x1 + 42
+        y = border_top + 11
         height = 6
         width1 = 40
         width2 = 40
+        field_y_space = UnitMM(2)
 
         self._add_form_shape()
 
-        main_form = self._doc.draw_page.forms.add_form("MainForm")
+        main_form = draw_page.forms.add_form("MainForm")
 
         self._ctl_lbl_first_name = main_form.insert_control_label(
             label="FIRSTNAME",
@@ -153,7 +132,11 @@ class BuildForm:
         self._ctl_txt_first_name.add_event_text_changed(self._fn_text_changed)
         self._set_tab_index(self._ctl_txt_first_name)
 
-        y = 19
+        y = (
+            self._ctl_txt_first_name.position.y
+            + self._ctl_txt_first_name.size.height
+            + field_y_space
+        )
         self._ctl_lbl_last_name = main_form.insert_control_label(
             label="LASTNAME",
             x=x1,
@@ -174,7 +157,7 @@ class BuildForm:
         self._ctl_txt_last_name.add_event_text_changed(self._fn_text_changed)
         self._set_tab_index(self._ctl_txt_last_name)
 
-        y = 43
+        y += 14
 
         self._ctl_lbl_age = main_form.insert_control_label(
             label="AGE",
@@ -189,17 +172,18 @@ class BuildForm:
             x=x2,
             y=y,
             width=width2,
-            height=height,
+            height=8,
             accuracy=0,
-            spin_button=False,
+            spin_button=True,
             border=BorderKind.BORDER_3D,
+            min_value=1,
         )
         self._ctl_lbl_age.bind_to_control(self._ctl_num_age)
         self._ctl_num_age.add_event_down(self._fn_on_down)
         self._ctl_num_age.add_event_up(self._fn_on_up)
         self._set_tab_index(self._ctl_num_age)
 
-        y = 51
+        y = self._ctl_num_age.position.y + self._ctl_num_age.size.height + field_y_space
         self._ctl_lbl_birth_date = main_form.insert_control_label(
             label="BIRTHDATE",
             x=x1,
@@ -224,10 +208,10 @@ class BuildForm:
         self._set_tab_index(self._ctl_date_birth_date)
 
         # buttons, all with listeners
-        col1_x = 2
+        col1_x = border_left + 2
         x = col1_x
         spacing = 10
-        y = 63
+        y += 10
         width = 8
 
         names, labels = map(
@@ -269,26 +253,24 @@ class BuildForm:
         self._set_tab_index(self._ctl_btn_reload)
 
         # some fixed text; no listener
-        width = 60
-        y = 80
-        height = 6
+        y += 20
 
-        _ = main_form.insert_control_label(
+        lbl_sales_since = main_form.insert_control_label(
             x=x,
             y=y,
-            width=width,
-            height=height,
+            width=60,
+            height=self._ctl_lbl_first_name.size.height,
             label="Show only sales since",
             styles=[font_colored],
         )
 
         #  radio buttons inside a group box; use a property change listener
-        col2_x = 90
+        col2_x = border_left + 90
         box_width = 70
-        y = 5
+        y = self._ctl_txt_first_name.position.y - 5
         name = "Options"
 
-        _ = main_form.insert_control_group_box(
+        opt_gb = main_form.insert_control_group_box(
             x=col2_x,
             y=y,
             width=box_width,
@@ -300,8 +282,8 @@ class BuildForm:
         # these three radio buttons have the same name ("Option"), and
         # so only one can be on at a time
         indent = 3
-        x = col2_x + indent
-        width = box_width - 2 * indent
+        x = opt_gb.position.x + indent
+        width = opt_gb.size.width - (2 * indent)
 
         labels = [
             "No automatic generation",
@@ -326,23 +308,21 @@ class BuildForm:
             radio_btn.tag = f"RadioBtn{i+1}"
             self._set_tab_index(radio_btn)
 
-        y = 35
-        height = 25
-        x = col2_x
-        width = width
-        _ = main_form.insert_control_group_box(
+        y += 30
+        x = opt_gb.position.x
+        width = opt_gb.size.width
+        misc_gb = main_form.insert_control_group_box(
             x=x,
             y=y,
             width=box_width,
-            height=height,
+            height=25,
             label="Miscellaneous",
             styles=[font_colored],
         )
 
-        y = 39
-        width = 60
-        x = x + indent
-        width = box_width - 4
+        y = misc_gb.position.y + 5
+        width = width = misc_gb.size.width - (2 * indent)
+        x = misc_gb.position.x + indent
         height = 6
 
         # check boxes inside another group box
@@ -407,8 +387,8 @@ class BuildForm:
         fruits = ("apple", "orange", "pear", "grape")
         width = 40
         height = 6
-        y = 90
-        x = 2
+        y = lbl_sales_since.position.y + 10
+        x = self._ctl_lbl_first_name.position.x
         self._ctl_lst_fruits = main_form.insert_control_list_box(
             x=x,
             y=y,
@@ -427,7 +407,7 @@ class BuildForm:
         )
 
         # a list filled using an SQL query on the form's data source
-        x = 60
+        x = border_left + 60
 
         self._ctl_db_lst_course_names = main_form.insert_db_control_list_box(
             x=x,
@@ -447,8 +427,9 @@ class BuildForm:
         self._set_tab_index(self._ctl_db_lst_course_names)
 
         # another list filled using a different SQL query on the form's data source
-        x = 120
         # ------------------------ set up database grid/table ----------------
+        # Align to right side of Misc group box
+        x = (misc_gb.position.x + misc_gb.size.width) - width
         self._ctl_db_lst_stud_names = main_form.insert_db_control_list_box(
             x=x,
             y=y,
@@ -467,7 +448,7 @@ class BuildForm:
         self._set_tab_index(self._ctl_db_lst_stud_names)
 
         # create a new form, GridForm,
-        grid_form = self._doc.draw_page.forms.add_form("GridForm")
+        grid_form = draw_page.forms.add_form("GridForm")
 
         # which uses an SQL query as its data source
         grid_form.bind_form_to_sql(
@@ -475,11 +456,12 @@ class BuildForm:
             cmd='SELECT "firstName", "lastName" FROM "Student"',
         )
 
+        x = self._ctl_lbl_first_name.position.x
         # create the grid/table component and set its columns
         self._ctl_grid_sales_tbl = grid_form.insert_control_grid(
             name="GridSalesTable",
-            x=2,
-            y=100,
+            x=x,
+            y=self._ctl_lst_fruits.position.y + 12,
             width=100,
             height=40,
         )
@@ -501,37 +483,21 @@ class BuildForm:
 
     # region Add Forms Shape
     def _add_form_shape(self) -> None:
-        dp = self._doc.draw_page
+        dp = self._doc.slides[0]
         # get the page margins from the document styles
-        margins = Margins.from_style(doc=self._doc.component)
-        margin_left = margins.prop_inner.prop_left or 0
-        margin_top = margins.prop_inner.prop_top or 0
-        txt_sz = self._doc.get_page_text_size()
+        # pos = Position(pos_x=0, pos_y=0)
+
         rect = dp.draw_rectangle(
-            x=margin_left, y=margin_top, width=UnitMM100(txt_sz.width), height=160
+            x=dp.border_left,
+            y=dp.border_top,
+            width=dp.width - (dp.border_left + dp.border_right),
+            height=160,
         )
-        rect_horz = UnitMM100(0)
-        rect_vert = UnitMM100(0)
-        anchor = Anchor(anchor=AnchorKind.AT_PARAGRAPH)  # anchor to paragraph
         # set the shape  to have a gradient fill
         gradient = DrawAreaGradient.from_preset(preset=PresetGradientKind.TEAL_BLUE)
         # set the shape to be positioned relative to the page
-        pos_style = Position(
-            vertical=Vertical(
-                position=VertOrient.FROM_TOP_OR_BOTTOM,
-                rel=RelVertOrient.ENTIRE_PAGE_OR_ROW,
-                amount=rect_vert,
-            ),
-            horizontal=Horizontal(
-                position=HoriOrient.FROM_LEFT_OR_INSIDE,
-                rel=RelHoriOrient.ENTIRE_PAGE,
-                amount=rect_horz,
-            ),
-        )
-        wrap_style = WrapSettings(mode=WrapTextMode.THROUGH)  # wrap text through shape
-        wrap_opt = WrapOptions(background=True)  # put shape in the background
         protect = Protect(size=True, position=True)  # protect size and position
-        rect.apply_styles(anchor, gradient, pos_style, wrap_style, wrap_opt, protect)
+        rect.apply_styles(gradient, protect)
 
     # endregion Add Forms Shape
 
@@ -585,7 +551,7 @@ class BuildForm:
         form_name = control_src.get_form_name()
         if not form_name:
             return
-        gform = self._doc.draw_page.forms[form_name]
+        gform = self._doc.slides[0].forms[form_name]
         rs = gform.qi(XResultSet)
         if not rs:
             return
