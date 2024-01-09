@@ -24,16 +24,18 @@ if TYPE_CHECKING:
     from ooodev.draw.shapes.rectangle_shape import RectangleShape
     from ooodev.calc import CalcSheet
     from ooodev.form.controls import (
-        FormCtlButton,
-        FormCtlGrid,
         FormCtlListBox,
         FormCtlTextField,
+        FormCtlNumericField,
     )
     from com.sun.star.document import DocumentEvent
     from com.sun.star.sheet import ActivationEvent
+    from com.sun.star.beans import PropertyChangeEvent
 
 
 class BuildForm:
+    """Build form class"""
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -65,6 +67,7 @@ class BuildForm:
             self._doc.current_controller.add_event_active_spreadsheet_changed(
                 self._fn_on_active_sheet_changed
             )
+            print("Done")
 
         except Exception:
             Lo.close_office()
@@ -80,6 +83,10 @@ class BuildForm:
         self._fn_on_document_event = self.on_document_event
         self._fn_on_active_sheet_changed = self.on_active_sheet_changed
         self._fn_text_changed = self.on_text_changed
+        self._fn_on_down = self.on_down
+        self._fn_on_up = self.on_up
+        self._fn_on_num_property_changed = self.on_num_property_changed
+        self._fn_on_txt_property_changed = self.on_txt_property_changed
 
     def _add_event_desc(self) -> None:
         # https://ask.libreoffice.org/t/solved-is-it-possible-to-insert-buttons-into-a-spreadsheet-from-a-macro/94771/7
@@ -131,6 +138,9 @@ class BuildForm:
         )
         self._ctl_lbl_first_name.bind_to_control(self._ctl_lbl_first_name)
         self._ctl_txt_first_name.add_event_text_changed(self._fn_text_changed)
+        self._ctl_txt_first_name.add_event_property_change(
+            "Text", self._fn_on_txt_property_changed
+        )
 
         x = self._ctl_lbl_first_name.position.x
         y = (
@@ -181,6 +191,11 @@ class BuildForm:
             min_value=1,
         )
         self._ctl_lbl_age.bind_to_control(self._ctl_num_age)
+        self._ctl_num_age.add_event_down(self._fn_on_down)
+        self._ctl_num_age.add_event_up(self._fn_on_up)
+        self._ctl_num_age.add_event_property_change(
+            "Value", self._fn_on_num_property_changed
+        )
 
         y += field_x_space + self._ctl_num_age.size.height
         x = self._ctl_lbl_first_name.position.x
@@ -226,6 +241,7 @@ class BuildForm:
         new_choice = Input.get_input(title="New Choice", msg="Enter a new choice")
         # if the user canceled, then return
         if not new_choice:
+            self._ctl_lst_choices.selected_items = (0,)
             return
         sheet = self._doc.sheets["Lookup"]
         # get the used range
@@ -235,7 +251,7 @@ class BuildForm:
         # get the next new row
         cell_obj = col_rng.cell_end + 1
         # set the new choice in the sheet
-        sheet[cell_obj].set_val(new_choice)
+        sheet[cell_obj].value = new_choice
 
     def _get_choices(self) -> list[str]:
         sheet = self._doc.sheets["Lookup"]
@@ -243,7 +259,7 @@ class BuildForm:
         print(f"Lookup range: {rng}")
         col_rng = rng.get_col(rng.col_start)
         data = sheet.get_array(range_obj=col_rng)
-        values = [i[0] for i in data if i[0]]
+        values = [str(i[0]) for i in data if i[0]]
         val_set = set(values)  # remove duplicates
         result = list(val_set)
         result.sort()
@@ -261,7 +277,7 @@ class BuildForm:
             x=100,
             y=10,
             width=100,
-            height=130,
+            height=80,
         )
         # set the shape  to have a gradient fill
         gradient = DrawAreaGradient.from_preset(preset=PresetGradientKind.TEAL_BLUE)
@@ -282,18 +298,6 @@ class BuildForm:
         # When the event is triggered it will call the on_lookup_modified method.
         # the on_lookup_modified method will reload the choices in the list box.
         sheet.add_event_modified(self._fn_on_lookup_modified)
-
-    def _show_recent_functions(self) -> None:
-        recent_ids = Calc.get_recent_functions()
-        if not recent_ids:
-            return
-
-        print(f"Recently used functions {len(recent_ids)}")
-        for i in recent_ids:
-            p = Calc.find_function(idx=i)
-            print(f'  {Props.get_value(name="Name", props=p)}')
-
-        print()
 
     # region Events
 
@@ -372,6 +376,44 @@ class BuildForm:
         self, src: Any, event: EventArgs, control_src: FormCtlTextField, *args, **kwargs
     ) -> None:
         # ev_arg = cast("TextEvent", event.event_data)
-        print(f"listen_to_text_field2: {control_src.name}: {control_src.text}")
+        print(f"Text changed: {control_src.name}: {control_src.text}")
+
+    def on_num_property_changed(
+        self,
+        src: Any,
+        event: EventArgs,
+        control_src: FormCtlNumericField,
+        *args,
+        **kwargs,
+    ) -> None:
+        event_args = cast("PropertyChangeEvent", event.event_data)
+        print(f"Property changed: {event_args.PropertyName}: {event_args.NewValue}")
+        print(f"Old Value: {event_args.OldValue}")
+        print(f"Value changed: {control_src.name}: {control_src.value}")
+
+    def on_txt_property_changed(
+        self,
+        src: Any,
+        event: EventArgs,
+        control_src: FormCtlTextField,
+        *args,
+        **kwargs,
+    ) -> None:
+        event_args = cast("PropertyChangeEvent", event.event_data)
+        print(f"Property changed: {event_args.PropertyName}: {event_args.NewValue}")
+        print(f"Old Value: {event_args.OldValue}")
+        print(f"Value changed: {control_src.name}: {control_src.text}")
+
+    def on_down(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
+        print("Down:", control_src.name)
+        print("Value:", control_src.value)
+
+    def on_up(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
+        print("Up:", control_src.name)
+        print("Value:", control_src.value)
 
     # endregion Events
