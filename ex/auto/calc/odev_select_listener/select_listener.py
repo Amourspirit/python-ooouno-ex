@@ -11,7 +11,6 @@ from ooodev.adapter.view.selection_change_events import SelectionChangeEvents
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
 

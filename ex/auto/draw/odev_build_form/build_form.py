@@ -9,16 +9,16 @@ import uno  # noqa: F401
 from com.sun.star.sdbc import XResultSet
 
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
+from ooodev.draw import Draw, DrawDoc, ZoomKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.form import BorderKind, TriStateKind
 from ooodev.form import ListSourceType
+from ooodev.format.draw.direct.position_size.position_size import Protect
 from ooodev.format.writer.direct.char.font import Font
 from ooodev.units import UnitMM
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
-from ooodev.draw import Draw, DrawDoc, ZoomKind
-from ooodev.format.draw.direct.position_size.position_size import Protect
 
 from ooodev.format.draw.direct.area import (
     Gradient as DrawAreaGradient,
