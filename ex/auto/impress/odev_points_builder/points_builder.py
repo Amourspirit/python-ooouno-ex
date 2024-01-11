@@ -42,6 +42,18 @@ class PointsBuilder:
             Lo.delay(2000)
 
             msg_result = MsgBox.msgbox(
+                "Do you wish to save document?",
+                "Save",
+                boxtype=MessageBoxType.QUERYBOX,
+                buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
+            )
+            if msg_result == MessageBoxResultsEnum.YES:
+                tmp = Path.cwd() / "tmp"
+                tmp.mkdir(exist_ok=True)
+                doc.save_doc(tmp / "points.odp")
+                print(f"Saved to {tmp / 'points.odp'}")
+
+            msg_result = MsgBox.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,
