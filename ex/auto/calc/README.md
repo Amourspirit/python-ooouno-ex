@@ -5,6 +5,7 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_add_range_data](./odev_add_range_data/) - Example that opens up a new Calc document and inserts array of data and a formula
 - [odev_cell_texts](./odev_cell_texts/) - Example of adding paragraphs, hyperlink, and style to spreadsheet cells.
 - [odev_data_sort](./odev_data_sort/) - Example sorting spreadsheet data.
+- [odev_export_calc_image](./odev_export_calc_image/) - Example of exporting spreadsheet range as an image.
 - [odev_extract_nums](./odev_extract_nums/) - Example of extracting data from a spreadsheet.
 - [odev_filler](./odev_filler/) - Example of using a fill series in a spreadsheet.
 - [odev_functions](./odev_functions/) - Examples of calc functions.
