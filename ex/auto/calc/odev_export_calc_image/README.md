@@ -17,7 +17,7 @@ rng = sheet.get_range(range_name="A1:N4")
 rng.export_as_image("my_image.png")
 ```
 
-if needed you can modify the image filters via the events.
+If needed you can modify the image filters via the events.
 
 ```python
 from typing import TYPE_CHECKING
