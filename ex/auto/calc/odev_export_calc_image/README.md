@@ -4,6 +4,8 @@
 <img src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/5cdf724c-1ba4-42ac-a14a-4a2de2d1318d">
 </p>
 
+## Overview
+
 Demonstrates saving a Calc sheet range as an image.
 
 This demo uses This demo uses [OOO Development Tools] (OooDev).
@@ -12,26 +14,60 @@ It only takes a few lines of code to export a Calc sheet range as an image.
 
 ```python
 rng = sheet.get_range(range_name="A1:N4")
-rng.export_as_image(file)
+rng.export_as_image("my_image.png")
 ```
 
 if needed you can modify the image filters via the events.
 
 ```python
-from ooodev.events.args.cancel_event_args_generic import CancelEventArgsGeneric
-from ooodev.events.event_data.img_export_t import ImgExportT
-from ooodev.calc import CalcNamedEvent
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    # Any imports in this block are only needed for type checking at design time and
+    # are not available at runtime.
+    from ooodev.events.args.cancel_event_args_export import CancelEventArgsExport
+    from ooodev.events.args.event_args_export import EventArgsExport
+    from ooodev.calc.filter.export_jpg import ExportJpgT
+    from ooodev.calc.filter.export_png import ExportPngT
 
-def on_exporting(source: Any, args: CancelEventArgsGeneric[ImgExportT]) -> None:
-    # set the image compression to 9
-    args.event_data["compression"] = 9
+
+# region event handlers
+def on_exporting_png(source: Any, args: CancelEventArgsExport[ExportPngT]) -> None:
+    args.event_data["translucent"] = False
+    args.event_data["compression"] = 8  # 0-9
+
+def on_exported_png(source: Any, args: EventArgsExport[ExportPngT]) -> None:
+    print(f'Png URL: {args.get("url")}')
+
+def on_exporting_jpg(source: Any, args: CancelEventArgsExport[ExportJpgT]) -> None:
+    args.event_data["quality"] = 80  # 0-100
+    # when color_mode False image is exported as grayscale.
+    args.event_data["color_mode"] = False
+
+def on_exported_jpg(source: Any, args: EventArgsExport[ExportJpgT]) -> None:
+    print(f'Jpg URL: {args.get("url")}')
+# endregion event handlers
+
+
 
 rng = sheet.get_range(range_name="A1:N4")
-rng.subscribe_event(CalcNamedEvent.RANGE_EXPORTING_IMAGE, on_exporting)
+# Register event handlers so we can have a little more fine control over the export.
+# It is not required to register event handlers to export an image.
+rng.subscribe_event(CalcNamedEvent.EXPORTING_RANGE_JPG, on_exporting_jpg)
+rng.subscribe_event(CalcNamedEvent.EXPORTED_RANGE_JPG, on_exported_jpg)
+rng.subscribe_event(CalcNamedEvent.EXPORTING_RANGE_PNG, on_exporting_png)
+rng.subscribe_event(CalcNamedEvent.EXPORTED_RANGE_PNG, on_exported_png)
 
-# on_exporting will be called when the image is exported
-rng.export_as_image(file)
+# on_exporting_png() will be called when the image is exported
+rng.export_as_image(fnm="my_image.png", resolution=200)
+
+# on_exporting_jpg() will be called when the image is exported as a jpg file.
 ```
+
+### See Also
+
+- [export_as_image()](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/calc/calc_cell_range.html#ooodev.calc.CalcCellRange.export_as_image)
+- [export_png()](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/calc/calc_cell_range.html#ooodev.calc.CalcCellRange.export_png)
+- [export_jpg()](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/calc/calc_cell_range.html#ooodev.calc.CalcCellRange.export_jpg)
 
 ## Automate
 
