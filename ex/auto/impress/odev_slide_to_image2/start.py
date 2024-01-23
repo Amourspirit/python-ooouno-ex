@@ -29,7 +29,8 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         help="Extension of the converted file. Default: %(default)s",
         action="store",
         dest="output_format",
-        default="jpeg",
+        default="jpg",
+        choices=["jpg", "png"],
     )
     parser.add_argument(
         "-d",
@@ -63,7 +64,7 @@ def _main() -> int:
         sys.argv.append("--idx")
         sys.argv.append("0")
         sys.argv.append("--out_fmt")
-        sys.argv.append("png")
+        sys.argv.append("jpg")
         sys.argv.append("--output_dir")
         sys.argv.append(str(tmp))
         sys.argv.append("--resolution")

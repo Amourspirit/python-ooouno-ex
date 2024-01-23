@@ -1,15 +1,14 @@
-# Impress Slide to Image
+# Impress Slide to Image 2
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/4193389/198423388-f8845bec-781a-42ef-b8cf-20bb13b9cb43.png">
 </p>
 
-Saves a given page of a slide presentation (e.g. ppt, odp) as an image file (e.g. "gif", "png", "jpeg", "wmf", "bmp", "svg")
+Saves a given page of a slide presentation (e.g. ppt, odp) as an image file (e.g. "png", "jpg")
 
-Custom Filter can be created to have more control over the output image. This example uses filters for `jpeg` and `png`.
-
-Like [odev_slide_to_image2](../odev_slide_to_image2/) example this example also exports a slide to an image.
-The main difference is filter can be passed in directly to the `export` method. However there are not events to subscribe to.
+Like [odev_slide_to_image](../odev_slide_to_image/) example this example also exports a slide to an image.
+However, this example uses the built in methods of ``DrawPage`` to export the slide to an image.
+The advantage of using this method is that it raise events that can be used to modify and track the progress of the export.
 
 This demo uses [OOO Development Tools]
 
@@ -34,7 +33,7 @@ If `--output_dir` arg is omitted then a temporary dir is created in the systems 
 From current example folder.
 
 ```sh
-python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0 -r 200
+python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0
 ```
 
 ### Cross Platform
@@ -42,7 +41,7 @@ python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0 -r 200
 From current example folder.
 
 ```sh
-python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0 -r 150
+python -m start --file "./data/algs.ppt" --out_fmt "jpeg" --idx 0
 ```
 
 ### Linux/Mac
