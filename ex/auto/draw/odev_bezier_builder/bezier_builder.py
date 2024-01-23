@@ -30,9 +30,8 @@ class BezierBuilder:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            # create Impress page or Draw slide
             doc = DrawDoc(Draw.create_draw_doc(loader))
-            slide = doc.get_slide(idx=0)
+            slide = doc.slides[0]
 
             doc.set_visible()
 
