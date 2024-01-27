@@ -9,7 +9,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.calc import Calc, CalcDoc, ZoomKind, CalcNamedEvent
+from ooodev.calc import CalcDoc, ZoomKind, CalcNamedEvent
 from ooodev.utils.lo import Lo
 from pathlib import Path
 
@@ -52,7 +52,7 @@ def export_image(fnm: Path, resolution: int = 96) -> None:
     # endregion event handlers
 
     try:
-        doc = CalcDoc(Calc.open_doc(fnm=data_file, loader=loader))
+        doc = CalcDoc.open_doc(fnm=data_file, loader=loader)
 
         doc.set_visible()
         # delay before dispatching zoom

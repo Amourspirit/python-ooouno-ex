@@ -22,7 +22,7 @@ class MasterUse:
     def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
         try:
-            doc = ImpressDoc(Draw.create_impress_doc(loader))
+            doc = ImpressDoc.create_doc(loader)
 
             # report on the shapes on the default master page
             master_page = doc.get_master_page(idx=0)
@@ -52,7 +52,7 @@ class MasterUse:
 
             # set slide 1 to use the master page's slide number
             # but its own footer text
-            slide1 = doc.get_slide(idx=0)
+            slide1 = doc.slides[0]
             slide1.title_slide(title="Slide 1")
 
             # IsPageNumberVisible = True: use the master page's slide number
@@ -79,7 +79,7 @@ class MasterUse:
 
             # link master page 2 to third slide
 
-            doc.get_slide(idx=2).set_master_page(master2.component)
+            doc.slides[2].set_master_page(master2.component)
 
             # put ellipse and text on master page 2
             ellipse = master2.draw_ellipse(

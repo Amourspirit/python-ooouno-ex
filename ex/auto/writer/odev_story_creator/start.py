@@ -15,7 +15,7 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.format.writer.direct.char.font import Font
 from ooodev.format.writer.direct.para.indent_space import Spacing, LineSpacing, ModeKind
-from ooodev.write import Write, WriteDoc, WriteTextCursor, FamilyNamesKind
+from ooodev.write import WriteDoc, WriteTextCursor, FamilyNamesKind
 from ooodev.units import UnitMM
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.info import Info
@@ -131,7 +131,7 @@ def main() -> int:
     fnm = Path(args.file_path)
 
     try:
-        doc = WriteDoc(Write.create_doc(loader=loader))
+        doc = WriteDoc.create_doc(loader=loader)
         if visible:
             doc.set_visible(visible=visible)
 

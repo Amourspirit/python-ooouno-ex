@@ -7,14 +7,9 @@ from typing import cast
 from pathlib import Path
 
 import uno
-from com.sun.star.text import XText
-from com.sun.star.text import XTextContent
-from com.sun.star.text import XTextRange
 
-from ooodev.write import Write, WriteDoc
-from ooodev.utils.info import Info
+from ooodev.write import WriteDoc
 from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 
 
@@ -90,7 +85,7 @@ def main() -> int:
         fnm = cast(str, args.file_path)
 
         try:
-            doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+            doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
         except Exception as e:
             print(f"Could not open '{fnm}'")
             print(f"  {e}")

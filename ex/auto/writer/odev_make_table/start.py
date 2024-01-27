@@ -10,8 +10,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.utils.lo import Lo
-from ooodev.office.write import Write
-from ooodev.utils.gui import GUI
+from ooodev.write import WriteDoc
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.format.writer.style.para import Para as ParaStyle
 
@@ -43,22 +42,20 @@ def main() -> int:
     loader = Lo.load_office(Lo.ConnectSocket())
 
     try:
-        doc = Write.create_doc(loader=loader)
-        GUI.set_visible(visible=True, doc=doc)
+        doc = WriteDoc.create_doc(loader=loader)
+        doc.set_visible()
 
-        cursor = Write.get_cursor(doc)
-
-        Write.append_para(cursor, "Table of Bond Movies", styles=[ParaStyle().h1])
-
-        Write.append_para(cursor, 'The following table comes form "bondMovies.txt"\n')
+        cursor = doc.get_cursor()
+        cursor.append_para("Table of Bond Movies", styles=[ParaStyle().h1])
+        cursor.append_para('The following table comes form "bondMovies.txt"\n')
 
         # Lock display updating for faster writing of table into document.
         with Lo.ControllerLock():
-            Write.add_table(cursor=cursor, table_data=tbl_data)
-            Write.end_paragraph(cursor)
+            cursor.add_table(table_data=tbl_data)
+            cursor.end_paragraph()
 
         Lo.delay(delay)
-        Write.append(cursor, f"Timestamp: {DateUtil.time_stamp()}")
+        cursor.append(f"Timestamp: {DateUtil.time_stamp()}")
         Lo.delay(delay)
         msg_result = MsgBox.msgbox(
             "Do you wish to save document?",
@@ -69,7 +66,7 @@ def main() -> int:
         if msg_result == MessageBoxResultsEnum.YES:
             tmp = Path.cwd() / "tmp"
             tmp.mkdir(exist_ok=True)
-            Lo.save_doc(doc, tmp / "table.odt")
+            doc.save_doc(tmp / "table.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",
@@ -78,7 +75,7 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            Lo.close_doc(doc=doc, deliver_ownership=True)
+            doc.close_doc()
             Lo.close_office()
         else:
             print("Keeping document open")

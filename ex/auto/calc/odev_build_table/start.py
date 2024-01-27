@@ -9,7 +9,6 @@ import argparse
 import uno
 from pathlib import Path
 
-from ooodev.utils.file_io import FileIO
 from build_table import BuildTable
 
 
@@ -62,9 +61,15 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    im_fnm = Path(__file__).parent / "image"/ "skinner.png"
+    im_fnm = Path(__file__).parent / "image" / "skinner.png"
 
-    bt = BuildTable(im_fnm=im_fnm, out_fnm=args.out_file, add_pic=args.add_pic, add_chart=args.add_chart, add_style=args.add_style)
+    bt = BuildTable(
+        im_fnm=im_fnm,
+        out_fnm=args.out_file,
+        add_pic=args.add_pic,
+        add_chart=args.add_chart,
+        add_style=args.add_style,
+    )
     bt.main()
     return 0
 

@@ -28,7 +28,7 @@ class CustomShow:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
+            doc = ImpressDoc.open_doc(fnm=self._fnm, loader=loader)
             # slideshow start() crashes if the doc is not visible
             doc.set_visible()
 

@@ -1,13 +1,13 @@
 from __future__ import annotations
 from pathlib import Path
 from ooodev.utils.lo import Lo
-from ooodev.write import Write, WriteDoc, ZoomKind
+from ooodev.write import WriteDoc, ZoomKind
 
 
 def main() -> int:
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with Lo.Loader(Lo.ConnectSocket()) as loader:
-        doc = WriteDoc(Write.create_doc(loader))
+        doc = WriteDoc.create_doc(loader)
 
         doc.set_visible()
         Lo.delay(300)  # small delay before dispatching zoom command

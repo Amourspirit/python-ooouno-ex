@@ -6,7 +6,7 @@ from com.sun.star.text import XTextContent
 
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 
 from ooodev.dialog.msgbox import (
     MsgBox,
@@ -25,7 +25,7 @@ class TextColumns:
     def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            doc = WriteDoc(Write.create_doc(loader=loader))
+            doc = WriteDoc.create_doc(loader=loader)
             doc.set_visible()
 
             cursor = doc.get_cursor()

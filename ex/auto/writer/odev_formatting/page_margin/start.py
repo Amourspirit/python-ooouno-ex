@@ -12,7 +12,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.format.writer.modify.page.page import Margins
-from ooodev.write import Write, WriteDoc, ZoomKind
+from ooodev.write import WriteDoc, ZoomKind
 from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 
@@ -60,7 +60,7 @@ def main() -> int:
     _ = Lo.load_office(Lo.ConnectPipe(), opt=Lo.Options(verbose=args.verbose))
 
     try:
-        doc = WriteDoc(Write.open_doc(fnm=fnm))
+        doc = WriteDoc.open_doc(fnm=fnm)
 
         # show the document
         doc.set_visible()

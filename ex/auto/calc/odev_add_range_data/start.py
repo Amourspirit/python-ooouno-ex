@@ -55,8 +55,8 @@ def do_cell_range(sheet: CalcSheet) -> None:
 def main() -> int:
     _ = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = CalcDoc(Calc.create_doc())
-        sheet = doc.get_sheet(idx=0)
+        doc = CalcDoc.create_doc()
+        sheet = doc.sheets[0]
         doc.set_visible()
         Lo.delay(300)
 

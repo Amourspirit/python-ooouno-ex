@@ -12,7 +12,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.utils.lo import Lo
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -106,7 +106,7 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
         doc.set_visible(visible)
         if visible:
             Lo.delay(300)  # delay for document to load

@@ -32,7 +32,7 @@ class Filler:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.create_doc(loader))
+            doc = CalcDoc.create_doc(loader)
 
             doc.set_visible()
 
@@ -61,24 +61,22 @@ class Filler:
 
     def _fill_series(self, sheet: CalcSheet) -> None:
         # set first two values of three rows
-        sheet.set_val(cell_name="B7", value=2)
-        sheet.set_val(cell_name="A7", value=1)  # 1. ascending
+        sheet["B7"].value = 2
+        sheet["A7"].value = 1  # 1. ascending
 
-        sheet.get_cell(cell_name="A8").set_date(
-            day=28, month=2, year=2015
-        )  # 2. dates, descending
-        sheet.get_cell(cell_name="B8").set_date(day=28, month=1, year=2015)
+        sheet["A8"].set_date(day=28, month=2, year=2015)  # 2. dates, descending
+        sheet["B8"].set_date(day=28, month=1, year=2015)
 
-        sheet.set_val(cell_name="A9", value=6)  # 3. descending
-        sheet.set_val(cell_name="B9", value=4)
+        sheet["A9"].value = 6  # 3. descending
+        sheet["B9"].value = 4
 
         # Autofill, using first 2 cells to right to determine progressions
         series = sheet.get_range(range_name="A7:G9").get_cell_series()
         series.fillAuto(FillDirection.TO_RIGHT, 2)
 
         # ----------------------------------------
-        sheet.set_val(cell_name="A2", value=1)
-        sheet.set_val(cell_name="A3", value=4)
+        sheet["A2"].value = 1
+        sheet["A3"].value = 4
 
         # Fill 2 rows; 2nd row is not filled completely since
         # the end value is reached
@@ -87,9 +85,7 @@ class Filler:
         #   ignore date mode; step == 2; end at 9
 
         # ----------------------------------------
-        sheet.get_cell(cell_name="A4").set_date(
-            day=20, month=11, year=2015
-        )  # day, month, year
+        sheet["A4"].set_date(day=20, month=11, year=2015)  # day, month, year
         # fill by adding one month to date; day is unchanged
         series = sheet.get_range(range_name="A4:E4").get_cell_series()
         series.fillSeries(
@@ -102,7 +98,7 @@ class Filler:
         # series.fillAuto(FillDirection.TO_RIGHT, 1)  # increments day not month
 
         # ----------------------------------------
-        sheet.set_val(cell_name="E5", value="Text 10")  # start in the middle of a row
+        sheet["E5"].value = "Text 10"  # start in the middle of a row
 
         # Fill from right to left with text+value in steps of +10
         series = sheet.get_range(range_name="A5:E5").get_cell_series()
@@ -111,7 +107,7 @@ class Filler:
         )
 
         # ----------------------------------------
-        sheet.set_val(cell_name="A6", value="Jan")
+        sheet["A6"].value = "Jan"
 
         # Fill with values generated automatically from first entry
         series = sheet.get_range(range_name="A6:E6").get_cell_series()
@@ -121,7 +117,7 @@ class Filler:
         # series.fillAuto(FillDirection.TO_RIGHT, 1)  # does the same
 
         # ----------------------------------------
-        sheet.set_val(cell_name="G6", value=10)
+        sheet["G6"].value = 10
 
         # Fill from  bottom to top with a geometric series (*2)
         series = sheet.get_range(range_name="G2:G6").get_cell_series()
