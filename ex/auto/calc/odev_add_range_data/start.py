@@ -9,8 +9,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.utils.lo import Lo
-from ooodev.utils.gui import GUI
-from ooodev.calc import Calc, CalcDoc, CalcSheet, ZoomKind
+from ooodev.calc import CalcDoc, CalcSheet, ZoomKind
 from ooodev.format.calc.direct.cell.borders import Borders, Side
 from ooodev.utils.color import CommonColor
 
@@ -55,11 +54,11 @@ def do_cell_range(sheet: CalcSheet) -> None:
 def main() -> int:
     _ = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = CalcDoc.create_doc()
+        doc = CalcDoc.create_doc(visible=True)
         sheet = doc.sheets[0]
-        doc.set_visible()
+        # doc.set_visible()
+        # wait for document to be ready
         Lo.delay(300)
-
         doc.zoom(ZoomKind.ZOOM_100_PERCENT)
 
         do_cell_range(sheet=sheet)

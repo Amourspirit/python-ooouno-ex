@@ -95,8 +95,7 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
-        doc.set_visible()
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader, visible=True)
 
         show_paragraphs(doc)
         print(f"Word count: {count_words(doc)}")

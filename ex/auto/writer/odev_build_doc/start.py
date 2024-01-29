@@ -21,7 +21,6 @@ from ooodev.format.writer.direct.para.alignment import Alignment
 from ooodev.format.writer.direct.para.area import Color as ParaBgColor
 from ooodev.format.writer.direct.para.outline_list import ListStyle, StyleListKind
 from ooodev.format.writer.style.para import Para as ParaStyle
-from ooodev.write import Write
 from ooodev.write import WriteDoc
 from ooodev.theme import ThemeGeneral
 from ooodev.units import UnitMM
@@ -40,8 +39,7 @@ def main() -> int:
 
     loader = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = WriteDoc.create_doc(loader=loader)
-        doc.set_visible()
+        doc = WriteDoc.create_doc(loader=loader, visible=True)
 
         cursor = doc.get_cursor()
 
@@ -256,7 +254,9 @@ def main() -> int:
             buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
         )
         if msg_result == MessageBoxResultsEnum.YES:
-            doc.save_doc("build.odt")
+            pth = Path.cwd() / "tmp"
+            pth.mkdir(parents=True, exist_ok=True)
+            doc.save_doc(pth / "build.odt")
 
         msg_result = MsgBox.msgbox(
             "Do you wish to close document?",

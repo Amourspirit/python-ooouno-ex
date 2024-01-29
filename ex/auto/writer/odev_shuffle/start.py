@@ -106,8 +106,8 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
-        doc.set_visible(visible)
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader, visible=visible)
+
         if visible:
             Lo.delay(300)  # delay for document to load
             doc.zoom()

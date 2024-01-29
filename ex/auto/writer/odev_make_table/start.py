@@ -42,8 +42,7 @@ def main() -> int:
     loader = Lo.load_office(Lo.ConnectSocket())
 
     try:
-        doc = WriteDoc.create_doc(loader=loader)
-        doc.set_visible()
+        doc = WriteDoc.create_doc(loader=loader, visible=True)
 
         cursor = doc.get_cursor()
         cursor.append_para("Table of Bond Movies", styles=[ParaStyle().h1])

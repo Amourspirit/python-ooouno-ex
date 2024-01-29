@@ -68,9 +68,8 @@ class BuildForm:
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            self._doc = WriteDoc(Write.create_doc(loader))
+            self._doc = WriteDoc.create_doc(loader=loader, visible=True)
 
-            self._doc.set_visible()
             # Delay to let the doc become visible before zooming.
             Lo.delay(500)
             self._doc.zoom(ZoomKind.ZOOM_100_PERCENT)

@@ -88,13 +88,12 @@ class ReplaceAll:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.create_doc(loader))
+            doc = CalcDoc.create_doc(loader=loader, visible=True)
 
-            doc.set_visible()
             Lo.delay(300)
             doc.zoom(ZoomKind.ZOOM_150_PERCENT)
 
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
 
             def cb(row: int, col: int, prev) -> str:
                 # call back function for make_2d_array, sets the value for the cell

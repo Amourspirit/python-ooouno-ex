@@ -21,7 +21,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.utils.lo import Lo
-from ooodev.draw import Draw, DrawDoc, DrawPage
+from ooodev.draw import DrawDoc, DrawPage
 from ooodev.utils.color import CommonColor
 from ooodev.utils.gui import GUI
 
@@ -42,7 +42,7 @@ class DrawHilbert:
     def draw(self) -> None:
         loader = Lo.load_office(Lo.ConnectPipe())
         try:
-            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc = DrawDoc.create_doc(loader)
             rect = GUI.get_screen_size()
             GUI.set_pos_size(
                 doc=doc.component,
@@ -56,7 +56,7 @@ class DrawHilbert:
 
             doc.zoom_value(value=75)
 
-            self._slide = doc.get_slide(idx=0)
+            self._slide = doc.slides[0]
             self._start_hilbert(self._level_str, self._slide.get_size_mm())
 
             Lo.delay(2000)

@@ -25,8 +25,7 @@ class TextColumns:
     def main(self) -> None:
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            doc = WriteDoc.create_doc(loader=loader)
-            doc.set_visible()
+            doc = WriteDoc.create_doc(loader=loader, visible=True)
 
             cursor = doc.get_cursor()
             # insert a new paragraph

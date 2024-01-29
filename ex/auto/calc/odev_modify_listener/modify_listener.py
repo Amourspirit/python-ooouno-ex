@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any
 
 import uno
 import unohelper
@@ -32,10 +32,9 @@ class ModifyListener(unohelper.Base, XModifyListener):
             self._out_fnm = ""
         self.closed = False
         loader = Lo.load_office(Lo.ConnectPipe())
-        self._doc = CalcDoc(Calc.create_doc(loader))
+        self._doc = CalcDoc.create_doc(loader, visible=True)
 
-        self._doc.set_visible()
-        self._sheet = self._doc.get_sheet(0)
+        self._sheet = self._doc.sheets[0]
 
         # insert some data
         self._sheet.set_col(

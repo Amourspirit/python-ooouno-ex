@@ -28,9 +28,7 @@ class ExtractNums:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader)
-
-            doc.set_visible()
+            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
             sheet = doc.get_active_sheet()
 

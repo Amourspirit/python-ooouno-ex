@@ -57,13 +57,12 @@ class BuildTable:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc.create_doc(loader)
+            doc = CalcDoc.create_doc(loader=loader, visible=True)
 
-            doc.set_visible()
             Lo.delay(300)
             doc.zoom(ZoomKind.ZOOM_100_PERCENT)
 
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
 
             self._convert_addresses(sheet)
 

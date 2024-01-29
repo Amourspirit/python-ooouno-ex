@@ -16,33 +16,40 @@ class Solver1:
         with Lo.Loader(
             connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)
         ) as loader:
-            doc = CalcDoc(Calc.create_doc(loader))
-            sheet = doc.get_sheet(0)
+            doc = CalcDoc.create_doc(loader)
+            sheet = doc.sheets[0]
 
             # specify the variable cells
-            x_pos = sheet.get_cell_address(cell_name="B1")  # X
-            y_pos = sheet.get_cell_address(cell_name="B2")  # Y
-            z_pos = sheet.get_cell_address(cell_name="B3")  # z
+            cell = sheet["B1"]
+            x_pos = cell.cell_obj.get_cell_address()
+            cell = cell.get_cell_down()  # B2
+            y_pos = cell.cell_obj.get_cell_address()
+            cell = cell.get_cell_down()  # B3
+            z_pos = cell.cell_obj.get_cell_address()
             vars = (x_pos, y_pos, z_pos)
 
             # set up equation formula without inequality
-            sheet.set_val(value="=B1+B2-B3", cell_name="B4")
-            objective = sheet.get_cell_address(cell_name="B4")
+            cell = cell.get_cell_down()  # B4
+            cell.value = "=B1+B2-B3"
+            objective = cell.cell_obj.get_cell_address()
 
             # create three constraints (using the 3 variables)
 
-            sc1 = sheet.make_constraint(num=6, op="<=", cell_name="B1")
+            cell = sheet["B1"]
+            sc1 = cell.make_constraint(num=6, op="<=")
             #   x <= 6
-            sc2 = sheet.make_constraint(num=8, op="<=", cell_name="B2")
+            cell = cell.get_cell_down()  # B2
+            sc2 = cell.make_constraint(num=8, op="<=")
             #   y <= 8
-            sc3 = sheet.make_constraint(num=4, op=">=", cell_name="B3")
+            cell = cell.get_cell_down()  # B3
+            sc3 = cell.make_constraint(num=4, op=">=")
             #   z >= 4
 
             constraints = (sc1, sc2, sc3)
 
             # initialize the nonlinear solver (SCO)
             try:
-                solver = Lo.create_instance_mcf(
+                solver = doc.lo_inst.create_instance_mcf(
                     XSolver,
                     "com.sun.star.comp.Calc.NLPSolver.SCOSolverImpl",
                     raise_err=True,

@@ -12,7 +12,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.draw import Draw, DrawDoc, DrawPage
+from ooodev.draw import DrawDoc, DrawPage
 from ooodev.draw.shapes import ClosedBezierShape
 from ooodev.utils.lo import Lo
 from ooodev.format.draw.direct.area import Gradient, PresetGradientKind
@@ -30,10 +30,8 @@ class BezierBuilder:
 
         try:
             # create Draw slide
-            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc = DrawDoc.create_doc(loader=loader, visible=True)
             slide = doc.slides[0]
-
-            doc.set_visible()
 
             _ = self._create_bezier(slide=slide)
 

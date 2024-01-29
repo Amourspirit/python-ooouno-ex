@@ -18,11 +18,9 @@ def main() -> int:
 
     loader = Lo.load_office(Lo.ConnectPipe())
 
-    doc = WriteDoc.create_doc(loader=loader)
+    doc = WriteDoc.create_doc(loader=loader, visible=True)
 
     try:
-        doc.set_visible()
-
         cursor = doc.get_cursor()
         cursor.append_para("Math Questions")
         cursor.style_prev_paragraph("Heading 1")

@@ -35,9 +35,7 @@ class PivotTable1:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.open_doc(fnm=self._fnm, loader=loader))
-
-            doc.set_visible()
+            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
             sheet = doc.get_sheet()
             dp_sheet = doc.insert_sheet(name="Pivot Table", idx=1)
@@ -85,15 +83,15 @@ class PivotTable1:
         # properties defined in DataPilotField
 
         # set column field
-        props = Lo.find_container_props(con=fields, nm="Category")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Category")
         Props.set(props, Orientation=DataPilotFieldOrientation.COLUMN)
 
         # set row field
-        props = Lo.find_container_props(con=fields, nm="Period")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Period")
         Props.set(props, Orientation=DataPilotFieldOrientation.ROW)
 
         # set data field, calculating the sum
-        props = Lo.find_container_props(con=fields, nm="Revenue")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Revenue")
         Props.set(props, Orientation=DataPilotFieldOrientation.DATA)
         Props.set(props, Function=GeneralFunction.SUM)
 

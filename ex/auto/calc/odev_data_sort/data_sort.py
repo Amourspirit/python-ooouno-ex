@@ -31,9 +31,7 @@ class DataSort:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc.create_doc(loader)
-
-            doc.set_visible()
+            doc = CalcDoc.create_doc(loader, visible=True)
 
             sheet = doc.sheets[0]
 

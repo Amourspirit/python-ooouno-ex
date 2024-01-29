@@ -131,9 +131,7 @@ def main() -> int:
     fnm = Path(args.file_path)
 
     try:
-        doc = WriteDoc.create_doc(loader=loader)
-        if visible:
-            doc.set_visible(visible=visible)
+        doc = WriteDoc.create_doc(loader=loader, visible=visible)
 
         if not create_para_style(doc, "adParagraph"):
             raise RuntimeError("Could not create new paragraph style")

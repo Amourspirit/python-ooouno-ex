@@ -128,9 +128,8 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader, visible=True)
 
-        doc.set_visible()
         Lo.delay(300)  # small delay before dispatching zoom command
         doc.zoom(ZoomKind.ENTIRE_PAGE)
 

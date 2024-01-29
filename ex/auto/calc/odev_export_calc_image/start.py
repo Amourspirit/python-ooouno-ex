@@ -52,9 +52,8 @@ def export_image(fnm: Path, resolution: int = 96) -> None:
     # endregion event handlers
 
     try:
-        doc = CalcDoc.open_doc(fnm=data_file, loader=loader)
+        doc = CalcDoc.open_readonly_doc(fnm=data_file, loader=loader, visible=True)
 
-        doc.set_visible()
         # delay before dispatching zoom
         Lo.delay(500)
         doc.zoom(ZoomKind.ZOOM_100_PERCENT)

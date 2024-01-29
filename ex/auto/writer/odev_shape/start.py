@@ -52,8 +52,7 @@ def main() -> int:
     )
     loader = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = WriteDoc.create_doc(loader)
-        doc.set_visible()
+        doc = WriteDoc.create_doc(loader=loader, visible=True)
 
         # delay so document is visible before dispatching zoom
         Lo.delay(500)

@@ -39,9 +39,7 @@ class GarlicSecrets:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader)
-
-            doc.set_visible()
+            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
             sheet = doc.sheets[0]
             sheet.goto_cell(cell_name="A1")

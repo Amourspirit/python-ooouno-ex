@@ -27,7 +27,7 @@ class AnimationDemo:
         with Lo.Loader(Lo.ConnectPipe()) as loader:
             doc = ImpressDoc.create_doc(loader)
             try:
-                slide = doc.get_slide(idx=0)  # access first page
+                slide = doc.slides[0]  # access first page
                 slide.blank_slide()
 
                 # add an ellipse to the center of the slide

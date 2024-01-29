@@ -37,10 +37,8 @@ class AutoShow:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = ImpressDoc.open_doc(self._fnm, loader)
-
             # slideshow start() crashes if the doc is not visible
-            doc.set_visible()
+            doc = ImpressDoc.open_doc(self._fnm, loader=loader, visible=True)
 
             # set up a fast automatic change between all the slides
             for slide in doc.slides:

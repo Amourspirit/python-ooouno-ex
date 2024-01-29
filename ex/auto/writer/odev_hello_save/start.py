@@ -7,9 +7,8 @@ from ooodev.write import WriteDoc, ZoomKind
 def main() -> int:
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with Lo.Loader(Lo.ConnectSocket()) as loader:
-        doc = WriteDoc.create_doc(loader)
+        doc = WriteDoc.create_doc(loader=loader, visible=True)
 
-        doc.set_visible()
         Lo.delay(300)  # small delay before dispatching zoom command
         doc.zoom(ZoomKind.PAGE_WIDTH)
 

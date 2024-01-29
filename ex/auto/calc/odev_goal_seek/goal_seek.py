@@ -12,7 +12,7 @@ class GoalSeek:
     def main(self) -> None:
         with Lo.Loader(connector=Lo.ConnectPipe()) as loader:
             doc = CalcDoc.create_doc(loader)
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
             gs = doc.qi(XGoalSeek, True)
 
             # -------------------------------------------------

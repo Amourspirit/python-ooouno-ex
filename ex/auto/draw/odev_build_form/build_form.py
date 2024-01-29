@@ -17,7 +17,7 @@ from ooodev.units import UnitMM
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
-from ooodev.draw import Draw, DrawDoc, ZoomKind
+from ooodev.draw import DrawDoc, ZoomKind
 from ooodev.format.draw.direct.position_size.position_size import Protect
 
 from ooodev.format.draw.direct.area import (
@@ -51,9 +51,8 @@ class BuildForm:
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            self._doc = DrawDoc(Draw.create_draw_doc(loader))
+            self._doc = DrawDoc.create_doc(loader=loader, visible=True)
 
-            self._doc.set_visible()
             # Delay to let the doc become visible before zooming.
             Lo.delay(500)
             self._doc.zoom(ZoomKind.ZOOM_100_PERCENT)

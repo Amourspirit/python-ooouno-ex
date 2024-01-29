@@ -61,12 +61,11 @@ class DrawGradient:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = DrawDoc(Draw.create_draw_doc(loader))
-            doc.set_visible()
+            doc = DrawDoc.create_doc(loader=loader, visible=True)
             Lo.delay(1_000)  # need delay or zoom may not occur
             doc.zoom(ZoomKind.ENTIRE_PAGE)
 
-            curr_slide = doc.get_slide(idx=0)
+            curr_slide = doc.slides[0]
 
             if self._gradient_kind == GradientKind.FILL:
                 self._gradient_fill(curr_slide)

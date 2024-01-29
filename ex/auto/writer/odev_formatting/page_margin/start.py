@@ -60,10 +60,9 @@ def main() -> int:
     _ = Lo.load_office(Lo.ConnectPipe(), opt=Lo.Options(verbose=args.verbose))
 
     try:
-        doc = WriteDoc.open_doc(fnm=fnm)
+        doc = WriteDoc.open_doc(fnm=fnm, visible=True)
 
         # show the document
-        doc.set_visible()
         Lo.delay(300)  # add delay to give dispatch a little time.
         doc.zoom(ZoomKind.ENTIRE_PAGE)
         Lo.delay(4_000)  # give user time to see the document before styling.
