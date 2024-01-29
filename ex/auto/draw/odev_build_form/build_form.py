@@ -127,7 +127,7 @@ class BuildForm:
             height=height,
             border=BorderKind.BORDER_SIMPLE,
         )
-        self._ctl_lbl_first_name.bind_to_control(self._ctl_lbl_first_name)
+        self._ctl_lbl_first_name.bind_to_control(self._ctl_txt_first_name)
         self._ctl_txt_first_name.add_event_text_changed(self._fn_text_changed)
         self._set_tab_index(self._ctl_txt_first_name)
 
