@@ -18,41 +18,45 @@ class LinearSolve:
         with Lo.Loader(
             connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)
         ) as loader:
-            doc = CalcDoc(Calc.create_doc(loader))
+            doc = CalcDoc.create_doc(loader)
             sheet = doc.get_active_sheet()
             Calc.list_solvers()
 
             # specify the variable cells
-            x_pos = Calc.get_cell_address(sheet=sheet.component, cell_name="B1")  # X
-            y_pos = Calc.get_cell_address(sheet=sheet.component, cell_name="B2")  # Y
+            cell = sheet["B1"]
+            x_pos = cell.cell_obj.get_cell_address()  # X
+            cell = cell.get_cell_down()  # B2
+            y_pos = cell.cell_obj.get_cell_address()  # Y
             vars = (x_pos, y_pos)
 
             # specify profit equation
-            sheet.set_val(value="=143*B1 + 60*B2", cell_name="B3")
-            profit_eq = Calc.get_cell_address(sheet.component, "B3")
+            cell = cell.get_cell_down()  # B3
+            cell.value = "=143*B1 + 60*B2"
+            profit_eq = cell.cell_obj.get_cell_address()
 
             # set up equation formulae without inequalities
-            sheet.set_val(value="=120*B1 + 210*B2", cell_name="B4")
-            sheet.set_val(value="=110*B1 + 30*B2", cell_name="B5")
-            sheet.set_val(value="=B1 + B2", cell_name="B6")
+            cell = cell.get_cell_down()  # B4
+            cell.value = "=120*B1 + 210*B2"
+            cell = cell.get_cell_down()  # B5
+            cell.value = "=110*B1 + 30*B2"
+            cell = cell.get_cell_down()  # B6
+            cell.value = "=B1 + B2"
 
             # create the constraints
             # constraints are equations and their inequalities
-            sc1 = Calc.make_constraint(
-                num=15000, op="<=", sheet=sheet.component, cell_name="B4"
-            )
+            cell = sheet["B4"]
+            sc1 = cell.make_constraint(num=15_000, op="<=")
+
             #   20x + 210y <= 15000
             #   B4 is the address of the cell that is constrained
-            sc2 = Calc.make_constraint(
-                num=4000,
-                op=SolverConstraintOperator.LESS_EQUAL,
-                sheet=sheet.component,
-                cell_name="B5",
+            cell = cell.get_cell_down()  # B5
+            sc2 = cell.make_constraint(
+                num=4_000, op=SolverConstraintOperator.LESS_EQUAL
             )
+
             #   110x + 30y <= 4000
-            sc3 = Calc.make_constraint(
-                num=75, op="<=", sheet=sheet.component, cell_name="B6"
-            )
+            cell = cell.get_cell_down()  # B6
+            sc3 = cell.make_constraint(num=75, op="<=")
             #   x + y <= 75
 
             # could also include x >= 0 and y >= 0
@@ -79,7 +83,9 @@ class LinearSolve:
             if not srv_solver:
                 raise ValueError("No valid solver was found")
             # initialize the linear solver (CoinMP or basic linear)
-            solver = Lo.create_instance_mcf(XSolver, srv_solver, raise_err=True)
+            solver = doc.lo_inst.create_instance_mcf(
+                XSolver, srv_solver, raise_err=True
+            )
 
             solver.Document = doc.component
             solver.Objective = profit_eq

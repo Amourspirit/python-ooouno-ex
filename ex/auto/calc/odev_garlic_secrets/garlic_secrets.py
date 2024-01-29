@@ -39,11 +39,9 @@ class GarlicSecrets:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.open_doc(fnm=self._fnm, loader=loader))
+            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
-            doc.set_visible()
-
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
             sheet.goto_cell(cell_name="A1")
 
             # freeze one row of view
@@ -76,7 +74,7 @@ class GarlicSecrets:
             row_range.is_visible = False
 
             # split window into 2 view panes
-            cell_name = sheet.get_cell(col=0, row=empty_row_num - 2).get_cell_str()
+            cell_name = sheet[(0, empty_row_num - 2)].get_cell_str()
             print(f"Splitting at: {cell_name}")
             # doesn't work with Calc.freeze()
             doc.split_window(cell_name=cell_name)
@@ -104,7 +102,7 @@ class GarlicSecrets:
                 states[0].move_pane_focus(dir=ViewState.PaneEnum.MOVE_UP)
                 doc.set_view_states(states=states)
             # move selection to top cell
-            sheet.goto_cell(cell_name="A1")
+            sheet["A1"].goto()
 
             # show revised sheet states
             states = doc.get_view_states()
@@ -149,7 +147,7 @@ class GarlicSecrets:
         """
         start_time = time.time()
         row = 0
-        cell = sheet.get_cell(col=0, row=row)  # produce column
+        cell = sheet[(0, row)]  # produce column
         sht_comp = sheet.component
         prod_cell = cell.component
         red_font = Font(b=True, color=CommonColor.RED)
@@ -158,10 +156,10 @@ class GarlicSecrets:
         while prod_cell.getType() != CellContentType.EMPTY:
             if prod_cell.getFormula() == "Garlic":
                 # show the cell in-screen
-                cell = sheet.get_cell(col=0, row=row)
-                _ = sheet.goto_cell(cell_obj=cell.cell_obj)
+                cell = sheet[(0, row)]
+                cell.goto()
                 # change cost/pound column
-                cost_cell = sheet.get_cell(col=1, row=row)
+                cost_cell = sheet[(1, row)]
                 # make the change more visible by making the text bold and red
                 cost_cell.set_val(1.05 * cost_cell.get_num(), [red_font])
             row += 1
@@ -202,10 +200,10 @@ class GarlicSecrets:
             for cell_obj in cells:
                 prod_cell = Calc.get_cell(sheet=sht_comp, cell_obj=cell_obj)
                 if prod_cell.getFormula() == "Garlic":
-                    cell = sheet.get_cell(col=0, row=row)
-                    _ = sheet.goto_cell(cell_obj=cell.cell_obj)
+                    cell = sheet[(0, row)]
+                    cell.goto()
                     # change cost/pound column
-                    cost_cell = sheet.get_cell(col=1, row=row)
+                    cost_cell = sheet[(1, row)]
                     # make the change more visible by making the text bold and red
                     cost_cell.set_val(1.05 * cost_cell.get_num(), [red_font])
         end_time = time.time()
@@ -240,10 +238,10 @@ class GarlicSecrets:
         for row in data:
             row_count += 1
             if row[0] == "Garlic":
-                cell = sheet.get_cell(col=0, row=row_count)
-                _ = sheet.goto_cell(cell_obj=cell.cell_obj)
+                cell = sheet[(0, row_count)]
+                cell.goto()
                 # change cost/pound column
-                cost_cell = sheet.get_cell(col=1, row=row_count)
+                cost_cell = sheet[(1, row_count)]
                 # make the change more visible by making the text bold and red
                 cost_cell.set_val(1.05 * cost_cell.get_num(), [red_font])
         end_time = time.time()
@@ -284,7 +282,7 @@ class GarlicSecrets:
         The text is black and bold in a red cell, and is centered.
         """
 
-        sheet.goto_cell(cell_obj=sheet.get_cell(col=0, row=empty_row_num).cell_obj)
+        sheet.goto_cell(cell_obj=sheet[(0, empty_row_num)].cell_obj)
 
         # Merge first few cells of the last row
         rng_obj = Calc.get_range_obj(
@@ -300,5 +298,5 @@ class GarlicSecrets:
         font_red = Font(b=True, size=24, color=CommonColor.BLACK)
         bg_color = BgColor(CommonColor.RED)
 
-        cell = sheet.get_cell(cell_obj=rng_obj.cell_start)
+        cell = sheet[rng_obj.cell_start]
         cell.set_val(value="Top Secret Garlic Changes", styles=[font_red, bg_color])

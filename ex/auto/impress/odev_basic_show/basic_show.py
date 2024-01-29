@@ -16,11 +16,9 @@ class BasicShow:
 
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectPipe()) as loader:
-            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
+            # slideshow start() crashes if the doc is not visible
+            doc = ImpressDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
             try:
-                # slideshow start() crashes if the doc is not visible
-                doc.set_visible()
-
                 show = doc.get_show()
                 Props.show_obj_props("Slide show", show)
 

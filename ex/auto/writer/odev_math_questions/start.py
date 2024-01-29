@@ -8,7 +8,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.lo import Lo
 
@@ -18,11 +18,9 @@ def main() -> int:
 
     loader = Lo.load_office(Lo.ConnectPipe())
 
-    doc = WriteDoc(Write.create_doc(loader=loader))
+    doc = WriteDoc.create_doc(loader=loader, visible=True)
 
     try:
-        doc.set_visible()
-
         cursor = doc.get_cursor()
         cursor.append_para("Math Questions")
         cursor.style_prev_paragraph("Heading 1")

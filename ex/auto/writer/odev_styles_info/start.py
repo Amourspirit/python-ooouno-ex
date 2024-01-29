@@ -6,7 +6,7 @@ from pathlib import Path
 
 import uno
 
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 from ooodev.utils.info import Info
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
@@ -107,7 +107,7 @@ def main() -> int:
         fnm = cast(str, args.file_path)
 
         try:
-            doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+            doc = WriteDoc.open_doc(fnm=fnm, loader=loader)
         except Exception as e:
             print(f"Could not open '{fnm}'")
             print(f"  {e}")

@@ -33,8 +33,8 @@ class CopySlide:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
-            num_slides = doc.get_slides_count()
+            doc = ImpressDoc.open_doc(fnm=self._fnm, loader=loader)
+            num_slides = len(doc.slides)
             if self._from_idx >= num_slides or self._to_idx >= num_slides:
                 Lo.close_office()
                 raise IndexError("One or both indices are out of range")

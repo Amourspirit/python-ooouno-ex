@@ -28,9 +28,8 @@ class CustomShow:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = ImpressDoc(Lo.open_doc(fnm=self._fnm, loader=loader))
             # slideshow start() crashes if the doc is not visible
-            doc.set_visible()
+            doc = ImpressDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
             if len(self._idxs) > 0:
                 _ = doc.build_play_list("ShortPlay", *self._idxs)

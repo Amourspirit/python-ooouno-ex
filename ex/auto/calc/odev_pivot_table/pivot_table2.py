@@ -35,11 +35,9 @@ class PivotTable2:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.open_doc(fnm=self._fnm, loader=loader))
+            doc = CalcDoc.open_doc(fnm=self._fnm, loader=loader, visible=True)
 
-            doc.set_visible()
-
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
             dp_sheet = doc.insert_sheet(name="Pivot Table", idx=1)
 
             self._create_pivot_table(sheet=sheet, dp_sheet=dp_sheet)
@@ -77,26 +75,26 @@ class PivotTable2:
 
         # XIndexAccess fields = dpDesc.getDataPilotFields();
         fields = dp_desc.getHiddenFields()
-        field_names = Lo.get_container_names(con=fields)
+        field_names = sheet.lo_inst.get_container_names(con=fields)
         print(f"Field Names ({len(field_names)}):")
         for name in field_names:
             print(f"  {name}")
 
         # properties defined in DataPilotField
         # set page field
-        props = Lo.find_container_props(con=fields, nm="Date")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Date")
         Props.set(props, Orientation=DataPilotFieldOrientation.PAGE)
 
         # set column field
-        props = Lo.find_container_props(con=fields, nm="Store")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Store")
         Props.set(props, Orientation=DataPilotFieldOrientation.COLUMN)
 
         # set 1st row field
-        props = Lo.find_container_props(con=fields, nm="Book")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Book")
         Props.set(props, Orientation=DataPilotFieldOrientation.ROW)
 
         # set data field, calculating the sum
-        props = Lo.find_container_props(con=fields, nm="Units Sold")
+        props = sheet.lo_inst.find_container_props(con=fields, nm="Units Sold")
         Props.set(props, Orientation=DataPilotFieldOrientation.DATA)
         Props.set(props, Function=GeneralFunction.SUM)
 

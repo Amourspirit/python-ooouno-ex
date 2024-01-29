@@ -27,16 +27,16 @@ class PointsBuilder:
         # create Impress page or Draw slide
         try:
             self._report_templates()
-            tmpl_name = "Inspiration.otp"  # "Piano.otp"
-            template_fnm = Path(Draw.get_slide_template_path(), tmpl_name)
+            template_name = "Inspiration.otp"  # "Piano.otp"
+            template_fnm = Path(Draw.get_slide_template_path(), template_name)
             _ = FileIO.is_exist_file(template_fnm, True)
-            doc = ImpressDoc(
-                Lo.create_doc_from_template(template_path=template_fnm, loader=loader)
+            doc = ImpressDoc.create_doc_from_template(
+                template_path=template_fnm, loader=loader
             )
 
             self._read_points(doc)
 
-            print(f"Total no. of slides: {doc.get_slides_count()}")
+            print(f"Total no. of slides: {len(doc.slides)}")
 
             doc.set_visible()
             Lo.delay(2000)

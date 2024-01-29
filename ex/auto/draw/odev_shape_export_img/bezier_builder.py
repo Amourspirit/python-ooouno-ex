@@ -43,10 +43,8 @@ class BezierBuilder:
 
         try:
             # create Draw slide
-            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc = DrawDoc.create_doc(loader=loader, visible=True)
             slide = doc.slides[0]
-
-            doc.set_visible()
 
             ext = FileIO.get_ext(self._fnm).lower()
             shape = self._create_bezier(slide=slide)

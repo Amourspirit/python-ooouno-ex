@@ -27,11 +27,9 @@ class AnimBicycle:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc = DrawDoc.create_doc(loader=loader, visible=True)
 
             slide = doc.get_slide(idx=0)
-
-            doc.set_visible()
 
             slide_size = slide.get_size_mm()
 

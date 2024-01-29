@@ -29,13 +29,13 @@ class SlideShow:
 
         # create Impress page or Draw slide
         try:
-            doc = ImpressDoc(Draw.create_impress_doc(loader))
+            doc = ImpressDoc.create_doc(loader)
 
-            while doc.get_slides_count() < 3:
+            while len(doc.slides) < 3:
                 _ = doc.add_slide()
 
             # ---- The first page
-            slide = doc.get_slide(idx=0)
+            slide = doc.slides[0]
             slide.set_transition(
                 fade_effect=FadeEffect.FADE_FROM_RIGHT,
                 speed=AnimationSpeed.FAST,
@@ -51,7 +51,7 @@ class SlideShow:
             )
 
             # ---- The second page
-            slide = doc.get_slide(idx=1)
+            slide = doc.slides[1]
             slide.set_transition(
                 fade_effect=FadeEffect.FADE_FROM_RIGHT,
                 speed=AnimationSpeed.FAST,
@@ -73,10 +73,10 @@ class SlideShow:
             )
 
             name_slide = "page two"
-            slide.set_name(name_slide)
+            slide.name = name_slide
 
             # ---- The third page
-            slide = doc.get_slide(idx=2)
+            slide = doc.slides[2]
             slide.set_transition(
                 fade_effect=FadeEffect.ROLL_FROM_LEFT,
                 speed=AnimationSpeed.MEDIUM,
@@ -116,6 +116,8 @@ class SlideShow:
 
             # slideshow start() crashes if the doc is not visible
             doc.set_visible()
+            # allow a little time for the doc to be visible
+            Lo.delay(300)
             show = doc.get_show()
 
             # a full-screen slide show

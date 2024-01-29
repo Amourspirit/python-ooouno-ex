@@ -25,9 +25,8 @@ class Runner:
 
         loader = Lo.load_office(Lo.ConnectSocket())
         try:
-            self._doc = CalcDoc(Calc.create_doc(loader))
+            self._doc = CalcDoc.create_doc(loader=loader, visible=True)
 
-            self._doc.set_visible()
             # Delay to let the doc become visible before zooming.
             Lo.delay(500)
             self._doc.zoom(ZoomKind.ZOOM_100_PERCENT)
@@ -45,7 +44,7 @@ class Runner:
             )
             # merge the cells just so the message looks nice
             sheet.get_range(range_name="A1:E1").merge_cells()
-            sheet.goto_cell("A1")
+            _ = sheet.goto_cell("A1")
             self._add_sheets()
 
             # add the event listener that detects when the active sheet changes

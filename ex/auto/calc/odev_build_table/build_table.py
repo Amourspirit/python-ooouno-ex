@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import uno
 from com.sun.star.drawing import XDrawPagesSupplier
-from com.sun.star.drawing import XDrawPageSupplier
 from com.sun.star.lang import XComponent
 
 from ooodev.dialog.msgbox import (
@@ -58,13 +57,12 @@ class BuildTable:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.create_doc(loader))
+            doc = CalcDoc.create_doc(loader=loader, visible=True)
 
-            doc.set_visible()
             Lo.delay(300)
             doc.zoom(ZoomKind.ZOOM_100_PERCENT)
 
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
 
             self._convert_addresses(sheet)
 
@@ -321,10 +319,10 @@ class BuildTable:
 
     def _convert_addresses(self, sheet: CalcSheet) -> None:
         # cell name <--> position
-        pos = sheet.get_cell(cell_name="A22").get_cell_position()
+        pos = sheet["A22"].get_cell_position()
         print(f"Position of AA2: ({pos.X}, {pos.Y})")
 
-        cell = sheet.get_cell(col=pos.X, row=pos.Y)
+        cell = sheet[(pos.X, pos.Y)]
         Calc.print_cell_address(cell.component)
 
         print(f"AA2: {cell.get_cell_str()}")
@@ -355,18 +353,19 @@ class BuildTable:
 
     def _add_picture(self, sheet: CalcSheet) -> None:
         # add a picture to the draw page for this sheet
-        dp_sup = sheet.qi(XDrawPageSupplier, True)
-        page = dp_sup.getDrawPage()
         x = 230 if self._add_chart else 125
-        Draw.draw_image(slide=page, fnm=self._im_fnm, x=x, y=32)
+        sheet.draw_page.draw_image(fnm=self._im_fnm, x=x, y=32)
 
         # look at all the draw pages
+        # 3 ways to get the draw pages
         supplier = sheet.calc_doc.qi(XDrawPagesSupplier, True)
         pages = supplier.getDrawPages()
         print(f"1. No. of draw pages: {pages.getCount()}")
 
         comp_doc = sheet.calc_doc.qi(XComponent, True)
         print(f"2. No. of draw pages: {Draw.get_slides_count(comp_doc)}")
+
+        print(f"3. No. of draw pages: {len(sheet.calc_doc.draw_pages)}")
 
     def _create_styles(self, doc: CalcDoc) -> None:
         try:

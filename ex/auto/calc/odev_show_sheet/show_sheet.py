@@ -7,7 +7,6 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
@@ -36,23 +35,19 @@ class ShowSheet:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.open_doc(fnm=self._input_fnm, loader=loader))
-
-            # doc = Lo.open_readonly_doc(fnm=self._input_fnm, loader=loader)
-            # doc = Calc.get_ss_doc(doc)
-
-            if self._visible:
-                doc.set_visible()
+            doc = CalcDoc.open_doc(
+                fnm=self._input_fnm, loader=loader, visible=self._visible
+            )
 
             sheet = doc.get_active_sheet()
 
-            sheet.goto_cell(cell_name="A1")
+            sheet["A1"].goto()
             sheet_names = doc.get_sheet_names()
             print(f"Names of Sheets ({len(sheet_names)}):")
             for name in sheet_names:
                 print(f"  {name}")
 
-            doc.set_active_sheet(sheet.component)
+            sheet.set_active()
             pro = sheet.qi(XProtectable, True)
             pro.protect("foobar")
             print(f"Is protected: {pro.isProtected()}")

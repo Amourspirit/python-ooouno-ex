@@ -7,7 +7,7 @@ import uno
 from com.sun.star.text import XTextShapesSupplier
 
 from ooodev.office.draw import Draw
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.images_lo import ImagesLo
 from ooodev.utils.lo import Lo
@@ -29,7 +29,7 @@ class ExtractGraphics:
 
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectSocket(headless=True)) as loader:
-            text_doc = WriteDoc(Write.open_doc(fnm=self._fnm, loader=loader))
+            text_doc = WriteDoc.open_doc(fnm=self._fnm, loader=loader)
 
             pics = text_doc.get_text_graphics()
             if not pics:
@@ -55,14 +55,13 @@ class ExtractGraphics:
                 print(f"No. of text shapes: {shape_supp.getShapes().getCount()}")
 
             # report on shapes in the doc
-            draw_page = text_doc.get_draw_page()
-            shapes = Draw.get_shapes(draw_page.component)
+            shapes = text_doc.draw_page.get_shapes()
             if shapes:
                 print()
                 print(f"No. of draw shapes: {len(shapes)}")
 
                 for shape in shapes:
-                    Draw.report_pos_size(shape)
+                    Draw.report_pos_size(shape.component)
                 print()
 
             text_doc.close_doc()

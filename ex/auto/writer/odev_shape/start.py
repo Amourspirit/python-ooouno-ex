@@ -1,7 +1,7 @@
 from __future__ import annotations
 import uno
 from ooodev.format.inner.direct.write.frame.frame_type.position import RelVertOrient
-from ooodev.write import Write, WriteDoc, ZoomKind
+from ooodev.write import WriteDoc, ZoomKind
 from ooodev.utils.lo import Lo
 from ooodev.units import UnitMM100
 
@@ -52,8 +52,7 @@ def main() -> int:
     )
     loader = Lo.load_office(Lo.ConnectSocket())
     try:
-        doc = WriteDoc(Write.create_doc(loader))
-        doc.set_visible()
+        doc = WriteDoc.create_doc(loader=loader, visible=True)
 
         # delay so document is visible before dispatching zoom
         Lo.delay(500)

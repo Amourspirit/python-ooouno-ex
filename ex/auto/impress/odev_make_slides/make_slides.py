@@ -53,11 +53,10 @@ class MakeSlides:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = ImpressDoc(Draw.create_impress_doc(loader))
-            curr_slide = doc.get_slide(idx=0)
+            doc = ImpressDoc.create_doc(loader=loader, visible=True)
+            curr_slide = doc.slides[0]
 
-            doc.set_visible()
-            Lo.delay(1_000)  # delay to make sure zoom takes
+            Lo.delay(500)  # delay to make sure zoom takes
             doc.zoom(ZoomKind.ENTIRE_PAGE)
 
             curr_slide.title_slide(

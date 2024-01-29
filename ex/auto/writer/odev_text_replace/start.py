@@ -16,7 +16,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.write import Write, WriteDoc
+from ooodev.write import WriteDoc
 from ooodev.utils.lo import Lo
 
 
@@ -105,11 +105,9 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader, visible=True)
         uk_words = ("colour", "neighbour", "centre", "behaviour", "metre", "through")
         us_words = ("color", "neighbor", "center", "behavior", "meter", "thru")
-
-        doc.set_visible()
 
         words = (
             "(G|g)rit",

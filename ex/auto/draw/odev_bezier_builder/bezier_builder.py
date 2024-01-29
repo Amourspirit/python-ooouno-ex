@@ -30,10 +30,8 @@ class BezierBuilder:
         loader = Lo.load_office(Lo.ConnectPipe())
 
         try:
-            doc = DrawDoc(Draw.create_draw_doc(loader))
+            doc = DrawDoc.create_doc(loader=loader, visible=True)
             slide = doc.slides[0]
-
-            doc.set_visible()
 
             # self._draw_curve(slide) # same as bpts3.txt
 

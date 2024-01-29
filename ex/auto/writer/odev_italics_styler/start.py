@@ -14,9 +14,8 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.write import Write, WriteDoc, ZoomKind
+from ooodev.write import WriteDoc, ZoomKind
 from ooodev.utils.color import CommonColor, Color
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.format.writer.direct.char.font import Font
@@ -129,9 +128,8 @@ def main() -> int:
     fnm = cast(str, args.file_path)
 
     try:
-        doc = WriteDoc(Write.open_doc(fnm=fnm, loader=loader))
+        doc = WriteDoc.open_doc(fnm=fnm, loader=loader, visible=True)
 
-        doc.set_visible()
         Lo.delay(300)  # small delay before dispatching zoom command
         doc.zoom(ZoomKind.ENTIRE_PAGE)
 

@@ -9,7 +9,6 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.lo import Lo
@@ -32,11 +31,9 @@ class DataSort:
         loader = Lo.load_office(Lo.ConnectSocket())
 
         try:
-            doc = CalcDoc(Calc.create_doc(loader))
+            doc = CalcDoc.create_doc(loader, visible=True)
 
-            doc.set_visible()
-
-            sheet = doc.get_sheet(0)
+            sheet = doc.sheets[0]
 
             # create the table that needs sorting
             vals = (

@@ -10,8 +10,8 @@ from ooodev.formatters.formatter_table import FormatterTable
 class CalcFunctions:
     def main(self) -> None:
         with Lo.Loader(Lo.ConnectPipe()) as loader:
-            doc = CalcDoc(Calc.create_doc(loader))
-            sheet = doc.get_sheet(0)
+            doc = CalcDoc.create_doc(loader)
+            sheet = doc.sheets[0]
             # round
             print("ROUND result for 1.999 is: ", end="")
             print(doc.call_fun("ROUND", 1.999))

@@ -16,34 +16,38 @@ class Solver2:
         with Lo.Loader(
             connector=Lo.ConnectPipe(), opt=Lo.Options(verbose=verbose)
         ) as loader:
-            doc = CalcDoc(Calc.create_doc(loader))
-            sheet = doc.get_sheet(0)
+            doc = CalcDoc.create_doc(loader)
+            sheet = doc.sheets[0]
 
             # specify the variable cells
-            x_pos = sheet.get_cell_address(cell_name="B1")  # X
-            y_pos = sheet.get_cell_address(cell_name="B2")  # Y
+            cell = sheet["B1"]
+            x_pos = cell.cell_obj.get_cell_address()
+            cell = cell.get_cell_down()  # B2
+            y_pos = cell.cell_obj.get_cell_address()
             vars = (x_pos, y_pos)
 
             # specify profit equation
-            sheet.set_val(value="=B1+B2", cell_name="B3")
-            objective = sheet.get_cell_address(cell_name="B3")
+            cell = cell.get_cell_down()  # B3
+            cell.value = "=B1*B2"
+            objective = cell.cell_obj.get_cell_address()
 
             # set up equation formula without inequality (only one needed)
             # x^2 + y^2
-            sheet.set_val(value="=B1*B1 + B2*B2", cell_name="B4")
+            cell = cell.get_cell_down()  # B4
+            cell.value = "=B1*B1 + B2*B2"
 
             # create three constraints (using the 3 variables)
 
-            sc1 = sheet.make_constraint(num=1, op=">=", cell_name="B4")
+            sc1 = cell.make_constraint(num=1, op=">=")
             #   x^2 + y^2 >= 1
-            sc2 = sheet.make_constraint(num=2, op="<=", cell_name="B4")
+            sc2 = cell.make_constraint(num=2, op="<=")
             #   x^2 + y^2 <= 2
 
             constraints = (sc1, sc2)
 
             # initialize the nonlinear solver (SCO)
             try:
-                solver = Lo.create_instance_mcf(
+                solver = doc.lo_inst.create_instance_mcf(
                     XSolver,
                     "com.sun.star.comp.Calc.NLPSolver.SCOSolverImpl",
                     raise_err=True,
