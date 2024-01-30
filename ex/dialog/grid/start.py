@@ -8,7 +8,6 @@ from __future__ import annotations
 from pathlib import Path
 import uno
 from ooodev.utils.lo import Lo
-from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from grid_ex import GridEx
 
@@ -16,8 +15,7 @@ from grid_ex import GridEx
 def main() -> int:
     fnm = Path(__file__).parent / "data" / "sales_data.ods"
     with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
-        doc = CalcDoc(Calc.open_doc(fnm=fnm))
-        doc.set_visible()
+        doc = CalcDoc.open_doc(fnm=fnm, visible=True)
         grid_ex = GridEx(doc=doc)
         Lo.delay(500)
         grid_ex.show()
