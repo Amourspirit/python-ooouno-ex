@@ -1,4 +1,4 @@
-# Radio Button Example
+# Radio Button2 Example
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/4193389/283243452-94e5910a-86fb-4d45-ad47-2cb21b266ac4.png" width="335" height="277">
@@ -6,11 +6,10 @@
 
 This example demonstrates how to create a Dialog window programmatically and add a Radio Button Groups.
 
-This demo is functionally the same as the [Radio Button2](../radio_groupbox2/) Example.
-The difference is that this example uses the `Dialogs` class to create the dialog box and its controls.
-This is not safe in a multi document environment, however it safe to use in a single document environment.
-It is recommended to use the `CalcDoc` class to create an instance of the `Dialog` class that build the dialog box and its controls
-as shown in [Radio Button2](../radio_groupbox2/) Example. This example to demonstration how to use the `Dialogs` class as an alternative if needed.
+This demo is functionally the same as the [Radio Button](../radio_groupbox/) Example. The difference is that this example uses the `CalcDoc` class to create an instance of the `Dialog` class that build the dialog box and its controls.
+
+By using the built in `create_dialog()` method of the `CalcDoc` class it ensure that the dialog and its controls get the correct context and parent window.
+This can be important in a multi document environment.
 
 This demo uses This demo uses [OOO Development Tools] (OooDev).
 Also available as a LibreOffice [Extension](https://extensions.libreoffice.org/en/extensions/show/41700).
@@ -41,7 +40,7 @@ python -m start
 ### Linux/Mac
 
 ```sh
-python ./ex/dialog/radio_groupbox/start.py
+python ./ex/dialog/radio_groupbox2/start.py
 ```
 
 ### Windows
@@ -60,15 +59,15 @@ In the terminal run:
 
 ```bash
 cd examples
-gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/dialog/radio_groupbox'
+gitget 'https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/dialog/radio_groupbox2'
 ```
 
-This will copy the `radio_groupbox` example to the examples folder.
+This will copy the `radio_groupbox2` example to the examples folder.
 
 In the terminal run:
 
 ```bash
-cd radio_groupbox
+cd radio_groupbox2
 python -m start
 ```
 
