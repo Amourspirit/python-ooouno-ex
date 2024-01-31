@@ -4,6 +4,7 @@ import uno
 from typing import Any, cast, TYPE_CHECKING, Tuple
 
 from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import Dialog
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
 from ooodev.utils.data_type.range_obj import RangeObj
@@ -25,6 +26,7 @@ class Listbox:
     # region Init
     def __init__(
         self,
+        dialog: Dialog,
         ctrl: XControl,
         doc: CalcDoc,
         x: int,
@@ -33,6 +35,7 @@ class Listbox:
         height: int,
         border_kind: BorderKind,
     ) -> None:
+        self._dialog = dialog
         self._control = ctrl
         self._doc = doc
         self._x = x
@@ -81,20 +84,19 @@ class Listbox:
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
-        self._ctl_main_lbl = Dialogs.insert_label(
-            dialog_ctrl=self._control,
+        self._ctl_main_lbl = self._dialog.insert_label(
             label=self.get_label_msg(),
             x=self._margin,
             y=self._padding,
             width=self._width - (self._margin * 2),
             height=self._box_height,
+            dialog_ctrl=self._control,
         )
 
     def _init_listbox(self) -> None:
         sz = self._ctl_main_lbl.view.getPosSize()
         # multi_select must be false for drop_down to work.
-        self._ctl_listbox = Dialogs.insert_list_box(
-            dialog_ctrl=self._control,
+        self._ctl_listbox = self._dialog.insert_list_box(
             entries=(),
             x=sz.X,
             y=sz.Y + sz.Height + self._margin,
@@ -103,6 +105,7 @@ class Listbox:
             height=self._height - sz.Height - (self._margin * 2),
             multi_select=False,
             drop_down=False,
+            dialog_ctrl=self._control,
         )
         self._ctl_listbox.add_event_item_state_changed(self._fn_on_item_state_changed)
         self._ctl_listbox.add_event_action_performed(self._fn_on_action_preformed)
@@ -181,6 +184,10 @@ class Listbox:
     # endregion Event Handlers
 
     # region Properties
+    @property
+    def dialog(self) -> Dialog:
+        return self._dialog
+
     @property
     def x(self) -> int:
         return self._x

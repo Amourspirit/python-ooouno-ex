@@ -4,13 +4,12 @@ import uno
 from typing import Any, cast, TYPE_CHECKING
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
-from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
+from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.utils.lo import Lo
 from ooodev.utils.color import StandardColor
-from ooodev.calc import CalcDoc
+from ooodev.utils.lo import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import AdjustmentEvent
@@ -23,8 +22,8 @@ if TYPE_CHECKING:
 class Progress:
     # pylint: disable=unused-argument
     # region Init
-    def __init__(self, doc: CalcDoc) -> None:
-        self._doc = doc
+    def __init__(self) -> None:
+        self._doc = Lo.current_doc
         self._border_kind = BorderKind.BORDER_3D
         self._width = 500
         self._height = 180

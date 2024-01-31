@@ -4,7 +4,8 @@ import uno
 from typing import TYPE_CHECKING
 
 from ooodev.calc import CalcDoc
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
+from ooodev.dialog import Dialog
 
 from listbox import Listbox
 
@@ -21,6 +22,7 @@ class ListboxDropDown(Listbox):
     # region Init
     def __init__(
         self,
+        dialog: Dialog,
         ctrl: XControl,
         doc: CalcDoc,
         x: int,
@@ -30,6 +32,7 @@ class ListboxDropDown(Listbox):
         border_kind: BorderKind,
     ) -> None:
         super().__init__(
+            dialog=dialog,
             ctrl=ctrl,
             doc=doc,
             x=x,
@@ -48,8 +51,7 @@ class ListboxDropDown(Listbox):
     def _init_listbox(self) -> None:
         sz = self._ctl_main_lbl.view.getPosSize()
         # multi_select must be false for drop_down to work.
-        self._ctl_listbox = Dialogs.insert_list_box(
-            dialog_ctrl=self._control,
+        self._ctl_listbox = self.dialog.insert_list_box(
             entries=(),
             x=sz.X,
             y=sz.Y + sz.Height + self._margin,
@@ -58,6 +60,7 @@ class ListboxDropDown(Listbox):
             height=self.box_height,
             multi_select=False,
             drop_down=True,
+            dialog_ctrl=self._control,
         )
         self._ctl_listbox.add_event_item_state_changed(self._fn_on_item_state_changed)
         self._ctl_listbox.add_event_action_performed(self._fn_on_action_preformed)

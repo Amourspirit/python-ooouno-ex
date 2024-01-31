@@ -16,7 +16,7 @@ def main() -> int:
         doc = CalcDoc.create_doc(visible=True)
         Lo.delay(300)
         doc.zoom_value(100)
-        rgb = RadioGroupBox(doc)
+        rgb = RadioGroupBox()
         rgb.show()
     return 0
 
