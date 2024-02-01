@@ -2,16 +2,18 @@
 
 ![slide_chart](https://user-images.githubusercontent.com/4193389/198894178-1c6b79bf-185f-44e0-b061-3c026da88384.png)
 
-Generates a column chart using the "Sneakers Sold this Month" table from `chartsData.ods`, copies it to the clipboard, and closes the spreadsheet. Then an Impress document is created, and the chart image is pasted into it.
+Generates a column chart using the "Sneakers Sold this Month" table from `chartsData.ods`, copies it to the clipboard.
+Then an Impress document is created, and the chart image is pasted into it.
+The Chart is then moved to the center of the slide.
 
-Also demonstrates saving the chart as an image.
+Also demonstrates saving the chart as an image and working with multiple documents.
 
-A message box is display once the document has been created asking if you want to close the document.
+A message box is display once the document has been created asking if you want to close the documents.
 
 ## NOTE
 
 There is currently a [bug](https://bugs.documentfoundation.org/show_bug.cgi?id=151846) in LibreOffice `7.4` that does not allow the `Chart2` class to load.
-The `Chart2` has been tested with LibreOffice `7.3`
+The `Chart2` has been tested with LibreOffice `7.3`. The bug has been fixed in `7.5`.
 
 ## Automate
 

@@ -17,7 +17,7 @@ def main() -> int:
 
         Lo.delay(300)
         doc.zoom_value(100)
-        progress = Progress(doc)
+        progress = Progress()
         progress.show()
     return 0
 
