@@ -4,7 +4,6 @@ from typing import Any, cast, TYPE_CHECKING
 import uno
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -82,7 +81,7 @@ def export_image(fnm: Path, resolution: int = 96) -> None:
         assert fnm.exists()
         print(f"Image exported to {fnm}")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

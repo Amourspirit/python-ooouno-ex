@@ -4,12 +4,12 @@ import uno
 from typing import Any, cast, TYPE_CHECKING
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
-from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
+from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.utils.lo import Lo
 from ooodev.utils.color import StandardColor
+from ooodev.utils.lo import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import AdjustmentEvent
@@ -23,6 +23,7 @@ class Progress:
     # pylint: disable=unused-argument
     # region Init
     def __init__(self) -> None:
+        self._doc = Lo.current_doc
         self._border_kind = BorderKind.BORDER_3D
         self._width = 500
         self._height = 180
@@ -45,8 +46,10 @@ class Progress:
     def _init_dialog(self) -> None:
         """Create dialog and add controls."""
         self._init_handlers()
-        self._dialog = Dialogs.create_dialog(x=-1, y=-1, width=self._width, height=self._height, title=self._title)
-        Dialogs.create_dialog_peer(self._dialog.control)
+        self._dialog = self._doc.create_dialog(
+            x=-1, y=-1, width=self._width, height=self._height, title=self._title
+        )
+        self._dialog.create_peer()
         self._init_label()
         self._init_progress()
         self._init_scroll()
@@ -74,8 +77,7 @@ class Progress:
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
-        self._ctl_main_lbl = Dialogs.insert_label(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_main_lbl = self._dialog.insert_label(
             label=self._msg,
             x=self._margin,
             y=self._padding,
@@ -85,8 +87,7 @@ class Progress:
 
     def _init_progress(self) -> None:
         sz = self._ctl_main_lbl.view.getPosSize()
-        self._ctl_progress = Dialogs.insert_progress_bar(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_progress = self._dialog.insert_progress_bar(
             x=sz.X,
             y=sz.Y + sz.Height + self._padding,
             width=sz.Width,
@@ -103,8 +104,7 @@ class Progress:
 
     def _init_scroll(self) -> None:
         sz = self._ctl_progress.view.getPosSize()
-        self._ctl_scroll_progress = Dialogs.insert_scroll_bar(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_scroll_progress = self._dialog.insert_scroll_bar(
             x=sz.X,
             y=sz.Y + sz.Height + self._padding,
             width=sz.Width,
@@ -115,12 +115,13 @@ class Progress:
         )
         self._set_tab_index(self._ctl_scroll_progress)
         self._ctl_scroll_progress.value = self._progress_value
-        self._ctl_scroll_progress.add_event_adjustment_value_changed(self._fn_on_scroll_adjustment)
+        self._ctl_scroll_progress.add_event_adjustment_value_changed(
+            self._fn_on_scroll_adjustment
+        )
 
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
-        self._ctl_btn_cancel = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_cancel = self._dialog.insert_button(
             label="Cancel",
             x=self._width - self._btn_width - self._margin,
             y=self._height - self._btn_height - self._padding,
@@ -130,8 +131,7 @@ class Progress:
         )
         self._set_tab_index(self._ctl_btn_cancel)
         sz = self._ctl_btn_cancel.view.getPosSize()
-        self._ctl_btn_ok = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_ok = self._dialog.insert_button(
             label="OK",
             x=sz.X - sz.Width - self._margin,
             y=sz.Y,
@@ -148,7 +148,7 @@ class Progress:
     def _handle_results(self, result: int) -> None:
         """Display a message if the OK button has been clicked"""
         if result == MessageBoxResultsEnum.OK.value:
-            _ = MsgBox.msgbox(
+            _ = self._doc.msgbox(
                 msg=f"Current Value: {self._progress_value}",
                 title="Selected Values",
                 boxtype=MessageBoxType.INFOBOX,
@@ -157,17 +157,33 @@ class Progress:
     # endregion Handle Results
 
     # region Event Handlers
-    def on_scroll_adjustment(self, src: Any, event: EventArgs, control_src: CtlScrollBar, *args, **kwargs) -> None:
+    def on_scroll_adjustment(
+        self, src: Any, event: EventArgs, control_src: CtlScrollBar, *args, **kwargs
+    ) -> None:
         # print("Scroll:", control_src.name)
         a_event = cast("AdjustmentEvent", event.event_data)
         self._progress_value = a_event.Value
         self._ctl_progress.value = self._progress_value
 
-    def on_mouse_entered(self, src: Any, event: EventArgs, control_src: DialogControlBase, *args, **kwargs) -> None:
+    def on_mouse_entered(
+        self,
+        src: Any,
+        event: EventArgs,
+        control_src: DialogControlBase,
+        *args,
+        **kwargs,
+    ) -> None:
         # print(control_src)
         print("Mouse Entered:", control_src.name)
 
-    def on_mouse_exit(self, src: Any, event: EventArgs, control_src: DialogControlBase, *args, **kwargs) -> None:
+    def on_mouse_exit(
+        self,
+        src: Any,
+        event: EventArgs,
+        control_src: DialogControlBase,
+        *args,
+        **kwargs,
+    ) -> None:
         # print(control_src)
         print("Mouse Exited:", control_src.name)
 
@@ -175,7 +191,9 @@ class Progress:
 
     # region Show Dialog
     def show(self) -> int:
-        window = Lo.get_frame().getContainerWindow()
+        # make sure the document is active.
+        self._doc.activate()
+        window = self._doc.get_frame().getContainerWindow()
         ps = window.getPosSize()
         x = round(ps.Width / 2 - self._width / 2)
         y = round(ps.Height / 2 - self._height / 2)

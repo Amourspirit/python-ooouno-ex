@@ -3,7 +3,6 @@ from __future__ import annotations
 import uno
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -63,7 +62,7 @@ def main() -> int:
 
         do_cell_range(sheet=sheet)
         Lo.delay(1_500)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

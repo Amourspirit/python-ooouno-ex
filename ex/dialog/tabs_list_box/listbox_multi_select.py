@@ -6,12 +6,12 @@ from typing import Any, cast, TYPE_CHECKING, Tuple
 from ooodev.calc import CalcDoc
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
+from ooodev.dialog import Dialog
 
 from listbox import Listbox
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ItemEvent
-    from com.sun.star.sheet import XSpreadsheetDocument
     from ooodev.dialog.dl_control.ctl_list_box import CtlListBox
     from com.sun.star.awt import XControl
 
@@ -25,6 +25,7 @@ class ListboxMultiSelect(Listbox):
     # region Init
     def __init__(
         self,
+        dialog: Dialog,
         ctrl: XControl,
         doc: CalcDoc,
         x: int,
@@ -35,6 +36,7 @@ class ListboxMultiSelect(Listbox):
     ) -> None:
         self._selected_items = (0,)
         super().__init__(
+            dialog=dialog,
             ctrl=ctrl,
             doc=doc,
             x=x,
@@ -54,13 +56,6 @@ class ListboxMultiSelect(Listbox):
 
     def get_label_msg(self) -> str:
         return "This is a Multi-selection Listbox example."
-
-    def get_data_message(self) -> str:
-        """Display a message if the OK button has been clicked"""
-        if self._selected_item:
-            return f"Drop Down List Selected Item: {self.selected_item}"
-        else:
-            return "Drop Down List: Nothing was selected"
 
     def on_item_state_changed(
         self, src: Any, event: EventArgs, control_src: CtlListBox, *args, **kwargs

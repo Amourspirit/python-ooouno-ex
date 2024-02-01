@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import cast, TYPE_CHECKING
 import re
-from ooodev.dialog.input import Input
+from ooodev.utils.lo import Lo
 from ooodev.dialog.search.tree_search import SearchTree, RuleTextRegex, RuleDataRegex
 
 from tree_simple import TreeSimple
@@ -42,14 +42,26 @@ class TreeSearchRe(TreeSimple):
                 ["B2", "To be or not to be"],
                 ["C3", "CP30"],
             ],
-            [["Always Present", "Twice as cool"], ["Slippery silk", None], ["C4", "May be explosive"]],
+            [
+                ["Always Present", "Twice as cool"],
+                ["Slippery silk", None],
+                ["C4", "May be explosive"],
+            ],
             [
                 ["Always Present"],
                 ["Slippery silk"],
                 ["Fast Thinking", "May be more explosive"],
             ],
-            [["Always Present"], ["Slippery silk"], ["Sunset View", "May be most explosive"]],
-            [["Always Present"], ["Start somewhere", "In the beginning"], ["Razors edge", "On the cutting edge"]],
+            [
+                ["Always Present"],
+                ["Slippery silk"],
+                ["Sunset View", "May be most explosive"],
+            ],
+            [
+                ["Always Present"],
+                ["Start somewhere", "In the beginning"],
+                ["Razors edge", "On the cutting edge"],
+            ],
         ]
         self.control_tree.add_sub_tree(flat_tree=flat_list, parent_node=self._root_node)
 
@@ -58,14 +70,18 @@ class TreeSearchRe(TreeSimple):
         """Search the tree nodes for the search text."""
         search_text = ".*P3\d"
         if self._selected_node is not None:
-            search_text = Input.get_input(
-                title="Regular Expression Search", msg= "Enter the regular expression to search for:", input_value=search_text
+            search_text = Lo.current_doc.input_box(
+                title="Regular Expression Search",
+                msg="Enter the regular expression to search for:",
+                input_value=search_text,
             )
             if search_text:
                 try:
                     regex = re.compile(search_text)
                 except Exception:
-                    self._event_text.write_line(f"Invalid Regular Expression: '{search_text}'")
+                    self._event_text.write_line(
+                        f"Invalid Regular Expression: '{search_text}'"
+                    )
                     return
                 search = SearchTree(None)
                 # by adding RuleTextRegex first it means that the search will be done on the display value first and then the data value.

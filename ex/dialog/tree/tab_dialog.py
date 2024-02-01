@@ -1,15 +1,12 @@
 from __future__ import annotations
 from typing import Any, TYPE_CHECKING, cast
-from pathlib import Path
 import uno  # pylint: disable=unused-import
 
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
 
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.office.calc import Calc
-from ooodev.utils.gui import GUI
 from ooodev.utils.lo import Lo
 from tree_simple import TreeSimple
 from tree_flat import TreeFlat
@@ -43,7 +40,7 @@ class Tabs:
     def _init_dialog(self) -> None:
         self._init_handlers()
 
-        self._dialog = Dialogs.create_dialog(
+        self._dialog = Lo.current_doc.create_dialog(
             x=-1,
             y=-1,
             width=self._width,
@@ -51,20 +48,22 @@ class Tabs:
             title=self._title,
         )
         # createPeer() must be call before inserting tabs
-        Dialogs.create_dialog_peer(self._dialog)
+        self._dialog.create_peer()
 
         # tab offset will vary depending on border kind and Operating System
-        
+
         self._init_tab_control()
         self._active_page_page_id = 1
 
     def _init_tab_control(self) -> None:
-        self._ctl_tab = Dialogs.insert_tab_control(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_tab = self._dialog.insert_tab_control(
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
-            height=self._height - (self._margin * 2) - self._btn_height - (self._padding * 2),
+            height=self._height
+            - (self._margin * 2)
+            - self._btn_height
+            - (self._padding * 2),
         )
         self._ctl_tab.add_event_tab_page_activated(self._fn_tab_activated)
         self._init_tab_tree_simple()
@@ -75,14 +74,14 @@ class Tabs:
 
     def _init_tab_tree_simple(self) -> None:
         self._tab_count += 1
-        self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_main = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Simple Tree",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._tree_simple = TreeSimple(
+            dialog=self._dialog,
             ctrl=self._tab_main.view,
             x=tab_sz.X + self._margin,
             y=tab_sz.Y + self._tab_offset_vert,
@@ -94,14 +93,14 @@ class Tabs:
 
     def _init_tab_tree_flat(self) -> None:
         self._tab_count += 1
-        self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_main = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Flat Data Tree",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._tree_flat = TreeFlat(
+            dialog=self._dialog,
             ctrl=self._tab_main.view,
             x=tab_sz.X + self._margin,
             y=tab_sz.Y + self._tab_offset_vert,
@@ -113,14 +112,14 @@ class Tabs:
 
     def _init_tab_tree_flat_data_value(self) -> None:
         self._tab_count += 1
-        self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_main = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Flat Data Tree (Data Value)",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._tree_flat_data_value = TreeFlatDataValue(
+            dialog=self._dialog,
             ctrl=self._tab_main.view,
             x=tab_sz.X + self._margin,
             y=tab_sz.Y + self._tab_offset_vert,
@@ -132,14 +131,14 @@ class Tabs:
 
     def _init_tab_tree_search_re(self) -> None:
         self._tab_count += 1
-        self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_main = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Search Tree - Regular Expressions",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._tree_search_re = TreeSearchRe(
+            dialog=self._dialog,
             ctrl=self._tab_main.view,
             x=tab_sz.X + self._margin,
             y=tab_sz.Y + self._tab_offset_vert,
@@ -152,8 +151,7 @@ class Tabs:
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
 
-        self._ctl_btn_ok = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_ok = self._dialog.insert_button(
             label="OK",
             x=self._width - self._btn_width - self._margin,
             y=self._height - self._btn_height - self._padding,
@@ -166,7 +164,7 @@ class Tabs:
     # region Show Dialog
     def show(self) -> int:
         self._ctl_tab.active_tab_page_id = self._active_page_page_id
-        window = Lo.get_frame().getContainerWindow()
+        window = Lo.current_doc.get_frame().getContainerWindow()
         ps = window.getPosSize()
         x = round(ps.Width / 2 - self._width / 2)
         y = round(ps.Height / 2 - self._height / 2)
@@ -183,24 +181,12 @@ class Tabs:
     def _init_handlers(self) -> None:
         self._fn_tab_activated = self.on_tab_activated
 
-    def on_tab_activated(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_tab_activated(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         print("Tab Changed:", control_src.name)
         itm_event = cast("TabPageActivatedEvent", event.event_data)
         self._active_page_page_id = itm_event.TabPageID
         print("Active ID:", self._active_page_page_id)
 
     # endregion Event Handlers
-
-
-def main() -> int:
-    with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
-        doc = Calc.create_doc()
-        GUI.set_visible(visible=True, doc=doc)
-        Lo.delay(300)
-        tabs = Tabs()
-        tabs.show()
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

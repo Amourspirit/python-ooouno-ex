@@ -1,16 +1,14 @@
 from __future__ import annotations
 from typing import Any, TYPE_CHECKING, cast
-from pathlib import Path
 import uno  # pylint: disable=unused-import
 
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
+from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
-from ooodev.utils.lo import Lo
 from listbox import Listbox
 from listbox_drop_down import ListboxDropDown
 from listbox_multi_select import ListboxMultiSelect
@@ -24,6 +22,7 @@ if TYPE_CHECKING:
 class Tabs:
     # pylint: disable=unused-argument
     def __init__(self, doc: CalcDoc) -> None:
+        self._doc = doc
         self._border_kind = BorderKind.BORDER_SIMPLE
         self._width = 320
         self._height = 500
@@ -37,13 +36,12 @@ class Tabs:
         else:
             self._padding = 14
         self._tab_count = 0
-        self._doc = doc
         self._init_dialog()
 
     def _init_dialog(self) -> None:
         self._init_handlers()
 
-        self._dialog = Dialogs.create_dialog(
+        self._dialog = self._doc.create_dialog(
             x=-1,
             y=-1,
             width=self._width,
@@ -51,7 +49,7 @@ class Tabs:
             title=self._title,
         )
         # createPeer() must be call before inserting tabs
-        Dialogs.create_dialog_peer(self._dialog)
+        self._dialog.create_peer()
 
         # tab offset will vary depending on border kind and Operating System
         self._tab_offset_vert = (self._margin * 3) + 30
@@ -59,8 +57,7 @@ class Tabs:
         self._active_page_page_id = 1
 
     def _init_tab_control(self) -> None:
-        self._ctl_tab = Dialogs.insert_tab_control(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_tab = self._dialog.insert_tab_control(
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
@@ -77,14 +74,14 @@ class Tabs:
 
     def _init_tab_list_box(self) -> None:
         self._tab_count += 1
-        self._tab_main = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_main = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Listbox",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._listbox = Listbox(
+            dialog=self._dialog,
             ctrl=self._tab_main.view,
             doc=self._doc,
             x=tab_sz.X + self._margin,
@@ -96,14 +93,14 @@ class Tabs:
 
     def _init_tab_drop_down(self) -> None:
         self._tab_count += 1
-        self._tab_oth = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_oth = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Drop Down",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._listbox_drop_down = ListboxDropDown(
+            dialog=self._dialog,
             ctrl=self._tab_oth.view,
             doc=self._doc,
             x=tab_sz.X + self._margin,
@@ -115,14 +112,14 @@ class Tabs:
 
     def _init_tab_multi_select(self) -> None:
         self._tab_count += 1
-        self._tab_oth = Dialogs.insert_tab_page(
-            dialog_ctrl=self._dialog.control,
+        self._tab_oth = self._dialog.insert_tab_page(
             tab_ctrl=self._ctl_tab,
             title="Multi Select",
             tab_position=self._tab_count,
         )
         tab_sz = self._ctl_tab.view.getPosSize()
         self._listbox_multi_select = ListboxMultiSelect(
+            dialog=self._dialog,
             ctrl=self._tab_oth.view,
             doc=self._doc,
             x=tab_sz.X + self._margin,
@@ -134,8 +131,7 @@ class Tabs:
 
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
-        self._ctl_btn_cancel = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_cancel = self._dialog.insert_button(
             label="Cancel",
             x=self._width - self._btn_width - self._margin,
             y=self._height - self._btn_height - self._padding,
@@ -144,8 +140,7 @@ class Tabs:
             btn_type=PushButtonType.CANCEL,
         )
         sz = self._ctl_btn_cancel.view.getPosSize()
-        self._ctl_btn_ok = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_ok = self._dialog.insert_button(
             label="OK",
             x=sz.X - sz.Width - self._margin,
             y=sz.Y,
@@ -155,8 +150,7 @@ class Tabs:
             DefaultButton=True,
         )
 
-        self._ctl_btn_info = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_info = self._dialog.insert_button(
             label="Info",
             x=self._margin,
             y=sz.Y,
@@ -170,7 +164,7 @@ class Tabs:
     # region Show Dialog
     def show(self) -> int:
         self._ctl_tab.active_tab_page_id = self._active_page_page_id
-        window = Lo.get_frame().getContainerWindow()
+        window = self._doc.get_frame().getContainerWindow()
         ps = window.getPosSize()
         x = round(ps.Width / 2 - self._width / 2)
         y = round(ps.Height / 2 - self._height / 2)
@@ -191,7 +185,7 @@ class Tabs:
             msg_vals.append(self._listbox_drop_down.get_data_message())
             msg_vals.append(self._listbox_multi_select.get_data_message())
             msg = "\n".join(msg_vals)
-            _ = MsgBox.msgbox(
+            _ = self._doc.msgbox(
                 msg=msg,
                 title="Selected Values",
                 boxtype=MessageBoxType.INFOBOX,

@@ -4,9 +4,9 @@ import uno
 from typing import Any, cast, TYPE_CHECKING
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
-from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
+from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
 from ooodev.utils.lo import Lo
@@ -39,16 +39,16 @@ class GridEx:
         else:
             self._padding = 14
         self._row_index = -1
-        self._init_dialog()
         self._doc = doc
+        self._init_dialog()
         self._sheet = doc.get_active_sheet()
-        self._sheet.goto_cell(cell_name="A1")
+        self._sheet["A1"].goto()
         self._set_table_data()
 
     def _init_dialog(self) -> None:
         """Create dialog and add controls."""
         self._init_handlers()
-        self._dialog = Dialogs.create_dialog(
+        self._dialog = self._doc.create_dialog(
             x=-1, y=-1, width=self._width, height=self._height, title=self._title
         )
         self._init_label()
@@ -76,8 +76,7 @@ class GridEx:
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
-        self._ctl_main_lbl = Dialogs.insert_label(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_main_lbl = self._dialog.insert_label(
             label=self._msg,
             x=self._margin,
             y=self._padding,
@@ -88,8 +87,7 @@ class GridEx:
     def _init_table(self) -> None:
         """Add a Grid (table) to the dialog control"""
         sz = self._ctl_main_lbl.view.getPosSize()
-        self._ctl_table1 = Dialogs.insert_table_control(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_table1 = self._dialog.insert_table_control(
             x=sz.X,
             y=sz.Y + sz.Height + self._margin,
             width=sz.Width,
@@ -102,8 +100,7 @@ class GridEx:
 
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
-        self._ctl_btn_cancel = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_cancel = self._dialog.insert_button(
             label="Cancel",
             x=self._width - self._btn_width - self._margin,
             y=self._height - self._btn_height - self._vert_margin,
@@ -112,8 +109,7 @@ class GridEx:
             btn_type=PushButtonType.CANCEL,
         )
         sz = self._ctl_btn_cancel.view.getPosSize()
-        self._ctl_btn_ok = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_ok = self._dialog.insert_button(
             label="OK",
             x=sz.X - sz.Width - self._margin,
             y=sz.Y,
@@ -123,8 +119,7 @@ class GridEx:
             DefaultButton=True,
         )
 
-        self._ctl_btn_info = Dialogs.insert_button(
-            dialog_ctrl=self._dialog.control,
+        self._ctl_btn_info = self._dialog.insert_button(
             label="Info",
             x=self._margin,
             y=sz.Y,
@@ -160,13 +155,11 @@ class GridEx:
                 # get the selected row from the grid. Returns a Tuple of Objects.
                 row = self._ctl_table1.model.GridDataModel.getRowData(self._row_index)
                 msg = f"{row}"
-                _ = MsgBox.msgbox(
-                    msg=msg,
-                    title="Selected Values",
-                    boxtype=MessageBoxType.INFOBOX,
+                self._doc.msgbox(
+                    msg=msg, title="Selected Values", boxtype=MessageBoxType.INFOBOX
                 )
             else:
-                _ = MsgBox.msgbox(
+                self._doc.msgbox(
                     msg="Nothing was selected",
                     title="No Selection",
                     boxtype=MessageBoxType.INFOBOX,
@@ -199,7 +192,9 @@ class GridEx:
 
     # region Show Dialog
     def show(self) -> int:
-        window = Lo.get_frame().getContainerWindow()
+        # window = Lo.get_frame().getContainerWindow()
+        self._doc.activate()
+        window = self._doc.get_frame().getContainerWindow()
         ps = window.getPosSize()
         x = round(ps.Width / 2 - self._width / 2)
         y = round(ps.Height / 2 - self._height / 2)

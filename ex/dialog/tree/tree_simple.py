@@ -8,6 +8,7 @@ from ooo.dyn.style.vertical_alignment import VerticalAlignment
 from ooodev.dialog import Dialogs, BorderKind, TriStateKind
 from ooodev.dialog.input import Input
 from ooodev.events.args.event_args import EventArgs
+from ooodev.dialog import Dialog
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
@@ -34,6 +35,7 @@ class TreeSimple:
     # region Init
     def __init__(
         self,
+        dialog: Dialog,
         ctrl: XControl,
         x: int,
         y: int,
@@ -41,6 +43,7 @@ class TreeSimple:
         height: int,
         border_kind: BorderKind,
     ) -> None:
+        self._dialog = dialog
         self._control = ctrl
         self._x = x
         self._y = y
@@ -102,21 +105,20 @@ class TreeSimple:
 
     def _init_label(self) -> None:
         """Add a fixed text label to the dialog control"""
-        self._ctl_main_lbl = Dialogs.insert_label(
-            dialog_ctrl=self._control,
+        self._ctl_main_lbl = self._dialog.insert_label(
             label=self.get_label_msg(),
             x=self._margin,
             y=self._margin,
             width=self._width - (self._margin * 2),
             height=self._box_height * 2,
             MultiLine=True,
+            dialog_ctrl=self._control,
         )
 
     def _init_tree(self) -> None:
         sz_main_lbl = self._ctl_main_lbl.view.getPosSize()
         # multi_select must be false for drop_down to work.
-        self._ctl_tree = Dialogs.insert_tree_control(
-            dialog_ctrl=self._control,
+        self._ctl_tree = self._dialog.insert_tree_control(
             x=sz_main_lbl.X,
             y=sz_main_lbl.Y + sz_main_lbl.Height + self._vert_margin,
             width=round(sz_main_lbl.Width / 2) - self._margin,
@@ -128,6 +130,7 @@ class TreeSimple:
                 - (self._vert_margin * 2)
             ),
             border=self._border_kind,
+            dialog_ctrl=self._control,
         )
         self._ctl_tree.model.InvokesStopNodeEditing = True
         self._ctl_tree.model.Editable = True
@@ -153,8 +156,7 @@ class TreeSimple:
     def _init_event_text(self) -> None:
         sz_tree = self._ctl_tree.view.getPosSize()
         sz_main_lbl = self._ctl_main_lbl.view.getPosSize()
-        self._event_text = Dialogs.insert_text_field(
-            dialog_ctrl=self._control,
+        self._event_text = self._dialog.insert_text_field(
             text="",
             x=sz_tree.X + sz_tree.Width + (self._margin * 2),
             y=sz_tree.Y,
@@ -167,6 +169,7 @@ class TreeSimple:
                 - (self._vert_margin * 2)
             ),
             border=self._border_kind,
+            dialog_ctrl=self._control,
             VerticalAlign=VerticalAlignment.TOP,
             ReadOnly=True,
             MultiLine=True,
@@ -176,26 +179,26 @@ class TreeSimple:
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
         sz = self._event_text.view.getPosSize()
-        self._ctl_btn_clear = Dialogs.insert_button(
-            dialog_ctrl=self._control,
+        self._ctl_btn_clear = self._dialog.insert_button(
             label="Clear",
             x=sz.X + sz.Width - self._btn_width,
             y=sz.Y + sz.Height + self._vert_margin,
             width=self._btn_width,
             height=self._btn_height,
+            dialog_ctrl=self._control,
         )
         self._ctl_btn_clear.view.setActionCommand("CLEAR")
         self._ctl_btn_clear.model.HelpText = "Clear contents"
         self._ctl_btn_clear.add_event_action_performed(self._fn_on_action_preformed_btn)
 
         sz_btn = self._ctl_btn_clear.view.getPosSize()
-        self._ctl_btn_search = Dialogs.insert_button(
-            dialog_ctrl=self._control,
+        self._ctl_btn_search = self._dialog.insert_button(
             label="Search...",
             x=sz_btn.X - sz_btn.Width - self._padding,
             y=sz_btn.Y,
             width=self._btn_width,
             height=self._btn_height,
+            dialog_ctrl=self._control,
         )
         self._ctl_btn_search.view.setActionCommand("SEARCH")
         self._ctl_btn_search.model.HelpText = "Search the Tree nodes"
@@ -206,14 +209,14 @@ class TreeSimple:
     def _init_options(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
         sz_tree = self._ctl_tree.view.getPosSize()
-        self._ctl_chk_node_edit = Dialogs.insert_check_box(
-            dialog_ctrl=self._control,
+        self._ctl_chk_node_edit = self._dialog.insert_check_box(
             label="Allow Tree Node Editing",
             x=sz_tree.X,
             y=sz_tree.Y + sz_tree.Height + self._vert_margin,
             width=200,
             height=self._box_height,
             tri_state=False,
+            dialog_ctrl=self._control,
         )
         self._ctl_chk_node_edit.tip_text = "Specifies if the tree nodes can be edited."
         self._ctl_chk_node_edit.add_event_item_state_changed(
@@ -492,6 +495,10 @@ class TreeSimple:
     # endregion Event Handlers
 
     # region Properties
+    @property
+    def dialog(self) -> Dialog:
+        return self._dialog
+    
     @property
     def x(self) -> int:
         return self._x

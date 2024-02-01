@@ -7,15 +7,13 @@
 from __future__ import annotations
 import uno
 from ooodev.utils.lo import Lo
-from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
 from tab_dialog import Tabs
 
 
 def main() -> int:
     with Lo.Loader(Lo.ConnectSocket(), opt=Lo.Options(verbose=True)):
-        doc = CalcDoc(Calc.create_doc())
-        doc.set_visible()
+        doc = CalcDoc.create_doc(visible=True)
         Lo.delay(300)
         doc.zoom_value(100)
         tabs = Tabs()

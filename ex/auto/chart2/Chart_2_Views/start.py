@@ -12,6 +12,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         "-k",
         "--kind",
         const="happy_stock",
+        # const="pie_3d",
         nargs="?",
         dest="kind",
         choices=[e.value for e in ChartKind],
