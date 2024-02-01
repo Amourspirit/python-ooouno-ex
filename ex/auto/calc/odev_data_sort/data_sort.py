@@ -4,7 +4,6 @@ import uno
 from com.sun.star.util import XSortable
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -68,7 +67,7 @@ class DataSort:
             if self._out_fnm:
                 doc.save_doc(fnm=self._out_fnm)
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

@@ -6,7 +6,6 @@ from com.sun.star.sheet import XCellRangesQuery
 from ooo.dyn.sheet.cell_flags import CellFlags
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -131,7 +130,7 @@ class ExtractNums:
                     # print("WITHOUT FORMATTING")
                     # Calc.print_array(vals)
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

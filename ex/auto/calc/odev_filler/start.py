@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 import argparse
-
-from ooodev.utils.file_io import FileIO
 from filler import Filler
 
 
