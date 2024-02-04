@@ -8,7 +8,7 @@ from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
@@ -44,7 +44,9 @@ class RadioGroupBox:
     def _init_dialog(self) -> None:
         """Create dialog and add controls."""
         self._init_handlers()
-        self._dialog = Dialogs.create_dialog(x=-1, y=-1, width=self._width, height=self._height, title=self._title)
+        self._dialog = Dialogs.create_dialog(
+            x=-1, y=-1, width=self._width, height=self._height, title=self._title
+        )
         Dialogs.create_dialog_peer(self._dialog.control)
         self._init_label()
         self._init_group_boxes()
@@ -88,7 +90,10 @@ class RadioGroupBox:
             dialog_ctrl=self._dialog.control,
             x=self._margin,
             y=self._padding + sz_lbl.X + sz_lbl.Height,
-            height=self._height - (sz_lbl.X + sz_lbl.Height) - self._btn_height - (self._padding * 3),
+            height=self._height
+            - (sz_lbl.X + sz_lbl.Height)
+            - self._btn_height
+            - (self._padding * 3),
             width=round(self._width / 2) - (self._margin * 2),
             label="Group Box ONE",
         )
@@ -253,21 +258,27 @@ class RadioGroupBox:
     # endregion Handle Results
 
     # region Event Handlers
-    def on_group1_changed(self, src: Any, event: EventArgs, control_src: CtlRadioButton, *args, **kwargs) -> None:
+    def on_group1_changed(
+        self, src: Any, event: EventArgs, control_src: CtlRadioButton, *args, **kwargs
+    ) -> None:
         itm_event = cast("ItemEvent", event.event_data)
         print("Group 1 Item ID:", itm_event.ItemId)
         print("Group 1 Tab Index:", control_src.tab_index)
         print("Group 1 Tab Name:", control_src.model.Name)
         self._group1_opt = control_src
 
-    def on_group2_changed(self, src: Any, event: EventArgs, control_src: CtlRadioButton, *args, **kwargs) -> None:
+    def on_group2_changed(
+        self, src: Any, event: EventArgs, control_src: CtlRadioButton, *args, **kwargs
+    ) -> None:
         itm_event = cast("ItemEvent", event.event_data)
         print("Group 2 Item ID:", itm_event.ItemId)
         print("Group 2 Tab Index:", control_src.tab_index)
         print("Group 2 Tab Name:", control_src.model.Name)
         self._group2_opt = control_src
 
-    def on_button_action_preformed(self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs) -> None:
+    def on_button_action_preformed(
+        self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
+    ) -> None:
         """Method that is fired when Info button is clicked."""
         itm_event = cast("ActionEvent", event.event_data)
         if itm_event.ActionCommand == "INFO":

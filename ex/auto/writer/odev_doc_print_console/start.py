@@ -4,9 +4,9 @@ import argparse
 from pathlib import Path
 from typing import cast
 
-from ooodev.office.write import Write
+from ooodev.write import Write
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
 
 
@@ -20,13 +20,14 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         required=True,
     )
 
+
 def main() -> int:
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
 
     # add args to parser
     args_add(parser=parser)
-    
+
     if len(sys.argv) == 1:
         fnm = Path(__file__).parent / "data" / "cicero_dummy.odt"
         sys.argv.append("-f")
@@ -34,7 +35,7 @@ def main() -> int:
 
     # read the current command line args
     args = parser.parse_args()
-    
+
     # Using Lo.Loader context manager warped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # Note the use of the headless flag. Not using GUI for process.
@@ -58,7 +59,7 @@ def main() -> int:
             print(text)
             print("-" * 50)
         else:
-            print("Extraction unsupported for this doc type")   
+            print("Extraction unsupported for this doc type")
         Lo.close_doc(doc)
 
     return 0

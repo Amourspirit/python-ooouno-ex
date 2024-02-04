@@ -3,8 +3,8 @@ from __future__ import annotations
 import time
 import sys
 
+from ooodev.loader import Lo
 from doc_monitor import DocMonitor
-from ooodev.utils.lo import Lo
 
 # endregion Imports
 

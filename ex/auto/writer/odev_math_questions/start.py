@@ -3,14 +3,13 @@ import random
 from pathlib import Path
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 from ooodev.utils.date_time_util import DateUtil
-from ooodev.utils.lo import Lo
 
 
 def main() -> int:
@@ -57,7 +56,7 @@ def main() -> int:
         cursor.append_para(f"Timestamp: {DateUtil.time_stamp()}")
 
         Lo.delay(delay)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -68,7 +67,7 @@ def main() -> int:
             pth.mkdir(exist_ok=True)
             doc.save_doc(pth / "mathQuestions.pdf")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

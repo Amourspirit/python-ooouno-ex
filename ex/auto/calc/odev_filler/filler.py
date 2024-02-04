@@ -9,8 +9,8 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc, CalcSheet
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 from ooo.dyn.sheet.fill_date_mode import FillDateMode

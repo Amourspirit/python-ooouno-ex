@@ -5,7 +5,7 @@ from typing import Any, cast, TYPE_CHECKING, Tuple
 
 from ooo.dyn.style.vertical_alignment import VerticalAlignment
 
-from ooodev.dialog import Dialogs, BorderKind, TriStateKind
+from ooodev.dialog import BorderKind, TriStateKind
 from ooodev.dialog.input import Input
 from ooodev.events.args.event_args import EventArgs
 from ooodev.dialog import Dialog
@@ -498,7 +498,7 @@ class TreeSimple:
     @property
     def dialog(self) -> Dialog:
         return self._dialog
-    
+
     @property
     def x(self) -> int:
         return self._x

@@ -6,10 +6,11 @@ import time
 import sys
 import argparse
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.gui import GUI
 from doc_window import DocWindow
 from doc_window_adapter import DocWindowAdapter
+
 # endregion Imports
 
 
@@ -37,7 +38,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 def main_loop() -> None:
     # https://stackoverflow.com/a/8685815/1171746
-    
+
     # create parser to read terminal input
     parser = argparse.ArgumentParser(description="main")
 
@@ -55,13 +56,13 @@ def main_loop() -> None:
     delay = 1.5
 
     # start run min and max to raise listen events
-    time.sleep(delay) # wait delay amount of seconds
+    time.sleep(delay)  # wait delay amount of seconds
     for _ in range(3):
         time.sleep(delay)
         GUI.minimize(dw.doc)
         time.sleep(delay)
         GUI.maximize(dw.doc)
-    
+
     # check an see if user passed in a auto terminate option
     if args.auto_terminate:
         Lo.delay(delay)
@@ -72,7 +73,7 @@ def main_loop() -> None:
 
     # while Writer is open, keep running the script unless specifically ended by user
     while 1:
-        if dw.closed is True: # wait for windowClosed event to be raised
+        if dw.closed is True:  # wait for windowClosed event to be raised
             print("\nExiting by document close.\n")
             break
         time.sleep(0.1)

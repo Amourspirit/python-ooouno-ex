@@ -11,13 +11,12 @@ from com.sun.star.util import XReplaceDescriptor
 from com.sun.star.util import XSearchable
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
-from ooodev.utils.lo import Lo
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -118,7 +117,7 @@ def main() -> int:
         _ = replace_words(doc, uk_words, us_words)
 
         Lo.delay(delay)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -129,7 +128,7 @@ def main() -> int:
             pth.mkdir(parents=True, exist_ok=True)
             doc.save_doc(fnm=pth / "replaced.doc")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

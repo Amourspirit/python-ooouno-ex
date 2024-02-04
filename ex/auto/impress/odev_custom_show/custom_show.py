@@ -2,15 +2,14 @@ from __future__ import annotations
 
 import uno
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
 from ooodev.draw import Draw, ImpressDoc
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 
@@ -44,7 +43,7 @@ class CustomShow:
                 Draw.wait_ended(sc)
 
                 Lo.delay(2000)
-                msg_result = MsgBox.msgbox(
+                msg_result = doc.msgbox(
                     "Do you wish to close document?",
                     "All done",
                     boxtype=MessageBoxType.QUERYBOX,
@@ -56,7 +55,7 @@ class CustomShow:
                 else:
                     print("Keeping document open")
             else:
-                MsgBox.msgbox(
+                doc.msgbox(
                     "There were no slides indexes to create a slide show.",
                     "No Slide Indexes",
                     boxtype=MessageBoxType.WARNINGBOX,

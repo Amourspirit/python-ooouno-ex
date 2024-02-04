@@ -7,14 +7,13 @@ from ooo.dyn.awt.point import Point
 from ooo.dyn.drawing.polygon_flags import PolygonFlags
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
 from ooodev.draw import DrawDoc, DrawPage
 from ooodev.draw.shapes import ClosedBezierShape
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.format.draw.direct.area import Gradient, PresetGradientKind
 
 # https://wiki.openoffice.org/wiki/Documentation/DevGuide/Drawings/Bezier_Shapes
@@ -37,7 +36,7 @@ class BezierBuilder:
 
             Lo.delay(2000)
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

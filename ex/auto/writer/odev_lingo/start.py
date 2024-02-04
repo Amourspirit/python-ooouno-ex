@@ -10,9 +10,9 @@
 # (<http://extensions.libreoffice.org/extension-center/lightproof-editor>;
 # <http://libreoffice.hu/2011/12/08/grammar-checking-in-libreoffice/>)
 
-from ooodev.office.write import Write
+from ooodev.write import Write
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 
 from com.sun.star.linguistic2 import XLinguServiceManager2
@@ -21,7 +21,7 @@ from com.sun.star.linguistic2 import XSpellChecker
 
 def main() -> int:
 
-    with Lo.Loader(Lo.ConnectSocket(headless=True)) as loader:
+    with Lo.Loader(Lo.ConnectSocket(headless=True)):
 
         # print linguistics info
         Write.dicts_info()
@@ -31,7 +31,9 @@ def main() -> int:
 
         Info.list_extensions()  # these include linguistic extensions
 
-        lingo_mgr = Lo.create_instance_mcf(XLinguServiceManager2, "com.sun.star.linguistic2.LinguServiceManager")
+        lingo_mgr = Lo.create_instance_mcf(
+            XLinguServiceManager2, "com.sun.star.linguistic2.LinguServiceManager"
+        )
         if lingo_mgr is None:
             print("No linguistics manager found")
             return 0
@@ -39,7 +41,9 @@ def main() -> int:
         Write.print_services_info(lingo_mgr)
 
         # load spell checker
-        speller = Lo.create_instance_mcf(XSpellChecker, "com.sun.star.linguistic2.SpellChecker")
+        speller = Lo.create_instance_mcf(
+            XSpellChecker, "com.sun.star.linguistic2.SpellChecker"
+        )
         # it is possible to age a spell checker from lingo_mgr;
         # however, it results in a error when passed to Write.spell_word for unknown reason.
         # For this reason we go with the speller above and not the next line.

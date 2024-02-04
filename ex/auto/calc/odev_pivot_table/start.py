@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 import argparse
 
-from ooodev.utils.file_io import FileIO
 from pivot_table1 import PivotTable1
 from pivot_table2 import PivotTable2
 

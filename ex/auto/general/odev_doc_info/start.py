@@ -5,12 +5,13 @@ from __future__ import annotations
 import argparse
 import sys
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 
 # endregion Imports
+
 
 # region args
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -66,6 +67,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 # endregion args
 
+
 # region Main
 def main() -> int:
     # create parser to read terminal input
@@ -99,7 +101,9 @@ def main() -> int:
             for service in Info.get_services(doc):
                 print(f"  {service}")
             print()
-            print(f"{Lo.Service.WRITER} is supported: {Info.is_doc_type(doc, Lo.Service.WRITER)}")
+            print(
+                f"{Lo.Service.WRITER} is supported: {Info.is_doc_type(doc, Lo.Service.WRITER)}"
+            )
             print()
 
             print("  Available Services for this document: ".center(80, "-"))
@@ -116,11 +120,15 @@ def main() -> int:
 
         if args.xdoc is True:
             print()
-            print(f" Method for interface: com.sun.star.text.XTextDocument ".center(80, "-"))
+            print(
+                f" Method for interface: com.sun.star.text.XTextDocument ".center(
+                    80, "-"
+                )
+            )
             i = 0
             for meth in Info.get_methods("com.sun.star.text.XTextDocument"):
                 print(f"  {meth}()")
-                i+= 1
+                i += 1
             print(f"No. methods: {i}")
 
         if args.property is True:

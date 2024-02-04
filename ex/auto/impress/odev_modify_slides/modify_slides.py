@@ -2,14 +2,13 @@ from __future__ import annotations
 
 import uno
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.draw import ImpressDoc, ImpressPage
+from ooodev.draw import ImpressDoc
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 
@@ -42,7 +41,7 @@ class ModifySlides:
             )
 
             Lo.delay(2000)
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

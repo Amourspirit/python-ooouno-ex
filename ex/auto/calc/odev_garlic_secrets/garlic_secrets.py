@@ -15,9 +15,9 @@ from ooodev.calc import Calc, GeneralFunction
 from ooodev.calc import CalcDoc, CalcSheet
 from ooodev.format.calc.direct.cell.background import Color as BgColor
 from ooodev.format.calc.direct.cell.font import Font
+from ooodev.loader import Lo
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 from ooodev.utils.view_state import ViewState

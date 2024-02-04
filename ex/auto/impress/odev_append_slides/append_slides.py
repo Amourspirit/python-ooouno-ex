@@ -12,12 +12,12 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.office.draw import Draw, mEx
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_drawing_dispatch import DrawDrawingDispatch
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.dispatch.global_edit_dispatch import GlobalEditDispatch
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 

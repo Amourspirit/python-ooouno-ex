@@ -7,8 +7,8 @@
 from __future__ import annotations
 from pathlib import Path
 import uno
-from ooodev.utils.lo import Lo
 from ooodev.calc import CalcDoc
+from ooodev.loader import Lo
 from tab_dialog import Tabs
 
 

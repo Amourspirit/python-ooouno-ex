@@ -6,9 +6,9 @@ from pathlib import Path
 
 import uno
 
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.wrapper.break_context import BreakContext
 

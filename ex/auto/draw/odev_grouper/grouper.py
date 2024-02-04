@@ -10,7 +10,6 @@ from com.sun.star.drawing import XShapeCombiner
 from com.sun.star.drawing import XShapes
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -26,9 +25,9 @@ from ooodev.draw import (
     ZoomKind,
 )
 from ooodev.draw.shapes import DrawShape
+from ooodev.loader import Lo
 from ooodev.utils.color import CommonColor
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.kind.graphic_arrow_style_kind import GraphicArrowStyleKind
 from ooodev.exceptions import ex as mEx
 
@@ -122,7 +121,7 @@ class Grouper:
             Draw.show_shapes_info(curr_slide.component)
 
             Lo.delay(1_500)
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

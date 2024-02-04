@@ -1,6 +1,6 @@
 from __future__ import annotations
 from pathlib import Path
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc, ZoomKind
 
 

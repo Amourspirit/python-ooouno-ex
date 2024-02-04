@@ -1,6 +1,6 @@
 from __future__ import annotations
 import uno
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.gallery import Gallery, GalleryKind, SearchByKind, SearchMatchKind
 
 

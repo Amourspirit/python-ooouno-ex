@@ -4,15 +4,14 @@ import uno
 
 # from ooodev.utils.info import Info
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
 from ooodev.draw import Draw, DrawDoc, DrawPage, PolySides
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.color import CommonColor
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 from ooo.dyn.drawing.circle_kind import CircleKind
@@ -59,7 +58,7 @@ class AnimBicycle:
 
             self._animate_bike(slide=slide)
             Lo.delay(2000)
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

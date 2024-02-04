@@ -9,16 +9,15 @@ from com.sun.star.text import XTextRange
 from com.sun.star.util import XSearchable
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.write import WriteDoc, ZoomKind
-from ooodev.utils.color import CommonColor, Color
-from ooodev.utils.lo import Lo
-from ooodev.utils.props import Props
 from ooodev.format.writer.direct.char.font import Font
+from ooodev.loader import Lo
+from ooodev.utils.color import CommonColor, Color
+from ooodev.utils.props import Props
+from ooodev.write import WriteDoc, ZoomKind
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -139,7 +138,7 @@ def main() -> int:
                 print(f"Found {result} results for {word}")
 
         Lo.delay(delay)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -150,7 +149,7 @@ def main() -> int:
             pth.mkdir(exist_ok=True)
             doc.save_doc(fnm=pth / "italicized.doc")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

@@ -9,8 +9,8 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.calc import CalcDoc
 from ooodev.utils.file_io import FileIO
+from ooodev.loader import Lo
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 from com.sun.star.util import XProtectable

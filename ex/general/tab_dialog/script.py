@@ -1,4 +1,3 @@
-from ooodev.utils.lo import Lo
 from ex.general.tab_dialog.mvc.controller import MultiSyntaxController
 from ex.general.tab_dialog.mvc.model import MultiSyntaxModel
 from ex.general.tab_dialog.mvc.view import MultiSyntaxView

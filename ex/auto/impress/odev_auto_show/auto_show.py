@@ -12,9 +12,9 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.draw import Draw, ImpressDoc, DrawingSlideShowKind
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 

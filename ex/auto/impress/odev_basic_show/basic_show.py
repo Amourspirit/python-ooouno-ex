@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import uno
 from ooodev.draw import Draw, ImpressDoc
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 

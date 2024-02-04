@@ -12,10 +12,10 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.draw import Draw, DrawDoc, DrawPage
+from ooodev.draw import DrawDoc, DrawPage
 from ooodev.draw.shapes import ClosedBezierShape
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 from ooodev.format.draw.direct.area import Gradient, PresetGradientKind
 

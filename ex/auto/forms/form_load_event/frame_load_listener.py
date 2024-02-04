@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 class FrameLoadListener(AdapterBase, XLoadEventListener):
     """
-    is used to receive callbacks from an asynchronous frame loader.
+    Is used to receive callbacks from an asynchronous frame loader.
 
     See Also:
         `API XLoadEventListener <https://api.libreoffice.org/docs/idl/ref/interfacecom_1_1sun_1_1star_1_1frame_1_1XLoadEventListener.html>`_

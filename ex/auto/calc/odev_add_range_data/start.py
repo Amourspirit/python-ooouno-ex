@@ -7,7 +7,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.calc import CalcDoc, CalcSheet, ZoomKind
 from ooodev.format.calc.direct.cell.borders import Borders, Side
 from ooodev.utils.color import CommonColor
@@ -47,7 +47,8 @@ def do_cell_range(sheet: CalcSheet) -> None:
     # set Border around data and summary.
     bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
     rng = sheet.get_range(range_name="A2:C24")
-    rng.set_style([bdr])
+    # rng.set_style([bdr])
+    rng.apply_styles(bdr)
 
 
 def main() -> int:

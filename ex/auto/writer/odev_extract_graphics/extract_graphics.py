@@ -8,9 +8,9 @@ from com.sun.star.text import XTextShapesSupplier
 
 from ooodev.office.draw import Draw
 from ooodev.write import WriteDoc
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.images_lo import ImagesLo
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 

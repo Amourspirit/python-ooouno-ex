@@ -1,12 +1,17 @@
 from __future__ import annotations
 
 import uno
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
 from ooodev.exceptions.ex import CancelEventError
+from ooodev.loader import Lo
 from ooodev.office.write import Write
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 from ooo.dyn.presentation.animation_speed import AnimationSpeed as AnimationSpeed

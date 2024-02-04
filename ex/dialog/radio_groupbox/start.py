@@ -6,7 +6,7 @@
 # see: http://www.babelsoft.net/forum/viewtopic.php?t=24545
 from __future__ import annotations
 import uno
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.calc import CalcDoc
 from radio_group_box import RadioGroupBox
 

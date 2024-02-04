@@ -33,23 +33,17 @@ from com.sun.star.text import XTextDocument
 from com.sun.star.view import XSelectionChangeListener
 from com.sun.star.view import XSelectionSupplier
 
-from ooodev.dialog.msgbox import (
-    MsgBox,
-    MessageBoxType,
-    MessageBoxButtonsEnum,
-    MessageBoxResultsEnum,
-)
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
 from ooodev.events.args.event_args import EventArgs
 from ooodev.format.writer.direct.char.font import Font
-from ooodev.office.write import Write
+from ooodev.loader import Lo
+from ooodev.write import Write
 from ooodev.theme import ThemeGeneral
 from ooodev.utils import color as color_util
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.forms import Forms, FormComponentKind, FormComponentType
 from ooodev.utils.gui import GUI
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 
 # endregion imports

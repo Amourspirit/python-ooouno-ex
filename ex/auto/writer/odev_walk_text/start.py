@@ -7,12 +7,11 @@ from pathlib import Path
 import uno
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 
 
@@ -102,7 +101,7 @@ def main() -> int:
         show_lines(doc)
 
         Lo.delay(1_000)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

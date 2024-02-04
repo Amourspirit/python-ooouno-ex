@@ -6,10 +6,11 @@ from ooodev.adapter.frame.terminate_events import TerminateEvents
 from ooodev.adapter.lang.event_events import EventEvents
 from ooodev.events.args.event_args import EventArgs
 from ooodev.events.lo_events import Events
+from ooodev.events.lo_events import LoEvents
 from ooodev.events.lo_named_event import LoNamedEvent
+from ooodev.loader import Lo
 from ooodev.office.calc import Calc
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 
 # endregion Imports
 
@@ -34,6 +35,7 @@ class DocMonitor:
         # Event handlers are defined as methods on the class.
         # However class methods are not callable by the event system.
         # The solution is to assign the method to class fields and use them to add the event callbacks.
+
         self._fn_on_notify_termination = self.on_notify_termination
         self._fn_on_query_termination = self.on_query_termination
         self._fn_on_disposing = self.on_disposing
@@ -52,15 +54,20 @@ class DocMonitor:
         # below a listener is attached to Lo.bridge that does the same job.
         self.events = Events(source=self)
         self.events.on(LoNamedEvent.BRIDGE_DISPOSED, self._fn_on_disposed)
+        LoEvents().add_observer(self.events)
+        # LoEvents().on(LoNamedEvent.BRIDGE_DISPOSED, self._fn_on_disposed)
 
         # attach a listener to the bridge connection that gets notified if
         # office bridge connection terminates unexpected.
         # Lo.bridge is not available if a script is run as a macro.
-        self._bridge_events = EventEvents()
-        self._bridge_events.add_event_disposing(self._fn_on_disposing)
-        Lo.bridge.addEventListener(self._bridge_events.events_listener_event)
+        self._bridge_events = EventEvents(subscriber=Lo.bridge)
+        # self._bridge_events = EventEvents()
+        self._bridge_events.add_event_disposing(self._fn_on_disposing_bridge)
+        # Lo.bridge.addEventListener(self._bridge_events.events_listener_event)
 
-    def on_notify_termination(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_notify_termination(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """
         is called when the master environment is finally terminated.
 
@@ -70,7 +77,7 @@ class DocMonitor:
         self.bridge_disposed = True
         self.closed = True
 
-    def on_query_termination(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_query_termination(self, source: Any, event_args: EventArgs) -> None:
         """
         is called when the master environment (e.g., desktop) is about to terminate.
 
@@ -82,7 +89,7 @@ class DocMonitor:
         """
         print("TL: Starting Closing")
 
-    def on_disposing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_disposing(self, source: Any, event_args: EventArgs) -> None:
         """
         gets called when the broadcaster is about to be disposed.
 
@@ -98,7 +105,7 @@ class DocMonitor:
         # script will stop before dispose is called
         print("TL: Disposing")
 
-    def on_disposing_bridge(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_disposing_bridge(self, source: Any, event_args: EventArgs) -> None:
         # do not try and exit script here.
         # for some reason when office triggers this method calls such as:
         # raise SystemExit(1)

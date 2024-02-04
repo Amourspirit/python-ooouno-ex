@@ -7,11 +7,11 @@ from ooo.dyn.awt.pos_size import PosSize
 
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.utils.lo import Lo
-from tree_simple import TreeSimple
+from ooodev.loader import Lo
 from tree_flat import TreeFlat
 from tree_flat_data_value import TreeFlatDataValue
 from tree_search_re import TreeSearchRe
+from tree_simple import TreeSimple
 
 
 if TYPE_CHECKING:

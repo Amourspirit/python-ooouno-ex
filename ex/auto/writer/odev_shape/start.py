@@ -1,8 +1,8 @@
 from __future__ import annotations
 import uno
 from ooodev.format.inner.direct.write.frame.frame_type.position import RelVertOrient
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc, ZoomKind
-from ooodev.utils.lo import Lo
 from ooodev.units import UnitMM100
 
 from ooodev.format.writer.direct.obj.type import (
@@ -16,7 +16,6 @@ from ooodev.format.writer.direct.obj.type import (
     RelHoriOrient,
 )
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -109,7 +108,7 @@ def main() -> int:
         # pause for 1 second
         Lo.delay(1_000)
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

@@ -3,7 +3,7 @@ import sys
 import argparse
 import time
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from modify_listener import ModifyListener
 from modify_listener_adapter import ModifyListenerAdapter
 

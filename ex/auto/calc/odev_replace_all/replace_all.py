@@ -14,9 +14,9 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc, CalcCellRange, ZoomKind
+from ooodev.loader import Lo
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.table_helper import TableHelper
 from ooodev.utils.type_var import PathOrStr
 from ooodev.format import Styler

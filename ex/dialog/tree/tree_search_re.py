@@ -1,8 +1,8 @@
 from __future__ import annotations
 from typing import cast, TYPE_CHECKING
 import re
-from ooodev.utils.lo import Lo
 from ooodev.dialog.search.tree_search import SearchTree, RuleTextRegex, RuleDataRegex
+from ooodev.loader import Lo
 
 from tree_simple import TreeSimple
 

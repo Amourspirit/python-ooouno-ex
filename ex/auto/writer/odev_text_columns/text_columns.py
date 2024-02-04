@@ -4,12 +4,11 @@ from com.sun.star.container import XNamed
 from com.sun.star.text import XTextColumns
 from com.sun.star.text import XTextContent
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.props import Props
 from ooodev.write import WriteDoc
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -99,7 +98,7 @@ class TextColumns:
                 new_content=para, predecessor=named_section
             )
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

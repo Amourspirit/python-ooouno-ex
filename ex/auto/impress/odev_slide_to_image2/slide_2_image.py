@@ -7,8 +7,8 @@ import uno
 from ooodev.draw import ImpressDoc, DrawNamedEvent
 from ooodev.events.args.cancel_event_args_export import CancelEventArgsExport
 from ooodev.events.args.event_args_export import EventArgsExport
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 if TYPE_CHECKING:

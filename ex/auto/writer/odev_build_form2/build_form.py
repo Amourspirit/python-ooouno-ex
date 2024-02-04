@@ -13,11 +13,11 @@ from ooodev.events.args.event_args import EventArgs
 from ooodev.form import BorderKind, TriStateKind
 from ooodev.form import ListSourceType
 from ooodev.format.writer.direct.char.font import Font
+from ooodev.loader import Lo
 from ooodev.units import UnitMM100
 from ooodev.utils.color import StandardColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
-from ooodev.write import Write, WriteDoc, ZoomKind
+from ooodev.write import WriteDoc, ZoomKind
 
 from ooodev.format.draw.direct.position_size.position_size import Protect
 from ooodev.format.writer.modify.page.page import Margins

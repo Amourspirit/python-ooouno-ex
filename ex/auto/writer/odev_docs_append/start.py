@@ -5,10 +5,10 @@ from typing import cast
 from pathlib import Path
 
 
-from ooodev.office.write import Write
+from ooodev.write import Write
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.document import XDocumentInsertable

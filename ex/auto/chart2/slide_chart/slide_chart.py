@@ -12,6 +12,7 @@ from ooodev.dialog.msgbox import (
 from ooodev.calc import CalcDoc
 from ooodev.draw import ImpressDoc
 from ooodev.exceptions import ex as mEx
+from ooodev.loader import Lo
 from ooodev.office.chart2 import Chart2, Angle
 from ooodev.office.draw import DrawingNameSpaceKind
 from ooodev.units import UnitMM
@@ -20,7 +21,6 @@ from ooodev.utils.dispatch.global_edit_dispatch import GlobalEditDispatch
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.images_lo import ImagesLo
 from ooodev.utils.kind.chart2_types import ChartTypes
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 
