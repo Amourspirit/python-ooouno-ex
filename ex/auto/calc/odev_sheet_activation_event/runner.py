@@ -2,12 +2,11 @@ from __future__ import annotations
 from typing import Any, cast, TYPE_CHECKING
 import uno
 
-from ooodev.utils.lo import Lo
-from ooodev.calc import Calc, CalcDoc, ZoomKind
+from ooodev.loader import Lo
+from ooodev.calc import CalcDoc, ZoomKind
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
 from ooodev.events.args.event_args import EventArgs
-
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType
+from ooodev.dialog.msgbox import MessageBoxType
 
 if TYPE_CHECKING:
     from com.sun.star.sheet import ActivationEvent
@@ -37,9 +36,7 @@ class Runner:
             self._top_win_ev.add_event_window_closing(self._fn_on_window_closing)
             sheet = self._doc.sheets[0]
             sheet.name = "Sheet 1"
-            sheet[
-                "A1"
-            ].value = (
+            sheet["A1"].value = (
                 "This is Sheet 1. Select a different sheet to see the event in action."
             )
             # merge the cells just so the message looks nice
@@ -83,7 +80,7 @@ class Runner:
             # get the activate sheet as a CalcSheet object
             sheet = self._doc.sheets.get_sheet(event.ActiveSheet)
             print("    Active Sheet:", sheet.name)
-            MsgBox.msgbox(
+            self._doc.msgbox(
                 f"The active sheet is now {sheet.name}.",
                 "Sheet Activation Event",
                 boxtype=MessageBoxType.INFOBOX,

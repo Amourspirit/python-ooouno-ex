@@ -6,12 +6,17 @@ import uno
 from com.sun.star.sheet import XSpreadsheet
 from com.sun.star.sheet import XSpreadsheetDocument
 
-from ooodev.dialog.msgbox import MsgBox, MessageBoxType, MessageBoxButtonsEnum, MessageBoxResultsEnum
+from ooodev.dialog.msgbox import (
+    MsgBox,
+    MessageBoxType,
+    MessageBoxButtonsEnum,
+    MessageBoxResultsEnum,
+)
+from ooodev.loader import Lo
 from ooodev.office.calc import Calc
 from ooodev.office.chart import Chart, ChartDiagramKind, ChartDataCaptionEnum, Intensity
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 
@@ -100,9 +105,15 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A43", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E43"))
-        Chart.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E45"))
-        Chart.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="F44"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E43")
+        )
+        Chart.set_x_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E45")
+        )
+        Chart.set_y_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="F44")
+        )
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
 
     def _bubble_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
@@ -111,7 +122,12 @@ class ChartViews:
     def _bar_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
         self._chart(doc=doc, sheet=sheet, diagram_kind=ChartDiagramKind.BAR)
 
-    def _chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet, diagram_kind: ChartDiagramKind) -> None:
+    def _chart(
+        self,
+        doc: XSpreadsheetDocument,
+        sheet: XSpreadsheet,
+        diagram_kind: ChartDiagramKind,
+    ) -> None:
         # uses "Sneakers Sold this Month" table
         range_addr = Calc.get_address(sheet=sheet, range_name="A2:B8")
         chart_doc = Chart.insert_chart(
@@ -124,9 +140,15 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A1", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A1"))
-        Chart.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A2"))
-        Chart.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B2"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A1")
+        )
+        Chart.set_x_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A2")
+        )
+        Chart.set_y_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B2")
+        )
 
     def _donut_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
         # draws a 3D donut chart with 2 rings
@@ -146,7 +168,9 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A44", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A43"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A43")
+        )
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
         subtitle = f'Outer: {Calc.get_string(sheet=sheet, cell_name="B44")}\nInner: {Calc.get_string(sheet=sheet, cell_name="C44")}'
         Chart.set_subtitle(chart_doc=chart_doc, subtitle=subtitle)
@@ -169,9 +193,13 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name=cell_name, doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A55"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A55")
+        )
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
-        Chart.set_data_caption(chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE)
+        Chart.set_data_caption(
+            chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE
+        )
 
     def _net_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
         # draws a net chart;
@@ -191,9 +219,13 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name=cell_name, doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A55"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A55")
+        )
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
-        Chart.set_data_caption(chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE)
+        Chart.set_data_caption(
+            chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE
+        )
 
     def _line_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
         # draw a line chart with data points, no legend;
@@ -209,9 +241,15 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A1", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A13"))
-        Chart.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A14"))
-        Chart.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B14"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A13")
+        )
+        Chart.set_x_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A14")
+        )
+        Chart.set_y_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B14")
+        )
         Chart.set_area_transparency(chart_doc=chart_doc, val=Intensity(30))
 
     def _pie_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
@@ -228,11 +266,17 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A1", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E1"))
-        Chart.set_subtitle(chart_doc=chart_doc, subtitle=Calc.get_string(sheet=sheet, cell_name="F2"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E1")
+        )
+        Chart.set_subtitle(
+            chart_doc=chart_doc, subtitle=Calc.get_string(sheet=sheet, cell_name="F2")
+        )
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
 
-    def _stock_prices_chart(self, doc: XSpreadsheetDocument, sheet: XSpreadsheet) -> None:
+    def _stock_prices_chart(
+        self, doc: XSpreadsheetDocument, sheet: XSpreadsheet
+    ) -> None:
         # draws a stock chart, with an extra pork bellies line
         cell_name = "E148"
         range_addr = Calc.get_address(sheet=sheet, range_name="E141:I146")
@@ -249,9 +293,15 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A148", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E140"))
-        Chart.set_data_caption(chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE)
-        Chart.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E141"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E140")
+        )
+        Chart.set_data_caption(
+            chart_doc=chart_doc, label_types=ChartDataCaptionEnum.NONE
+        )
+        Chart.set_x_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="E141")
+        )
         Chart.set_y_axis_title(chart_doc=chart_doc, title="Dollars")
 
         Chart.view_legend(chart_doc=chart_doc, is_visible=True)
@@ -274,6 +324,12 @@ class ChartViews:
         )
         Calc.goto_cell(cell_name="A148", doc=doc)
 
-        Chart.set_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A109"))
-        Chart.set_x_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A110"))
-        Chart.set_y_axis_title(chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B110"))
+        Chart.set_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A109")
+        )
+        Chart.set_x_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="A110")
+        )
+        Chart.set_y_axis_title(
+            chart_doc=chart_doc, title=Calc.get_string(sheet=sheet, cell_name="B110")
+        )

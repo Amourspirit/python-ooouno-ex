@@ -10,15 +10,15 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
+from ooodev.calc import CalcDoc
 from ooodev.format.calc.direct.cell.borders import Borders, Padding
 from ooodev.format.calc.direct.cell.font import Font
-from ooodev.calc import CalcDoc
-from ooodev.write import Write
+from ooodev.loader import Lo
 from ooodev.units.unit_mm import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
+from ooodev.write import Write
 
 
 class CellTexts:

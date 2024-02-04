@@ -3,14 +3,13 @@ from __future__ import annotations
 import uno
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
 from ooodev.draw import Draw, DrawDoc, DrawPage, Intensity, ZoomKind
+from ooodev.loader import Lo
 from ooodev.utils.color import CommonColor
-from ooodev.utils.lo import Lo
 
 
 class DrawPicture:
@@ -40,14 +39,14 @@ class DrawPicture:
             Draw.report_pos_size(s.component)
 
             Lo.delay(2000)
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,
                 buttons=MessageBoxButtonsEnum.BUTTONS_YES_NO,
             )
             if msg_result == MessageBoxResultsEnum.YES:
-                doc.close_doc()
+                doc.close()
                 Lo.close_office()
             else:
                 print("Keeping document open")

@@ -13,10 +13,10 @@ from ooo.dyn.presentation.effect_node_type import EffectNodeTypeEnum
 from ooo.dyn.presentation.effect_preset_class import EffectPresetClassEnum
 
 from ooodev.draw import Draw, ImpressDoc
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 
 
 class AnimationDemo:

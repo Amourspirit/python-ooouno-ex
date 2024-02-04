@@ -4,9 +4,9 @@ from pathlib import Path
 
 import uno
 from ooodev.draw import ImpressDoc
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.images_lo import ImagesLo
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 from ooodev.draw.filter.export_jpg import ExportJpg
 from ooodev.draw.filter.export_png import ExportPng

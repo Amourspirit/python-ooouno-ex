@@ -4,12 +4,11 @@ from pathlib import Path
 from typing import List
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.format.writer.style.para import Para as ParaStyle
@@ -56,7 +55,7 @@ def main() -> int:
         Lo.delay(delay)
         cursor.append(f"Timestamp: {DateUtil.time_stamp()}")
         Lo.delay(delay)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -67,7 +66,7 @@ def main() -> int:
             tmp.mkdir(exist_ok=True)
             doc.save_doc(tmp / "table.odt")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

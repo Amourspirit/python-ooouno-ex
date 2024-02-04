@@ -4,12 +4,12 @@
 <img src="https://user-images.githubusercontent.com/4193389/204155527-4e975c63-ea78-4591-a659-d9ddafa8970c.png" width="327" height="218">
 </p>
 
-
 This is a basic example that shows how attach a Terminate Monitor to office.
 In addition a listener is attached to bridge connection to office and
 if the bridge terminates for any reason before office is closed then script will also terminate.
 
-This script will stay running until office is closed or `ctl+c` is pressed.
+This script will stay running until office is closed or `ctl+c` is pressed. Note that closing the window does not trigger termination.
+Must use `File --> Exit LibreOffice` or `ctl+q` to close office in order to trigger termination.
 
 As (*Calc in this case*) window terminates. The events are captured and printed to the screen.
 

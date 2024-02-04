@@ -3,11 +3,10 @@ from __future__ import annotations
 import uno
 from typing import Any, cast, TYPE_CHECKING, Tuple
 
-from ooodev.dialog import Dialogs, BorderKind
+from ooodev.dialog import BorderKind
 from ooodev.dialog import Dialog
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
-from ooodev.utils.data_type.range_obj import RangeObj
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent

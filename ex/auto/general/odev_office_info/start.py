@@ -9,12 +9,13 @@ import uno
 
 from com.sun.star.beans import XPropertySet
 
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 
 # endregion Imports
+
 
 # region args
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -87,6 +88,7 @@ def show_services(title: str, srv_name: str | None = None) -> None:
 
 # endregion Show
 
+
 # region Main
 def main() -> int:
     # create parser to read terminal input
@@ -112,7 +114,7 @@ def main() -> int:
 
         print(f"\nWorking Dir: {Info.get_paths('Work')}")
 
-        addin_dir = Info.get_paths('Addin')
+        addin_dir = Info.get_paths("Addin")
         print(f"\nAddin Dir: {addin_dir}")
         print(f"Addin Path: {FileIO.uri_to_path(addin_dir)}")
         print(f"\nOffice Dir: {Info.get_office_dir()}")
@@ -132,10 +134,17 @@ def main() -> int:
         if args.services_calc:
             show_services(" Services for Calc: ", Lo.Service.CALC)
         if args.user_data:
-            props = Lo.qi(XPropertySet, Info.get_config(node_str='Data', node_path="/org.openoffice.UserProfile/"))
+            props = Lo.qi(
+                XPropertySet,
+                Info.get_config(
+                    node_str="Data", node_path="/org.openoffice.UserProfile/"
+                ),
+            )
             Props.show_obj_props("User Data", props)
-            print(f'  Full Name: {props.getPropertyValue("givenname")} {props.getPropertyValue("sn")}'.rstrip())
-        
+            print(
+                f'  Full Name: {props.getPropertyValue("givenname")} {props.getPropertyValue("sn")}'.rstrip()
+            )
+
         print()
     return 0
 

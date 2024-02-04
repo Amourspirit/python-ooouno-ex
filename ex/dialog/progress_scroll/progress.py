@@ -8,8 +8,8 @@ from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
+from ooodev.loader import Lo
 from ooodev.utils.color import StandardColor
-from ooodev.utils.lo import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import AdjustmentEvent

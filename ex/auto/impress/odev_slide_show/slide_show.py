@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import uno
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -15,8 +14,8 @@ from ooodev.draw import (
     DrawingGradientKind,
     DrawingSlideShowKind,
 )
+from ooodev.loader import Lo
 from ooodev.utils.dispatch.draw_view_dispatch import DrawViewDispatch
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 
 from ooo.dyn.presentation.animation_effect import AnimationEffect
@@ -133,7 +132,7 @@ class SlideShow:
             # Lo.dispatch_cmd(DrawViewDispatch.PRESENTATION_END)
             Draw.wait_ended(sc)
             Lo.delay(1_000)
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

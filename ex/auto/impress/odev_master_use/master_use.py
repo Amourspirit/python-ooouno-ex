@@ -8,12 +8,11 @@
 from __future__ import annotations
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.draw import Draw, ImpressDoc
 from ooodev.utils.color import CommonColor
 
@@ -102,7 +101,7 @@ class MasterUse:
 
             Lo.delay(2_000)
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

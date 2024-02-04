@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, cast, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 import uno
 
@@ -9,7 +9,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.calc import CalcDoc, ZoomKind, CalcNamedEvent
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from pathlib import Path
 
 if TYPE_CHECKING:

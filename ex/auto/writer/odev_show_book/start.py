@@ -8,8 +8,8 @@ from pathlib import Path
 
 import uno
 
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
-from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
 
 

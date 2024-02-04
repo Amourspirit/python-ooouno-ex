@@ -7,7 +7,6 @@ from ooo.dyn.awt.point import Point
 from ooo.dyn.drawing.polygon_flags import PolygonFlags
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -15,8 +14,8 @@ from ooodev.dialog.msgbox import (
 from ooodev.exceptions import ex as mEx
 from ooodev.draw import Draw, DrawDoc, DrawPage
 from ooodev.draw.shapes import OpenBezierShape
+from ooodev.loader import Lo
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.type_var import PathOrStr
 
 
@@ -46,7 +45,7 @@ class BezierBuilder:
 
             Lo.delay(2000)
 
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

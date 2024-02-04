@@ -20,7 +20,7 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.draw import DrawDoc, DrawPage
 from ooodev.utils.color import CommonColor
 from ooodev.utils.gui import GUI

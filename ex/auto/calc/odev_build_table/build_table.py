@@ -9,22 +9,22 @@ from ooodev.dialog.msgbox import (
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.format import Styler
-from ooodev.format.calc.direct.cell import borders as direct_borders
-from ooodev.format.calc.modify.cell import borders as modify_borders
 from ooodev.format.calc.modify.cell.alignment import (
     HoriAlignKind,
     VertAlignKind,
     TextAlign,
 )
+from ooodev.calc import Calc, CalcDoc, CalcSheet, ZoomKind
+from ooodev.format import Styler
+from ooodev.format.calc.direct.cell import borders as direct_borders
+from ooodev.format.calc.modify.cell import borders as modify_borders
 from ooodev.format.calc.modify.cell.background import Color as BgColor
 from ooodev.format.calc.modify.cell.font import FontEffects
-from ooodev.calc import Calc, CalcDoc, CalcSheet, ZoomKind
+from ooodev.loader import Lo
 from ooodev.office.draw import Draw
 from ooodev.units import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.lo import Lo
 from ooodev.utils.table_helper import TableHelper
 from ooodev.utils.type_var import PathOrStr
 
@@ -170,19 +170,19 @@ class BuildTable:
             "DEC",
         )
         sheet.set_row(values=vals, cell_name="B1")
-        sheet.set_val(value="SUM", cell_name="N1")
+        sheet["N1"].value = "SUM"
 
-        sheet.set_val(value="Smith", cell_name="A2")
+        sheet["A2"].value = "Smith"
         vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
         sheet.set_row(values=vals, cell_name="B2")
-        sheet.set_val(value="=SUM(B2:M2)", cell_name="N2")
+        sheet["N2"].value = "=SUM(B2:M2)"
 
-        sheet.set_val(value="Jones", col=0, row=2)
+        sheet[(0, 2)].value = "Jones"
         vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
         sheet.set_row(values=vals, col_start=1, row_start=2)
-        sheet.set_val(value="=SUM(B3:M3)", col=13, row=2)
+        sheet[(13, 3)].value = "=SUM(B3:M3)"
 
-        sheet.set_val(value="Brown", col=0, row=3)
+        sheet[(0, 3)].value = "Brown"
         vals = (
             31.45,
             -20.9,
@@ -198,7 +198,7 @@ class BuildTable:
             38.5,
         )
         sheet.set_row(values=vals, col_start=1, row_start=3)
-        sheet.set_val(value="=SUM(A4:L4)", col=13, row=3)
+        sheet[(13, 3)].value = "=SUM(A4:L4)"
 
     def _build_cols(self, sheet: CalcSheet) -> None:
         vals = (
@@ -216,19 +216,19 @@ class BuildTable:
             "DEC",
         )
         sheet.set_col(values=vals, cell_name="A2")
-        sheet.set_val(value="SUM", cell_name="A14")
+        sheet["A14"].value = "SUM"
 
-        sheet.set_val(value="Smith", cell_name="B1")
+        sheet["B1"].value = "Smith"
         vals = (42, 58.9, -66.5, 43.4, 44.5, 45.3, -67.3, 30.5, 23.2, -97.3, 22.4, 23.5)
         sheet.set_col(values=vals, cell_name="B2")
-        sheet.set_val(value="=SUM(B2:M2)", cell_name="B14")
+        sheet["B14"].value = "=SUM(B2:M2)"
 
-        sheet.set_val(value="Jones", col=2, row=0)
+        sheet[(2, 0)].value = "Jones"
         vals = (21, 40.9, -57.5, -23.4, 34.5, 59.3, 27.3, -38.5, 43.2, 57.3, 25.4, 28.5)
         sheet.set_col(values=vals, col_start=2, row_start=1)
-        sheet.set_val(value="=SUM(B3:M3)", col=2, row=13)
+        sheet[(2, 13)].value = "=SUM(B3:M3)"
 
-        sheet.set_val(value="Brown", col=3, row=0)
+        sheet[(3, 0)].value = "Brown"
         vals = (
             31.45,
             -20.9,
@@ -244,7 +244,7 @@ class BuildTable:
             38.5,
         )
         sheet.set_col(values=vals, col_start=3, row_start=1)
-        sheet.set_val(value="=SUM(A4:L4)", col=3, row=13)
+        sheet[(3, 13)].value = "=SUM(A4:L4)"
 
     def _build_array(self, sheet: CalcSheet) -> None:
         vals = (
@@ -311,10 +311,14 @@ class BuildTable:
         )
         sheet.set_array(values=vals, name="A1:M4")  # or just A1
 
-        sheet.set_val(cell_name="N1", value="SUM")
-        sheet.set_val(cell_name="N2", value="=SUM(B2:M2)")
-        sheet.set_val(cell_name="N3", value="=SUM(B3:M3)")
-        sheet.set_val(cell_name="N4", value="=SUM(B4:M4)")
+        cell = sheet["N1"]
+        cell.value = "SUM"
+        cell = cell.get_cell_down()  # N2
+        cell.value = "=SUM(B2:M2)"
+        cell = cell.get_cell_down()  # N3
+        cell.value = "=SUM(B3:M3)"
+        cell = cell.get_cell_down()  # N4
+        cell.value = "=SUM(B4:M4)"
 
     def _convert_addresses(self, sheet: CalcSheet) -> None:
         # cell name <--> position
@@ -426,7 +430,7 @@ class BuildTable:
         bdr = direct_borders.Borders(left=side, right=side)
         # Apply border to range
         rng = sheet.get_range(range_name="N1:N4")
-        rng.set_style(styles=[bdr])
+        rng.apply_styles(bdr)
 
     # endregion Private Methods
 

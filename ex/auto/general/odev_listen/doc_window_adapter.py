@@ -4,9 +4,9 @@ from typing import TYPE_CHECKING, Any, cast
 
 from ooodev.events.args.event_args import EventArgs
 from ooodev.adapter.awt.top_window_events import TopWindowEvents
+from ooodev.loader import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 
 from com.sun.star.awt import XWindow
 
@@ -57,31 +57,43 @@ class DocWindowAdapter:
         GUI.set_visible(True, self.doc)
         # triggers 2 opened and 2 activated events
 
-    def on_window_opened(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_opened(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window is activated."""
         event = cast("EventObject", event_args.event_data)
         print("WA: Opened")
         x_win = Lo.qi(XWindow, event.Source)
         GUI.print_rect(x_win.getPosSize())
 
-    def on_window_activated(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_activated(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window is activated."""
         print("WA: Activated")
         print(f"  Title bar: {GUI.get_title_bar()}")
 
-    def on_window_deactivated(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_deactivated(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window is deactivated."""
         print("WA: Minimized")
 
-    def on_window_minimized(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_minimized(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window is iconified."""
         print("WA:  De-activated")
 
-    def on_window_normalized(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_normalized(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window is deiconified."""
         print("WA: Normalized")
 
-    def on_window_closing(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_closing(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """
         is invoked when a window is in the process of being closed.
 
@@ -89,7 +101,9 @@ class DocWindowAdapter:
         """
         print("WA: Closing")
 
-    def on_window_closed(self, source: Any, event_args: EventArgs, *args, **kwargs) -> None:
+    def on_window_closed(
+        self, source: Any, event_args: EventArgs, *args, **kwargs
+    ) -> None:
         """is invoked when a window has been closed."""
         self.closed = True
         print("WA: Closed")

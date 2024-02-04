@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
@@ -21,6 +20,7 @@ from ooodev.format.writer.direct.para.alignment import Alignment
 from ooodev.format.writer.direct.para.area import Color as ParaBgColor
 from ooodev.format.writer.direct.para.outline_list import ListStyle, StyleListKind
 from ooodev.format.writer.style.para import Para as ParaStyle
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 from ooodev.theme import ThemeGeneral
 from ooodev.units import UnitMM
@@ -29,7 +29,6 @@ from ooodev.utils.color import CommonColor
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.images_lo import ImagesLo
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.utils.props import Props
 
 
@@ -247,7 +246,7 @@ def main() -> int:
         view_cursor.goto_range(bm_range, False)
 
         Lo.delay(delay)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -258,7 +257,7 @@ def main() -> int:
             pth.mkdir(parents=True, exist_ok=True)
             doc.save_doc(pth / "build.odt")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

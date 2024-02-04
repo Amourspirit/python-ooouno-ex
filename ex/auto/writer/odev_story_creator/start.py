@@ -8,18 +8,17 @@ from pathlib import Path
 import uno
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
 from ooodev.format.writer.direct.char.font import Font
 from ooodev.format.writer.direct.para.indent_space import Spacing, LineSpacing, ModeKind
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc, WriteTextCursor, FamilyNamesKind
 from ooodev.units import UnitMM
 from ooodev.utils.date_time_util import DateUtil
 from ooodev.utils.info import Info
-from ooodev.utils.lo import Lo
 from ooodev.format.writer.style.para import Para as StylePara, StyleParaKind
 from ooodev.utils.color import CommonColor
 from ooodev.format.writer.direct.page.header import Header
@@ -192,7 +191,7 @@ def main() -> int:
         pth.mkdir(exist_ok=True)
         doc_pth = pth / "bigStory.doc"
         if visible:
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to save document?",
                 "Save",
                 boxtype=MessageBoxType.QUERYBOX,
@@ -205,7 +204,7 @@ def main() -> int:
             doc.save_doc(fnm=doc_pth)
             print(f'Saved to: "{doc_pth}"')
         if visible:
-            msg_result = MsgBox.msgbox(
+            msg_result = doc.msgbox(
                 "Do you wish to close document?",
                 "All done",
                 boxtype=MessageBoxType.QUERYBOX,

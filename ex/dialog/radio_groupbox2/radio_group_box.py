@@ -8,13 +8,12 @@ from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
     from com.sun.star.awt import ItemEvent
     from ooodev.dialog.dl_control.ctl_radio_button import CtlRadioButton
-    from ooodev.proto.office_document_t import OfficeDocumentT
 
 
 # endregion Imports

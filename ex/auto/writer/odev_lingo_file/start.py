@@ -12,9 +12,9 @@ from typing import cast
 import uno
 from com.sun.star.text import XTextDocument
 
-from ooodev.office.write import Write
+from ooodev.loader import Lo
+from ooodev.write import Write
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 from ooodev.wrapper.break_context import BreakContext
 
 
@@ -52,8 +52,22 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         dest="file_path",
         required=True,
     )
-    parser.add_argument("-s", "--show", help="Show Document", action="store_true", dest="show", default=False)
-    parser.add_argument("-v", "--verbose", help="Verbose output", action="store_true", dest="verbose", default=False)
+    parser.add_argument(
+        "-s",
+        "--show",
+        help="Show Document",
+        action="store_true",
+        dest="show",
+        default=False,
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action="store_true",
+        dest="verbose",
+        default=False,
+    )
 
 
 def main() -> int:
@@ -70,7 +84,6 @@ def main() -> int:
         sys.argv.append("-s")
         sys.argv.append("-f")
         sys.argv.append(str(pth))
-        
 
     # read the current command line args
     args = parser.parse_args()
@@ -86,7 +99,10 @@ def main() -> int:
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
     with BreakContext(
-        Lo.Loader(connector=Lo.ConnectSocket(headless=not visible), opt=Lo.Options(verbose=args.verbose))
+        Lo.Loader(
+            connector=Lo.ConnectSocket(headless=not visible),
+            opt=Lo.Options(verbose=args.verbose),
+        )
     ) as loader:
         fnm = cast(str, args.file_path)
 

@@ -4,7 +4,7 @@ import argparse
 import time
 import sys
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from build_form import BuildForm
 
 
@@ -33,7 +33,7 @@ def main_loop() -> None:
     # delay in seconds
     delay = 1.5
 
-    db_fnm = Path(__file__).parent/ "data"  /"liang.odb"
+    db_fnm = Path(__file__).parent / "data" / "liang.odb"
     builder = BuildForm(db_fnm)
 
     # check an see if user passed in a auto terminate option

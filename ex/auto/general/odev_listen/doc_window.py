@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 import unohelper
 
+from ooodev.loader import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 
 from com.sun.star.awt import XExtendedToolkit
 from com.sun.star.awt import XTopWindowListener

@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
 from ooodev.utils.file_io import FileIO
 
@@ -53,7 +53,9 @@ def main() -> int:
             # just in case user did not include . in --ext value
             ext = "." + ext
 
-        p_save = Path(p_fnm.parent, f"{name}{ext}")  # new file, same as old file but different ext
+        p_save = Path(
+            p_fnm.parent, f"{name}{ext}"
+        )  # new file, same as old file but different ext
 
         doc = Lo.open_doc(fnm=p_fnm, loader=loader)
         Lo.save_doc(doc=doc, fnm=p_save)

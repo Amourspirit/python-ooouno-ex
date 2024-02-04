@@ -1,8 +1,7 @@
 import sys
 from pathlib import Path
-from ooodev.utils.file_io import FileIO
-from pathlib import Path
 from copy_slide import CopySlide
+
 
 # region main()
 def main() -> int:

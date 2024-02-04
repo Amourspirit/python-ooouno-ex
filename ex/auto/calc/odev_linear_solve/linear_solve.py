@@ -7,7 +7,7 @@ from ooo.dyn.sheet.solver_constraint_operator import SolverConstraintOperator
 
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
 from ooodev.utils.props import Props
 

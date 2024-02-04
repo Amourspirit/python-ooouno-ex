@@ -8,14 +8,13 @@ import re
 
 from text_to_speech import speak
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.office.write import Write
 from ooodev.utils.gui import GUI
 from ooodev.wrapper.break_context import BreakContext
 
 from com.sun.star.text import XTextDocument
 from com.sun.star.text import XSentenceCursor
-from com.sun.star.text import XTextRangeCompare
 
 
 regex = re.compile("[^a-zA-Z0-9, ]")
@@ -45,7 +44,9 @@ def speak_sentences(doc: XTextDocument) -> None:
 
         if len(curr_para_str) > 0:
             # set sentence cursor pointing to start of this paragraph
-            cursor = para_cursor.getText().createTextCursorByRange(para_cursor.getStart())
+            cursor = para_cursor.getText().createTextCursorByRange(
+                para_cursor.getStart()
+            )
             sc = Lo.qi(XSentenceCursor, cursor)
             sc.gotoStartOfSentence(False)
             while 1:
@@ -60,7 +61,10 @@ def speak_sentences(doc: XTextDocument) -> None:
                     speak(
                         curr_sent_str,
                     )
-                if Write.compare_cursor_ends(sc.getEnd(), end_para) >= Write.CompareEnum.EQUAL:
+                if (
+                    Write.compare_cursor_ends(sc.getEnd(), end_para)
+                    >= Write.CompareEnum.EQUAL
+                ):
                     print("Sentence cursor passed end of current paragraph")
                     break
 
@@ -88,7 +92,7 @@ def main() -> int:
     # read the current command line args
     args = parser.parse_args()
 
-    # Using Lo.Loader context manager wraped by BreakContext load Office and connect via socket.
+    # Using Lo.Loader context manager wrapped by BreakContext load Office and connect via socket.
     # Context manager takes care of terminating instance when job is done.
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/wrapper/break_context.html
     # see: https://python-ooo-dev-tools.readthedocs.io/en/latest/src/utils/lo.html#ooodev.utils.lo.Lo.Loader
@@ -105,7 +109,7 @@ def main() -> int:
             raise BreakContext.Break
 
         try:
-            GUI.set_visible(is_visible=True, odoc=doc)
+            GUI.set_visible(visible=True, doc=doc)
             speak_sentences(doc)
 
         finally:

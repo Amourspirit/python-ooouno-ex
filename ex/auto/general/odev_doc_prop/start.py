@@ -5,10 +5,11 @@ from __future__ import annotations
 import argparse
 import sys
 
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.info import Info
 
 # endregion Imports
+
 
 # region args
 def args_add(parser: argparse.ArgumentParser) -> None:
@@ -23,6 +24,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
 
 
 # endregion args
+
 
 # region Main
 def main() -> int:

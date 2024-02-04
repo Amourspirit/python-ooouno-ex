@@ -6,7 +6,7 @@ from com.sun.star.sheet import XSolver
 from ooodev.exceptions import ex
 from ooodev.calc import Calc
 from ooodev.calc import CalcDoc
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.props import Props
 
 

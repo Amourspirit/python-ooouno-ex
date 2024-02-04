@@ -6,12 +6,11 @@ from pathlib import Path
 import random
 
 from ooodev.dialog.msgbox import (
-    MsgBox,
     MessageBoxType,
     MessageBoxButtonsEnum,
     MessageBoxResultsEnum,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc
 
 
@@ -114,7 +113,7 @@ def main() -> int:
         apply_shuffle(doc, loop_delay, visible)
 
         Lo.delay(1_000)
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to save document?",
             "Save",
             boxtype=MessageBoxType.QUERYBOX,
@@ -125,7 +124,7 @@ def main() -> int:
             pth.mkdir(exist_ok=True)
             doc.save_doc(fnm=pth / "shuffled.odt")
 
-        msg_result = MsgBox.msgbox(
+        msg_result = doc.msgbox(
             "Do you wish to close document?",
             "All done",
             boxtype=MessageBoxType.QUERYBOX,

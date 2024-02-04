@@ -12,9 +12,8 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.format.writer.modify.page.page import Margins
+from ooodev.loader import Lo
 from ooodev.write import WriteDoc, ZoomKind
-from ooodev.utils.gui import GUI
-from ooodev.utils.lo import Lo
 
 
 def args_add(parser: argparse.ArgumentParser) -> None:

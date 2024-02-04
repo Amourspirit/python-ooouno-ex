@@ -15,12 +15,11 @@ from ooodev.calc import Calc, CalcDoc, CalcSheet
 from ooodev.office.chart2 import Chart2, Angle, DataPointLabelTypeKind, CurveKind, mEx
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
-from ooodev.utils.gui import GUI
 from ooodev.utils.kind.chart2_types import ChartTypes
 from ooodev.utils.kind.data_point_lable_placement_kind import (
     DataPointLabelPlacementKind,
 )
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.props import Props
 from ooodev.utils.type_var import PathOrStr
 

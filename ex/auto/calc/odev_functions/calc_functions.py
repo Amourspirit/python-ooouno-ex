@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import uno
-from ooodev.utils.lo import Lo
+from ooodev.loader import Lo
 from ooodev.utils.props import Props
 from ooodev.calc import Calc, CalcDoc
 from ooodev.formatters.formatter_table import FormatterTable
