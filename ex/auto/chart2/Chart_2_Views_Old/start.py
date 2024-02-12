@@ -2,6 +2,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from chart_2_views import Chart2View, ChartKind
+from ooodev.utils.file_io import FileIO
 import argparse
 
 
@@ -11,6 +12,7 @@ def args_add(parser: argparse.ArgumentParser) -> None:
         "-k",
         "--kind",
         const="happy_stock",
+        # const="pie_3d",
         nargs="?",
         dest="kind",
         choices=[e.value for e in ChartKind],

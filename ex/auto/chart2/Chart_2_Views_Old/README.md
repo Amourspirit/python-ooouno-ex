@@ -9,13 +9,9 @@ A message box is display once the document has been created asking if you want t
 
 ## UPDATE
 
-This is a new version of the original `Chart_Views` example.
-Since [OOO Development Tools] `0.27.0` the there is another more flexible way to create charts.
-The original example is now located in the [Chart_2_Views_Old](../Chart_2_Views_Old/) folder.
-The original example used the static [Chart2](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/office/chart2.html) class to create the charts.
-While this works it is not as flexible as the new chart classes.
-This new example has access to charts directly from the [CalcSheet](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/calc/calc_sheet.html) class.
-This allows for more flexibility in creating charts. With the new chart classes styles and other chart options can be set.
+Since [OOO Development Tools] version `0.27.0` the there is another more flexible way to create charts.
+A new version of the original `Chart_Views` example has been created. This example still works but is now renamed to `Chart_2_Views_Old`.
+The new example is located in the [Chart_2_Views](../Chart_2_Views/) folder.
 
 ## NOTE
 
