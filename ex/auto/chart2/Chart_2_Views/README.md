@@ -20,7 +20,9 @@ This allows for more flexibility in creating charts. With the new chart classes 
 ## NOTE
 
 There is currently a [bug](https://bugs.documentfoundation.org/show_bug.cgi?id=151846) in LibreOffice `7.4` that does not allow the `Chart2` class to load.
-The `Chart2` has been tested with LibreOffice `7.3`
+The `Chart2` has been tested with LibreOffice `7.3` and `7.5+`.
+
+There are many options for styling the chart components. See [Chart2 Formatting and Style](https://python-ooo-dev-tools.readthedocs.io/en/latest/help/chart2/format/index.html) for more information.
 
 ## Options
 

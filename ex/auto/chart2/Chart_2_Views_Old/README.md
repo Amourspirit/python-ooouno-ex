@@ -16,7 +16,7 @@ The new example is located in the [Chart_2_Views](../Chart_2_Views/) folder.
 ## NOTE
 
 There is currently a [bug](https://bugs.documentfoundation.org/show_bug.cgi?id=151846) in LibreOffice `7.4` that does not allow the `Chart2` class to load.
-The `Chart2` has been tested with LibreOffice `7.3`
+The `Chart2` has been tested with LibreOffice `7.3` and `7.5+`.
 
 ## Options
 
