@@ -3,6 +3,8 @@ from __future__ import annotations
 import uno
 from com.sun.star.drawing import XDrawPagesSupplier
 from com.sun.star.lang import XComponent
+from ooo.dyn.i18n.number_format_index import NumberFormatIndexEnum
+from ooo.dyn.util.number_format import NumberFormatEnum
 
 from ooodev.dialog.msgbox import (
     MessageBoxType,
@@ -78,16 +80,33 @@ class BuildTable:
             # add a chart
             if self._add_chart and Chart2:
                 # assumes _build_array() has filled the spreadsheet with data
-                rng_addr = sheet.get_address(range_name="B2:M4")
-                chart_cell = "B6" if self._add_pic else "D6"
-                Chart2.insert_chart(
-                    sheet=sheet.component,
-                    cells_range=rng_addr,
+                rng = sheet.rng("B2:M4")
+                chart_cell = "B6" if self._add_pic else "A6"
+                tbl_chart = sheet.charts.insert_chart(
+                    rng_obj=rng,
                     cell_name=chart_cell,
-                    width=21,
+                    width=21 if self._add_pic else 31,
                     height=11,
                     diagram_name="Column",
                 )
+                chart_doc = tbl_chart.chart_doc
+
+                chart_doc.style_border_line(color=CommonColor.DARK_BLUE, width=0.75)
+
+                if self._add_pic is False:
+                    # style the number as currency
+                    with chart_doc:
+                        # lock the controllers while applying styles for faster updates and less flicker.
+                        ds_arr = chart_doc.get_data_series()
+                        for ds in ds_arr:
+                            ds.style_numbers_numbers(
+                                source_format=False,
+                                num_format_index=NumberFormatIndexEnum.CURRENCY_1000DEC2,
+                            )
+                        chart_doc.axis_y.style_numbers_numbers(
+                            source_format=False,
+                            num_format_index=NumberFormatIndexEnum.CURRENCY_1000DEC2_RED,
+                        )
 
             if self._add_style:
                 self._create_styles(doc)
@@ -390,9 +409,11 @@ class BuildTable:
                 style_name=BuildTable.HEADER_STYLE_NAME,
             )
             # Apply formatting to header_style
-            Styler.apply(
-                header_style, header_bg_color_style, effects_style, txt_align_style
-            )
+            with doc:
+                # lock the controllers while applying styles for faster updates.
+                Styler.apply(
+                    header_style, header_bg_color_style, effects_style, txt_align_style
+                )
 
             # create style
             data_style = doc.create_cell_style(style_name=BuildTable.DATA_STYLE_NAME)
@@ -406,7 +427,10 @@ class BuildTable:
             )
 
             # Apply formatting to data_style
-            Styler.apply(data_style, footer_bg_color_style, bdr_style, txt_align_style)
+            with doc:
+                Styler.apply(
+                    data_style, footer_bg_color_style, bdr_style, txt_align_style
+                )
 
         except Exception as e:
             print(e)
@@ -431,6 +455,9 @@ class BuildTable:
         # Apply border to range
         rng = sheet.get_range(range_name="N1:N4")
         rng.apply_styles(bdr)
+
+        data_rng = sheet.get_range(range_name="B2:N4")
+        data_rng.style_numbers_currency()
 
     # endregion Private Methods
 

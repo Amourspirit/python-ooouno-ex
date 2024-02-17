@@ -11,14 +11,12 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.calc import CalcDoc
-from ooodev.format.calc.direct.cell.borders import Borders, Padding
-from ooodev.format.calc.direct.cell.font import Font
+from ooodev.format.calc.direct.cell.borders import Padding
 from ooodev.loader import Lo
 from ooodev.units.unit_mm import UnitMM
 from ooodev.utils.color import CommonColor
 from ooodev.utils.file_io import FileIO
 from ooodev.utils.type_var import PathOrStr
-from ooodev.write import Write
 
 
 class CellTexts:
@@ -44,22 +42,18 @@ class CellTexts:
             # Insert two text paragraphs and a hyperlink into the cell
 
             cell = sheet["B4"]
-            x_text = cell.qi(XText, True)
-            cursor = x_text.createTextCursor()
-            Write.append_para(cursor=cursor, text="Text in first line.")
-            Write.append(cursor=cursor, text="And a ")
-            Write.add_hyperlink(
-                cursor=cursor,
+            cursor = cell.create_text_cursor()
+            cursor.append_para(text="Text in first line.")
+            cursor.append(text="And a ")
+            cursor.add_hyperlink(
                 label="hyperlink",
                 url_str="https://github.com/Amourspirit/python_ooo_dev_tools",
             )
 
-            # beautify the cell
-            font = Font(color=CommonColor.DARK_BLUE, size=18.0)
-            bdr = Borders(padding=Padding(left=UnitMM(5)))
-            cell.apply_styles(font, bdr)
+            cell.style_font_general(color=CommonColor.DARK_BLUE, size=18.0)
+            cell.style_borders(padding=Padding(left=UnitMM(5)))
 
-            self._print_cell_text(x_text)
+            self._print_cell_text(cell.qi(XText, True))
 
             cell.add_annotation(msg=f"This annotation is located at {cell.cell_obj}")
 

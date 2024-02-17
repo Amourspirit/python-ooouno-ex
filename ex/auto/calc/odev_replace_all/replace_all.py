@@ -72,7 +72,7 @@ class ReplaceAll:
             srch_strs (Iterable[str]): One or more search terms
             repl_str (str | None, optional): Replace String.
             out_fnm (PathOrStr, optional): File Save path.
-            is_search_all (bool, optional): Determins if search is done in a iter manor or find all manor. Defaults to False (iter manor).
+            is_search_all (bool, optional): Determines if search is done in a iter manor or find all manor. Defaults to False (iter manor).
         """
         self._srch_strs = [s for s in srch_strs]
         self._repl_str = repl_str

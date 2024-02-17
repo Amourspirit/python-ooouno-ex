@@ -294,8 +294,8 @@ class GarlicSecrets:
         # make the row taller
         sheet.set_row_height(height=18, idx=empty_row_num)
         # get the cell from the range cell start
-        font_red = Font(b=True, size=24, color=CommonColor.BLACK)
-        bg_color = BgColor(CommonColor.RED)
-
         cell = sheet[rng_obj.cell_start]
-        cell.set_val(value="Top Secret Garlic Changes", styles=[font_red, bg_color])
+
+        cell.style_font_general(color=CommonColor.BLACK, size=24, b=True)
+        cell.style_area_color(color=CommonColor.RED)
+        cell.value = "Top Secret Garlic Changes"
