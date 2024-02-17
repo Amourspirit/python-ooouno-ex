@@ -9,7 +9,6 @@ from ooodev.dialog.msgbox import (
 )
 from ooodev.loader import Lo
 from ooodev.calc import CalcDoc, CalcSheet, ZoomKind
-from ooodev.format.calc.direct.cell.borders import Borders, Side
 from ooodev.utils.color import CommonColor
 
 
@@ -37,18 +36,18 @@ def do_cell_range(sheet: CalcSheet) -> None:
         ("Alice", "Oranges", 4),
         ("Alice", "Apples", 9),
     )
-    sheet.set_array(values=vals, name="A3:C23")  # or just "A3"
-    cell = sheet.get_cell(cell_name="A24")
-    cell.set_val("Total")
+    with sheet.calc_doc:
+        # use doc context manager to lock controllers for faster updates.
+        sheet.set_array(values=vals, name="A3:C23")  # or just "A3"
+        cell = sheet.get_cell(cell_name="A24")
+        cell.set_val("Total")
 
-    cell = sheet.get_cell(cell_name="C24")
-    cell.set_val("=SUM(C4:C23)")
+        cell = sheet.get_cell(cell_name="C24")
+        cell.set_val("=SUM(C4:C23)")
 
-    # set Border around data and summary.
-    bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
-    rng = sheet.get_range(range_name="A2:C24")
-    # rng.set_style([bdr])
-    rng.apply_styles(bdr)
+        # set Border around data and summary.
+        rng = sheet.get_range(range_name="A2:C24")
+        rng.style_borders_sides(color=CommonColor.LIGHT_BLUE, width=2.85)
 
 
 def main() -> int:

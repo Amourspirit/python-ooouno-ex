@@ -92,4 +92,4 @@ class GoalSeek:
             x = cell1.goal_seek(gs=gs, formula_cell_name=cell2.cell_obj, result=0)
             # x is -1.7692923428381226 so not using Newton's method which oscillates between 0 and 1
             print(f"x == {x} when formula == 0\n")
-            doc.close_doc()
+            doc.close()
