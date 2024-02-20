@@ -8,6 +8,7 @@ from ooo.dyn.awt.pos_size import PosSize
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.loader import Lo
+from ooodev.utils.color import StandardColor
 from tree_flat import TreeFlat
 from tree_flat_data_value import TreeFlatDataValue
 from tree_search_re import TreeSearchRe
@@ -47,6 +48,7 @@ class Tabs:
             height=self._height,
             title=self._title,
         )
+        self._dialog.set_visible(False)
         # createPeer() must be call before inserting tabs
         self._dialog.create_peer()
 
@@ -160,6 +162,8 @@ class Tabs:
             btn_type=PushButtonType.OK,
             DefaultButton=True,
         )
+        self._ctl_btn_ok.text_color = StandardColor.BLACK
+        self._ctl_btn_ok.background_color = StandardColor.GREEN_LIGHT1
 
     # region Show Dialog
     def show(self) -> int:

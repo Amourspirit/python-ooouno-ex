@@ -7,6 +7,7 @@ from ooodev.dialog import BorderKind
 from ooodev.dialog import Dialog
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
+from ooodev.utils.color import StandardColor
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
@@ -108,6 +109,8 @@ class Listbox:
         )
         self._ctl_listbox.add_event_item_state_changed(self._fn_on_item_state_changed)
         self._ctl_listbox.add_event_action_performed(self._fn_on_action_preformed)
+        self._ctl_listbox.text_color = StandardColor.BLACK
+        self._ctl_listbox.background_color = StandardColor.GRAY_LIGHT4
 
     # endregion Init
 
