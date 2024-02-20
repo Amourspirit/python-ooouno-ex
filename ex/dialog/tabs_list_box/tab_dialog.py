@@ -9,6 +9,7 @@ from ooodev.dialog.msgbox import MessageBoxResultsEnum, MessageBoxType
 from ooodev.dialog import BorderKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.calc import CalcDoc
+from ooodev.utils.color import StandardColor
 from listbox import Listbox
 from listbox_drop_down import ListboxDropDown
 from listbox_multi_select import ListboxMultiSelect
@@ -48,6 +49,7 @@ class Tabs:
             height=self._height,
             title=self._title,
         )
+        self._dialog.set_visible(False)
         # createPeer() must be call before inserting tabs
         self._dialog.create_peer()
 
@@ -139,6 +141,9 @@ class Tabs:
             height=self._btn_height,
             btn_type=PushButtonType.CANCEL,
         )
+        self._ctl_btn_cancel.text_color = StandardColor.BLACK
+        self._ctl_btn_cancel.background_color = StandardColor.RED_LIGHT1
+
         sz = self._ctl_btn_cancel.view.getPosSize()
         self._ctl_btn_ok = self._dialog.insert_button(
             label="OK",
@@ -149,6 +154,8 @@ class Tabs:
             btn_type=PushButtonType.OK,
             DefaultButton=True,
         )
+        self._ctl_btn_ok.text_color = StandardColor.BLACK
+        self._ctl_btn_ok.background_color = StandardColor.GREEN_LIGHT1
 
         self._ctl_btn_info = self._dialog.insert_button(
             label="Info",

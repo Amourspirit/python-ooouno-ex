@@ -4,11 +4,14 @@ import uno
 from typing import Any, cast, TYPE_CHECKING
 from ooo.dyn.awt.push_button_type import PushButtonType
 from ooo.dyn.awt.pos_size import PosSize
+from ooo.dyn.awt.font_descriptor import FontDescriptor
 from ooodev.dialog.msgbox import MsgBox, MessageBoxResultsEnum, MessageBoxType
 
 from ooodev.dialog import Dialogs, BorderKind
 from ooodev.events.args.event_args import EventArgs
 from ooodev.loader import Lo
+from ooodev.utils.info import Info
+from ooodev.utils.color import StandardColor
 
 if TYPE_CHECKING:
     from com.sun.star.awt import ActionEvent
@@ -39,6 +42,18 @@ class RadioGroupBox:
         self._current_tab_index = 1
         self._group1_opt: CtlRadioButton | None = None
         self._group2_opt: CtlRadioButton | None = None
+        # get or set a font descriptor. This helps to keep the font consistent across different platforms.
+        fd = Info.get_font_descriptor("Liberation Serif", "Regular")
+        if fd is None:
+            fd = FontDescriptor(
+                CharacterWidth=100.0,
+                Kerning=True,
+                WordLineMode=False,
+                Pitch=2,
+                Weight=100,
+            )
+        fd.Height = 10
+        self._fd = fd
         self._init_dialog()
 
     def _init_dialog(self) -> None:
@@ -47,6 +62,7 @@ class RadioGroupBox:
         self._dialog = Dialogs.create_dialog(
             x=-1, y=-1, width=self._width, height=self._height, title=self._title
         )
+        self._dialog.set_visible(False)
         Dialogs.create_dialog_peer(self._dialog.control)
         self._init_label()
         self._init_group_boxes()
@@ -83,6 +99,8 @@ class RadioGroupBox:
             width=self._width - (self._padding * 2),
             height=self._box_height,
         )
+        self._ctl_main_lbl.set_font_descriptor(self._fd)
+        self._ctl_main_lbl.font_descriptor.weight = 150  # make bold
 
     def _init_group_boxes(self) -> None:
         sz_lbl = self._ctl_main_lbl.view.getPosSize()
@@ -97,6 +115,8 @@ class RadioGroupBox:
             width=round(self._width / 2) - (self._margin * 2),
             label="Group Box ONE",
         )
+        self._ctl_gb1.set_font_descriptor(self._fd)
+        self._ctl_gb1.font_descriptor.weight = 150  # make bold
 
         sz = self._ctl_gb1.view.getPosSize()
         self._ctl_gb2 = Dialogs.insert_group_box(
@@ -107,6 +127,7 @@ class RadioGroupBox:
             width=sz.Width,
             label="Group Box TWO",
         )
+        self._ctl_gb2.set_font_descriptor(self._ctl_gb1.font_descriptor.component)
 
     def _init_buttons(self) -> None:
         """Add OK, Cancel and Info buttons to dialog control"""
@@ -119,6 +140,10 @@ class RadioGroupBox:
             height=self._btn_height,
             btn_type=PushButtonType.CANCEL,
         )
+        self._ctl_btn_cancel.set_font_descriptor(self._fd)
+        self._ctl_btn_cancel.text_color = StandardColor.BLACK
+        self._ctl_btn_cancel.background_color = StandardColor.RED_LIGHT1
+
         sz = self._ctl_btn_cancel.view.getPosSize()
         self._ctl_btn_ok = Dialogs.insert_button(
             dialog_ctrl=self._dialog.control,
@@ -130,6 +155,9 @@ class RadioGroupBox:
             btn_type=PushButtonType.OK,
             DefaultButton=True,
         )
+        self._ctl_btn_ok.set_font_descriptor(self._fd)
+        self._ctl_btn_ok.text_color = StandardColor.BLACK
+        self._ctl_btn_ok.background_color = StandardColor.GREEN_LIGHT1
 
         self._ctl_btn_info = Dialogs.insert_button(
             dialog_ctrl=self._dialog.control,
@@ -139,6 +167,7 @@ class RadioGroupBox:
             width=self._btn_width,
             height=self._btn_height,
         )
+        self._ctl_btn_info.set_font_descriptor(self._fd)
         self._ctl_btn_info.view.setActionCommand("INFO")
         self._ctl_btn_info.model.HelpText = "Show info for selected items."
         self._ctl_btn_info.add_event_action_performed(self._fn_button_action_preformed)
@@ -170,6 +199,8 @@ class RadioGroupBox:
             width=sz_gb1.Width - (self._margin * 2),
             height=20,
         )
+        self._rb1.set_font_descriptor(self._fd)
+        self._rb1.text_color = StandardColor.get_random_color()
         self._group1_opt = self._rb1
         self._ctl_gb1.model.TabIndex = self._current_tab_index
         self._current_tab_index += 1
@@ -189,6 +220,8 @@ class RadioGroupBox:
                 width=rb1_sz.Width,
                 height=rb1_sz.Height,
             )
+            radio_btn.set_font_descriptor(self._rb1.font_descriptor.component)
+            radio_btn.text_color = StandardColor.get_random_color()
             radio_btn.tab_index = self._current_tab_index
             radio_btn.model.State = 0
             self._current_tab_index += 1
@@ -208,6 +241,8 @@ class RadioGroupBox:
             height=rb1_sz.Height,
             # name="Radio1",
         )
+        self._rb2.set_font_descriptor(self._rb1.font_descriptor.component)
+        self._rb2.text_color = StandardColor.get_random_color()
         self._rb2.model.State = 1
         self._rb2.tab_index = self._current_tab_index
         self._group2_opt = self._rb2
@@ -224,6 +259,8 @@ class RadioGroupBox:
                 height=rb2_sz.Height,
                 # name=f"Radio{i + 1}",
             )
+            radio_btn.set_font_descriptor(self._rb1.font_descriptor.component)
+            radio_btn.text_color = StandardColor.get_random_color()
             radio_btn.model.State = 0
             radio_btn.tab_index = self._current_tab_index
             self._current_tab_index += 1
