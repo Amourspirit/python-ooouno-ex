@@ -11,6 +11,7 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_functions](./odev_functions/) - Examples of calc functions.
 - [odev_garlic_secrets](./odev_garlic_secrets/) - Example illustrates how data can be extracted from an existing spreadsheet.
 - [odev_goal_seek](./odev_goal_seek/) - Example of goal seeking in Calc.
+- [odev_hyperlinks](./odev_hyperlinks/) - Example that opens up a new Calc document inserts array of formatted hyperlinks.
 - [odev_linear_solve](./odev_linear_solve/) - Example of Linear Solve in a spreadsheet.
 - [odev_modify_listener](./odev_modify_listener/) - Example of spreadsheet modify listeners.
 - [odev_non_linear_solve](./odev_non_linear_solve/) - Examples of non-Linear Solve in a spreadsheet.
