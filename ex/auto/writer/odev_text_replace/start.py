@@ -4,11 +4,6 @@ from typing import Sequence, cast
 from pathlib import Path
 
 import uno
-from com.sun.star.beans import XPropertySet
-from com.sun.star.text import XTextRange
-from com.sun.star.util import XReplaceable
-from com.sun.star.util import XReplaceDescriptor
-from com.sun.star.util import XSearchable
 
 from ooodev.dialog.msgbox import (
     MessageBoxType,
@@ -42,26 +37,16 @@ def find_words(doc: WriteDoc, words: Sequence[str]) -> None:
     # get the view cursor and link the page cursor to it
     tvc = doc.get_view_cursor()
     tvc.goto_start()
-    searchable = doc.qi(XSearchable, True)
-    search_desc = searchable.createSearchDescriptor()
-
+    search = doc.create_search_descriptor()
+    search.search_regular_expression = True
     for word in words:
-        print(f"Searching for fist occurrence of '{word}'")
-        search_desc.setSearchString(word)
-
-        search_props = Lo.qi(XPropertySet, search_desc, raise_err=True)
-        search_props.setPropertyValue("SearchRegularExpression", True)
-
-        search = searchable.findFirst(search_desc)
-
-        if search is not None:
-            match_tr = Lo.qi(XTextRange, search)
-
-            tvc.goto_range(match_tr)
-            print(f"  - found '{match_tr.getString()}'")
+        search.search_str = word
+        result = search.find_first()
+        if result is not None:
+            tvc.goto_range(result.component)
+            print(f"  - found '{result.get_string()}'")
             print(f"    - on page {tvc.get_page()}")
-            # tvc.gotoStart(True)
-            tvc.go_right(len(match_tr.getString()), True)
+            tvc.go_right(len(result.get_string()), True)
             print(f"    - at char position: {len(tvc.get_string())}")
             Lo.delay(500)
 
@@ -69,13 +54,9 @@ def find_words(doc: WriteDoc, words: Sequence[str]) -> None:
 def replace_words(
     doc: WriteDoc, old_words: Sequence[str], new_words: Sequence[str]
 ) -> int:
-    replaceable = doc.qi(XReplaceable, True)
-    replace_desc = Lo.qi(XReplaceDescriptor, replaceable.createSearchDescriptor())
-
-    for old, new in zip(old_words, new_words):
-        replace_desc.setSearchString(old)
-        replace_desc.setReplaceString(new)
-    return replaceable.replaceAll(replace_desc)
+    replace = doc.create_replace_descriptor()
+    result = replace.replace_words(old_words, new_words)
+    print(f"Replaced {result} words")
 
 
 def main() -> int:
