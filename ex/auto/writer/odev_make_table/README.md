@@ -109,7 +109,7 @@ Spectre 2015 Daniel Craig Sam Mendes
 
 ## Screen shot of document
 
-![image](https://user-images.githubusercontent.com/4193389/185208883-2a11e357-dde0-403a-ac08-b5696d51d5a9.png)
+![image](https://github.com/Amourspirit/python_ooo_dev_tools/assets/4193389/7aeb06aa-fd5f-4860-9dc7-083c8ad2d488)
 
 [Text Content Other than Strings]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html
 [Adding a Text Table to a Document]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html#adding-a-text-table-to-a-document

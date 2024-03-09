@@ -2,6 +2,8 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from typing import List
+import uno
+from ooo.dyn.style.paragraph_adjust import ParagraphAdjust
 
 from ooodev.dialog.msgbox import (
     MessageBoxType,
@@ -9,9 +11,11 @@ from ooodev.dialog.msgbox import (
     MessageBoxResultsEnum,
 )
 from ooodev.loader import Lo
-from ooodev.write import WriteDoc
-from ooodev.utils.date_time_util import DateUtil
 from ooodev.format.writer.style.para import Para as ParaStyle
+from ooodev.format.inner.direct.structs.side import LineSize
+from ooodev.utils.date_time_util import DateUtil
+from ooodev.utils.color import StandardColor
+from ooodev.write import WriteDoc
 
 
 def read_table(fnm: Path) -> List[list]:
@@ -48,11 +52,47 @@ def main() -> int:
         cursor.append_para('The following table comes form "bondMovies.txt"\n')
 
         # Lock display updating for faster writing of table into document.
-        with Lo.ControllerLock():
-            cursor.add_table(table_data=tbl_data)
+        with doc:
+            tbl = cursor.add_table(table_data=tbl_data, first_row_header=True)
             cursor.end_paragraph()
 
+            tbl.style_direct.style_borders_side(
+                color=StandardColor.BLUE_DARK1, width=LineSize.MEDIUM
+            )
+            tbl.table_column_separators[0].position += 1000  # make first column wider
+            # set the table border line color
+            tbl.table_border.horizontal_line.color = StandardColor.BLUE_LIGHT1
+            tbl.table_border.vertical_line.color = StandardColor.BLUE_LIGHT1
+
+            # iterate over the rows and set the background color
+            for i, row in enumerate(tbl.rows):
+                if i == 0:
+                    row.back_color = StandardColor.BLUE
+                elif i % 2 == 0:
+                    row.back_color = StandardColor.GRAY_LIGHT2
+                else:
+                    row.back_color = StandardColor.GRAY_LIGHT4
+
+            header_row = tbl.rows[0]
+            # style header row text to be white and bold
+            for i, cell in enumerate(header_row):
+                cell.style_direct.style_font_general(color=StandardColor.WHITE, b=True)
+
+            # make the first column blue.
+            col1 = tbl.columns[0]
+            for i, cell in enumerate(col1):
+                if i > 0:
+                    cell.style_direct.style_font_general(color=StandardColor.BLUE_DARK3)
+
+            # right align the second column and set the style to general numbers.
+            col2 = tbl.columns[1]
+            for i, cell in enumerate(col2):
+                if i > 0:
+                    cell.style_direct.style_numbers_general()
+                    cell.style_direct.style_alignment(align=ParagraphAdjust.RIGHT)
+
         Lo.delay(delay)
+        # Append a timestamp to the document.
         cursor.append(f"Timestamp: {DateUtil.time_stamp()}")
         Lo.delay(delay)
         msg_result = doc.msgbox(
