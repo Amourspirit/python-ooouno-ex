@@ -78,7 +78,7 @@ class RotateDialog:
         self._dialog.create_peer()
         self._init_buttons()
         self._init_label()
-        self._init_group_boxes()
+        self._init_group_box()
         self._init_radio_controls()
         self._init_num_ctl()
 
@@ -94,7 +94,7 @@ class RotateDialog:
         self._fn_on_text_changed = self.on_text_changed
 
     def _init_buttons(self) -> None:
-        """Add OK, Cancel and Info buttons to dialog control"""
+        """Add OK and Cancel and buttons to dialog control"""
         self._ctl_btn_cancel = self._dialog.insert_button(
             label="Cancel",
             x=self._width - self._btn_width - self._margin,
@@ -133,7 +133,8 @@ class RotateDialog:
         self._ctl_main_lbl.set_font_descriptor(self._fd)
         self._ctl_main_lbl.font_descriptor.weight = 150  # make bold
 
-    def _init_group_boxes(self) -> None:
+    def _init_group_box(self) -> None:
+        """Create a group box to hold radio buttons."""
         sz_lbl = self._ctl_main_lbl.view.getPosSize()
 
         mid = self._get_horizontal_center(self._width)
@@ -187,6 +188,7 @@ class RotateDialog:
         self._current_tab_index += 1
 
     def _init_num_ctl(self) -> None:
+        """Create a Number Control for the angle."""
         sz_gb1 = self._ctl_gb1.view.getPosSize()
         self._num_ctl = self._dialog.insert_numeric_field(
             x=50,
@@ -208,12 +210,14 @@ class RotateDialog:
     def on_group1_changed(
         self, src: Any, event: EventArgs, control_src: CtlRadioButton, *args, **kwargs
     ) -> None:
+        """Fires when the radio button selection changes."""
         # itm_event = cast("ItemEvent", event.event_data)
         self._group1_opt = control_src
 
     def on_text_changed(
         self, src: Any, event: EventArgs, control_src: Any, *args, **kwargs
     ) -> None:
+        """Fires when the text in the numeric control changes."""
         self._angle = float(control_src.value)
 
     # endregion Event Handlers
@@ -241,8 +245,10 @@ class RotateDialog:
         return self._group1_opt.name == "rb_relative"
 
     @property
-    def angle(self) -> float:
-        return self._angle
+    def angle(self) -> Angle100:
+        # angle is in 100th of a degree
+        # multiply by 100 to get the value in 100th of a degree
+        return Angle100(round(self._angle * 100))
 
 
 def rotate_dialog(shapes: list) -> Any:
@@ -270,16 +276,14 @@ def rotate_dialog(shapes: list) -> Any:
     if dialog.show():
         # doc = Lo.current_doc
         # doc.msgbox(f"Relative: {dialog.relative}. Angle: {dialog.angle}")
-        relative = dialog.relative
-        angle = dialog.angle
         print(shapes)
         for shape in shapes:
             if isinstance(shape, RotationDescriptorPropertiesPartial):
-                if relative:
-                    angle = shape.rotate_angle + Angle100(round(angle * 100))
-                    shape.rotate_angle = angle
+                if dialog.relative:
+                    # In OooDev rotate_angle can be set with an integer or with another angle unit
+                    shape.rotate_angle += dialog.angle
                 else:
-                    shape.rotate_angle = Angle100(round(angle * 100))
+                    shape.rotate_angle = dialog.angle
 
 
 def rotate_selected_shapes(*args) -> None:
@@ -290,7 +294,11 @@ def rotate_selected_shapes(*args) -> None:
     """
     doc = Lo.current_doc
     if doc.DOC_TYPE != DocType.DRAW:
-        doc.msgbox("This macro only works with Draw documents.")
+        doc.msgbox(
+            "This macro only works with Draw documents.",
+            title="Wrong Document",
+            boxtype=MessageBoxType.WARNINGBOX,
+        )
         return
     draw_doc = cast(DrawDoc, doc)
     selected = draw_doc.get_selected_shapes()
