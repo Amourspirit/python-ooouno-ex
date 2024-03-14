@@ -1,7 +1,7 @@
 # Welcome to the Macro Examples
 
 There is no actual macro code in this directory.
-Instead, it contains documentation for macros in the [macros](../macro/) directory in the root of this project.
+Instead, it contains documentation for macros in the [macro](../../macro/) directory in the root of this project.
 
 ## Documentation
 
