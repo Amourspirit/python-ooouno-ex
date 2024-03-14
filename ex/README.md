@@ -9,3 +9,7 @@ Welcome to examples folder. Open a sub folder to get to an example.
 - [auto](./auto/) - Is generally examples that automate office using the command line.
 - [calc](./calc/) - Is generally macro examples for Calc.
 - [general](./general/) - is generally macro example that apply to more then one office app.
+
+# Other Examples
+
+- [Macro](.macro/) - Contains documentation for macros in the [macros](../macro/) directory in the root of this project.
