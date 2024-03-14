@@ -12,4 +12,4 @@ Welcome to examples folder. Open a sub folder to get to an example.
 
 # Other Examples
 
-- [Macro](.macro/) - Contains documentation for macros in the [macros](../macro/) directory in the root of this project.
+- [Macro](./macro/) - Contains documentation for macros in the [macro](../macro/) directory in the root of this project.

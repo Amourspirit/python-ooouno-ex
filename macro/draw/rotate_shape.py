@@ -1,3 +1,9 @@
+"""
+Example of a dialog that allows the user to rotate shapes in a Draw document.
+
+For documentation see: https://github.com/Amourspirit/python-ooouno-ex/tree/main/ex/macro/rotate_shape
+"""
+
 from __future__ import annotations
 from typing import Any, cast, TYPE_CHECKING
 from ooodev.draw import DrawDoc
