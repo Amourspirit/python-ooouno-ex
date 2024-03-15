@@ -21,9 +21,11 @@ except ImportError:
     interactive_hlp = None
 
 try:
-    from ooodev.utils.lo import Lo
+    from ooodev.loader import Lo
 except ImportError:
-    print("ooodev is not installed. Please install it with 'poetry add --group=dev ooodev'")
+    print(
+        "ooodev is not installed. Please install it with 'poetry add --group=dev ooodev'"
+    )
     if TYPE_CHECKING:
         # satisfy type checkers
         Lo = cast(Any, None)
@@ -54,7 +56,10 @@ lo_port = int(getenv("LO_CONN_PORT", 2002))
 if check_if_process_running("soffice.bin"):
     _ = Lo.load_office(
         connector=ConnectSocket(
-            host="localhost", port=lo_port, start_office=False, options=Options(verbose=True, dynamic=True)
+            host="localhost",
+            port=lo_port,
+            start_office=False,
+            options=Options(verbose=True, dynamic=True),
         )
     )
 else:
