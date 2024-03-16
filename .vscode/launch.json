@@ -28,6 +28,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": false
+        },
+        {
+            "name": "Macro Attach",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "port": 8560,
+            }
         }
     ]
 }

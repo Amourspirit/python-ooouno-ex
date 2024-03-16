@@ -1,8 +1,11 @@
 from __future__ import annotations
+from typing import cast
+from ooodev.loader import Lo
+from ooodev.loader.inst.doc_type import DocType
 from ooodev.write import WriteDoc
 from ooodev.utils.color import StandardColor
 from ooodev.format.writer.direct.char.font import Font
-from ooodev.dialog.msgbox import MsgBox, MessageBoxButtonsEnum, MessageBoxType
+from ooodev.dialog.msgbox import MessageBoxButtonsEnum, MessageBoxType
 from ooodev.format.writer.direct.para.alignment import Alignment
 
 
@@ -32,15 +35,15 @@ def write_hello(*args) -> None:
     """
     # for more on formatting Writer documents see,
     # https://python-ooo-dev-tools.readthedocs.io/en/latest/help/writer/format/index.html
-    try:
-        doc = WriteDoc.from_current_doc()
-        cursor = doc.get_cursor()  # type: ignore
-        cursor.goto_end()
-        al = Alignment().align_center
-        ft = Font(size=36, u=True, b=True, color=StandardColor.GREEN_DARK2)
-        cursor.append_para(text="Hello World!", styles=[ft, al])
-    except Exception as e:
-        _ = MsgBox.msgbox(f"This method requires a Writer document.\n{e}")
+    if Lo.current_doc.DOC_TYPE != DocType.WRITER:
+        Lo.current_doc.msgbox(f"This method requires a Writer document")
+        return
+    doc = cast(WriteDoc, Lo.current_doc)
+    cursor = doc.get_cursor()  # type: ignore
+    cursor.goto_end()
+    al = Alignment().align_center
+    ft = Font(size=36, u=True, b=True, color=StandardColor.GREEN_DARK2)
+    cursor.append_para(text="Hello World!", styles=[ft, al])
 
 
 g_exportedScripts = (show_hello, write_hello)
