@@ -119,6 +119,12 @@ When you need to use [poetry] just toggle environment.
 python -m main env -t
 ```
 
+### Debugging Macros
+
+Now it is possible to also debug macros when running in the Codesapce (Development container).
+
+See [Debug Macros in Vs Code](https://github.com/Amourspirit/live-libreoffice-python/wiki/Debug-Macros-in-Vs-Code) Guide for [Live LibreOffice Python]. The guide uses Port `3002` This container uses Port `3004`.
+
 ### Testing Virtual Environment
 
 For a quick test of environment import `uno` If there is no import error you should be good to go.
@@ -140,3 +146,4 @@ Type "help", "copyright", "credits" or "license" for more information.
 [ex]: ./ex/
 [LibreOffice Programming]: https://github.com/flywire/lo-p
 [poetry]: https://python-poetry.org
+[Live LibreOffice Python]:https://github.com/Amourspirit/live-libreoffice-python

@@ -5,6 +5,7 @@ For documentation see: https://github.com/Amourspirit/python-ooouno-ex/tree/main
 """
 
 from __future__ import annotations
+
 from typing import Any, cast, TYPE_CHECKING
 from ooodev.draw import DrawDoc
 from ooodev.utils.color import StandardColor
@@ -237,7 +238,8 @@ class RotateDialog:
             result = True
 
         # self._handle_results(result)
-        self._dialog.dispose()
+        # self._dialog.dispose()
+        self._dialog.end_dialog(0)
         return result
 
     @property
@@ -277,6 +279,7 @@ def rotate_dialog(shapes: list) -> Any:
         # doc = Lo.current_doc
         # doc.msgbox(f"Relative: {dialog.relative}. Angle: {dialog.angle}")
         print(shapes)
+        print("Hello")
         for shape in shapes:
             if isinstance(shape, RotationDescriptorPropertiesPartial):
                 if dialog.relative:
