@@ -268,6 +268,10 @@ def rotate_dialog(shapes: list) -> Any:
     OooDev provides the Angle100 class to help with this. Getting the ``rotate_angle`` property will return an Angle100 object.
     Setting the ``rotate_angle`` property can be done with an Angle100 object or an integer value in  ``1/100th degrees``.
 
+    Angle classes can do addition, subtraction, multiplication and division. For the various angle (Angle, Angle10, Angle100).
+    Angle classes can be added to each other or subtracted from each other or a number.
+    They can also be multiplied or divided by each other or by a number.
+
     Args:
         shapes (list): This is the list of shapes selected found in the current document.
 
@@ -278,8 +282,6 @@ def rotate_dialog(shapes: list) -> Any:
     if dialog.show():
         # doc = Lo.current_doc
         # doc.msgbox(f"Relative: {dialog.relative}. Angle: {dialog.angle}")
-        print(shapes)
-        print("Hello")
         for shape in shapes:
             if isinstance(shape, RotationDescriptorPropertiesPartial):
                 if dialog.relative:
@@ -291,7 +293,7 @@ def rotate_dialog(shapes: list) -> Any:
 
 def rotate_selected_shapes(*args) -> None:
     """
-    Displays a message box for Hello World
+    Displays a dialog box to rotate the selected shapes in a Draw document.
 
     This is the actual macro that will be called from the macro run dialog.
     """
