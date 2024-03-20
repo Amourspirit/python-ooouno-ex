@@ -167,13 +167,13 @@ files = [
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.36.3"
+version = "0.36.4"
 description = "LibreOffice Developer Tools"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "ooo_dev_tools-0.36.3-py3-none-any.whl", hash = "sha256:668317ae5e5229bd7e906e4a65c4d3a8851ea7d685fcf2f955ef6f7e1a015f73"},
-    {file = "ooo_dev_tools-0.36.3.tar.gz", hash = "sha256:d54cc7b094233bb578b607306d2e1d6aaafd7b5f4d11214f611140770222313c"},
+    {file = "ooo_dev_tools-0.36.4-py3-none-any.whl", hash = "sha256:1f879082c7348511a9e21f591ce2a41f2c55d357b12151e920ee43e24905e7eb"},
+    {file = "ooo_dev_tools-0.36.4.tar.gz", hash = "sha256:d63860358a1c1c63f7c44306e8cd35a0844500d68b9026a2a0e528f9119e3c58"},
 ]
 
 [package.dependencies]
@@ -591,4 +591,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "96d992175bcd38d28407be0b1cde2e194b45de265426061078c90afbf5ba259e"
+content-hash = "071867ee9ea36fe477a27813011dcf07eeef7e24bef5bb8748cda9c5cdf837aa"
