@@ -1,0 +1,18 @@
+{
+    "id": "oooscript",
+    "name": "tabs_list_box",
+    "app": "CALC",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "script.py",
+        "output_name": "tabs_list_box",
+        "single_script": false,
+        "clean": false,
+        "exclude_modules": [
+            "sphinx\\.*"
+        ]
+    },
+    "methods": [
+        "show_tabs"
+    ]
+}

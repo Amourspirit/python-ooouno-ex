@@ -45,6 +45,49 @@ python ./ex/dialog/grid/start.py
 python .\ex\dialog\grid\start.py
 ```
 
+## Embedding
+
+### Embedding the Dialog in sales_data.ods
+
+The dialog can be embedded in a spreadsheet in the following two ways:
+
+The recommended way is to have [OOO Development Tools Extension] installed and use the number `1` method below.
+
+These commands must be run from this current folder in a terminal.
+
+1. **Embedding the Dialog in sales_data.ods use with extension**
+
+   The dialog can be embedded in sales_data.ods running the following command in the terminal:
+
+   ```sh
+   make build
+   ```
+
+   With extension installed this will create a much more lightweight file. The startup for the macro will be faster.
+
+2. **Embedding the Dialog in sales_data.ods use without extension**
+
+    With this method the macro will run without the extension installed.
+
+   The dialog can be embedded in sales_data.ods running the following command in the terminal:
+
+   ```sh
+   make build_ooodev
+   ```
+
+    This will include the required `ooodev` packages in the document. This will create a much larger file. The startup for the macro will be slower. After first load the macro files will be cached and running the macro again will be faster.
+
+### Build output
+
+After running the build command, the output will be in the `build/sales_grid` folder of this projects root.
+The file name will be `grid_dialog.ods`.
+
+### Running the embedded Dialog
+
+To run the embedded dialog, open the `sales_data.ods` file in LibreOffice and run
+`Tools -> Macros -> Run Macro...` and select `grid_dialog.ods -> grid_dialog -> show_grid` and click `Run`.
+
+
 ## Live LibreOffice Python
 
 Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
@@ -68,3 +111,4 @@ python -m start
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OOO Development Tools Extension]: https://extensions.libreoffice.org/en/extensions/show/41700
