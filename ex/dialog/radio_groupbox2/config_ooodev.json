@@ -1,0 +1,18 @@
+{
+    "id": "oooscript",
+    "name": "radio_example",
+    "app": "WRITER",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "script.py",
+        "output_name": "radio_example",
+        "single_script": false,
+        "clean": true,
+        "exclude_modules": [
+            "sphinx\\.*"
+        ]
+    },
+    "methods": [
+        "show_radio_dialog"
+    ]
+}

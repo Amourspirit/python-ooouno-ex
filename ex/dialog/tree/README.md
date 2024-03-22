@@ -50,6 +50,48 @@ python ./ex/dialog/tree/start.py
 python .\ex\dialog\tree\start.py
 ```
 
+## Embedding
+
+### Embedding the Dialog in a document
+
+The dialog can be embedded in a Writer document in the following two ways:
+
+The recommended way is to have [OOO Development Tools Extension] installed and use the number `1` method below.
+
+These commands must be run from this current folder in a terminal.
+
+1. **Embedding the Dialog in a Writer document for use with extension**
+
+   The dialog can be embedded in Writer document running the following command in the terminal:
+
+   ```sh
+   make build
+   ```
+
+   With extension installed this will create a much more lightweight file. The startup for the macro will be faster.
+
+2. **Embedding the Dialog in a Writer document for use without extension**
+
+    With this method the macro will run without the extension installed.
+
+   The dialog can be embedded in a Writer document running the following command in the terminal:
+
+   ```sh
+   make build_ooodev
+   ```
+
+    This will include the required `ooodev` packages in the document. This will create a much larger file. The startup for the macro will be slower. After first load the macro files will be cached and running the macro again will be faster.
+
+### Build output
+
+After running the build command, the output will be in the `build/tree_tabs` folder of this projects root.
+The file name will be `tabs_tree.odt`.
+
+### Running the embedded Dialog
+
+To run the embedded dialog, open the `tabs_tree.odt` file in LibreOffice and run
+`Tools -> Macros -> Run Macro...` and select `tabs_tree.ods -> tabs_tree -> show_tabs` and click `Run`.
+
 ## Live LibreOffice Python
 
 Instructions to run this example in [Live-LibreOffice-Python](https://github.com/Amourspirit/live-libreoffice-python).
@@ -73,3 +115,4 @@ python -m start
 ```
 
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OOO Development Tools Extension]: https://extensions.libreoffice.org/en/extensions/show/41700

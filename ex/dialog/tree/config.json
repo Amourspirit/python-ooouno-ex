@@ -1,0 +1,20 @@
+{
+    "id": "oooscript",
+    "name": "tabs_tree",
+    "app": "WRITER",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "script.py",
+        "output_name": "tabs_tree",
+        "single_script": false,
+        "clean": true,
+        "exclude_modules": [
+            "ooodev\\.*",
+            "com\\.*",
+            "ooo\\.*"
+        ]
+    },
+    "methods": [
+        "show_tabs"
+    ]
+}
