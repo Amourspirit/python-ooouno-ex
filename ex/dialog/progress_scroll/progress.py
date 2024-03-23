@@ -49,11 +49,16 @@ class Progress:
         self._dialog = self._doc.create_dialog(
             x=-1, y=-1, width=self._width, height=self._height, title=self._title
         )
+        self._dialog.set_visible(False)
         self._dialog.create_peer()
         self._init_label()
         self._init_progress()
         self._init_scroll()
         self._init_buttons()
+        self._ctl_progress.tip_text = f"Value: {self._progress_value}"
+        self._ctl_scroll_progress.tip_text = (
+            f"{self._progress_value}/{self._ctl_scroll_progress.max_value}"
+        )
 
     def _init_handlers(self) -> None:
         """
@@ -164,6 +169,10 @@ class Progress:
         a_event = cast("AdjustmentEvent", event.event_data)
         self._progress_value = a_event.Value
         self._ctl_progress.value = self._progress_value
+        self._ctl_progress.tip_text = f"Value: {self._progress_value}"
+        self._ctl_scroll_progress.tip_text = (
+            f"{self._progress_value}/{self._ctl_scroll_progress.max_value}"
+        )
 
     def on_mouse_entered(
         self,
