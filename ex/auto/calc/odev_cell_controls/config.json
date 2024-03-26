@@ -1,0 +1,20 @@
+{
+    "id": "oooscript",
+    "name": "odev_cell_controls",
+    "app": "CALC",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "macro_listener.py",
+        "output_name": "odev_cell_controls",
+        "single_script": true,
+        "clean": false,
+        "exclude_modules": [
+            "ooodev\\.*",
+            "com\\.*",
+            "ooo\\.*"
+        ]
+    },
+    "methods": [
+        "info"
+    ]
+}
