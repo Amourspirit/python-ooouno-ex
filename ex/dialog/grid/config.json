@@ -4,17 +4,8 @@
     "app": "CALC",
     "version": "1.0.0",
     "args": {
-        "src_file": "script.py",
+        "src_file": "grid_ex.py",
         "output_name": "grid_dialog",
-        "single_script": false,
-        "clean": false,
-        "exclude_modules": [
-            "ooodev\\.*",
-            "com\\.*",
-            "ooo\\.*"
-        ]
-    },
-    "methods": [
-        "show_grid"
-    ]
+        "single_script": true
+    }
 }
