@@ -1,0 +1,12 @@
+{
+    "id": "oooscript",
+    "name": "odev_formula",
+    "app": "WRITER",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "make_formula.py",
+        "output_name": "make_formula",
+        "single_script": true,
+        "clean": false
+    }
+}
