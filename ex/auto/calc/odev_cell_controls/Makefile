@@ -1,5 +1,5 @@
 help:
-	@echo "Run make build to compile into 'build/sales_grid' folder."
+	@echo "Run make build to compile into './data/odev_cell_controls.ods' file."
 	@echo "Run make start to execute the dialog script locally"
 
 
