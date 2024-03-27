@@ -16,6 +16,23 @@ See Also:
 
 See [source code](./start.py)
 
+## Embedding Script
+
+The `make_formula.py` script can be embedded into a document using the [oooscript] library.
+
+In a terminal window for the current folder run:
+
+```bash
+make build
+```
+
+This will embed `make_formula.py` into the `data/blank.odt` file and save it as `build/make_formula/make_formula.odt`.
+The `build` folder will be in the root of this project.
+
+The `make_formula.odt` file will contain a macro named `generate_formula` that can be run from `Tools -> Macros -> Run Macro...` dialog.
+
+You will need [OOO Development Tools Extension] installed to run macro in the `make_formula.odt` document.
+
 ## Automate
 
 Displays a message box asking if you want to save document.
@@ -79,3 +96,5 @@ python -m start
 [Text Content Other than Strings]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html
 [Adding a Text Embedded Object to a Document]: https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part2/chapter07.html#adding-a-text-embedded-object-to-a-document
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
+[OOO Development Tools Extension]: https://extensions.libreoffice.org/en/extensions/show/41700
+[oooscript]: https://oooscript.readthedocs.io/en/latest/

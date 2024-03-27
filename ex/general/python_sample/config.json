@@ -1,0 +1,12 @@
+{
+    "id": "oooscript",
+    "name": "python_sample",
+    "app": "WRITER",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "sample.py",
+        "output_name": "python_sample",
+        "single_script": true,
+        "clean": false
+    }
+}
