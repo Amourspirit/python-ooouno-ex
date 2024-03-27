@@ -4,17 +4,8 @@
     "app": "WRITER",
     "version": "1.0.0",
     "args": {
-        "src_file": "script.py",
+        "src_file": "radio_group_box.py",
         "output_name": "radio_example",
-        "single_script": false,
-        "clean": true,
-        "exclude_modules": [
-            "ooodev\\.*",
-            "com\\.*",
-            "ooo\\.*"
-        ]
-    },
-    "methods": [
-        "show_radio_dialog"
-    ]
+        "single_script": true
+    }
 }

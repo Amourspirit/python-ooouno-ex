@@ -331,3 +331,20 @@ class RadioGroupBox:
         return result
 
     # endregion Show Dialog
+
+
+# region Macro method
+
+# show_radio_dialog is here and in script.py
+# The reason for this is when this script is embedded into a document via make build it is a stand alone script.
+# As a standalone script there needs to be a macro to call.
+# When embedded using make build_ooodev it is part of a multi-file output and the macro is not needed and will be found in script.py
+
+
+def show_radio_dialog(*args) -> None:
+    rgb = RadioGroupBox()
+    rgb.show()
+
+
+g_exportedScripts = (show_radio_dialog,)
+# endregion Macro method

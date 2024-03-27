@@ -210,7 +210,7 @@ class GridEx:
 # region Macro method
 
 # show_grid is here and in script.py
-# The reason for thi is when this script is embedded into a document via make build it is a stand alone script.
+# The reason for this is when this script is embedded into a document via make build it is a stand alone script.
 # As a standalone script there needs to be a macro to call.
 # When embedded using make build_ooodev it is part of a multi-file output and the macro is not needed and will be found in script.py
 
