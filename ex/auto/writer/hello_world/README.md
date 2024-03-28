@@ -2,6 +2,9 @@
 
 This is a basic example that opens up a new Writer document and writes *Hello World* using [ScriptForge](https://gitlab.com/LibreOfficiant/scriptforge)
 and [ScriptForge Typings](https://pypi.org/project/types-scriptforge/).
+ScriptForge is a repository of "macro scripting resources" that are written in basic, but callable from python. They have been contributed for consideration to be incorporated in future distributions of LibreOffice (hence the "forge" aspect of the name.) In the mean time, we can access them explicitly via the scriptforge PyPI package. See https://gitlab.com/LibreOfficiant/scriptforge.
+
+NOTE: This is not a real-world example of why you would want to invoke any of the ScriptForge resources. It merely illustrates how you would go about it should you decide that it is useful to you.
 
 See [source code](./start.py)
 
