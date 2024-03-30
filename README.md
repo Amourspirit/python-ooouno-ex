@@ -63,7 +63,7 @@ python3 -m venv ./.venv
 poetry install
 ```
 
-Add the `uno.py` and `unohelper.py` links to virtual environment using the [oooenv] tool.
+Add the `uno.py` and `unohelper.py` links to virtual environment using the [oooenv] tool which is installed in the virtual environment.
 
 ```sh
 oooenv cmd-link -a
@@ -85,7 +85,7 @@ py -m venv .\.venv
 poetry install
 ```
 
-Now, here's how we hack the virtual environment.
+Now, here's how we hack the virtual environment using the [oooenv] tool which is installed in the virtual environment.
 We're creating a secondary virtual environment configuration that runs off of the copy of Python 3.8 that is embedded in LibreOfiice (where the `uno` and `unohelper` packages are installed.)
 The first time you run this `oooenv env -t` command, the secondary environment configuration is created and activated.
 Thereafter, the `-t` switch tells the command to toggle between the main virtual environment and this special UNO evnvironment.
