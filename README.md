@@ -105,7 +105,7 @@ The UNO environment is stuck with whatever version of Python is embedded in Libr
 Newer versions of [poetry], for example, require 3.9 or higher.
 So, when you need to use [poetry] just toggle the environment, then toggle back.
 
-```ps
+```
 oooenv env -t
 poetry <some-command>
 oooenv env -t
