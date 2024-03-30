@@ -10,7 +10,6 @@ So far, this collection includes the use of the [ooouno], [OOO Development Tools
 
 [ScriptForge] is a repository of "macro scripting resources" that are written in basic, but callable from python. They have been contributed for consideration to be incorporated in future distributions of LibreOffice (hence the "forge" aspect of the name.) In the mean time, we can access them explicitly via the scriptforge PyPI package. See https://gitlab.com/LibreOfficiant/scriptforge.
 
-
 ### TL;DR
 
 - The main collection of examples reside in [ex], with a subfolder for each component, and with a sub-subfolder for each example. Every folder and subfolder has its own README.md file.
@@ -18,12 +17,11 @@ So far, this collection includes the use of the [ooouno], [OOO Development Tools
 - Code that supports setting up the environment needed to run these examples reside in `src`, starting with `src/main.py`. There are a few corresponding unit tests in `tests`.
 - The `resources` folder contains assets that are used by the examples (pre-existing ods/odb/odt files, plain text files, images, etc.) NOTE: Some of the examples have their own resources within their subfolders.
 
-
 ### oooscript
 
 This project uses [oooscript] to compile multiple scripts into a single script and embed output into a document.
 This makes it easy to use as a LibreOffice macro.
-
+See the [embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html) guide.
 
 ### Other Resources
 
@@ -31,32 +29,28 @@ Another fantastic resource is [LibreOffice Programming].
 It has great documentation and many Java examples.
 An archive of the Java code is available at https://github.com/Amourspirit/libreoffice_lop_java.
 
-
-
 ## I NEED A BREAK ...
 
 Check out the LibreOffice Calc [Sudoku example](./ex/calc/sudoku).
 
 ![calc_sudoku](https://user-images.githubusercontent.com/4193389/165391098-883a7647-5fc8-47de-b028-4c2c98337abe.png)
 
-
-
 ## Running the Project Examples
 
-This project is set up to work with [Vs Code](https://code.visualstudio.com/), or [Github Codespaces](https://docs.github.com/en/codespaces/overview), or in a Development Container on your local computer.
+This project is set up to work with [Vs Code](https://code.visualstudio.com/), [Pycharm](https://www.jetbrains.com/pycharm), or [Github Codespaces](https://docs.github.com/en/codespaces/overview), or in a Development Container on your local computer.
 You can run the examples directly from within any of them.
 The Development container for this project is based off [Live LibreOffice Python](https://github.com/Amourspirit/live-libreoffice-python) template. See the [Live LibreOffice Python Wiki](https://github.com/Amourspirit/live-libreoffice-python/wiki) for more information.
-
-
 
 ## Project Installation
 
 Installing this project is not necessary if you are using [Github Codespaces](https://docs.github.com/en/codespaces/overview) or in a Development Container on your local computer; however, if you want to install locally, follow the instructions below.
 
-[poetry] is required to install this project. Poetry is one of several back-end tools available for building Python packages. It offers supperb dependency management and virtual environment management.
+[poetry] is used to install this project. Poetry is one of several back-end tools available for building Python packages. It offers supperb dependency management and virtual environment management.
 
-One tricky part of running these examples is gaining access to the `uno` and `unohelper` packages that are embedded in LibreOffice (alongside the embedded build of Python itself). [ooouno] depends on them. The exact location of these files vary depending on OS and other factors. For Linux, we have a script called `cmd-link` that does this for you.
+Although [poetry] is recommended to set up this project it is not strickly speaking required.
+One could manually set the virtual envornment and install the required pacakges in the `pyproject.toml` file.
 
+One tricky part of running these examples is gaining access to the `uno` and `unohelper` packages that are embedded in LibreOffice (alongside the embedded build of Python itself). [ooouno] depends on them and they are the glue between python scritps and LibreOffice. The exact location of these files vary depending on OS and other factors. This project uses [oooenv] which is a command line tool to aid in connecting a virtual environment to the `uno` an `unohelper` modules.
 
 ### Linux
 
@@ -69,12 +63,11 @@ python3 -m venv ./.venv
 poetry install
 ```
 
-Add the `uno.py` and `unohelper.py` links to virtual environment.
+Add the `uno.py` and `unohelper.py` links to virtual environment using the [oooenv] tool which is installed in the virtual environment.
 
 ```sh
-python -m main cmd-link --add
+oooenv cmd-link -a
 ```
-
 
 ### Windows
 
@@ -92,18 +85,18 @@ py -m venv .\.venv
 poetry install
 ```
 
-Now, here's how we hack the virtual environment.
-We're creating a secondary virtual environment that runs off of the copy of Python 3.8 that is embedded in LibreOfiice (where the `uno` and `unohelper` packages are installed.)
-The first time you run this `main env` command, the secondary environment is created and activated.
+Now, here's how we hack the virtual environment using the [oooenv] tool which is installed in the virtual environment.
+We're creating a secondary virtual environment configuration that runs off of the copy of Python 3.8 that is embedded in LibreOfiice (where the `uno` and `unohelper` packages are installed.)
+The first time you run this `oooenv env -t` command, the secondary environment configuration is created and activated.
 Thereafter, the `-t` switch tells the command to toggle between the main virtual environment and this special UNO evnvironment.
 
 ```ps
-python -m main env -t
+oooenv env -t
 ```
 To check if the virtual environment is set for LibreOffice use the `-u` switch.
 
-```python
->>> python -m main env -u
+```ps
+oooenv env -u
 UNO Environment
 ```
 
@@ -112,12 +105,14 @@ The UNO environment is stuck with whatever version of Python is embedded in Libr
 Newer versions of [poetry], for example, require 3.9 or higher.
 So, when you need to use [poetry] just toggle the environment, then toggle back.
 
-```python
-python -m main env -t
+```
+oooenv env -t
 poetry <some-command>
-python -m main env -t
+oooenv env -t
 ```
 
+If you get an error such as `ImportError: Are you sure that uno has been imported?` then it is likely that the `uno` environment has not been activated.
+Try running `oooenv env -t`.
 
 ### Testing the Installed Environment
 
@@ -132,7 +127,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
-
 ### Debugging Macros
 
 It is possible to debug macros when running in the Codesapce (Development container).
@@ -143,6 +137,7 @@ See [Debug Macros in Vs Code](https://github.com/Amourspirit/live-libreoffice-py
 
 [ooouno]: https://pypi.org/project/ooouno/
 [oooscript]: https://pypi.org/project/oooscript/
+[oooenv]: https://pypi.org/project/oooenv/
 [OOO Development Tools]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 [OooDev]: https://python-ooo-dev-tools.readthedocs.io/en/latest/
 [ooouno]: https://github.com/Amourspirit/python-ooouno
