@@ -62,7 +62,7 @@ def _args_cmd_toggle_evn(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-t",
         "--toggle-env",
-        help="Toggle virtual environment to and from LibreOffice environment",
+        help="Toggles the virtual environment to and from LibreOffice environment (aka. the UNO environment)",
         action="store_true",
         dest="toggle_env",
         default=False,
@@ -70,7 +70,7 @@ def _args_cmd_toggle_evn(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-u",
         "--uno-env",
-        help="Displayes if the current Virtual Environment is UNO Environment.",
+        help="Displays if the current Virtual Environment is the UNO Environment or not.",
         action="store_true",
         dest="uno_env",
         default=False,
@@ -83,6 +83,7 @@ def _args_cmd_toggle_evn(parser: argparse.ArgumentParser) -> None:
         dest="cusom_env",
         required=False,
     )
+
 
 def _args_action_cmd_link(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -104,6 +105,7 @@ def _args_action_cmd_auto(
     else:
         run_auto.run_py(*pargs)
 
+
 def _args_action_cmd_toggle_env(a_parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
     if args.uno_env:
         if manage_env_cfg.is_env_uno_python():
@@ -116,6 +118,7 @@ def _args_action_cmd_toggle_env(a_parser: argparse.ArgumentParser, args: argpars
         return
     if args.cusom_env:
         manage_env_cfg.toggle_cfg(suffix=args.cusom_env)
+
 
 def _args_process_cmd(
     a_parser: argparse.ArgumentParser, args: argparse.Namespace
@@ -141,7 +144,7 @@ def _main() -> int:
     sys.argv.extend(args.split())
     extra = "ex/auto/writer/odev_doc_convert/start.py -e 'pdf' -f 'README.md'"
     sys.argv.append(extra)
-    
+
     return main()
 
 
