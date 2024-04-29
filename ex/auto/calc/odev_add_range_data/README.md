@@ -1,10 +1,16 @@
+<p align="center">
+<img src="https://github.com/Amourspirit/python-ooouno-ex/assets/4193389/832195c4-9e7c-403a-9600-0dbe52cf0405" width="550" height="488">
+</p>
+
 # Calc Add Range of Data Automation
 
-This is a basic example that opens up a new Calc document and inserts array of data and a formula.
+This is a basic example that opens up a new Calc document and inserts array of data and a formula and freezes the first row of the sheet.
 
 This demo uses [OOO Development Tools](https://python-ooo-dev-tools.readthedocs.io/en/latest/) (OooDev).
 
 OooDev makes this demo possible with just a few lines of code.
+
+Also demonstrates saving an document, displaying a message box and displaying a info bar message.
 
 See [source code](./start.py)
 
@@ -66,4 +72,3 @@ cd odev_add_range_data
 python -m start
 ```
 
-![calc_auto_range](https://user-images.githubusercontent.com/4193389/173204609-e6ed10f0-55df-486e-8c93-3b40e705bbe6.png)
