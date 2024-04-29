@@ -3,6 +3,8 @@ from ooo.dyn.sheet.cell_flags import CellFlagsEnum
 from ooodev.calc import CalcDoc, CalcSheet
 from ooodev.format.calc.direct.cell.borders import Borders, Side
 from ooodev.utils.color import CommonColor
+from ooodev.adapter.util.the_path_settings_comp import ThePathSettingsComp
+from ooodev.utils.props import Props
 
 
 def do_cell_range(sheet: CalcSheet) -> None:
@@ -29,18 +31,18 @@ def do_cell_range(sheet: CalcSheet) -> None:
         ("Alice", "Oranges", 4),
         ("Alice", "Apples", 9),
     )
-    sheet.set_array(values=vals, name="A3:C23")  # or just "A3"
-    cell = sheet["A24"]
-    cell.value = "Total"
+    with sheet.calc_doc:
+        # use doc context manager to lock controllers for faster updates.
+        sheet.set_array(values=vals, name="A1:C21")  # or just "A1"
+        cell = sheet.get_cell(cell_name="A22")
+        cell.set_val("Total")
 
-    cell = sheet["C24"]
-    cell.value = "=SUM(C4:C23)"
+        cell = sheet.get_cell(cell_name="C22")
+        cell.set_val("=SUM(C2:C21)")
 
-    # set Border around data and summary.
-    bdr = Borders(border_side=Side(color=CommonColor.LIGHT_BLUE, width=2.85))
-    rng = sheet.get_range(range_name="A3:C24")
-    rng.apply_styles(bdr)
-    # Calc.set_style_range(sheet=sheet.component, range_name="A3:C24", styles=[bdr])
+        # set Border around data and summary.
+        rng = sheet.get_range(range_name="A1:C22")
+        rng.style_borders_sides(color=CommonColor.LIGHT_BLUE, width=2.85)
 
 
 def create_array() -> None:
@@ -52,6 +54,7 @@ def create_array() -> None:
 
     # insert the array of data
     do_cell_range(sheet=sheet)
+    doc.freeze_rows(num_rows=1)
 
 
 def clear_range() -> None:
@@ -65,10 +68,12 @@ def clear_range() -> None:
     flags = CellFlagsEnum.VALUE | CellFlagsEnum.STRING | CellFlagsEnum.FORMULA
 
     # clears the cells in a given range
-    sheet.clear_cells(range_name="A2:C24", cell_flags=flags)
+    sheet.clear_cells(range_name="A1:C22", cell_flags=flags)
 
     # remove the border from the range.
     # OooDev >= 0.25.2
-    sheet.get_range(range_name="A2:C24").remove_border()
+    sheet.get_range(range_name="A1:C22").remove_border()
     # OooDev <= 0.25.1
     # _ = Calc.remove_border(sheet=sheet.component, range_name="A2:C24")
+    sheet.goto_cell(cell_name="A1")
+    doc.unfreeze()
