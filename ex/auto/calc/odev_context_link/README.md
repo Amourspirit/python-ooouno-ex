@@ -137,10 +137,6 @@ make build
 
 The `start.py` file is a way to run the example code when this project is run in a development container.
 
-See Also:
-
-- [OOO Development Tools - Chapter 24. Complex Data Manipulation](https://python-ooo-dev-tools.readthedocs.io/en/latest/odev/part4/chapter24.html)
-
 ## Example File
 
 The Example file is located in `data/links.ods` it is ready to run providing the [OooDev Extension] is installed.
