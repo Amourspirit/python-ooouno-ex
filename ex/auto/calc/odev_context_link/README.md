@@ -16,7 +16,7 @@ It is relatively simple to add a custom action to the context menu in LibreOffic
 This can be seen in the [About Example for App Menu](https://python-ooo-dev-tools.readthedocs.io/en/latest/help/common/gui/menus/app_menu/about_example.html) of the [OOO Development Tools] documentation.
 
 Adding a custom action is a more complex task. One possible solution is to point the context menu to run a macro. A macro url could be constructed using [MacroScript.get_url_script()](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/macro/script/macro_script.html#ooodev.macro.script.MacroScript.get_url_script) or [Shortcuts.get_url_script()](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/gui/menu/shortcuts.html#ooodev.gui.menu.Shortcuts.get_url_script).
-This solution can work in many case but has some limitations. One limitation is it can be used to pass args to the macro.
+This solution can work in many case but has some limitations. One limitation is it can not be used to pass args to the macro.
 
 This example demonstrates how to add a custom action to the context menu in LibreOffice Calc.
 One benefit of this approach is that it can be used to pass args to the dispatch.
