@@ -1,0 +1,21 @@
+{
+    "id": "oooscript",
+    "name": "odev_context_link",
+    "app": "CALC",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "macro_code.py",
+        "output_name": "links",
+        "single_script": false,
+        "clean": false,
+        "exclude_modules": [
+            "ooodev\\.*",
+            "com\\.*",
+            "ooo\\.*"
+        ]
+    },
+    "methods": [
+        "register_url_interceptor",
+        "unregister_url_interceptor"
+    ]
+}
