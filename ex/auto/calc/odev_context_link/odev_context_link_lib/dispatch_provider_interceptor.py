@@ -9,14 +9,35 @@ from com.sun.star.frame import XDispatchProvider
 from com.sun.star.frame import XDispatch
 from com.sun.star.util import URL
 from com.sun.star.frame import DispatchDescriptor
-from dispatch_convert_cell_url import DispatchConvertCellUrl
+from .dispatch_convert_cell_url import DispatchConvertCellUrl
 
 
 class DispatchProviderInterceptor(unohelper.Base, XDispatchProviderInterceptor):
+    """
+    Dispatch Provider Interceptor.
+
+    This class needs to be kept alive as long as the dispatch provider is in use.
+    For this reason this class is a singleton.
+
+    Calling the ``dispose()`` method will release the singleton instance.
+    """
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = super(DispatchProviderInterceptor, cls).__new__(
+                cls, *args, **kwargs
+            )
+            cls._instance._initialized = False
+        return cls._instance
 
     def __init__(self):
+        if self._initialized:
+            return
         self._master = None
         self._slave = None
+        self._initialized = True
 
     # def _convert_query_to_dict(self, query: str):
     #     return parse_qs(query)
@@ -58,24 +79,11 @@ class DispatchProviderInterceptor(unohelper.Base, XDispatchProviderInterceptor):
         Searches for an XDispatch for the specified URL within the specified target frame.
         """
         if url.Protocol == "slot:":
-            # not really sure if this is necessary.
+            # not really sure if this is necessary but there have been reports in the past
+            # of crashes without this check.
             return None
 
         if url.Main == ".uno:ooodev.calc.menu.convert.url":
-            # print(
-            #     f"Complete = {url.Complete}",
-            #     f"Protocol = {url.Protocol}",
-            #     f"Main = {url.Main}",
-            #     f"Mark = {url.Mark}",
-            #     f"Name = {url.Name}",
-            #     f"Path = {url.Path}",
-            #     f"User = {url.User}",
-            #     f"Server = {url.Server}",
-            #     f"Port = {url.Port}",
-            #     f"Arguments = {url.Arguments}",
-            #     sep="; ",
-            # )
-            # print(url)
             with contextlib.suppress(Exception):
                 args = self._convert_query_to_dict(url.Arguments)
                 return DispatchConvertCellUrl(sheet=args["sheet"], cell=args["cell"])
@@ -90,3 +98,10 @@ class DispatchProviderInterceptor(unohelper.Base, XDispatchProviderInterceptor):
         It's not allowed to pack it - because every request must match to its real result. Means: don't delete NULL entries inside this list.
         """
         pass
+
+    def dispose(self) -> None:
+        DispatchProviderInterceptor._instance = None
+
+    @classmethod
+    def has_instance(cls) -> bool:
+        return cls._instance is not None
