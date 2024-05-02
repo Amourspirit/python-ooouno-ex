@@ -77,7 +77,7 @@ The `macro_listener.py` script is embedded into the Calc document via the `make 
 oooscript compile --embed --config "$(PWD)/config.json" --embed-doc "$(PWD)/data/src_doc/src_doc.ods" --build-dir "$(PWD)/data"
 ```
 
-See [OooScript Docs](https://oooscript.readthedocs.io/en/latest/) for more information on embedding scripts.
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html) and [OooScript Docs](https://oooscript.readthedocs.io/en/latest/) for more information on embedding scripts.
 
 ## Other Notes
 

@@ -24,6 +24,7 @@ The `make build` command invokes [oooscript].
 This will embed `sample.py` into the `data/sample.odt` file and save it as `build/python_sample/python_sample.odt`.
 The `build` is in the root of this project. It will be created if it does not exist.
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
 
 ## Notes
 

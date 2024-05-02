@@ -44,6 +44,7 @@ The output is written into `build/input_box` folder in the projects root.
 ```sh
 oooscript compile --embed --config "ex/general/input_box/config.json" --embed-doc "ex/general/input_box/inputbox.odt" --build-dir "build/input_box"
 ```
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
 
 ## Run Directly
 
