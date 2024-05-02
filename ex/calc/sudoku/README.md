@@ -8,14 +8,16 @@ To run the example you need to use LibreOffice >= `7.2`.
 
 ## Build
 
-Build will compile the python scripts for this example into a single python script.
+`make build` will compile the python scripts for this example into a single python script and
+embed the script into the `calc-sudoku.ods` document in the `build/sudoku` folder.
 
-The following command will compile script as `calc-sudoku.py` and embed it into `calc-sudoku.ods`
-The output is written into `build/sudoku` folder in the projects root.
+From the current folder run:
 
 ```sh
-oooscript compile --embed --config "ex/calc/sudoku/config.json" --embed-doc "ex/calc/sudoku/calc-sudoku.ods" --build-dir "build/sudoku"
+make build
 ```
+
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
 
 ## Sample Document
 

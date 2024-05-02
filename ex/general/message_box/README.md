@@ -71,6 +71,8 @@ The output is written into `build/message_box` folder in the projects root.
 oooscript compile --embed --config "ex/general/message_box/config.json" --embed-doc "ex/general/message_box/msgbox.odt" --build-dir "build/message_box"
 ```
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
+
 ## Run Directly
 
 To start LibreOffice and display a message box run the following command from this folder.

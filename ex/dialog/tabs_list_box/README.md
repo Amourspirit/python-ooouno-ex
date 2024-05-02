@@ -83,6 +83,8 @@ These commands must be run from this current folder in a terminal.
 After running the build command, the output will be in the `build/sales_data` folder of this projects root.
 The file name will be `tabs_list_box.ods`.
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
+
 ### Running the embedded Dialog
 
 To run the embedded dialog, open the `sales_data.ods` file in LibreOffice and run

@@ -133,6 +133,8 @@ The existing file is overwritten. Note the existing file already has the code an
 make build
 ```
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html)
+
 ## start.py
 
 The `start.py` file is a way to run the example code when this project is run in a development container.
@@ -142,6 +144,10 @@ The `start.py` file is a way to run the example code when this project is run in
 The Example file is located in `data/links.ods` it is ready to run providing the [OooDev Extension] is installed.
 The file has a start up macro that registers the `DispatchProviderInterceptor` instance.
 Simply open the file and the intercept will be active.
+
+### Note
+
+If you are having trouble getting the example to work, try turning off `Automatic Spell checking` in the `Tools` menu (`Shift+F7`).
 
 ## Automate
 

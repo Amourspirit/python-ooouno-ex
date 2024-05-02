@@ -28,6 +28,8 @@ The output is written into `build/BasicCounter` folder in the projects root.
 oooscript compile --embed --config "ex/general/dialog_basic_counter/config.json" --embed-doc "ex/general/dialog_basic_counter/BasicCounter.ods" --build-dir "build/BasicCounter"
 ```
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
+
 ![screenshot](https://user-images.githubusercontent.com/4193389/179670709-978fd704-db5e-4225-ae65-92bba0e88ac8.png)
 
 

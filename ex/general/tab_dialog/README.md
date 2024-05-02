@@ -62,6 +62,8 @@ The output is written into `build` folder in the projects root.
 oooscript compile --embed --config "ex/general/tab_dialog/config.json" --embed-doc "ex/general/tab_dialog/tab_dialog.odt" --build-dir "build/tab_dialog"
 ```
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
+
 ## Run Directly
 
 Even though this is a multi-script example, it is possible to run and debug the example directly from this source folder. See the `run.py` script in this folder.

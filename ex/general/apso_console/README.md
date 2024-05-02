@@ -27,4 +27,6 @@ The output is written into `build` folder in the projects root.
 oooscript compile --embed --config "ex/general/apso_console/config.json" --embed-doc "ex/general/apso_console/apso_example.odt" -build-dir "build/apso_console"
 ```
 
+See [Guide on embedding python macros in a LibreOffice Document](https://python-ooo-dev-tools.readthedocs.io/en/latest/guide/embed_python.html).
+
 [APSO Extension]: https://extensions.libreoffice.org/en/extensions/show/apso-alternative-script-organizer-for-python
