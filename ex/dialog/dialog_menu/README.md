@@ -19,6 +19,11 @@ The example uses `OooDev` to create a dialog with a menu. `OooDev` has great sup
 
 The simple explanation is that the dialog is created, a label is added with the ☰ icon, and a menu is created, and the label mouse events triggers the display of the menu. A listener for the menu is added to handle the menu item selection.
 
+## Start Demo
+
+With the [OooDev Extension] installed, open the `dialog_menu.ods` file in the `data` folder.
+Click on the Show button to open the dialog.
+
 ## Library files
 
 ### dialog_menu_lib module
