@@ -8,7 +8,7 @@
 
 Example of intercepting a context menu in LibreOffice Calc.
 
-This demo uses This demo uses [OOO Development Tools] (OooDev).
+This demo uses [OOO Development Tools] (OooDev).
 
 Intercepting a menu with a custom action is a powerful feature. This example demonstrates how to intercept the context menu in LibreOffice Calc and add a custom action to the menu.
 
