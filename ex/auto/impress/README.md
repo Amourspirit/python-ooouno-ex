@@ -7,6 +7,7 @@ Welcome to Impress Automation folder. Open a sub folder to get to an example.
 - [odev_auto_show](./odev_auto_show/) - Example demonstrates displaying a slide show that automatically plays.
 - [odev_basic_show](./odev_basic_show/) - Example demonstrates displaying a slide show.
 - [odev_copy_slide](./odev_copy_slide/) - Example demonstrates how to copy a slide from one position and place it into another position.
+- [odev_custom_page_props](./odev_custom_page_props) - Example of setting custom page properties in an Impress document.
 - [odev_custom_show](./odev_custom_show/) - Example demonstrates opening a presentation file in Impress starting a slide show with specified slides.
 - [odev_extract_text](./odev_extract_text/) - Example of to extract the text from the slide deck and printing to console.
 - [odev_make_slides](./odev_make_slides/) - Example creates a deck of four or five slides, illustrating different aspects of slide generation.
