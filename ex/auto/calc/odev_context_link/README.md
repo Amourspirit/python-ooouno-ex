@@ -149,6 +149,10 @@ Simply open the file and the intercept will be active.
 
 If you are having trouble getting the example to work, try turning off `Automatic Spell checking` in the `Tools` menu (`Shift+F7`).
 
+## See Also:
+
+- [Custom Cell Properties](../odev_custom_cell_props#readme)
+
 ## Automate
 
 A message box is display once the document has been processed asking if you want to close the document.
