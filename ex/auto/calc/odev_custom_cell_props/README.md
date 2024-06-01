@@ -5,7 +5,7 @@
 </p>
 
 
-This is a example that show how to add custom properties to Calc sheet cells. The custom properties are stored in the document and can be accessed later. Using `OooDev` custom properties can be added to cells in a Calc document. The can store values that are not part of the cell content such as booleans, string and numbers.
+This is a example that show how to add custom properties to Calc sheet cells. The custom properties are stored in the document and can be accessed later. Using `OooDev` custom properties can be added to cells in a Calc document. The custom properties can store values that are not part of the cell content such as booleans, string and numbers.
 
 See also [ooodev.calc.CalcCell](https://python-ooo-dev-tools.readthedocs.io/en/latest/src/calc/calc_cell.html).
 
@@ -17,8 +17,14 @@ cell.set_custom_property("OriginalValue", cell.value)
 cell.set_custom_property("IsOriginal", True)
 assert cell.has_custom_properties()
 assert cell.has_custom_property("OriginalValue")
+cell.get_custom_property("OriginalValue")
+props = cell.get_custom_properties()
+assert props.IsOriginal
+print(props.OriginalValue)
 cell.remove_custom_property("OriginalValue")
 cell.remove_custom_properties() # removes all custom properties
+props.NewValue = "New Value"
+cell.set_custom_properties(props)
 ```
 
 This example uses [OOO Development Tools] (OooDev) which makes custom properties possible.
