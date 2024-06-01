@@ -22,7 +22,6 @@ from .menu_data import get_popup_menu
 if TYPE_CHECKING:
     from ooodev.dialog.dl_control.ctl_base import DialogControlBase
     from com.sun.star.awt import MenuEvent
-    from com.sun.star.awt import FocusEvent
 
 # endregion Imports
 

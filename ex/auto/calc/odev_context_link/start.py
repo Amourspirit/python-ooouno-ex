@@ -15,16 +15,16 @@ from ooodev.dialog.msgbox import (
 from ooodev.loader import Lo
 
 # import from this example custom library
-from odev_context_link_lib.dispatch_provider_interceptor import (
-    DispatchProviderInterceptor,
-)
+# from odev_context_link_lib.dispatch_provider_interceptor import (
+#     DispatchProviderInterceptor,
+# )
 import macro_code
 
 
-def register_interceptor(doc: CalcDoc):
-    inst = DispatchProviderInterceptor()  # singleton
-    frame = doc.get_frame()
-    frame.registerDispatchProviderInterceptor(inst)
+# def register_interceptor(doc: CalcDoc):
+#     inst = DispatchProviderInterceptor()  # singleton
+#     frame = doc.get_frame()
+#     frame.registerDispatchProviderInterceptor(inst)
 
 
 def main() -> int:

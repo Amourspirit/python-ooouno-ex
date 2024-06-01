@@ -15,7 +15,8 @@ See Also:
 - [OOO Development Tools]
 - [Draw Custom Page Properties](../../draw/odev_custom_page_props#readme)
 - [Writer Custom Properties](../../writer/odev_custom_props#readme)
-- [Calc Custom Properties](../../calc/odev_custom_props#readme)
+- [Calc Custom Properties](../../calc/odev_custom_sheet_props#readme)
+- [Custom Cell Properties](../../calc/odev_custom_cell_props#readme)
 
 See [source code](./start.py)
 

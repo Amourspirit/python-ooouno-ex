@@ -13,6 +13,7 @@ In some cases it may be beneficial to add custom properties to a Sheet. This can
 See Also:
 
 - [OOO Development Tools]
+- [Custom Cell Properties](../odev_custom_cell_props#readme)
 - [Draw Custom Page Properties](../../draw/odev_custom_page_props#readme)
 - [Impress Custom Page Properties](../../impress/odev_custom_page_props#readme)
 - [Writer Custom Properties](../../writer/odev_custom_props#readme)

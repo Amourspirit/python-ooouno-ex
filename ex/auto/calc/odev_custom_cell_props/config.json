@@ -1,0 +1,22 @@
+{
+    "id": "oooscript",
+    "name": "odev_custom_cell_props",
+    "app": "CALC",
+    "version": "1.0.0",
+    "args": {
+        "src_file": "macro_code.py",
+        "output_name": "custom_props",
+        "single_script": false,
+        "clean": false,
+        "exclude_modules": [
+            "ooodev\\.*",
+            "com\\.*",
+            "ooo\\.*"
+        ]
+    },
+    "methods": [
+        "register_custom_prop_interceptor",
+        "unregister_custom_prop_interceptor",
+        "clean_custom_props"
+    ]
+}
