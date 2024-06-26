@@ -18,6 +18,7 @@ Welcome to Calc Automation folder. Open a sub folder to get to an example.
 - [odev_hyperlinks](./odev_hyperlinks/) - example that opens up a new calc document inserts array of formatted hyperlinks.
 - [odev_linear_solve](./odev_linear_solve/) - example of linear solve in a spreadsheet.
 - [odev_modify_listener](./odev_modify_listener/) - example of spreadsheet modify listeners.
+- [odev_named_range](./odev_named_range/) - example of adding and removing named ranges from a spreadsheet.
 - [odev_non_linear_solve](./odev_non_linear_solve/) - examples of non-linear solve in a spreadsheet.
 - [odev_pivot_table](./odev_pivot_table/) - example of calc pivot tables.
 - [odev_replace_all](./odev_replace_all/) - examples for find and replace in a spreadsheet.
