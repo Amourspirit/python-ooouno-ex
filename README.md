@@ -58,8 +58,8 @@ Clone this project into an appropriate working folder, then navigate to that fol
 Activate the virtual environment and have [poetry] install the dependencies (both the runtime and development requirements).
 
 ```sh
-python3 -m venv ./.venv
-. ./.venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 poetry install
 ```
 
