@@ -167,18 +167,18 @@ files = [
 
 [[package]]
 name = "ooo-dev-tools"
-version = "0.47.3"
+version = "0.50.0"
 description = "LibreOffice Developer Tools"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "ooo_dev_tools-0.47.3-py3-none-any.whl", hash = "sha256:4fb2ca9ee2aaba94f7e46383f5825b86df27f62882a19f0f035dcd1727c72919"},
-    {file = "ooo_dev_tools-0.47.3.tar.gz", hash = "sha256:5c7a42c2792020fa06f5f173a28f8dc5e0dd2574eab6da957abb3e0b4784e358"},
+    {file = "ooo_dev_tools-0.50.0-py3-none-any.whl", hash = "sha256:0c863ab18bc27680d8f9dc61399e530b6577dd2a9781b1a68ffb4ff2ddb6ee6f"},
+    {file = "ooo_dev_tools-0.50.0.tar.gz", hash = "sha256:c718a1dae935f4a2b0833f7634ebc7b914155cf0ea7e57b65d3f93d8a985b2a9"},
 ]
 
 [package.dependencies]
-ooouno = ">=2.1.2"
-typing-extensions = ">=4.9.0"
+ooouno = ">=3.0.0"
+typing-extensions = ">=4.12.2"
 
 [[package]]
 name = "ooo-dev-tools-gui-win"
@@ -197,45 +197,45 @@ pywinauto = ">=0.6.8"
 
 [[package]]
 name = "oooenv"
-version = "0.2.2"
+version = "0.2.4"
 description = "Configures a project python environment for LibreOffice UNO."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "oooenv-0.2.2-py3-none-any.whl", hash = "sha256:6ff74a5c9c33220f42246a01b4585290bb8a089f3f4fd8d233ddf3a4beb620e4"},
-    {file = "oooenv-0.2.2.tar.gz", hash = "sha256:86044c2de7ed2e24c1d683c6b2351fa2a0d79dd78587653be68625af76bf5817"},
+    {file = "oooenv-0.2.4-py3-none-any.whl", hash = "sha256:e17a57661cf12d60f1d1ce5ed1db2aed4e441f0c85f09bc2ac0636d64c5925f3"},
+    {file = "oooenv-0.2.4.tar.gz", hash = "sha256:ec9c864d6165b87d18dbf008c01cf8e3d941565003799ce5e7e748abc5d57c0f"},
 ]
 
 [[package]]
 name = "oooscript"
-version = "1.1.4"
-description = "Compiles several python scripts into a single script that can be eaisly used by LibreOffice as a macro."
+version = "1.2.2"
+description = "Compiles several python scripts into a single script that can be easily used by LibreOffice as a macro."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = ">=3.8"
 files = [
-    {file = "oooscript-1.1.4-py3-none-any.whl", hash = "sha256:62772fa88f22baa771a2383d1750e2d9ceff0c7cab45938b0ee5c6f33da8b29d"},
-    {file = "oooscript-1.1.4.tar.gz", hash = "sha256:699c30db8ddbab4e79478993f40b8ea2978307fd7a5a33a58fb4f7729b83cbf4"},
+    {file = "oooscript-1.2.2-py3-none-any.whl", hash = "sha256:6db4ba0c28de0fc7d249e1e38db0f230ec7044b8565391d469c5c98d0d65c527"},
+    {file = "oooscript-1.2.2.tar.gz", hash = "sha256:a45d49cb105dd77115245718e382229bf1b13e17ea75ccb20e29cd7a526b4246"},
 ]
 
 [package.dependencies]
 pydantic = ">=1.10.2,<2.0.0"
-python-dotenv = ">=0.21.1,<0.22.0"
-scriptmerge = ">=1.1.0"
+python-dotenv = ">=1.0.1"
+scriptmerge = ">=1.1.0,<2.0.0"
 
 [[package]]
 name = "ooouno"
-version = "2.1.2"
+version = "3.0.0"
 description = "Interfaces and classes for LibreOffice (uno)"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "ooouno-2.1.2-py3-none-any.whl", hash = "sha256:d06635941300d8e2a489b03592d9bfb9e70167c379352c275d3b96ac0586f4de"},
-    {file = "ooouno-2.1.2.tar.gz", hash = "sha256:3152a1769c0baa7d66efe0ae4b909a0a3f882562eb283d2672cbed2e31e01b82"},
+    {file = "ooouno-3.0.0-py3-none-any.whl", hash = "sha256:237af5c39c41892e00dacb7d89c18b62025af080c96579bb3c24051f0113fd65"},
+    {file = "ooouno-3.0.0.tar.gz", hash = "sha256:e4b4208387bda46c2ba777f9e406fba22d1eb4367d0ec56403f4fc23bb50d580"},
 ]
 
 [package.dependencies]
 types-unopy = ">=1.2.3"
-typing-extensions = ">=4.6.2,<5.0.0"
+typing-extensions = ">=4.12,<5.0"
 
 [[package]]
 name = "packaging"
@@ -383,13 +383,13 @@ files = [
 
 [[package]]
 name = "python-dotenv"
-version = "0.21.1"
+version = "1.0.1"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "python-dotenv-0.21.1.tar.gz", hash = "sha256:1c93de8f636cde3ce377292818d0e440b6e45a82f215c3744979151fa8151c49"},
-    {file = "python_dotenv-0.21.1-py3-none-any.whl", hash = "sha256:41e12e0318bebc859fcc4d97d4db8d20ad21721a6aa5047dd59f090391cb549a"},
+    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
+    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
 ]
 
 [package.extras]
@@ -538,13 +538,13 @@ types-uno-script = ">=0.1.1"
 
 [[package]]
 name = "typing-extensions"
-version = "4.9.0"
+version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "typing_extensions-4.9.0-py3-none-any.whl", hash = "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"},
-    {file = "typing_extensions-4.9.0.tar.gz", hash = "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783"},
+    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
+    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
 
 [[package]]
@@ -591,4 +591,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "6da1636586faefa23f4a665e14cde0911a96cfb8fe8c34209eaeba07f9b01b64"
+content-hash = "f857e69594e2d5d893b29832ce95db5a3b08182c4f1a310e508298ec21aafea1"

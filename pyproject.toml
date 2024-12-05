@@ -18,7 +18,7 @@ repository = "https://github.com/Amourspirit/python-ooouno-ex"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-oooscript = ">=1.1.4"
+oooscript = ">=1.2.1"
 types-access2base = ">=1.0.2"
 types-scriptforge = ">=2.0.1"
 types-unopy = ">=1.0.3"
@@ -26,11 +26,11 @@ unotools = ">=0.3.3"
 verr = ">=1.1.2"
 kwargshelper = ">=2.7.1"
 ooo-dev-tools-gui-win = { version = ">=0.3.1", markers = "sys_platform == 'win32'" }
-ooo-dev-tools = ">=0.47.3"
+ooo-dev-tools = ">=0.50.0"
+oooenv = "^0.2.4"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=22.12.0"
-oooenv = ">=0.2.2"
 pdbpp = "^0.10.3"
 debugpy = "^1.8.1"
 
