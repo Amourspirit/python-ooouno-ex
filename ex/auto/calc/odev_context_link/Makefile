@@ -6,8 +6,9 @@ help:
 .PHONY: build help, msg-short, msg-long, msg-warn, msg-error, msg-yes
 
 build:
-	oooscript compile --embed --config "$(PWD)/config.json" --embed-doc "$(PWD)/data/src_doc/src_doc.ods" --build-dir "$(PWD)/data"
-	rm -f "$(PWD)/data/links.py"
+	oooscript compile --pyz-out --embed --config "$(PWD)/config.json" --embed-doc "$(PWD)/data/src_doc/src_doc.ods" --build-dir "$(PWD)/data"
+	rm -f $(PWD)/data/*.pyz
+	rm -f $(PWD)/data/links.py
 
 start:
 	python $(PWD)/start.py

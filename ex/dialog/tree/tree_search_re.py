@@ -68,7 +68,7 @@ class TreeSearchRe(TreeSimple):
     # region Search
     def _search_nodes(self) -> None:
         """Search the tree nodes for the search text."""
-        search_text = ".*P3\d"
+        search_text = ".*P3\\d"
         if self._selected_node is not None:
             search_text = Lo.current_doc.input_box(
                 title="Regular Expression Search",

@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "ooouno-ex"
-version = "2.2.0"
+version = "3.0.0"
 description = "Examples for LibreOffice python"
 license = "MIT"
 readme = "README.md"
@@ -18,7 +18,7 @@ repository = "https://github.com/Amourspirit/python-ooouno-ex"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-oooscript = ">=1.2.1"
+oooscript = ">=2.1.1"
 types-access2base = ">=1.0.2"
 types-scriptforge = ">=2.0.1"
 types-unopy = ">=1.0.3"

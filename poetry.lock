@@ -208,19 +208,19 @@ files = [
 
 [[package]]
 name = "oooscript"
-version = "1.2.2"
+version = "2.1.1"
 description = "Compiles several python scripts into a single script that can be easily used by LibreOffice as a macro."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "oooscript-1.2.2-py3-none-any.whl", hash = "sha256:6db4ba0c28de0fc7d249e1e38db0f230ec7044b8565391d469c5c98d0d65c527"},
-    {file = "oooscript-1.2.2.tar.gz", hash = "sha256:a45d49cb105dd77115245718e382229bf1b13e17ea75ccb20e29cd7a526b4246"},
+    {file = "oooscript-2.1.1-py3-none-any.whl", hash = "sha256:6899ea3aa25d5c876ebe6f8b58ca8d74ae632e3ca96d505b7a454e6eb1870373"},
+    {file = "oooscript-2.1.1.tar.gz", hash = "sha256:1bd87327fc9dd91f24e11557d3f061c77083e10b1e1f672ce0f61f8e19e21886"},
 ]
 
 [package.dependencies]
 pydantic = ">=1.10.2,<2.0.0"
 python-dotenv = ">=1.0.1"
-scriptmerge = ">=1.1.0,<2.0.0"
+scriptmerge = ">=3.1.0"
 
 [[package]]
 name = "ooouno"
@@ -436,13 +436,13 @@ six = "*"
 
 [[package]]
 name = "scriptmerge"
-version = "1.1.0"
+version = "3.1.0"
 description = "Convert Python packages into a single script"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8"
 files = [
-    {file = "scriptmerge-1.1.0-py3-none-any.whl", hash = "sha256:c1e08c136628d2ba3c0c3d8ed13e36d102e01da72e8c5bcfcb5ef19619cd068b"},
-    {file = "scriptmerge-1.1.0.tar.gz", hash = "sha256:3c5bc476fdb0dd93563a53caf52f1be2385647c298cb8b99f83db77a6a309102"},
+    {file = "scriptmerge-3.1.0-py3-none-any.whl", hash = "sha256:e14ee40c76a166aa20c0b811b018d2facecd50c7cc31a542e39b64a6e4615c5c"},
+    {file = "scriptmerge-3.1.0.tar.gz", hash = "sha256:54f0fa8890f530de0205ade49bd76391528970e9092929d4e5453ce7bd111dcd"},
 ]
 
 [[package]]
@@ -591,4 +591,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "f857e69594e2d5d893b29832ce95db5a3b08182c4f1a310e508298ec21aafea1"
+content-hash = "413c788f24a95151aee25dfc049ccfec0d25ba43cc98ffb7dae4f3aef1783ec2"

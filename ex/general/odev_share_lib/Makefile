@@ -1,4 +1,4 @@
-BUILD_DIR  = input_box
+BUILD_DIR  = shared_lib
 BUILD_ROOT_DIR = ../../../build
 BUILD  = $(BUILD_ROOT_DIR)/$(BUILD_DIR)
 
@@ -10,7 +10,7 @@ help:
 .PHONY: build run help
 
 build:
-	oooscript compile --pyz-out --embed --config "$(PWD)/config.json" --embed-doc "$(PWD)/inputbox.odt" --build-dir "build/$(BUILD_DIR)"
+	oooscript compile --pyz-out --embed --config "$(PWD)/config.json" --embed-doc "ex/general/odev_share_lib/share_lib.ods" --build-dir "build/$(BUILD_DIR)"
 	rm -f $(BUILD)/*.pyz
 	rm -f $(BUILD)/*.py
 
